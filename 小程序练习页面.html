@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>模拟练习 · 环慧慧EHS+</title>
+  <style>
+    /* 样式复用自由练习，与自由练习页面完全一致 */
+    :root {
+      --color-brand: #1570EF;
+      --color-brand-hover: #2E90FA;
+      --color-success: #52C41A;
+      --color-warning: #FA8C16;
+      --color-danger: #F54A45;
+      --color-text-primary: #1A1A1A;
+      --color-text-secondary: #666666;
+      --color-text-placeholder: #999999;
+      --color-bg-page: #F5F5F5;
+      --color-bg-surface: #FFFFFF;
+      --color-border: #E5E5E5;
+      --color-divider: #EEEEEE;
+      --radius-card: 12px;
+      --font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family); font-size: 15px; line-height: 1.5;
+      color: var(--color-text-primary); background: var(--color-bg-page);
+      max-width: 414px; margin: 0 auto; min-height: 100vh;
+      -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased;
+    }
+
+    .status-bar { height: env(safe-area-inset-top, 20px); background: #fff; }
+
+    .nav-bar { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid var(--color-divider); }
+    .nav-inner {
+      height: 44px; display: flex; align-items: center; justify-content: center;
+      padding: 0 16px; position: relative;
+    }
+    .nav-back {
+      position: absolute; left: 12px; width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      background: transparent; border: 0; color: var(--color-text-primary); cursor: pointer;
+    }
+    .nav-back svg { width: 20px; height: 20px; }
+    .nav-title { font-size: 17px; font-weight: 500; color: var(--color-text-primary); }
+
+    .progress-header { background: var(--color-brand); padding: 16px 16px 20px; color: #fff; position: relative; }
+    .progress-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .progress-label { font-size: 15px; font-weight: 500; color: #fff; }
+    .progress-bar-wrap { height: 6px; background: rgba(255,255,255,0.3); border-radius: 3px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: #fff; border-radius: 3px; transition: width 300ms ease; }
+
+    .page-body { padding: 16px; min-height: calc(100vh - 44px - env(safe-area-inset-top, 20px) - 80px - 80px); }
+
+    .question-card { background: #fff; border-radius: var(--radius-card); padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); position: relative; }
+    .question-header { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 16px; }
+    .question-type-tag { display: inline-flex; align-items: center; padding: 2px 8px; background: var(--color-brand); color: #fff; font-size: 12px; font-weight: 500; border-radius: 4px; flex-shrink: 0; }
+    .question-title { font-size: 16px; font-weight: 500; color: var(--color-text-primary); line-height: 1.6; flex: 1; }
+
+    .options-list { display: flex; flex-direction: column; gap: 12px; }
+    .option-item {
+      display: flex; align-items: center; padding: 14px 16px;
+      background: #F8F9FA; border-radius: 8px; cursor: pointer;
+      transition: all 150ms ease; border: 2px solid transparent;
+    }
+    .option-item:active { background: #E8F4FF; border-color: var(--color-brand); }
+    .option-item.selected { background: #E8F4FF; border-color: var(--color-brand); }
+    .option-label {
+      width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+      background: #fff; border: 1px solid var(--color-border); border-radius: 50%;
+      font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin-right: 12px; flex-shrink: 0;
+    }
+    .option-item.selected .option-label { background: var(--color-brand); border-color: var(--color-brand); color: #fff; }
+    .option-text { font-size: 15px; color: var(--color-text-primary); flex: 1; }
+
+    .bottom-bar {
+      position: fixed; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 414px; bottom: 0; background: #fff;
+      border-top: 1px solid var(--color-divider);
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 16px)); z-index: 100;
+    }
+    .bottom-actions { display: flex; gap: 8px; max-width: 414px; margin: 0 auto; }
+    .btn {
+      height: 44px; padding: 0 8px; border-radius: 8px; font-size: 13px; font-weight: 500;
+      cursor: pointer; border: none; display: flex; align-items: center; justify-content: center;
+      transition: all 150ms ease; white-space: nowrap;
+    }
+    .btn-default { background: #fff; border: 1px solid var(--color-border); color: var(--color-text-primary); }
+    .btn-default:active { background: #F5F5F5; }
+    .btn-primary { background: var(--color-brand); color: #fff; }
+    .btn-primary:active { background: var(--color-brand-hover); }
+    .btn-disabled { background: #E5E5E5; color: #999; cursor: not-allowed; }
+    .btn-flex { flex: 1; }
+
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6); display: none; align-items: flex-end; justify-content: center; z-index: 200;
+    }
+    .modal-overlay.is-open { display: flex; }
+    .modal-content {
+      background: #fff; width: 100%; max-width: 414px; max-height: 55vh;
+      border-radius: 16px 16px 0 0; padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 16px));
+      animation: slideUp 300ms ease; display: flex; flex-direction: column; overflow: hidden;
+    }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .modal-handle { width: 36px; height: 4px; background: var(--color-border); border-radius: 2px; margin: 0 auto 12px; flex-shrink: 0; }
+    .modal-body-scroll { flex: 1; overflow-y: auto; }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .modal-title { font-size: 17px; font-weight: 600; color: var(--color-text-primary); }
+    .modal-close { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; color: var(--color-text-secondary); cursor: pointer; font-size: 20px; }
+    .answer-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+    .answer-item {
+      aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+      border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer;
+      border: 1px solid var(--color-border); background: #fff; color: var(--color-text-primary);
+    }
+    .answer-item.answered { background: var(--color-brand); border-color: var(--color-brand); color: #fff; }
+    .answer-item.unanswered { background: #FAFAFA; border-color: var(--color-border); color: var(--color-text-placeholder); }
+    .answer-item.current { border-color: var(--color-brand); border-width: 2px; }
+    .answer-legend { display: flex; gap: 16px; margin-bottom: 16px; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--color-text-secondary); }
+    .legend-dot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+    .legend-dot.answered { background: var(--color-brand); }
+    .legend-dot.unanswered { background: var(--color-border); }
+
+    .confirm-modal {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center;
+      z-index: 300; padding: 32px;
+    }
+    .confirm-modal.is-open { display: flex; }
+    .confirm-box { background: #fff; border-radius: 14px; width: 100%; max-width: 290px; text-align: center; overflow: hidden; }
+    .confirm-body { padding: 24px 20px 20px; }
+    .confirm-title { font-size: 17px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 8px; }
+    .confirm-desc { font-size: 14px; color: var(--color-text-secondary); line-height: 1.5; }
+    .confirm-divider { height: 1px; background: var(--color-divider); }
+    .confirm-actions-vertical { display: flex; flex-direction: column; }
+    .confirm-btn { height: 44px; font-size: 17px; font-weight: 400; background: #fff; border: none; cursor: pointer; color: var(--color-brand); -webkit-tap-highlight-color: transparent; }
+    .confirm-btn:active { background: #F5F5F5; }
+    .confirm-btn-cancel { color: var(--color-brand); }
+    .confirm-btn-confirm { color: var(--color-brand); font-weight: 600; }
+    .confirm-btn-divider { height: 1px; background: var(--color-divider); }
+
+    /* ========== 角标样式 ========== */
+    .prd-badge {
+      display: inline-block !important; vertical-align: top !important;
+      font-size: 10px !important; font-weight: bold !important; line-height: 14px !important;
+      padding: 0px 4px !important; border-radius: 2px !important;
+      color: #fff !important; cursor: pointer !important;
+      position: absolute !important; top: -8px !important; right: -4px !important;
+      z-index: 900 !important; white-space: nowrap !important;
+      font-family: var(--font-family) !important;
+    }
+    .prd-badge.normal { background: rgb(250, 173, 20) !important; }
+    .prd-badge.changed { background: #F54A45 !important; }
+
+    .badge-wrapper { position: relative; display: inline-block; }
+
+    /* ========== 浮窗样式 ========== */
+    .prd-tooltip {
+      position: fixed; z-index: 9959;
+      background: #FFFFFF; border: 2px solid #1890ff; border-radius: 4px;
+      box-shadow: 0 6px 16px rgba(0,120,255,0.15);
+      width: 450px; max-width: calc(100vw - 20px);
+      display: none; font-family: var(--font-family); font-size: 13px;
+    }
+    .prd-tooltip-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; background: #F0F7FF; border-bottom: 1px solid #E8E8E8;
+      cursor: move; user-select: none;
+    }
+    .prd-tooltip-title { font-weight: 600; color: var(--color-text-primary); font-size: 14px; }
+    .prd-tooltip-close {
+      width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+      background: transparent; border: none; color: var(--color-text-placeholder);
+      cursor: pointer; font-size: 16px; border-radius: 2px;
+    }
+    .prd-tooltip-close:hover { background: #E8E8E8; }
+    .prd-tooltip-body { padding: 14px; max-height: 380px; overflow-y: auto; line-height: 1.6; color: var(--color-text-secondary); }
+    .prd-tooltip-body p { margin-bottom: 12px; }
+    .prd-tooltip-body strong { color: var(--color-text-primary); }
+    .prd-tooltip-body ul, .prd-tooltip-body ol { padding-left: 18px; margin-bottom: 12px; }
+    .prd-tooltip-body li { margin-bottom: 4px; }
+    .prd-tooltip-body blockquote { border-left: 3px solid #E8E8E8; padding-left: 10px; margin: 0 0 12px; color: var(--color-text-placeholder); }
+    .prd-tooltip-body table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 12px; }
+    .prd-tooltip-body th, .prd-tooltip-body td { border: 1px solid #E8E8E8; padding: 4px 8px; text-align: left; }
+    .prd-tooltip-body th { background: #FAFAFA; font-weight: 600; }
+
+    /* ========== PRD 抽屉 ========== */
+    .prd-drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.45); z-index: 10000; display: none; }
+    .prd-drawer-overlay.is-open { display: block; }
+    .prd-drawer {
+      position: fixed; top: 0; right: -600px; width: 600px; max-width: 100vw; height: 100vh;
+      background: #fff; z-index: 10001; transition: right 300ms ease;
+      display: flex; flex-direction: column; box-shadow: -4px 0 16px rgba(0,0,0,0.1);
+    }
+    .prd-drawer.is-open { right: 0; }
+    .prd-drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--color-divider); flex-shrink: 0; }
+    .prd-drawer-title { font-size: 17px; font-weight: 600; color: var(--color-text-primary); }
+    .prd-drawer-close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; font-size: 20px; color: var(--color-text-secondary); cursor: pointer; }
+    .prd-drawer-body { flex: 1; overflow-y: auto; padding: 20px; line-height: 1.6; }
+    .prd-drawer-body h1, .prd-drawer-body h2, .prd-drawer-body h3 { color: var(--color-text-primary); margin: 20px 0 10px; }
+    .prd-drawer-body h1 { font-size: 20px; }
+    .prd-drawer-body h2 { font-size: 17px; border-bottom: 1px solid var(--color-divider); padding-bottom: 6px; }
+    .prd-drawer-body h3 { font-size: 15px; }
+    .prd-drawer-body p { margin-bottom: 10px; color: var(--color-text-secondary); }
+    .prd-drawer-body ul, .prd-drawer-body ol { padding-left: 20px; margin-bottom: 10px; }
+    .prd-drawer-body li { margin-bottom: 4px; }
+    .prd-drawer-body table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+    .prd-drawer-body th, .prd-drawer-body td { border: 1px solid #E8E8E8; padding: 6px 10px; text-align: left; }
+    .prd-drawer-body th { background: #FAFAFA; font-weight: 600; }
+    .prd-drawer-body blockquote { border-left: 3px solid var(--color-brand); padding-left: 12px; margin: 0 0 12px; color: var(--color-text-placeholder); background: #F8F9FA; padding: 8px 12px; }
+
+    /* ========== 标注开关 + PRD按钮 ========== */
+    .badge-toggle-btn {
+      position: fixed !important; bottom: 20px !important; right: 20px !important;
+      z-index: 10001 !important; width: 44px !important; height: 44px !important;
+      border-radius: 50% !important; background: #307FE2 !important; border: none !important;
+      color: #fff !important; cursor: pointer !important; display: flex !important;
+      align-items: center !important; justify-content: center !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    }
+    .badge-toggle-btn svg { width: 20px; height: 20px; }
+    .prd-nav-btns { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); display: flex; gap: 6px; }
+    .prd-nav-btn { height: 26px; padding: 0 8px; border-radius: 4px; font-size: 11px; font-weight: 500; background: #F0F7FF; border: 1px solid #1890ff; color: #1890ff; cursor: pointer; white-space: nowrap; }
+  </style>
+</head>
+<body>
+
+  <div class="status-bar"></div>
+
+  <!-- 顶部导航 -->
+  <div class="nav-bar">
+    <div class="nav-inner">
+      <button class="nav-back" type="button" aria-label="返回" id="backBtn">
+        <span class="badge-wrapper" style="position:absolute;top:-4px;right:2px;">
+          <span class="prd-badge normal" data-badge-id="1">1</span>
+        </span>
+        <svg viewBox="0 0 48 48" fill="currentColor"><path d="M30.83 37.17L17.66 24 30.83 10.83 28 8 12 24l16 16z"/></svg>
+      </button>
+      <span class="nav-title">
+        模拟练习
+        <span class="badge-wrapper" style="margin-left:4px;">
+          <span class="prd-badge changed" style="position:static !important;" data-badge-id="2">2</span>
+        </span>
+      </span>
+      <div class="prd-nav-btns">
+        <button class="prd-nav-btn" onclick="openDrawer()" title="查看页面PRD">📄 页面PRD</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 进度头部 -->
+  <div class="progress-header">
+    <span class="badge-wrapper" style="position:absolute;top:4px;right:8px;">
+      <span class="prd-badge normal" data-badge-id="3">3</span>
+    </span>
+    <div class="progress-row">
+      <span class="progress-label">答题进度 <span id="progressText">1/4</span></span>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressBar" style="width: 25%;"></div>
+    </div>
+  </div>
+
+  <!-- 页面主体 -->
+  <div class="page-body">
+    <div class="question-card">
+      <span class="badge-wrapper" style="position:absolute;top:-8px;right:12px;">
+        <span class="prd-badge normal" data-badge-id="4">4</span>
+      </span>
+      <div class="question-header">
+        <span class="question-type-tag" id="questionType">单选题</span>
+        <div class="question-title" id="questionTitle">1.测试Q</div>
+      </div>
+      <div class="options-list" id="optionsList"></div>
+    </div>
+  </div>
+
+  <!-- 底部操作栏 -->
+  <div class="bottom-bar">
+    <span class="badge-wrapper" style="position:absolute;top:-8px;left:16px;">
+      <span class="prd-badge normal" data-badge-id="5">5</span>
+    </span>
+    <div class="bottom-actions">
+      <button class="btn btn-default" id="answerCardBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;margin-right:4px;">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/>
+          <line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/>
+        </svg>答题卡
+      </button>
+      <button class="btn btn-default" id="endEarlyBtn">提前结束</button>
+      <button class="btn btn-default btn-disabled" id="prevBtn" disabled>上一题</button>
+      <button class="btn btn-primary btn-flex" id="nextBtn">下一题</button>
+    </div>
+  </div>
+
+  <!-- 答题卡弹窗 -->
+  <div class="modal-overlay" id="answerCardModal">
+    <div class="modal-content">
+      <div class="modal-handle"></div>
+      <div class="modal-header">
+        <span class="modal-title">答题卡</span>
+        <button class="modal-close" id="closeModal">×</button>
+      </div>
+      <div class="modal-body-scroll">
+        <div class="answer-legend">
+          <span class="legend-item"><span class="legend-dot answered"></span>已做</span>
+          <span class="legend-item"><span class="legend-dot unanswered"></span>未做</span>
+        </div>
+        <div class="answer-grid" id="answerGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 提前结束确认弹窗 -->
+  <div class="confirm-modal" id="confirmModal">
+    <div class="confirm-box">
+      <div class="confirm-body">
+        <div class="confirm-title">提示</div>
+        <div class="confirm-desc">你还有未完成试题，确定要交卷吗？</div>
+      </div>
+      <div class="confirm-divider"></div>
+      <div class="confirm-actions-vertical">
+        <button class="confirm-btn confirm-btn-confirm" id="confirmEnd">确定</button>
+        <div class="confirm-btn-divider"></div>
+        <button class="confirm-btn confirm-btn-cancel" id="cancelEnd">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 退出练习确认弹窗 -->
+  <div class="confirm-modal" id="exitModal">
+    <div class="confirm-box">
+      <div class="confirm-body">
+        <div class="confirm-title">确认退出练习</div>
+        <div class="confirm-desc">退出后将不会保存本次练习，请谨慎操作</div>
+      </div>
+      <div class="confirm-divider"></div>
+      <div class="confirm-actions-vertical">
+        <button class="confirm-btn confirm-btn-confirm" id="confirmExit">退出</button>
+        <div class="confirm-btn-divider"></div>
+        <button class="confirm-btn confirm-btn-cancel" id="cancelExit">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 标注浮窗容器 ========== -->
+  <div class="prd-tooltip" id="tooltip-1"></div>
+  <div class="prd-tooltip" id="tooltip-2"></div>
+  <div class="prd-tooltip" id="tooltip-3"></div>
+  <div class="prd-tooltip" id="tooltip-4"></div>
+  <div class="prd-tooltip" id="tooltip-5"></div>
+  <div class="prd-tooltip" id="tooltip-6"></div>
+
+  <!-- ========== PRD 抽屉 ========== -->
+  <div class="prd-drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+  <div class="prd-drawer" id="drawer">
+    <div class="prd-drawer-header">
+      <span class="prd-drawer-title">📄 小程序练习页面 · 页面 PRD</span>
+      <button class="prd-drawer-close" onclick="closeDrawer()">×</button>
+    </div>
+    <div class="prd-drawer-body" id="drawerBody"></div>
+  </div>
+
+  <!-- ========== 标注开关 ========== -->
+  <button class="badge-toggle-btn" id="badgeToggle" title="显示/隐藏标注">
+    <svg id="toggleEyeOn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+    </svg>
+    <svg id="toggleEyeOff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+      <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/>
+      <line x1="1" y1="1" x2="23" y2="23"/>
+    </svg>
+  </button>
+
+<script>
+// ==================== 标注数据 ====================
+var badgeData = {
+  "1": {
+    title: "需求描述：返回按钮",
+    content: "" +
+      "<p><strong>来自PRD 2.2 导航栏：</strong></p>" +
+      "<table><tr><th>元素</th><th>位置</th><th>行为</th></tr>" +
+      "<tr><td>返回按钮 ←</td><td>左侧</td><td>弹出确认对话框 → 点击「退出」返回练习列表</td></tr></table>" +
+      "<p><strong>返回确认弹窗：</strong></p>" +
+      "<ul><li>标题：确认退出练习</li><li>内容：退出后将不会保存本次练习，请谨慎操作</li><li>按钮：取消（关闭弹窗）/ 退出（返回练习列表）</li></ul>" +
+      "<p><strong>来自PRD 5 核心交互：</strong>点击返回 → 弹出确认对话框 → 确定退出后返回练习列表，不保存进度</p>"
+  },
+  "2": {
+    title: "需求描述：导航栏标题 🔥变化",
+    content: "" +
+      "<p style='color:#F54A45;'><strong>🔥 变化点：导航栏标题改为「模拟练习」</strong></p>" +
+      "<p><strong>来自PRD 2.2 导航栏：</strong></p>" +
+      "<table><tr><th>元素</th><th>位置</th><th>说明</th></tr>" +
+      "<tr><td>标题</td><td>居中</td><td><strong>固定显示「模拟练习」</strong></td></tr></table>" +
+      "<p><strong>来自PRD 7 对比表：</strong>自由练习标题 → 模拟练习固定显示「模拟练习」</p>"
+  },
+  "3": {
+    title: "需求描述：进度头部",
+    content: "" +
+      "<p><strong>来自PRD 2.3 进度头部：</strong></p>" +
+      "<table><tr><th>元素</th><th>说明</th></tr>" +
+      "<tr><td>背景色</td><td>主题色</td></tr>" +
+      "<tr><td>进度文字</td><td>左侧「答题进度」，右侧「当前题/总题数」</td></tr>" +
+      "<tr><td>进度条</td><td>白色填充条，按 (当前题/总题数) 比例</td></tr></table>"
+  },
+  "4": {
+    title: "需求描述：题目卡片",
+    content: "" +
+      "<p><strong>来自PRD 3.1 题型支持：</strong></p>" +
+      "<table><tr><th>题型</th><th>标签文案</th><th>来源</th></tr>" +
+      "<tr><td>单选题</td><td>单选题</td><td>试卷题目</td></tr>" +
+      "<tr><td>多选题</td><td>多选题</td><td>试卷题目</td></tr>" +
+      "<tr><td>判断题</td><td>判断题</td><td>试卷题目</td></tr></table>" +
+      "<p><strong>来自PRD 3.2 选项交互：</strong></p>" +
+      "<table><tr><th>题型</th><th>选择方式</th></tr>" +
+      "<tr><td>单选题</td><td>单选，点击替换上一个选择</td></tr>" +
+      "<tr><td>多选题</td><td>支持多选，点击切换选中/取消</td></tr>" +
+      "<tr><td>判断题</td><td>单选，A 正确 / B 错误</td></tr></table>" +
+      "<p>选中态高亮显示。</p>" +
+      "<p><strong>来自PRD 3.3 题目来源：</strong></p>" +
+      "<p>题目由后台根据练习配置，从<strong>关联试卷</strong>中按配置的题目数量和题型数量抽取。每次进入练习重新抽题，不保留上次答题进度。</p>"
+  },
+  "5": {
+    title: "需求描述：底部操作栏",
+    content: "" +
+      "<p><strong>来自PRD 4.1 按钮布局：</strong></p>" +
+      "<table><tr><th>按钮</th><th>位置</th><th>行为</th></tr>" +
+      "<tr><td>答题卡</td><td>最左</td><td>打开答题卡半屏弹窗</td></tr>" +
+      "<tr><td>提前结束</td><td>左二</td><td>弹出提前结束确认弹窗</td></tr>" +
+      "<tr><td>上一题</td><td>右二</td><td>回到上一题，可修改答案；首题置灰不可用</td></tr>" +
+      "<tr><td>下一题/提交</td><td>最右</td><td>进入下一题；最后一题变为「提交」</td></tr></table>" +
+      "<p><strong>来自PRD 4.2 答题卡弹窗：</strong>从底部滑入，半屏；7列网格，已做/未做图例，当前题加粗边框，点击题号跳转。</p>" +
+      "<p><strong>来自PRD 4.3 提前结束：</strong>弹窗提示「你还有未完成试题，确定要交卷吗？」，确定→跳转练习结束页，取消→继续答题。</p>"
+  },
+  "6": {
+    title: "需求描述：异常处理",
+    content: "" +
+      "<p><strong>来自PRD 8 异常处理：</strong></p>" +
+      "<table><tr><th>异常场景</th><th>处理方式</th></tr>" +
+      "<tr><td>题目数据加载失败</td><td>轻提示「加载失败，请稍后重试」</td></tr>" +
+      "<tr><td>练习已结束（过期访问）</td><td>提示「练习已结束」，返回列表页</td></tr>" +
+      "<tr><td>网络中断</td><td>保留当前已作答记录，网络恢复后可继续</td></tr>" +
+      "<tr><td>关联试卷已删除</td><td>不影响练习，已抽取的题目数据可正常使用</td></tr>" +
+      "<tr><td>用户被移除练习人员范围</td><td>不影响已进入的练习，可继续答题至结束</td></tr></table>"
+  }
+};
+
+// ==================== PRD 抽屉内容 ====================
+var pagePrdContent = '<h1>小程序练习页面 · 页面 PRD</h1>\n' +
+  '<blockquote><strong>页面类型：</strong>用户前台类（小程序端） | <strong>所属模块：</strong>模拟练习 | <strong>最后更新：</strong>2026-07-01</blockquote>\n' +
+  '<h2>[2] 1. 引言</h2>\n' +
+  '<h3>1.1 页面概述</h3>\n' +
+  '<p>小程序练习页面是员工进入模拟练习后的核心答题页面。<strong>本页面复用自由练习的练习页面，样式与自由练习完全一致</strong>，题目来源改为试卷（由后台练习配置关联的试卷抽取），所有按钮功能和交互逻辑保持不变。</p>\n' +
+  '<h3>1.2 使用角色</h3>\n' +
+  '<table><tr><th>角色</th><th>访问权限</th></tr><tr><td>普通员工</td><td>✓ 从练习列表「进行中」卡片进入</td></tr><tr><td>部门负责人</td><td>✓ 从练习列表「进行中」卡片进入</td></tr></table>\n' +
+  '<h3>1.3 前置条件</h3>\n' +
+  '<ul><li>从练习列表页点击「进行中」的试卷卡片进入</li><li>携带练习配置 ID 和名称参数</li><li>后台根据练习配置从关联试卷中抽取题目</li></ul>\n' +
+  '<h2>[2] 2. 页面结构</h2>\n' +
+  '<h3>2.1 页面布局</h3>\n' +
+  '<pre>┌──────────────────────────────┐\n│       ··· (状态栏)            │\n├──────────────────────────────┤\n│  ←  模拟练习                   │  导航栏\n├──────────────────────────────┤\n│  答题进度              1/4    │\n│  ████████░░░░░░░░░░  25%     │  进度头部\n├──────────────────────────────┤\n│  ┌──────────────────────────┐│\n│  │ 单选题                    ││\n│  │ 1. 题目内容 ...           ││\n│  │  ○ A. 选项A              ││\n│  │  ● B. 选项B              ││\n│  │  ○ C. 选项C              ││\n│  │  ○ D. 选项D              ││\n│  └──────────────────────────┘│\n├──────────────────────────────┤\n│ [答题卡][提前结束][上一题][下一题]│  底部操作栏\n└──────────────────────────────┘</pre>\n' +
+  '<h3>[1][2] 2.2 导航栏</h3>\n' +
+  '<table><tr><th>元素</th><th>位置</th><th>行为</th></tr><tr><td>返回按钮 ←</td><td>左侧</td><td>弹出确认对话框 → 退出返回练习列表</td></tr><tr><td>标题</td><td>居中</td><td>固定显示「模拟练习」</td></tr></table>\n' +
+  '<h3>[3] 2.3 进度头部</h3>\n' +
+  '<table><tr><th>元素</th><th>说明</th></tr><tr><td>背景色</td><td>主题色</td></tr><tr><td>进度文字</td><td>左侧「答题进度」，右侧「当前题/总题数」</td></tr><tr><td>进度条</td><td>白色填充条，按比例</td></tr></table>\n' +
+  '<h2>[4] 3. 题目卡片</h2>\n' +
+  '<h3>3.1 题型支持</h3>\n' +
+  '<table><tr><th>题型</th><th>标签文案</th><th>来源</th></tr><tr><td>单选题</td><td>单选题</td><td>试卷题目</td></tr><tr><td>多选题</td><td>多选题</td><td>试卷题目</td></tr><tr><td>判断题</td><td>判断题</td><td>试卷题目</td></tr></table>\n' +
+  '<h3>3.2 选项交互</h3>\n' +
+  '<table><tr><th>题型</th><th>选择方式</th></tr><tr><td>单选题</td><td>单选，点击替换上一个选择</td></tr><tr><td>多选题</td><td>支持多选，点击切换选中/取消</td></tr><tr><td>判断题</td><td>单选，A 正确 / B 错误</td></tr></table>\n' +
+  '<h3>3.3 题目来源</h3>\n' +
+  '<p>题目由后台根据练习配置，从<strong>关联试卷</strong>中按配置的题目数量和题型数量抽取。每次进入练习重新抽题，不保留上次答题进度。</p>\n' +
+  '<h2>[5] 4. 底部操作栏</h2>\n' +
+  '<h3>4.1 按钮布局</h3>\n' +
+  '<table><tr><th>按钮</th><th>位置</th><th>行为</th></tr><tr><td>答题卡</td><td>最左</td><td>打开答题卡半屏弹窗</td></tr><tr><td>提前结束</td><td>左二</td><td>弹出提前结束确认弹窗</td></tr><tr><td>上一题</td><td>右二</td><td>回到上一题，可修改答案；首题置灰不可用</td></tr><tr><td>下一题/提交</td><td>最右</td><td>进入下一题；最后一题变为「提交」</td></tr></table>\n' +
+  '<h3>4.2 答题卡弹窗（半屏）</h3>\n' +
+  '<p>从底部滑入，半屏；7列网格；已做/未做图例；当前题加粗边框；点击题号跳转</p>\n' +
+  '<h3>4.3 提前结束确认弹窗</h3>\n' +
+  '<p>确定 → 跳转「练习结束页面」；取消 → 关闭弹窗，继续答题</p>\n' +
+  '<h2>5. 核心交互</h2>\n' +
+  '<table><tr><th>操作</th><th>行为</th></tr><tr><td>进入页面</td><td>后台按练习配置从试卷抽题，渲染首题</td></tr><tr><td>选择答案</td><td>记录选项，高亮选中项</td></tr><tr><td>上一题</td><td>回到前一题，可修改已选答案</td></tr><tr><td>下一题</td><td>保存当前答案，前进到下一题</td></tr><tr><td>最后一题→提交</td><td>按钮文案变为「提交」，跳转练习结束页</td></tr><tr><td>返回</td><td>弹出确认对话框，退出返回练习列表</td></tr><tr><td>提前结束</td><td>弹出确认弹窗，确定后跳转练习结束页</td></tr></table>\n' +
+  '<h2>6. 数据来源</h2>\n' +
+  '<table><tr><th>来源</th><th>说明</th></tr><tr><td>关联试卷</td><td>练习配置中选择的试卷，从中按配置的题型数量随机抽取题目</td></tr></table>\n' +
+  '<h2>7. 与自由练习页面的关系</h2>\n' +
+  '<table><tr><th>对比项</th><th>自由练习</th><th>模拟练习</th></tr><tr><td>页面结构</td><td>相同</td><td>复用</td></tr><tr><td>页面样式</td><td>现有样式</td><td>完全复用</td></tr><tr><td><strong>导航栏标题</strong></td><td><strong>自由练习标题</strong></td><td><strong>固定显示「模拟练习」</strong></td></tr><tr><td>按钮功能</td><td>答题卡、提前结束、上一题、下一题/提交</td><td>全部不变</td></tr><tr><td>题目来源</td><td>通用/专业题库随机抽题</td><td>关联试卷按配置抽题</td></tr><tr><td>结束页面跳转</td><td>自由练习结束页</td><td>模拟练习结束页</td></tr></table>\n' +
+  '<h2>[6] 8. 异常处理</h2>\n' +
+  '<table><tr><th>异常场景</th><th>处理方式</th></tr><tr><td>题目数据加载失败</td><td>轻提示「加载失败，请稍后重试」</td></tr><tr><td>练习已结束</td><td>提示「练习已结束」，返回列表页</td></tr><tr><td>网络中断</td><td>保留当前已作答记录，网络恢复后可继续</td></tr></table>';
+
+// ==================== 通用浮窗交互 ====================
+var activeTooltip = null;
+var tooltipTimers = {};
+
+function showTooltip(badgeId, e) {
+  var tip = document.getElementById('tooltip-' + badgeId);
+  var data = badgeData[badgeId];
+  if (!tip || !data) return;
+  if (tooltipTimers[badgeId]) clearTimeout(tooltipTimers[badgeId]);
+  if (activeTooltip && activeTooltip !== tip) activeTooltip.style.display = 'none';
+
+  tip.innerHTML = '<div class="prd-tooltip-header">' +
+    '<span class="prd-tooltip-title">' + data.title + '</span>' +
+    '<button class="prd-tooltip-close" onclick="closeTooltip(\'' + badgeId + '\')">×</button>' +
+    '</div><div class="prd-tooltip-body">' + data.content + '</div>';
+
+  var badge = document.querySelector('.prd-badge[data-badge-id="' + badgeId + '"]');
+  var rect = badge ? badge.getBoundingClientRect() : { top: e.clientY, left: e.clientX };
+  var tipWidth = 450;
+  var left = rect.left + rect.width / 2 - tipWidth / 2;
+  if (left < 10) left = 10;
+  if (left + tipWidth > window.innerWidth - 10) left = window.innerWidth - tipWidth - 10;
+  var top = rect.bottom + 8;
+  if (top + 400 > window.innerHeight) top = rect.top - 400 - 8;
+
+  tip.style.left = left + 'px'; tip.style.top = top + 'px';
+  tip.style.display = 'block'; tip.style.zIndex = '9959';
+  activeTooltip = tip;
+}
+
+function closeTooltip(badgeId) {
+  var tip = document.getElementById('tooltip-' + badgeId);
+  if (tip) { tip.style.display = 'none'; if (activeTooltip === tip) activeTooltip = null; }
+}
+
+document.querySelectorAll('.prd-badge').forEach(function(badge) {
+  badge.addEventListener('mouseenter', function(e) { showTooltip(badge.getAttribute('data-badge-id'), e); });
+  badge.addEventListener('mouseleave', function(e) {
+    var id = badge.getAttribute('data-badge-id');
+    tooltipTimers[id] = setTimeout(function() { closeTooltip(id); }, 200);
+  });
+});
+
+document.querySelectorAll('.prd-tooltip').forEach(function(tip) {
+  tip.addEventListener('mouseenter', function() {
+    var badgeId = tip.id.replace('tooltip-', '');
+    if (tooltipTimers[badgeId]) clearTimeout(tooltipTimers[badgeId]);
+  });
+  tip.addEventListener('mouseleave', function() {
+    closeTooltip(tip.id.replace('tooltip-', ''));
+  });
+});
+
+var dragTarget = null, dragOffsetX = 0, dragOffsetY = 0;
+document.addEventListener('mousedown', function(e) {
+  var header = e.target.closest('.prd-tooltip-header');
+  if (!header) return;
+  dragTarget = header.closest('.prd-tooltip');
+  if (dragTarget) { dragOffsetX = e.clientX - dragTarget.offsetLeft; dragOffsetY = e.clientY - dragTarget.offsetTop; }
+});
+document.addEventListener('mousemove', function(e) {
+  if (!dragTarget) return;
+  dragTarget.style.left = (e.clientX - dragOffsetX) + 'px';
+  dragTarget.style.top = (e.clientY - dragOffsetY) + 'px';
+});
+document.addEventListener('mouseup', function() { dragTarget = null; });
+
+function openDrawer() {
+  document.getElementById('drawerBody').innerHTML = pagePrdContent;
+  document.getElementById('drawerOverlay').classList.add('is-open');
+  document.getElementById('drawer').classList.add('is-open');
+}
+function closeDrawer() {
+  document.getElementById('drawerOverlay').classList.remove('is-open');
+  document.getElementById('drawer').classList.remove('is-open');
+}
+
+var badgesVisible = true;
+document.getElementById('badgeToggle').addEventListener('click', function() {
+  badgesVisible = !badgesVisible;
+  var badges = document.querySelectorAll('.prd-badge');
+  for (var i = 0; i < badges.length; i++) badges[i].style.display = badgesVisible ? '' : 'none';
+  document.getElementById('toggleEyeOn').style.display = badgesVisible ? '' : 'none';
+  document.getElementById('toggleEyeOff').style.display = badgesVisible ? 'none' : '';
+});
+
+// ==================== 原有业务逻辑 ====================
+var questions = [
+  { id:1,type:'single',typeLabel:'单选题',title:'测试Q',options:[{label:'A',text:'第一个选项'},{label:'B',text:'第二个选项'}] },
+  { id:2,type:'single',typeLabel:'单选题',title:'安全生产的第一责任人是？',options:[{label:'A',text:'企业主要负责人'},{label:'B',text:'安全管理人员'},{label:'C',text:'班组长'},{label:'D',text:'普通员工'}] },
+  { id:3,type:'multi',typeLabel:'多选题',title:'以下哪些属于安全防护措施？',options:[{label:'A',text:'佩戴安全帽'},{label:'B',text:'穿戴防护服'},{label:'C',text:'使用防护手套'},{label:'D',text:'佩戴护目镜'}] },
+  { id:4,type:'judge',typeLabel:'判断题',title:'在进行高空作业时，必须系好安全带。',options:[{label:'A',text:'正确'},{label:'B',text:'错误'}] }
+];
+var currentIndex = 0;
+var answers = {};
+
+function renderQuestion(index) {
+  var q = questions[index];
+  document.getElementById('questionType').textContent = q.typeLabel;
+  document.getElementById('questionTitle').textContent = (index+1)+'.'+q.title;
+  document.getElementById('optionsList').innerHTML = q.options.map(function(opt) {
+    return '<div class="option-item '+(answers[q.id]===opt.label?'selected':'')+'" onclick="selectOption(\''+opt.label+'\')"><span class="option-label">'+opt.label+'</span><span class="option-text">'+opt.text+'</span></div>';
+  }).join('');
+  updateProgress(); updateButtons();
+}
+
+window.selectOption = function(label) {
+  var q = questions[currentIndex]; answers[q.id] = label;
+  document.querySelectorAll('.option-item').forEach(function(item) { item.classList.toggle('selected', item.dataset.label === label); });
+};
+
+function updateProgress() {
+  var current = currentIndex + 1, total = questions.length;
+  document.getElementById('progressText').textContent = current+'/'+total;
+  document.getElementById('progressBar').style.width = (current/total*100)+'%';
+}
+
+function updateButtons() {
+  var prevBtn = document.getElementById('prevBtn'), nextBtn = document.getElementById('nextBtn');
+  if (currentIndex === 0) { prevBtn.disabled = true; prevBtn.classList.add('btn-disabled'); }
+  else { prevBtn.disabled = false; prevBtn.classList.remove('btn-disabled'); }
+  nextBtn.textContent = currentIndex === questions.length - 1 ? '提交' : '下一题';
+}
+
+document.getElementById('prevBtn').addEventListener('click', function() { if(currentIndex>0){currentIndex--;renderQuestion(currentIndex);} });
+document.getElementById('nextBtn').addEventListener('click', function() { if(currentIndex<questions.length-1){currentIndex++;renderQuestion(currentIndex);}else{window.location.href='小程序练习结束页面.html';} });
+document.getElementById('endEarlyBtn').addEventListener('click', function() { document.getElementById('confirmModal').classList.add('is-open'); });
+document.getElementById('cancelEnd').addEventListener('click', function() { document.getElementById('confirmModal').classList.remove('is-open'); });
+document.getElementById('confirmEnd').addEventListener('click', function() { document.getElementById('confirmModal').classList.remove('is-open'); window.location.href='小程序练习结束页面.html'; });
+document.getElementById('answerCardBtn').addEventListener('click', function() { renderAnswerGrid(); document.getElementById('answerCardModal').classList.add('is-open'); });
+document.getElementById('closeModal').addEventListener('click', function() { document.getElementById('answerCardModal').classList.remove('is-open'); });
+document.getElementById('answerCardModal').addEventListener('click', function(e) { if(e.target===e.currentTarget) document.getElementById('answerCardModal').classList.remove('is-open'); });
+
+function renderAnswerGrid() {
+  document.getElementById('answerGrid').innerHTML = questions.map(function(q,i) {
+    return '<div class="answer-item '+(answers[q.id]?'answered':'unanswered')+' '+(i===currentIndex?'current':'')+'" onclick="jumpToQuestion('+i+')">'+(i+1)+'</div>';
+  }).join('');
+}
+window.jumpToQuestion = function(index) { currentIndex=index; renderQuestion(currentIndex); document.getElementById('answerCardModal').classList.remove('is-open'); };
+document.getElementById('backBtn').addEventListener('click', function() { document.getElementById('exitModal').classList.add('is-open'); });
+document.getElementById('cancelExit').addEventListener('click', function() { document.getElementById('exitModal').classList.remove('is-open'); });
+document.getElementById('confirmExit').addEventListener('click', function() { document.getElementById('exitModal').classList.remove('is-open'); window.location.href='小程序练习列表.html'; });
+
+renderQuestion(0);
+</script>
+</body>
+</html>

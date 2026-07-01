@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>工作台 · 环慧慧EHS+</title>
+  <style>
+    :root {
+      --color-brand: #1570EF;
+      --color-text-primary: #1A1A1A;
+      --color-text-secondary: #666666;
+      --color-text-placeholder: #999999;
+      --color-bg-page: #F5F5F5;
+      --color-bg-surface: #FFFFFF;
+      --color-divider: #EEEEEE;
+      --radius-card: 12px;
+      --font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--color-text-primary);
+      background: var(--color-bg-page);
+      max-width: 414px;
+      margin: 0 auto;
+      min-height: 100vh;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .status-bar { height: env(safe-area-inset-top, 20px); background: #fff; }
+
+    .nav-bar { background: #fff; }
+
+    .nav-inner {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 16px;
+      position: relative;
+    }
+
+    .nav-back {
+      position: absolute; left: 12px; width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      background: transparent; border: 0; color: var(--color-text-primary); cursor: pointer;
+    }
+
+    .nav-back svg { width: 20px; height: 20px; }
+
+    .nav-title { font-size: 17px; font-weight: 500; color: var(--color-text-primary); }
+
+    .page-body { padding: 12px 16px 24px; display: flex; flex-direction: column; gap: 16px; }
+
+    .section { background: #fff; border-radius: var(--radius-card); overflow: hidden; position: relative; }
+
+    .section-header { padding: 16px 16px 8px; font-size: 15px; font-weight: 600; color: var(--color-text-primary); }
+
+    .icon-grid { display: grid; grid-template-columns: repeat(4, 1fr); padding: 4px 4px 12px; gap: 4px 0; }
+
+    .icon-item {
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+      padding: 12px 4px 8px; cursor: pointer; border-radius: 8px;
+      transition: background 150ms ease; -webkit-tap-highlight-color: transparent; position: relative;
+    }
+
+    .icon-item:active { background: #F5F5F5; }
+
+    .icon-img {
+      width: 48px; height: 48px; border-radius: 12px; display: flex;
+      align-items: center; justify-content: center; margin-bottom: 6px; flex-shrink: 0;
+    }
+
+    .icon-img svg { width: 26px; height: 26px; }
+
+    .icon--study  { background: linear-gradient(135deg, #EBF5FF 0%, #D6EBFF 100%); color: #1570EF; }
+    .icon--exam   { background: linear-gradient(135deg, #FFF7EB 0%, #FFE8CC 100%); color: #F59E0B; }
+    .icon--free   { background: linear-gradient(135deg, #EEFDF5 0%, #D5F5E3 100%); color: #16A34A; }
+    .icon--paper  { background: linear-gradient(135deg, #F3F0FF 0%, #E0D9FF 100%); color: #7C3AED; }
+
+    .icon-label { font-size: 12px; color: var(--color-text-primary); text-align: center; line-height: 1.3; white-space: nowrap; }
+
+    .safe-bottom { height: env(safe-area-inset-bottom, 16px); }
+
+    /* ========== 角标样式 ========== */
+    .prd-badge {
+      display: inline-block !important; vertical-align: top !important;
+      font-size: 10px !important; font-weight: bold !important; line-height: 14px !important;
+      padding: 0px 4px !important; border-radius: 2px !important;
+      color: #fff !important; cursor: pointer !important;
+      position: absolute !important; top: -8px !important; right: -4px !important;
+      z-index: 900 !important; white-space: nowrap !important;
+      font-family: var(--font-family) !important;
+    }
+    .prd-badge.normal { background: rgb(250, 173, 20) !important; }
+    .prd-badge.changed { background: #F54A45 !important; }
+
+    .badge-wrapper { position: relative; display: inline-block; }
+
+    /* ========== 浮窗样式 ========== */
+    .prd-tooltip {
+      position: fixed; z-index: 9959;
+      background: #FFFFFF; border: 2px solid #1890ff; border-radius: 4px;
+      box-shadow: 0 6px 16px rgba(0,120,255,0.15);
+      width: 450px; max-width: calc(100vw - 20px);
+      display: none; font-family: var(--font-family); font-size: 13px;
+    }
+    .prd-tooltip-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; background: #F0F7FF; border-bottom: 1px solid #E8E8E8;
+      cursor: move; user-select: none;
+    }
+    .prd-tooltip-title { font-weight: 600; color: var(--color-text-primary); font-size: 14px; }
+    .prd-tooltip-close {
+      width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+      background: transparent; border: none; color: var(--color-text-placeholder);
+      cursor: pointer; font-size: 16px; border-radius: 2px;
+    }
+    .prd-tooltip-close:hover { background: #E8E8E8; }
+    .prd-tooltip-body { padding: 14px; max-height: 380px; overflow-y: auto; line-height: 1.6; color: var(--color-text-secondary); }
+    .prd-tooltip-body p { margin-bottom: 12px; }
+    .prd-tooltip-body strong { color: var(--color-text-primary); }
+    .prd-tooltip-body ul, .prd-tooltip-body ol { padding-left: 18px; margin-bottom: 12px; }
+    .prd-tooltip-body li { margin-bottom: 4px; }
+    .prd-tooltip-body blockquote {
+      border-left: 3px solid #E8E8E8; padding-left: 10px; margin: 0 0 12px; color: var(--color-text-placeholder);
+    }
+    .prd-tooltip-body table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 12px; }
+    .prd-tooltip-body th, .prd-tooltip-body td { border: 1px solid #E8E8E8; padding: 4px 8px; text-align: left; }
+    .prd-tooltip-body th { background: #FAFAFA; font-weight: 600; }
+
+    /* ========== PRD 抽屉 ========== */
+    .prd-drawer-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.45); z-index: 10000; display: none;
+    }
+    .prd-drawer-overlay.is-open { display: block; }
+    .prd-drawer {
+      position: fixed; top: 0; right: -600px; width: 600px; max-width: 100vw; height: 100vh;
+      background: #fff; z-index: 10001; transition: right 300ms ease;
+      display: flex; flex-direction: column; box-shadow: -4px 0 16px rgba(0,0,0,0.1);
+    }
+    .prd-drawer.is-open { right: 0; }
+    .prd-drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; border-bottom: 1px solid var(--color-divider); flex-shrink: 0;
+    }
+    .prd-drawer-title { font-size: 17px; font-weight: 600; color: var(--color-text-primary); }
+    .prd-drawer-close {
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+      background: transparent; border: none; font-size: 20px; color: var(--color-text-secondary); cursor: pointer;
+    }
+    .prd-drawer-body { flex: 1; overflow-y: auto; padding: 20px; line-height: 1.6; }
+    .prd-drawer-body h1, .prd-drawer-body h2, .prd-drawer-body h3 { color: var(--color-text-primary); margin: 20px 0 10px; }
+    .prd-drawer-body h1 { font-size: 20px; }
+    .prd-drawer-body h2 { font-size: 17px; border-bottom: 1px solid var(--color-divider); padding-bottom: 6px; }
+    .prd-drawer-body h3 { font-size: 15px; }
+    .prd-drawer-body p { margin-bottom: 10px; color: var(--color-text-secondary); }
+    .prd-drawer-body ul, .prd-drawer-body ol { padding-left: 20px; margin-bottom: 10px; }
+    .prd-drawer-body li { margin-bottom: 4px; }
+    .prd-drawer-body table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+    .prd-drawer-body th, .prd-drawer-body td { border: 1px solid #E8E8E8; padding: 6px 10px; text-align: left; }
+    .prd-drawer-body th { background: #FAFAFA; font-weight: 600; }
+    .prd-drawer-body blockquote { border-left: 3px solid var(--color-brand); padding-left: 12px; margin: 0 0 12px; color: var(--color-text-placeholder); background: #F8F9FA; padding: 8px 12px; }
+
+    /* ========== 标注开关 ========== */
+    .badge-toggle-btn {
+      position: fixed !important; bottom: 20px !important; right: 20px !important;
+      z-index: 10001 !important; width: 44px !important; height: 44px !important;
+      border-radius: 50% !important; background: #307FE2 !important; border: none !important;
+      color: #fff !important; cursor: pointer !important; display: flex !important;
+      align-items: center !important; justify-content: center !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    }
+    .badge-toggle-btn svg { width: 20px; height: 20px; }
+
+    /* ========== PRD 按钮 ========== */
+    .prd-nav-btns {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      display: flex; gap: 6px;
+    }
+    .prd-nav-btn {
+      height: 26px; padding: 0 8px; border-radius: 4px; font-size: 11px; font-weight: 500;
+      background: #F0F7FF; border: 1px solid #1890ff; color: #1890ff; cursor: pointer;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="status-bar"></div>
+
+  <div class="nav-bar">
+    <div class="nav-inner">
+      <button class="nav-back" type="button" aria-label="返回" id="backBtn">
+        <svg viewBox="0 0 48 48" fill="currentColor"><path d="M30.83 37.17L17.66 24 30.83 10.83 28 8 12 24l16 16z"/></svg>
+      </button>
+      <span class="nav-title">工作台</span>
+      <div class="prd-nav-btns">
+        <button class="prd-nav-btn" onclick="openDrawer()" title="查看页面PRD">📄 页面PRD</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <!-- 学习管理 -->
+    <div class="section">
+      <div class="section-header">
+        学习管理
+      </div>
+      <div class="icon-grid">
+        <!-- 学习中心 -->
+        <div class="icon-item" id="studyCenter">
+          <div class="icon-img icon--study">
+            <svg viewBox="0 0 48 48" fill="currentColor">
+              <rect x="6" y="6" width="36" height="36" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+              <line x1="6" y1="18" x2="42" y2="18" stroke="currentColor" stroke-width="2.5"/>
+              <line x1="20" y1="18" x2="20" y2="42" stroke="currentColor" stroke-width="2.5"/>
+              <rect x="26" y="24" width="8" height="3" rx="1" fill="currentColor" opacity="0.4"/>
+              <rect x="26" y="30" width="8" height="3" rx="1" fill="currentColor" opacity="0.4"/>
+              <rect x="10" y="24" width="6" height="3" rx="1" fill="currentColor" opacity="0.4"/>
+              <rect x="10" y="30" width="6" height="3" rx="1" fill="currentColor" opacity="0.4"/>
+            </svg>
+          </div>
+          <span class="icon-label">学习中心</span>
+        </div>
+
+        <!-- 考试中心 -->
+        <div class="icon-item" id="examCenter">
+          <div class="icon-img icon--exam">
+            <svg viewBox="0 0 48 48" fill="currentColor">
+              <rect x="8" y="7" width="32" height="34" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/>
+              <line x1="16" y1="17" x2="32" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="16" y1="23" x2="28" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="16" y1="23" x2="24" y2="29" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M16 29l8-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="34" cy="34" r="7" fill="#F59E0B" stroke="#fff" stroke-width="1.5"/>
+              <path d="M31.5 34l2 2 3-3" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="icon-label">考试中心</span>
+        </div>
+
+        <!-- 自由练习 -->
+        <div class="icon-item" id="freePractice">
+          <div class="icon-img icon--free">
+            <svg viewBox="0 0 48 48" fill="currentColor">
+              <rect x="8" y="6" width="32" height="32" rx="5" fill="none" stroke="currentColor" stroke-width="2.5"/>
+              <circle cx="20" cy="20" r="4" fill="currentColor" opacity="0.25"/>
+              <circle cx="20" cy="20" r="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+              <path d="M12 33c0-4.42 3.58-8 8-8h2c4.42 0 8 3.58 8 8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M34 14l-6 6M34 20l-6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="icon-label">自由练习</span>
+        </div>
+
+        <!-- 模拟练习 -->
+        <div class="icon-item" id="paperPractice">
+          <span class="badge-wrapper" style="position:absolute;top:0;right:4px;">
+            <span class="prd-badge changed" style="position:static !important;" data-badge-id="1">1</span>
+          </span>
+          <div class="icon-img icon--paper">
+            <svg viewBox="0 0 48 48" fill="currentColor">
+              <rect x="10" y="4" width="28" height="40" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/>
+              <line x1="16" y1="14" x2="32" y2="14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="16" y1="20" x2="32" y2="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="16" y1="26" x2="24" y2="26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <rect x="14" y="32" width="20" height="3" rx="1" fill="currentColor" opacity="0.25"/>
+              <rect x="14" y="38" width="14" height="3" rx="1" fill="currentColor" opacity="0.25"/>
+            </svg>
+          </div>
+          <span class="icon-label">模拟练习</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="safe-bottom"></div>
+
+  <!-- ========== 标注浮窗容器 ========== -->
+  <div class="prd-tooltip" id="tooltip-1"></div>
+
+  <!-- ========== PRD 抽屉 ========== -->
+  <div class="prd-drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+  <div class="prd-drawer" id="drawer">
+    <div class="prd-drawer-header">
+      <span class="prd-drawer-title">📄 小程序工作台 · 页面 PRD</span>
+      <button class="prd-drawer-close" onclick="closeDrawer()">×</button>
+    </div>
+    <div class="prd-drawer-body" id="drawerBody"></div>
+  </div>
+
+  <!-- ========== 标注开关 ========== -->
+  <button class="badge-toggle-btn" id="badgeToggle" title="显示/隐藏标注">
+    <svg id="toggleEyeOn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </svg>
+    <svg id="toggleEyeOff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+      <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/>
+      <line x1="1" y1="1" x2="23" y2="23"/>
+    </svg>
+  </button>
+
+<script>
+// ==================== 标注数据 ====================
+var badgeData = {
+  "1": {
+    title: "需求描述：模拟练习图标 🔥新增",
+    content: "" +
+      "<p style='color:#F54A45;'><strong>🔥 变化点：新增入口图标</strong></p>" +
+      "<p><strong>来自PRD 3.1 功能入口：</strong></p>" +
+      "<table><tr><th>图标名称</th><th>点击行为</th><th>权限控制</th></tr>" +
+      "<tr><td><strong>模拟练习（新增）</strong></td><td><strong>跳转至模拟练习列表页</strong></td><td>菜单资源授权</td></tr></table>" +
+      "<p><strong>来自PRD 4.1 权限控制：</strong></p>" +
+      "<table><tr><th>授权状态</th><th>效果</th></tr>" +
+      "<tr><td>已授权「模拟练习」菜单</td><td>工作台显示「模拟练习」图标</td></tr>" +
+      "<tr><td>未授权「模拟练习」菜单</td><td>工作台不显示「模拟练习」图标</td></tr></table>" +
+      "<p><strong>来自PRD 5 页面交互：</strong></p>" +
+      "<p>点击「模拟练习」图标 → 跳转至<code>小程序练习列表.html</code></p>"
+  }
+};
+
+// ==================== PRD 抽屉内容 ====================
+var pagePrdContent = '<h1>小程序工作台 · 页面 PRD</h1>\n' +
+  '<blockquote><strong>页面类型：</strong>用户前台类（小程序端） | <strong>所属模块：</strong>工作台 | <strong>最后更新：</strong>2026-07-01</blockquote>\n' +
+  '<h2>[1] [2] 1. 引言</h2>\n' +
+  '<h3>1.1 页面概述</h3>\n' +
+  '<p>小程序工作台是员工进入小程序后的首页，以图标网格形式展示各功能入口。本次在「学习管理」区块新增<strong>模拟练习</strong>入口图标，供用户进入模拟练习列表。</p>\n' +
+  '<h3>1.2 使用角色</h3>\n' +
+  '<table><tr><th>角色</th><th>访问权限</th></tr><tr><td>普通员工</td><td>✓ 可见且有权限的功能入口</td></tr><tr><td>部门负责人</td><td>✓ 可见且有权限的功能入口</td></tr><tr><td>超级管理员</td><td>✗（使用管理后台）</td></tr><tr><td>安全管理员</td><td>✗（使用管理后台）</td></tr></table>\n' +
+  '<h3>1.3 前置条件</h3>\n' +
+  '<ul><li>管理后台「菜单资源授权」已开启练习功能模块的授权</li><li>小程序工作台已渲染「学习管理」区块及相关图标</li></ul>\n' +
+  '<h2>[2] 2. 页面结构</h2>\n' +
+  '<h3>2.1 页面布局</h3>\n' +
+  '<pre>┌──────────────────────────────┐\n' +
+  '│       ··· (状态栏)            │\n' +
+  '├──────────────────────────────┤\n' +
+  '│  ...          工作台           │  导航栏（无返回按钮）\n' +
+  '├──────────────────────────────┤\n' +
+  '│                              │\n' +
+  '│  学习管理                     │\n' +
+  '│  ┌──────┬──────┬──────┬──────┐\n' +
+  '│  │ 学习  │ 考试  │ 自由  │ 模拟  │\n' +
+  '│  │ 中心  │ 中心  │ 练习  │ 练习  │\n' +
+  '│  └──────┴──────┴──────┴──────┘\n' +
+  '└──────────────────────────────┘</pre>\n' +
+  '<h3>2.2 导航栏</h3>\n' +
+  '<table><tr><th>元素</th><th>位置</th><th>说明</th></tr><tr><td>标题「工作台」</td><td>居中</td><td>纯文本展示</td></tr><tr><td>返回按钮</td><td>-</td><td>工作台为首页，无返回按钮</td></tr></table>\n' +
+  '<h2>[3][4][5][6] 3. 功能入口</h2>\n' +
+  '<h3>3.1 「学习管理」区块图标</h3>\n' +
+  '<table><tr><th>#</th><th>图标名称</th><th>点击行为</th><th>权限控制</th></tr><tr><td>1</td><td>学习中心</td><td>进入学习中心</td><td>菜单资源授权</td></tr><tr><td>2</td><td>考试中心</td><td>进入考试中心</td><td>菜单资源授权</td></tr><tr><td>3</td><td>自由练习</td><td>进入自由练习刷题页</td><td>菜单资源授权</td></tr><tr><td>4</td><td><strong>模拟练习（新增）</strong></td><td><strong>跳转至模拟练习列表页</strong></td><td>菜单资源授权</td></tr></table>\n' +
+  '<h2>[1] 4. 权限控制</h2>\n' +
+  '<h3>4.1 菜单资源授权</h3>\n' +
+  '<p>图标可见性由已有的<strong>菜单资源授权</strong>功能统一控制：</p>\n' +
+  '<table><tr><th>授权状态</th><th>效果</th></tr><tr><td>已授权「模拟练习」菜单</td><td>工作台显示「模拟练习」图标</td></tr><tr><td>未授权「模拟练习」菜单</td><td>工作台不显示「模拟练习」图标</td></tr></table>\n' +
+  '<h3>4.2 图标展示规则</h3>\n' +
+  '<ul><li>管理员在后台「菜单资源授权」中为角色/用户授权后，对应图标出现在工作台</li><li>未授权的图标不渲染，不影响其他图标布局</li><li>图标数量变化时，网格自动调整（4列固定，行数随图标数变化）</li></ul>\n' +
+  '<h2>5. 页面交互</h2>\n' +
+  '<table><tr><th>操作</th><th>行为</th></tr><tr><td>点击「模拟练习」图标</td><td>跳转至 小程序练习列表.html</td></tr><tr><td>点击其他已授权图标</td><td>跳转对应功能页面</td></tr></table>\n' +
+  '<h2>6. 数据来源</h2>\n' +
+  '<table><tr><th>数据项</th><th>来源</th><th>说明</th></tr><tr><td>图标列表</td><td>菜单资源授权配置</td><td>后台统一管理各角色/用户的可见图标</td></tr><tr><td>图标顺序</td><td>后台配置</td><td>「学习管理」区块内按配置顺序排列</td></tr></table>\n' +
+  '<h2>7. 与现有系统的关系</h2>\n' +
+  '<table><tr><th>模块</th><th>关系</th><th>说明</th></tr><tr><td>菜单资源授权</td><td>依赖</td><td>已有功能，控制工作台图标可见性</td></tr><tr><td>工作台页面</td><td>优化</td><td>原有页面，「学习管理」区块从4个图标扩展为5个</td></tr></table>\n' +
+  '<h2>8. 异常处理</h2>\n' +
+  '<table><tr><th>异常场景</th><th>处理方式</th></tr><tr><td>用户无任何「学习管理」入口授权</td><td>该区块不展示</td></tr><tr><td>点击图标后目标页面加载失败</td><td>轻提示「页面加载失败，请稍后重试」</td></tr></table>';
+
+// ==================== 通用浮窗交互 ====================
+var activeTooltip = null;
+var tooltipTimers = {};
+
+function showTooltip(badgeId, e) {
+  var tip = document.getElementById('tooltip-' + badgeId);
+  var data = badgeData[badgeId];
+  if (!tip || !data) return;
+
+  // 清除之前的定时器
+  if (tooltipTimers[badgeId]) { clearTimeout(tooltipTimers[badgeId]); }
+
+  // 隐藏其他浮窗
+  if (activeTooltip && activeTooltip !== tip) {
+    activeTooltip.style.display = 'none';
+  }
+
+  tip.innerHTML = '<div class="prd-tooltip-header">' +
+    '<span class="prd-tooltip-title">' + data.title + '</span>' +
+    '<button class="prd-tooltip-close" onclick="closeTooltip(\'' + badgeId + '\')">×</button>' +
+    '</div>' +
+    '<div class="prd-tooltip-body">' + data.content + '</div>';
+
+  // 计算位置
+  var badge = document.querySelector('.prd-badge[data-badge-id="' + badgeId + '"]');
+  var rect = badge ? badge.getBoundingClientRect() : { top: e.clientY, left: e.clientX };
+
+  var tipWidth = 450;
+  var left = rect.left + rect.width / 2 - tipWidth / 2;
+  if (left < 10) left = 10;
+  if (left + tipWidth > window.innerWidth - 10) left = window.innerWidth - tipWidth - 10;
+
+  var top = rect.bottom + 8;
+  if (top + 400 > window.innerHeight) top = rect.top - 400 - 8;
+
+  tip.style.left = left + 'px';
+  tip.style.top = top + 'px';
+  tip.style.display = 'block';
+  tip.style.zIndex = '9959';
+  activeTooltip = tip;
+}
+
+function closeTooltip(badgeId) {
+  var tip = document.getElementById('tooltip-' + badgeId);
+  if (tip) {
+    tip.style.display = 'none';
+    if (activeTooltip === tip) activeTooltip = null;
+  }
+}
+
+// 角标 hover 事件
+document.querySelectorAll('.prd-badge').forEach(function(badge) {
+  badge.addEventListener('mouseenter', function(e) {
+    var id = badge.getAttribute('data-badge-id');
+    showTooltip(id, e);
+  });
+  badge.addEventListener('mouseleave', function(e) {
+    var id = badge.getAttribute('data-badge-id');
+    tooltipTimers[id] = setTimeout(function() {
+      if (!isMouseInTooltip(id)) closeTooltip(id);
+    }, 200);
+  });
+});
+
+// 浮窗 hover 保持
+document.querySelectorAll('.prd-tooltip').forEach(function(tip) {
+  tip.addEventListener('mouseenter', function() {
+    var badgeId = tip.id.replace('tooltip-', '');
+    if (tooltipTimers[badgeId]) clearTimeout(tooltipTimers[badgeId]);
+  });
+  tip.addEventListener('mouseleave', function() {
+    var badgeId = tip.id.replace('tooltip-', '');
+    closeTooltip(badgeId);
+  });
+});
+
+function isMouseInTooltip(badgeId) {
+  var tip = document.getElementById('tooltip-' + badgeId);
+  if (!tip || tip.style.display === 'none') return false;
+  var rect = tip.getBoundingClientRect();
+  var mx = window.mouseX || 0, my = window.mouseY || 0;
+  return mx >= rect.left && mx <= rect.right && my >= rect.top && my <= rect.bottom;
+}
+document.addEventListener('mousemove', function(e) { window.mouseX = e.clientX; window.mouseY = e.clientY; });
+
+// ==================== 浮窗拖拽 ====================
+var dragTarget = null, dragOffsetX = 0, dragOffsetY = 0;
+document.addEventListener('mousedown', function(e) {
+  var header = e.target.closest('.prd-tooltip-header');
+  if (!header) return;
+  dragTarget = header.closest('.prd-tooltip');
+  if (dragTarget) {
+    dragOffsetX = e.clientX - dragTarget.offsetLeft;
+    dragOffsetY = e.clientY - dragTarget.offsetTop;
+  }
+});
+document.addEventListener('mousemove', function(e) {
+  if (!dragTarget) return;
+  dragTarget.style.left = (e.clientX - dragOffsetX) + 'px';
+  dragTarget.style.top = (e.clientY - dragOffsetY) + 'px';
+});
+document.addEventListener('mouseup', function() { dragTarget = null; });
+
+// ==================== PRD 抽屉 ====================
+function openDrawer() {
+  document.getElementById('drawerBody').innerHTML = pagePrdContent;
+  document.getElementById('drawerOverlay').classList.add('is-open');
+  document.getElementById('drawer').classList.add('is-open');
+}
+function closeDrawer() {
+  document.getElementById('drawerOverlay').classList.remove('is-open');
+  document.getElementById('drawer').classList.remove('is-open');
+}
+
+// ==================== 全局标注开关 ====================
+var badgesVisible = true;
+document.getElementById('badgeToggle').addEventListener('click', function() {
+  badgesVisible = !badgesVisible;
+  var badges = document.querySelectorAll('.prd-badge');
+  for (var i = 0; i < badges.length; i++) {
+    badges[i].style.display = badgesVisible ? '' : 'none';
+  }
+  document.getElementById('toggleEyeOn').style.display = badgesVisible ? '' : 'none';
+  document.getElementById('toggleEyeOff').style.display = badgesVisible ? 'none' : '';
+});
+
+// ==================== 原有业务逻辑 ====================
+document.getElementById('backBtn').addEventListener('click', function() { history.back(); });
+document.getElementById('studyCenter').addEventListener('click', function() { console.log('进入学习中心'); alert('进入学习中心'); });
+document.getElementById('examCenter').addEventListener('click', function() { console.log('进入考试中心'); alert('进入考试中心'); });
+document.getElementById('freePractice').addEventListener('click', function() { console.log('进入自由练习'); alert('进入自由练习刷题页'); });
+document.getElementById('paperPractice').addEventListener('click', function() { console.log('进入模拟练习列表'); window.location.href = '小程序练习列表.html'; });
+</script>
+
+</body>
+</html>

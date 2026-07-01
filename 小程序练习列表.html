@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>模拟练习 · 环慧慧EHS+</title>
+  <style>
+    :root {
+      --color-brand: #1570EF;
+      --color-brand-hover: #2E90FA;
+      --color-success: #00C5C3;
+      --color-warning: #FF8340;
+      --color-text-primary: #1A1A1A;
+      --color-text-secondary: #666666;
+      --color-text-placeholder: #999999;
+      --color-bg-page: #F5F5F5;
+      --color-bg-surface: #FFFFFF;
+      --color-border: #E5E5E5;
+      --color-divider: #EEEEEE;
+      --radius-card: 12px;
+      --font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--color-text-primary);
+      background: var(--color-bg-page);
+      max-width: 414px;
+      margin: 0 auto;
+      min-height: 100vh;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---- 状态栏占位 ---- */
+    .status-bar {
+      height: env(safe-area-inset-top, 20px);
+      background: #fff;
+    }
+
+    /* ---- 顶部导航 ---- */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid var(--color-divider);
+    }
+
+    .nav-inner {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 16px;
+      position: relative;
+    }
+
+    .nav-back {
+      position: absolute;
+      left: 12px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 0;
+      color: var(--color-text-primary);
+      cursor: pointer;
+    }
+
+    .nav-back svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .nav-title {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+
+    /* ---- 练习列表 ---- */
+    .list-body {
+      padding: 12px 16px 24px;
+    }
+
+    /* ---- 自由练习入口卡片 ---- */
+    .free-entry-card {
+      background: #fff;
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 120ms ease;
+      margin-bottom: 24px;
+    }
+
+    .free-entry-card:active {
+      transform: scale(0.98);
+    }
+
+    .free-entry-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-right: 14px;
+      background: linear-gradient(135deg, #EFF8FF 0%, #D9E6F7 100%);
+      color: #1570EF;
+    }
+
+    .free-entry-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .free-entry-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .free-entry-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      margin-bottom: 4px;
+    }
+
+    .free-entry-desc {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+    }
+
+    .free-entry-arrow {
+      width: 20px;
+      height: 20px;
+      color: #CCCCCC;
+      flex-shrink: 0;
+    }
+
+    /* ---- 模拟练习区域 ---- */
+    .paper-section {
+      /* container */
+    }
+
+    .paper-section-header {
+      display: flex;
+      align-items: center;
+      padding: 0 0 16px 0;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .paper-section-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    .paper-section-count {
+      font-size: 14px;
+      color: var(--color-text-placeholder);
+      font-weight: 400;
+    }
+
+    .paper-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .paper-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 120ms ease, box-shadow 120ms ease, opacity 200ms ease;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      position: relative;
+    }
+
+    .paper-card:active {
+      transform: scale(0.98);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .paper-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .paper-card-name {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      line-height: 1.4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .paper-card-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .paper-card-status .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .status-pending { color: #FA8C16; background: #FFF7E6; }
+    .status-pending .status-dot { background: #FA8C16; }
+    .status-active { color: #52C41A; background: #F6FFED; }
+    .status-active .status-dot { background: #52C41A; }
+    .status-ended { color: #999; background: #F5F5F5; }
+    .status-ended .status-dot { background: #999; }
+
+    .paper-card-time {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .paper-card-time .time-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      color: var(--color-brand);
+    }
+
+    .paper-card-time .time-label {
+      color: var(--color-text-placeholder);
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .paper-card-time .time-separator {
+      color: var(--color-text-placeholder);
+      font-size: 13px;
+      margin: 0 2px;
+      flex-shrink: 0;
+    }
+
+    .paper-card-time .time-value {
+      color: var(--color-text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .paper-card-footer {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .paper-card-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      height: 36px;
+      padding: 0 48px;
+      border-radius: 18px;
+      border: none;
+      background: var(--color-brand);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      line-height: 1;
+      transition: background 150ms ease;
+    }
+
+    .paper-card-btn:active {
+      background: var(--color-brand-hover);
+    }
+
+    /* ---- 空状态 ---- */
+    .empty-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 0;
+      color: var(--color-text-placeholder);
+    }
+
+    .empty-wrap svg {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 12px;
+      opacity: .4;
+    }
+
+    .empty-wrap p {
+      font-size: 14px;
+    }
+
+    /* ---- 底部安全区 ---- */
+    .safe-bottom {
+      height: env(safe-area-inset-bottom, 16px);
+    }
+
+    /* ---- 隐藏 ---- */
+    .hidden {
+      display: none !important;
+    }
+
+    /* ==================== PRD标注样式 ==================== */
+    .prd-annotation {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      background: #FF8340;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 2px;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(255,131,64,0.3);
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .prd-annotation.hidden { display: none !important; }
+
+    .annotation-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* 浮窗 */
+    .prd-tooltip {
+      position: fixed;
+      z-index: 1000;
+      width: 320px;
+      max-width: calc(100vw - 32px);
+      background: #fff;
+      border: 2px solid #FF8340;
+      border-radius: 4px;
+      box-shadow: 0 4px 16px rgba(255,131,64,0.2);
+      display: none;
+      flex-direction: column;
+      max-height: 360px;
+    }
+    .prd-tooltip.is-open { display: flex; }
+    .prd-tooltip-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid #e6e7eb;
+      background: #f7f8fa;
+      border-radius: 2px 2px 0 0;
+    }
+    .prd-tooltip-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+    .prd-tooltip-close {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #666;
+      font-size: 16px;
+      line-height: 1;
+    }
+    .prd-tooltip-body {
+      padding: 12px 14px;
+      overflow-y: auto;
+      max-height: 270px;
+      font-size: 12px;
+      line-height: 1.7;
+      color: #333;
+    }
+    .prd-tooltip-body p { margin: 0 0 6px; }
+    .prd-tooltip-body ul { margin: 0; padding-left: 18px; }
+    .prd-tooltip-body li { margin-bottom: 3px; }
+    .prd-tooltip-body strong { color: #FF8340; }
+    .prd-tooltip-body table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      margin: 6px 0;
+    }
+    .prd-tooltip-body th,
+    .prd-tooltip-body td {
+      padding: 3px 6px;
+      border: 1px solid #e6e7eb;
+      text-align: left;
+    }
+    .prd-tooltip-body th { background: #f7f8fa; font-weight: 500; }
+
+    /* PRD抽屉按钮 */
+    .prd-drawer-btn {
+      position: fixed;
+      top: 56px;
+      right: 12px;
+      z-index: 200;
+      height: 32px;
+      padding: 0 12px;
+      background: #FF8340;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(255,131,64,0.3);
+    }
+    .prd-drawer-btn:hover { background: #FF9A5C; }
+
+    /* 标注开关按钮 */
+    .prd-toggle-btn {
+      position: fixed;
+      top: 56px;
+      right: 96px;
+      z-index: 200;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #FF8340;
+      color: #fff;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(255,131,64,0.3);
+    }
+
+    /* PRD抽屉 */
+    .prd-drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 300;
+      background: rgba(0,0,0,0.45);
+      display: none;
+    }
+    .prd-drawer-overlay.is-open { display: block; }
+    .prd-drawer {
+      position: fixed;
+      top: 0;
+      right: -100vw;
+      z-index: 301;
+      width: 100vw;
+      max-width: 414px;
+      height: 100vh;
+      height: 100dvh;
+      background: #fff;
+      box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      transition: right 300ms ease;
+    }
+    .prd-drawer.is-open { right: 0; }
+    .prd-drawer-header {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      border-bottom: 1px solid #e6e7eb;
+      flex-shrink: 0;
+      background: #f7f8fa;
+    }
+    .prd-drawer-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+    .prd-drawer-close {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #666;
+      font-size: 18px;
+      border-radius: 4px;
+    }
+    .prd-drawer-close:hover { background: #f0f0f0; color: #FF8340; }
+    .prd-drawer-tabs {
+      display: flex;
+      border-bottom: 1px solid #e6e7eb;
+      flex-shrink: 0;
+    }
+    .prd-drawer-tab {
+      padding: 10px 20px;
+      font-size: 13px;
+      color: #666;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 150ms;
+    }
+    .prd-drawer-tab.is-active {
+      color: #FF8340;
+      border-bottom-color: #FF8340;
+      font-weight: 500;
+    }
+    .prd-drawer-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      font-size: 13px;
+      line-height: 1.8;
+      color: #333;
+      display: none;
+    }
+    .prd-drawer-content.is-active { display: block; }
+    .prd-drawer-content h1 { font-size: 17px; margin: 0 0 12px; color: #1a1a1a; }
+    .prd-drawer-content h2 { font-size: 15px; margin: 20px 0 8px; color: #1a1a1a; border-bottom: 1px solid #f0f0f0; padding-bottom: 4px; }
+    .prd-drawer-content h3 { font-size: 14px; margin: 14px 0 6px; color: #333; }
+    .prd-drawer-content p { margin: 0 0 8px; }
+    .prd-drawer-content ul, .prd-drawer-content ol { margin: 0 0 8px; padding-left: 20px; }
+    .prd-drawer-content li { margin-bottom: 4px; }
+    .prd-drawer-content table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin: 8px 0;
+    }
+    .prd-drawer-content th, .prd-drawer-content td {
+      padding: 4px 8px;
+      border: 1px solid #e6e7eb;
+      text-align: left;
+    }
+    .prd-drawer-content th { background: #f7f8fa; font-weight: 500; }
+    .prd-drawer-content pre {
+      font-size: 11px;
+      line-height: 1.6;
+      background: #f7f8fa;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    .prd-drawer-content strong { color: #FF8340; }
+  </style>
+</head>
+<body>
+
+  <div class="status-bar"></div>
+
+  <div class="nav-bar" style="position:relative;">
+    <span class="prd-annotation" data-badge-id="1" data-title="[1] 页面路由逻辑" data-content="<p><strong>页面展示由有效模拟练习数量决定：</strong></p><table><tr><th>用户可见试卷数</th><th>展示结果</th></tr><tr><td>0 条</td><td>展示<strong>列表空数据</strong>（提示「暂无数据」）</td></tr><tr><td>≥1 条</td><td>展示<strong>模拟练习列表</strong></td></tr></table><p>用户可见试卷数 = 已发布 + 当前用户在练习人员范围内的试卷数量。</p><p>用户在「练习人员」列表中则可见，不在则不可见。</p>" style="position:absolute;top:-2px;left:4px;z-index:110;width:16px;height:16px;font-size:9px;">1</span>
+    <div class="nav-inner">
+      <button class="nav-back" type="button" aria-label="返回" id="backBtn">
+        <svg viewBox="0 0 48 48" fill="currentColor"><path d="M30.83 37.17L17.66 24 30.83 10.83 28 8 12 24l16 16z"/></svg>
+      </button>
+      <span class="nav-title" id="navTitle">模拟练习</span>
+    </div>
+  </div>
+
+  <!-- 练习列表 -->
+  <div class="list-body" id="listPage">
+    <div id="listBody"></div>
+  </div>
+
+  <div class="safe-bottom"></div>
+
+  <script>
+    // 模拟练习数据（来自管理后台「练习设置 → 模拟练习」）
+    const practices = [
+      { id: 1, name: '2026年安全知识练习1', createdAt: '2026-06-15T09:30:00', openTimeStart: '2026-06-10 08:00', openTimeEnd: '2026-07-10 20:00' },
+      { id: 2, name: '2026年消防知识练习', createdAt: '2026-06-18T14:22:00', openTimeStart: '2026-08-01 09:00', openTimeEnd: '2026-09-01 18:00' },
+      { id: 3, name: '安全基础知识考核', createdAt: '2026-05-20T10:15:00', openTimeStart: '2026-05-01 10:00', openTimeEnd: '2026-05-31 10:00' },
+    ];
+
+    // 获取练习状态
+    function getPracticeStatus(item) {
+      var now = new Date();
+      var start = item.openTimeStart ? new Date(item.openTimeStart.replace(' ', 'T')) : null;
+      var end = item.openTimeEnd ? new Date(item.openTimeEnd.replace(' ', 'T')) : null;
+      if (!start && !end) return { status: 'unknown', label: '-', cls: '' };
+      if (start && now < start) return { status: 'notStarted', label: '未开始', cls: 'status-pending' };
+      if (!end || now <= end) return { status: 'inProgress', label: '进行中', cls: 'status-active' };
+      return { status: 'ended', label: '已结束', cls: 'status-ended' };
+    }
+
+    // 渲染模拟练习列表（按创建时间倒序）
+    function renderPracticeList() {
+      const container = document.getElementById('listBody');
+
+      // 按创建时间倒序排列
+      const paperPractices = [...practices]
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+      if (paperPractices.length === 0) {
+        container.innerHTML = `
+          <div class="empty-wrap">
+            <svg viewBox="0 0 120 120" fill="currentColor"><rect x="20" y="20" width="80" height="80" rx="8" fill="#E8EBF0"/><rect x="32" y="40" width="56" height="8" rx="4" fill="#C4C9D1"/><rect x="32" y="56" width="40" height="8" rx="4" fill="#C4C9D1"/><circle cx="60" cy="60" r="28" fill="none" stroke="#C4C9D1" stroke-width="2"/><path d="M52 60h16M52 64h12" stroke="#C4C9D1" stroke-width="2" stroke-linecap="round"/></svg>
+            <p>暂无数据</p>
+          </div>
+        `;
+        return;
+      }
+
+      document.getElementById('backBtn').style.visibility = 'visible';
+
+      container.innerHTML = `
+        <div class="paper-section" style="position:relative;padding-top:8px;">
+          <span class="prd-annotation" data-badge-id="2" data-title="[2] 模拟练习列表" data-content="<p><strong>列表内容：</strong>展示当前用户有权限参与的模拟练习，每条显示练习名称、状态标签、开放时间和前往练习按钮（仅进行中）。</p><p><strong>排序规则：</strong>按创建时间<strong>倒序</strong>排列（最新创建的练习排在最前）。</p><p><strong>数据来源：</strong>管理后台「练习设置 → 模拟练习」中已发布的练习配置。</p>" style="position:absolute;top:0;right:8px;z-index:10;width:16px;height:16px;font-size:9px;">2</span>
+          <div class="paper-cards" style="position:relative;">
+            <span class="prd-annotation" data-badge-id="3" data-title="[3] 试卷卡片" data-content="<p><strong>卡片元素：</strong></p><ul><li><strong>练习名称：</strong>卡片左上，管理后台配置的名称，单行截断</li><li><strong>状态标签：</strong>卡片右上，三种状态：未开始 / 进行中 / 已结束</li><li><strong>开放时间：</strong>名称下方，显示「开放时间」+ 开始时间 ~ 结束时间</li><li><strong>前往练习按钮：</strong>卡片底部，<strong>仅「进行中」状态显示</strong></li></ul><p><strong>卡片交互：</strong></p><ul><li>点击「进行中」卡片 → 跳转该模拟练习页面</li><li>点击「未开始」或「已结束」卡片 → 不响应跳转</li></ul>" style="position:absolute;top:4px;right:0;z-index:10;width:16px;height:16px;font-size:9px;">3</span>
+            ${paperPractices.map(item => {
+              var st = getPracticeStatus(item);
+              var isActive = st.status === 'inProgress';
+              return `
+              <div class="paper-card" data-id="${item.id}">
+                <div class="paper-card-header">
+                  <div class="paper-card-name">${item.name}</div>
+                  <span class="paper-card-status ${st.cls}">
+                    <span class="status-dot"></span>${st.label}
+                  </span>
+                </div>
+                <div class="paper-card-time">
+                  <svg class="time-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <span class="time-label">开放时间</span>
+                  <span class="time-value">${item.openTimeStart || '未设置'}</span>
+                  <span class="time-separator">~</span>
+                  <span class="time-value">${item.openTimeEnd || '未设置'}</span>
+                </div>
+                ${isActive ? `
+                <div class="paper-card-footer">
+                  <button class="paper-card-btn">
+                    前往练习
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                  </button>
+                </div>
+                ` : ''}
+              </div>
+            `}).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // 初始化：直接渲染试卷列表（无有效试卷则展示空数据）
+    function init() {
+      document.getElementById('listPage').classList.remove('hidden');
+      renderPracticeList();
+    }
+
+    // 返回按钮 → 返回工作台页面
+    document.getElementById('backBtn').addEventListener('click', () => {
+      window.location.href = '小程序工作台页面.html';
+    });
+
+    // 事件委托：试卷卡片点击
+    document.getElementById('listBody').addEventListener('click', (e) => {
+      // 试卷卡片
+      const paperCard = e.target.closest('.paper-card');
+      if (paperCard) {
+        const id = paperCard.dataset.id;
+        const item = practices.find(p => p.id == id);
+        if (item) {
+          const st = getPracticeStatus(item);
+          if (st.status !== 'inProgress') return;
+          window.location.href = '小程序练习页面.html?id=' + encodeURIComponent(id) + '&name=' + encodeURIComponent(item.name);
+        }
+      }
+    });
+
+    /* ---- 启动 ---- */
+    init();
+  </script>
+
+  <!-- ==================== PRD标注全局按钮 ==================== -->
+  <button class="prd-drawer-btn" id="prdDrawerBtn" type="button">PRD 说明</button>
+
+  <!-- ==================== PRD标注全局开关 ==================== -->
+  <button class="prd-toggle-btn" id="prdToggleBtn" type="button" title="显示/隐藏标注">👁</button>
+
+  <!-- ==================== PRD标注浮窗 ==================== -->
+  <div class="prd-tooltip" id="prdTooltip">
+    <div class="prd-tooltip-header">
+      <span class="prd-tooltip-title" id="prdTooltipTitle"></span>
+      <button class="prd-tooltip-close" id="prdTooltipClose">×</button>
+    </div>
+    <div class="prd-tooltip-body" id="prdTooltipBody"></div>
+  </div>
+
+  <!-- ==================== PRD标注抽屉 ==================== -->
+  <div class="prd-drawer-overlay" id="prdDrawerOverlay"></div>
+  <div class="prd-drawer" id="prdDrawer">
+    <div class="prd-drawer-header">
+      <span class="prd-drawer-title">小程序练习列表 - PRD 说明</span>
+      <button class="prd-drawer-close" id="prdDrawerClose">×</button>
+    </div>
+    <div class="prd-drawer-tabs" style="display:none;"></div>
+    <style>
+      .prd-drawer-tabs { display: none !important; }
+    </style>
+    <div class="prd-drawer-content is-active" id="prdDrawerContentPage">
+      <h1>小程序练习列表 · 页面 PRD</h1>
+      <blockquote><strong>页面类型</strong>：用户前台类（小程序端）<br><strong>所属模块</strong>：模拟练习<br><strong>最后更新</strong>：2026-07-01</blockquote>
+
+      <h2>1. 引言</h2>
+      <h3>1.1 页面概述</h3>
+      <p>小程序练习列表页面是员工在小程序端进入「模拟练习」模式时的中间页，用于展示当前用户有权限参与的所有模拟练习卡片，供用户选择并进入具体练习。</p>
+
+      <h3>1.2 使用角色</h3>
+      <table>
+        <tr><th>角色</th><th>访问权限</th></tr>
+        <tr><td>普通员工</td><td>✓ 可见且有权限的练习</td></tr>
+        <tr><td>部门负责人</td><td>✓ 可见且有权限的练习</td></tr>
+        <tr><td>超级管理员</td><td>✗（使用管理后台）</td></tr>
+        <tr><td>安全管理员</td><td>✗（使用管理后台）</td></tr>
+      </table>
+
+      <h3>1.3 前置条件</h3>
+      <ul>
+        <li>管理后台已开启练习功能的资源授权</li>
+        <li>小程序工作台已集成「练习」入口图标</li>
+        <li>满足以上两点即可进入练习列表（无有效练习时展示空数据）</li>
+      </ul>
+
+      <h2>2. 页面路由逻辑</h2>
+      <p>页面展示由有效模拟练习数量决定：</p>
+      <table>
+        <tr><th>用户可见试卷数</th><th>展示结果</th></tr>
+        <tr><td>0 条</td><td>展示<strong>列表空数据</strong>（提示「暂无数据」）</td></tr>
+        <tr><td>≥1 条</td><td>展示<strong>模拟练习列表</strong></td></tr>
+      </table>
+      <blockquote><strong>用户可见试卷数</strong> = 已发布 + 当前用户在练习人员范围内 的试卷数量。<br><br>「练习人员范围」判定逻辑：<br>· 用户在该练习的「练习人员」列表中：可见<br>· 用户不在该练习的「练习人员」列表中：不可见</blockquote>
+
+      <h2>3. 页面结构</h2>
+      <h3>3.1 页面布局（ASCII 线框图）</h3>
+      <pre>
+┌──────────────────────────────┐
+│       ··· (状态栏)            │
+├──────────────────────────────┤
+│  ←     模拟练习               │  导航栏
+├──────────────────────────────┤
+│                              │
+│  ┌──────────────────────────────┐
+│  │ 练习名称          [未开始]  │
+│  │ 🕐 开放时间 06-10 ~ 07-10 │  试卷卡片（不显示前往练习按钮）
+│  └──────────────────────────────┘
+│  ┌──────────────────────────────┐
+│  │ 练习名称          [进行中]  │
+│  │ 🕐 开放时间 08-01 ~ 09-01 │
+│  │          [前往练习]        │
+│  └──────────────────────────────┘
+│  ┌──────────────────────────────┐
+│  │ 练习名称          [已结束]  │
+│  │ 🕐 开放时间 05-01 ~ 05-31 │
+│  └──────────────────────────────┘
+│                              │
+└──────────────────────────────┘
+      </pre>
+
+      <h3>3.2 空数据页面</h3>
+      <p>当有效模拟练习数量 = 0 时展示：</p>
+      <pre>
+┌──────────────────────────────┐
+│       ··· (状态栏)            │
+├──────────────────────────────┤
+│          模拟练习              │  导航栏（返回按钮不隐藏）
+├──────────────────────────────┤
+│                              │
+│           [图标]              │
+│                              │
+│          暂无数据             │
+│                              │
+└──────────────────────────────┘
+      </pre>
+
+      <h2>4. 试卷卡片</h2>
+      <h3>4.1 卡片元素</h3>
+      <table>
+        <tr><th>元素</th><th>位置</th><th>说明</th></tr>
+        <tr><td>练习名称</td><td>卡片左上</td><td>管理后台配置的名称，单行截断</td></tr>
+        <tr><td>状态标签</td><td>卡片右上</td><td>三种状态：未开始 / 进行中 / 已结束</td></tr>
+        <tr><td>开放时间</td><td>名称下方</td><td>显示「开放时间」+ 开始时间 ~ 结束时间</td></tr>
+        <tr><td>前往练习按钮</td><td>卡片底部</td><td><strong>仅「进行中」状态显示</strong></td></tr>
+      </table>
+
+      <h3>4.2 状态标签规则</h3>
+      <table>
+        <tr><th>状态</th><th>判定条件</th><th>标签文案</th></tr>
+        <tr><td>未开始</td><td>当前时间早于练习开始时间</td><td>未开始</td></tr>
+        <tr><td>进行中</td><td>当前时间在练习开始时间和结束时间之间，或无结束时间</td><td>进行中</td></tr>
+        <tr><td>已结束</td><td>当前时间晚于练习结束时间</td><td>已结束</td></tr>
+      </table>
+      <blockquote>若未设置开放时间，状态显示为「无」。</blockquote>
+
+      <h3>4.3 卡片排序</h3>
+      <p>按<strong>创建时间倒序</strong>排列（最新创建的练习排在最前）。</p>
+
+      <h3>4.4 卡片交互</h3>
+      <table>
+        <tr><th>交互操作</th><th>行为</th></tr>
+        <tr><td>点击「进行中」卡片（任意位置）</td><td>跳转该模拟练习页面</td></tr>
+        <tr><td>点击「未开始」卡片</td><td>不响应跳转</td></tr>
+        <tr><td>点击「已结束」卡片</td><td>不响应跳转</td></tr>
+      </table>
+
+      <h2>5. 导航栏</h2>
+      <table>
+        <tr><th>元素</th><th>位置</th><th>行为</th></tr>
+        <tr><td>返回按钮 ←</td><td>左侧</td><td>点击返回工作台页面</td></tr>
+        <tr><td>标题「模拟练习」</td><td>居中</td><td>纯文本展示</td></tr>
+      </table>
+      <p>空数据时返回按钮正常显示，可返回上一页。</p>
+
+      <h2>6. 数据来源</h2>
+      <h3>6.1 后台配置字段</h3>
+      <p>数据来源于管理后台「练习设置 → 模拟练习」中已保存的练习配置：</p>
+      <table>
+        <tr><th>字段</th><th>类型</th><th>说明</th></tr>
+        <tr><td>练习编号</td><td>文本</td><td>练习唯一标识</td></tr>
+        <tr><td>练习名称</td><td>文本</td><td>管理后台配置的练习名称</td></tr>
+        <tr><td>开放开始时间</td><td>日期时间</td><td>练习开放起始时间</td></tr>
+        <tr><td>开放结束时间</td><td>日期时间</td><td>练习开放截止时间</td></tr>
+        <tr><td>创建时间</td><td>日期时间</td><td>用于排序，最新创建排前</td></tr>
+        <tr><td>是否已发布</td><td>是/否</td><td>标记是否已发布</td></tr>
+        <tr><td>练习人员</td><td>人员列表</td><td>指定可参与练习的人员</td></tr>
+      </table>
+
+      <h2>7. 异常处理</h2>
+      <table>
+        <tr><th>异常场景</th><th>处理方式</th></tr>
+        <tr><td>无有效模拟练习</td><td>展示列表空状态：「暂无数据」</td></tr>
+        <tr><td>接口请求失败</td><td>轻提示「加载失败，请稍后重试」（不展示空状态，保留上次数据）</td></tr>
+        <tr><td>用户无权限（被排除在人员范围外）</td><td>对应试卷不展示在列表中，逻辑等同于无数据</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ==================== PRD标注交互脚本 ==================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      var $ = function(sel) { return document.querySelector(sel); };
+      var $$ = function(sel) { return document.querySelectorAll(sel); };
+
+      var annotationsVisible = true;
+      var activeTooltip = null;
+      var isDragging = false;
+      var dragOffsetX = 0, dragOffsetY = 0;
+
+      // ===== 初始化标注（支持动态渲染的元素） =====
+      function initAnnotations() {
+        // 使用事件委托处理角标点击
+        document.body.addEventListener('click', function(e) {
+          var anno = e.target.closest('.prd-annotation');
+          if (anno) {
+            e.stopPropagation();
+            var title = anno.dataset.title || '';
+            var content = anno.dataset.content || '';
+            showTooltip(anno, title, content);
+            return;
+          }
+          // 点击其他地方关闭浮窗
+          if (!e.target.closest('.prd-tooltip')) {
+            hideTooltip();
+          }
+        });
+
+        // 浮窗关闭按钮
+        document.getElementById('prdTooltipClose').addEventListener('click', function(e) {
+          e.stopPropagation();
+          hideTooltip();
+        });
+
+        // 浮窗拖拽支持
+        var tooltip = document.getElementById('prdTooltip');
+        tooltip.addEventListener('mousedown', function(e) {
+          if (e.target === document.getElementById('prdTooltipClose')) return;
+          isDragging = true;
+          var rect = tooltip.getBoundingClientRect();
+          dragOffsetX = e.clientX - rect.left;
+          dragOffsetY = e.clientY - rect.top;
+          e.preventDefault();
+        });
+        document.addEventListener('mousemove', function(e) {
+          if (!isDragging) return;
+          tooltip.style.left = (e.clientX - dragOffsetX) + 'px';
+          tooltip.style.top = (e.clientY - dragOffsetY) + 'px';
+        });
+        document.addEventListener('mouseup', function() {
+          isDragging = false;
+        });
+        // 触摸拖拽
+        tooltip.addEventListener('touchstart', function(e) {
+          if (e.target === document.getElementById('prdTooltipClose')) return;
+          isDragging = true;
+          var rect = tooltip.getBoundingClientRect();
+          dragOffsetX = e.touches[0].clientX - rect.left;
+          dragOffsetY = e.touches[0].clientY - rect.top;
+        }, { passive: false });
+        document.addEventListener('touchmove', function(e) {
+          if (!isDragging) return;
+          tooltip.style.left = (e.touches[0].clientX - dragOffsetX) + 'px';
+          tooltip.style.top = (e.touches[0].clientY - dragOffsetY) + 'px';
+        });
+        document.addEventListener('touchend', function() {
+          isDragging = false;
+        });
+
+        // 全局标注开关
+        document.getElementById('prdToggleBtn').addEventListener('click', toggleAnnotations);
+
+        // PRD抽屉按钮
+        document.getElementById('prdDrawerBtn').addEventListener('click', openDrawer);
+
+        // PRD抽屉关闭
+        document.getElementById('prdDrawerClose').addEventListener('click', closeDrawer);
+        document.getElementById('prdDrawerOverlay').addEventListener('click', closeDrawer);
+
+        // ESC关闭
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            closeDrawer();
+            hideTooltip();
+          }
+        });
+      }
+
+      function showTooltip(targetEl, title, content) {
+        var tooltip = document.getElementById('prdTooltip');
+        document.getElementById('prdTooltipTitle').textContent = title;
+        document.getElementById('prdTooltipBody').innerHTML = content;
+
+        var rect = targetEl.getBoundingClientRect();
+        var top = rect.bottom + 8;
+        var left = rect.left;
+
+        // 边界检测
+        if (left + 320 > window.innerWidth) {
+          left = window.innerWidth - 328;
+        }
+        if (left < 8) left = 8;
+        if (top + 360 > window.innerHeight) {
+          top = rect.top - 368;
+        }
+        if (top < 8) top = 8;
+
+        tooltip.style.top = top + 'px';
+        tooltip.style.left = left + 'px';
+        tooltip.style.transform = 'none';
+        tooltip.classList.add('is-open');
+        activeTooltip = tooltip;
+      }
+
+      function hideTooltip() {
+        var tooltip = document.getElementById('prdTooltip');
+        if (tooltip) {
+          tooltip.classList.remove('is-open');
+          activeTooltip = null;
+        }
+      }
+
+      function toggleAnnotations() {
+        annotationsVisible = !annotationsVisible;
+        var btn = document.getElementById('prdToggleBtn');
+        $$('.prd-annotation').forEach(function(a) {
+          if (annotationsVisible) {
+            a.classList.remove('hidden');
+          } else {
+            a.classList.add('hidden');
+          }
+        });
+        btn.innerHTML = annotationsVisible ? '👁' : '🚫';
+        btn.style.background = annotationsVisible ? '#FF8340' : '#999';
+      }
+
+      function openDrawer() {
+        document.getElementById('prdDrawerOverlay').classList.add('is-open');
+        document.getElementById('prdDrawer').classList.add('is-open');
+      }
+
+      function closeDrawer() {
+        document.getElementById('prdDrawerOverlay').classList.remove('is-open');
+        document.getElementById('prdDrawer').classList.remove('is-open');
+      }
+
+      // 启动
+      initAnnotations();
+    })();
+  </script>
+
+</body>
+</html>

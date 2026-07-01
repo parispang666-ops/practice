@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模块导航 · 原型预览</title>
+  <style>
+    /* ==================== 设计变量 ==================== */
+    :root {
+      --color-brand: #1570EF;
+      --color-brand-hover: #2E90FA;
+      --color-brand-active: #175CD3;
+      --color-text-primary: #444F66;
+      --color-text-secondary: #758095;
+      --color-text-placeholder: #9EA4AE;
+      --color-bg-page: #F7F8FA;
+      --color-bg-surface: #FFFFFF;
+      --color-bg-muted: #F7F8F9;
+      --color-border: #DEDFE3;
+      --color-divider: #E6E7EB;
+      --radius-component: 4px;
+      --font-family-ui: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", Arial, sans-serif;
+      --shadow-topbar: 0 1px 4px rgba(31, 42, 55, .10);
+      --shadow-brand: 0 1px 5px rgba(21,112,239,.05), 0 4px 2.5px rgba(21,112,239,.08), 0 2px 2px rgba(21,112,239,.25);
+      --transition: 150ms ease;
+      --sidebar-width: 240px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font-family-ui);
+      font-size: 14px;
+      line-height: 22px;
+      color: var(--color-text-primary);
+      background: var(--color-bg-page);
+      overflow: hidden;
+    }
+
+    button, input, textarea { font: inherit; letter-spacing: 0; }
+    button { border: 0; cursor: pointer; }
+
+    /* ===== LAYOUT ===== */
+    .app-container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* ===== SIDEBAR TOGGLE BUTTON ===== */
+    .sidebar-toggle {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-bg-muted);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-component);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background var(--transition), color var(--transition);
+    }
+    .sidebar-toggle:hover {
+      background: var(--color-divider);
+      color: var(--color-text-primary);
+    }
+    .sidebar-toggle svg {
+      width: 14px;
+      height: 14px;
+      transition: transform var(--transition);
+    }
+    .sidebar-toggle.collapsed svg {
+      transform: rotate(180deg);
+    }
+
+    /* ==================== SIDEBAR ==================== */
+    .sidebar {
+      width: var(--sidebar-width);
+      min-width: var(--sidebar-width);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--color-bg-surface);
+      box-shadow: 0 6px 30px 5px rgba(67, 82, 111, 0.05);
+      flex-shrink: 0;
+      user-select: none;
+      z-index: 20;
+    }
+
+    .sidebar-header {
+      padding: 20px 16px 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-component);
+      background: var(--color-brand);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .sidebar-logo svg {
+      width: 22px;
+      height: 22px;
+      fill: #fff;
+    }
+    .sidebar-title {
+      color: var(--color-text-primary);
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .sidebar-title-brand { color: var(--color-brand); }
+    .sidebar-subtitle {
+      color: var(--color-text-secondary);
+      font-size: 12px;
+      line-height: 20px;
+      font-weight: 400;
+    }
+
+    /* ---- NAV LIST ---- */
+    .sidebar-nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 8px 8px 16px;
+      overflow-y: auto;
+    }
+    .sidebar-nav::-webkit-scrollbar { width: 3px; }
+    .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+    .sidebar-nav::-webkit-scrollbar-thumb {
+      border-radius: 50px;
+      background: var(--color-divider);
+    }
+
+    /* ---- GROUP HEADER ---- */
+    .nav-group-header {
+      width: 224px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border-radius: var(--radius-component);
+      background: transparent;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: background-color var(--transition), color var(--transition);
+    }
+    .nav-group-header:hover {
+      background: var(--color-bg-muted);
+      color: var(--color-text-primary);
+    }
+    .nav-group-header .arrow {
+      width: 16px;
+      height: 16px;
+      display: inline-grid;
+      place-items: center;
+      flex-shrink: 0;
+      transition: transform var(--transition);
+    }
+    .nav-group-header .arrow svg {
+      width: 12px;
+      height: 12px;
+      fill: currentColor;
+    }
+    .nav-group-header .arrow.open { transform: rotate(90deg); }
+    .nav-group-label {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 500;
+    }
+    .nav-group-header .badge {
+      background: var(--color-bg-muted);
+      color: var(--color-text-secondary);
+      font-size: 11px;
+      line-height: 18px;
+      padding: 0 6px;
+      border-radius: 10px;
+      font-weight: 400;
+    }
+
+    /* ---- CHILDREN CONTAINER ---- */
+    .nav-children {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .nav-children.expanded { display: flex; }
+
+    /* ---- NAV ITEM (page) ---- */
+    .nav-item {
+      width: 224px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      padding: 9px 16px;
+      border-radius: var(--radius-component);
+      background: transparent;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      gap: 10px;
+      text-align: left;
+      white-space: nowrap;
+      transition: background-color var(--transition), color var(--transition);
+    }
+    .nav-item:hover {
+      background: var(--color-bg-muted);
+      color: var(--color-text-primary);
+    }
+    .nav-item.active {
+      background: var(--color-brand);
+      color: #fff;
+      box-shadow: var(--shadow-brand);
+    }
+    .nav-item .nav-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--color-text-placeholder);
+      flex-shrink: 0;
+      transition: background var(--transition);
+    }
+    .nav-item.active .nav-dot {
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.2);
+    }
+
+    /* ---- Indentation levels ---- */
+    .nav-item.level-0 { padding-left: 16px; }
+    .nav-item.level-1 { padding-left: 32px; }
+    .nav-item.level-2 { padding-left: 48px; }
+    .nav-item.level-3 { padding-left: 60px; }
+
+    /* ---- SUBGROUP HEADER ---- */
+    .nav-subgroup-header {
+      width: 224px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px 9px 32px;
+      border-radius: var(--radius-component);
+      background: transparent;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      text-align: left;
+      transition: background-color var(--transition), color var(--transition);
+      font-weight: 500;
+    }
+    .nav-subgroup-header:hover {
+      background: var(--color-bg-muted);
+      color: var(--color-text-primary);
+    }
+    .nav-subgroup-header .arrow {
+      width: 14px;
+      height: 14px;
+      display: inline-grid;
+      place-items: center;
+      flex-shrink: 0;
+      transition: transform var(--transition);
+    }
+    .nav-subgroup-header .arrow svg {
+      width: 10px;
+      height: 10px;
+      fill: currentColor;
+    }
+    .nav-subgroup-header .arrow.open { transform: rotate(90deg); }
+    .nav-subgroup-header .label {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .nav-divider {
+      width: 208px;
+      height: 1px;
+      background: var(--color-divider);
+      margin: 8px 12px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-footer {
+      width: 240px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 9px 16px 9px 24px;
+      border-top: 1px solid var(--color-divider);
+      background: var(--color-bg-surface);
+      color: var(--color-text-secondary);
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    /* ---- SIDEBAR COLLAPSED STATE ---- */
+    .sidebar.collapsed {
+      width: 0 !important;
+      min-width: 0 !important;
+      overflow: hidden;
+      border-right: none;
+      box-shadow: none;
+      padding: 0;
+    }
+    .sidebar-resizer.collapsed {
+      display: none;
+    }
+
+    /* ---- RESIZER ---- */
+    .sidebar-resizer {
+      width: 4px;
+      cursor: col-resize;
+      background: transparent;
+      flex-shrink: 0;
+      transition: background var(--transition);
+      position: relative;
+      z-index: 21;
+    }
+    .sidebar-resizer:hover,
+    .sidebar-resizer:active { background: var(--color-brand); }
+
+    /* ==================== MAIN CONTENT ==================== */
+    .main-content {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: var(--color-bg-page);
+      overflow: hidden;
+    }
+
+    .content-toolbar {
+      height: 48px;
+      min-height: 48px;
+      background: var(--color-bg-surface);
+      border-bottom: 1px solid var(--color-divider);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 8px;
+    }
+    .content-toolbar .breadcrumb {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .content-toolbar .breadcrumb .sep { color: var(--color-text-placeholder); }
+    .content-toolbar .breadcrumb .current { color: var(--color-text-primary); font-weight: 500; }
+
+    .content-frame-wrapper {
+      flex: 1;
+      overflow: auto;
+      position: relative;
+    }
+    .content-frame-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: var(--color-bg-surface);
+    }
+    .content-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      color: var(--color-text-placeholder);
+      font-size: 14px;
+      pointer-events: none;
+    }
+    .content-placeholder svg {
+      width: 64px;
+      height: 64px;
+      opacity: 0.15;
+    }
+    .content-placeholder.hidden { display: none; }
+
+    /* ==================== 全局 PRD 抽屉系统 ==================== */
+    /* 右上角 PRD 说明按钮 */
+    .prd-info-btn { display:flex; align-items:center; gap:6px; background:var(--color-brand); color:#fff; border-radius:6px; padding:6px 14px; box-shadow:0 2px 8px rgba(21,112,239,0.3); cursor:pointer; font-size:13px; user-select:none; border:none; transition:opacity 150ms ease, box-shadow 150ms ease; margin-left:auto; flex-shrink:0; }
+    .prd-info-btn:hover { opacity:0.9; box-shadow:0 4px 14px rgba(21,112,239,0.4); }
+    .prd-info-btn .prd-info-icon { width:16px; height:16px; display:flex; align-items:center; justify-content:center; }
+
+    /* PRD抽屉 */
+    .prd-drawer-overlay { display:none; position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,0.35); }
+    .prd-drawer-overlay.is-open { display:block; }
+    .prd-drawer { position:fixed; z-index:10001; top:0; right:0; width:520px; height:100vh; background:white; box-shadow:-4px 0 24px rgba(0,0,0,0.12); display:flex; flex-direction:column; transform:translateX(100%); transition:transform 300ms ease; }
+    .prd-drawer.is-open { transform:translateX(0); }
+    .prd-drawer-header { display:flex; align-items:center; justify-content:space-between; padding:16px 24px; border-bottom:1px solid var(--color-divider); flex-shrink:0; background:var(--color-bg-surface); }
+    .prd-drawer-header h3 { margin:0; font-size:16px; font-weight:600; color:var(--color-text-primary); }
+    .prd-drawer-close { width:32px; height:32px; display:flex; align-items:center; justify-content:center; border:none; background:none; cursor:pointer; border-radius:4px; color:var(--color-text-secondary); font-size:18px; }
+    .prd-drawer-close:hover { background:var(--color-bg-muted); }
+    .prd-drawer-body { flex:1; overflow-y:auto; padding:24px; font-size:13px; line-height:1.8; color:var(--color-text-primary); }
+    .prd-drawer-body h4 { margin:0 0 8px; font-size:14px; font-weight:600; color:var(--color-brand); }
+    .prd-drawer-body h5 { margin:8px 0 4px; font-size:13px; font-weight:600; color:var(--color-text-primary); }
+    .prd-drawer-body .drawer-section { margin-bottom:24px; }
+    .prd-drawer-body .drawer-tag { display:inline-block; padding:2px 8px; border-radius:3px; font-size:11px; font-weight:500; margin-right:6px; }
+    .prd-drawer-body .drawer-tag.new { background:#E8F5E9; color:#2E7D32; }
+    .prd-drawer-body .drawer-tag.update { background:#EFF8FF; color:#1570EF; }
+    .prd-drawer-body .drawer-tag.exist { background:#F5F5F5; color:#666; }
+    .prd-drawer-body ul { margin:4px 0; padding-left:18px; }
+    .prd-drawer-body li { margin-bottom:4px; }
+    .prd-drawer-body table { width:100%; border-collapse:collapse; font-size:12px; margin:6px 0 10px; }
+    .prd-drawer-body table th { background:var(--color-bg-muted); padding:5px 8px; text-align:left; border:1px solid var(--color-divider); font-weight:500; }
+    .prd-drawer-body table td { padding:5px 8px; border:1px solid var(--color-divider); vertical-align:top; }
+    .prd-drawer-body pre { background:var(--color-bg-muted); padding:8px 12px; border-radius:4px; font-size:10px; line-height:1.4; overflow-x:auto; white-space:pre; margin:4px 0; }
+
+    /* 着重标注块 */
+    .prd-highlight { position:relative; margin:6px 0 12px; padding:12px 14px 12px 18px; border-left:3px solid var(--color-warning, #FF8340); background:#FFF8F0; border-radius:0 6px 6px 0; }
+    .prd-highlight::before { content:attr(data-label); position:absolute; top:-10px; left:-1px; display:inline-block; padding:2px 10px; border-radius:0 4px 4px 0; font-size:10px; font-weight:600; color:#fff; background:var(--color-warning, #FF8340); white-space:nowrap; }
+    .prd-highlight table, .prd-highlight ul, .prd-highlight p { margin-top:6px; }
+
+    /* ==================== Mermaid 流程图 ==================== */
+    .prd-drawer-body .mermaid {
+      margin: 12px 0;
+      padding: 16px;
+      background: #FAFBFC;
+      border: 1px solid var(--color-divider);
+      border-radius: 6px;
+      text-align: center;
+      overflow-x: auto;
+    }
+    .prd-drawer-body .mermaid svg {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <div class="sidebar-title">环慧慧<span class="sidebar-title-brand">EHS+</span></div>
+        <div class="sidebar-subtitle">Enterprise Edition</div>
+      </div>
+    </div>
+
+    <!-- 动态菜单容器 -->
+    <nav class="sidebar-nav" id="menuContainer"></nav>
+
+    <div class="sidebar-footer">环慧慧EHS+ © 2026</div>
+  </aside>
+
+  <!-- resizer -->
+  <div class="sidebar-resizer" id="resizer"></div>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="main-content">
+    <div class="content-toolbar">
+      <button class="sidebar-toggle" id="sidebarToggleBtn" onclick="toggleSidebar()" title="收起侧边栏">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 5l-7 7 7 7"/>
+          <path d="M4 12h16"/>
+        </svg>
+      </button>
+      <div class="breadcrumb">
+        环慧慧EHS+ <span class="sep">›</span>
+        <span id="breadcrumb-platform" class="current">请选择</span>
+        <span class="sep">›</span>
+        <span id="breadcrumb-page" class="current">页面</span>
+      </div>
+      <!-- 全局 PRD 说明按钮 -->
+      <button class="prd-info-btn" onclick="openPrdDrawer()" title="查看练习功能整体 PRD">
+        <span class="prd-info-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        </span>
+        整体PRD
+      </button>
+    </div>
+
+    <div class="content-frame-wrapper">
+      <div class="content-placeholder" id="placeholder">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+        </svg>
+        <span>请从左侧菜单选择页面查看</span>
+      </div>
+      <iframe id="content-frame" style="display:block;"></iframe>
+    </div>
+  </main>
+
+</div>
+
+<!-- ==================== 全局 PRD 说明抽屉 ==================== -->
+<div class="prd-drawer-overlay" id="prdDrawerOverlay" onclick="closePrdDrawer()"></div>
+<div class="prd-drawer" id="prdDrawer">
+  <div class="prd-drawer-header">
+    <h3>练习功能 · 整体 PRD</h3>
+    <button class="prd-drawer-close" onclick="closePrdDrawer()" title="关闭">✕</button>
+  </div>
+  <div class="prd-drawer-body">
+
+    <!-- 元信息 -->
+    <div class="drawer-section">
+      <p style="color:var(--color-text-secondary);font-size:12px;margin:0 0 16px;">
+        <strong>文档类型</strong>：整体 PRD &emsp;<strong>功能模块</strong>：练习功能 &emsp;<strong>最后更新</strong>：2026-07-01
+      </p>
+    </div>
+
+    <!-- 1. 业务背景 -->
+    <div class="drawer-section">
+      <h4>1. 业务背景</h4>
+      <p>环慧慧 EHS+ 系统原先仅支持<strong>按专业类型进行自由练习</strong>，用户根据自身专业从通用题库 + 专业题库中随机抽题练习。</p>
+      <p>本次新增<strong>模拟练习</strong>模式：管理员选择关联标准试卷，按试卷结构配置练习参数（题目总数、各题型数量、练习开放时间、练习人员），模拟练习支持灵活划定题目范围，进行针对性强化训练，适用于考前冲刺与阶段性能力评估。员工在小程序端抽题练习，达到考前巩固和冲刺的目的。</p>
+      <p>原有专业练习模式保持不变，两种模式并存。</p>
+    </div>
+
+    <!-- 2. 角色与权限 -->
+    <div class="drawer-section">
+      <h4>2. 角色与权限</h4>
+      <table>
+        <tr><th>角色</th><th>PC 后台-查看</th><th>PC 后台-新增/编辑/删除</th><th>PC 后台-发布</th><th>小程序-查看列表</th><th>小程序-进入练习</th></tr>
+        <tr><td>管理员</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td><td>✗</td></tr>
+        <tr><td>平台员工</td><td>✗</td><td>✗</td><td>✗</td><td>✓</td><td>✓</td></tr>
+      </table>
+      <p><strong>说明：</strong>管理员在 PC 后台管理练习配置；员工仅在小程序端参与练习。</p>
+    </div>
+
+    <!-- 3. 核心流程图 -->
+    <div class="drawer-section">
+      <h4>3. 核心流程图</h4>
+      <h5>3.1 整体业务流</h5>
+      <div class="mermaid">
+flowchart TD
+    A["练习设置 - PC后台"] --> B["Tab切换"]
+    B --> C["专业练习 - 已有不变"]
+    B --> D["模拟练习 - 新增Tab"]
+    D --> E["模拟练习列表 - 含新增按钮"]
+    E --> F{"管理员操作"}
+    F -->|保存| G["草稿 - 未发布"]
+    F -->|保存并发布| H["已发布"]
+    H --> I{"根据开放时间动态判定状态"}
+    I -->|"now &lt; start"| J["未开始 - 小程序可见"]
+    I -->|"start ≤ now ≤ end"| K["进行中 - 小程序可练"]
+    I -->|"now &gt; end"| L["已结束 - 小程序可见"]
+    J --> M["小程序 - 模拟练习入口"]
+    K --> M
+    L --> M
+    M --> N{"权限范围内已发布练习数"}
+    N -->|0个| O["暂无数据缺省页"]
+    N -->|有数据| Q["练习列表页"]
+    Q --> P["练习页"]
+    P --> R["练习页 - 刷题 / 答题卡 / 提前结束 / 上一题 / 下一题提交"]
+    R -->|提前结束| S["练习结束"]
+    R -->|答完所有题 + 手动提交| S
+    S --> T["查看详情 - 试卷详情页 - 逐题查看解析"]
+    S --> U["再次练习 - 重新抽题"]
+    U --> R
+      </div>
+
+      <h5>3.2 小程序端练习流程</h5>
+      <div class="mermaid">
+flowchart TD
+    A["用户点击工作台 - 模拟练习"] --> B{"是否有已发布练习"}
+    B -->|否| C["暂无数据缺省页面"]
+    B -->|是| F["列表页"]
+    F -->|有数据，点击| E["练习页"]
+    F -->|无数据| C
+    E --> G["练习页 - 刷题"]
+    G --> H{"结束方式"}
+    H -->|提前结束| I["练习结束"]
+    H -->|答完所有题 + 手动提交| I
+    I --> J["查看详情 - 试卷详情页 - 逐题查看解析 - 返回首页 - 下一题"]
+    I --> K["再次练习 - 练习页 - 重新开始"]
+      </div>
+    </div>
+
+    <!-- 4. 名词解释 -->
+    <div class="drawer-section">
+      <h4>4. 名词解释</h4>
+      <table>
+        <tr><th>术语</th><th>定义</th></tr>
+        <tr><td><strong>模拟练习</strong></td><td>新增的练习模式，管理员选择关联标准试卷，按试卷结构配置题目数量和练习人员，支持灵活划定题目范围进行针对性强化训练，适用于考前冲刺与阶段性能力评估</td></tr>
+        <tr><td><strong>专业练习（自由练习）</strong></td><td>已有模式，用户按自身专业从通用题库+专业题库随机抽题练习，不受试卷限制</td></tr>
+        <tr><td><strong>草稿</strong></td><td>未发布的练习配置，仅 PC 后台可见，小程序端不可见</td></tr>
+        <tr><td><strong>已发布</strong></td><td>已发布的练习配置，小程序端可见。根据开放时间进一步显示为：未开始 / 进行中 / 已结束</td></tr>
+        <tr><td><strong>未开始</strong></td><td>已发布且当前时间 < 开始时间，小程序端可见但不可进入练习</td></tr>
+        <tr><td><strong>进行中</strong></td><td>已发布且开始时间 ≤ 当前时间 ≤ 结束时间，小程序端可正常进入练习</td></tr>
+        <tr><td><strong>已结束</strong></td><td>已发布且当前时间 > 结束时间，小程序端可见但不可进入练习</td></tr>
+        <tr><td><strong>开放时间</strong></td><td>练习集中可用的时间窗口（开始时间 至 结束时间），仅在开放时间内的进行中练习可进入</td></tr>
+      </table>
+    </div>
+
+    <!-- 5. 用例图 -->
+    <div class="drawer-section">
+      <h4>5. 用例图</h4>
+      <div class="mermaid">
+flowchart TD
+    ADMIN_USER["管理员"] ---|管理练习| A1["新增模拟练习"]
+    ADMIN_USER ---|管理练习| A2["编辑模拟练习"]
+    ADMIN_USER ---|管理练习| A3["删除模拟练习"]
+    ADMIN_USER ---|管理练习| A4["发布练习"]
+    ADMIN_USER ---|管理练习| A5["查看练习记录"]
+
+    USER["员工"] ---|参与练习| B1["工作台"]
+    B1 --> B2["练习列表"]
+    B2 --> B3["练习页"]
+    B3 --> B4["练习结束页"]
+    B4 --> B5["试卷详情页"]
+      </div>
+    </div>
+
+    <!-- 6. 页面清单 -->
+    <div class="drawer-section">
+      <h4>6. 页面清单</h4>
+      <table>
+        <tr><th>#</th><th>页面</th><th>端侧</th><th>类型</th><th>功能说明</th></tr>
+        <tr><td>1</td><td>练习设置 - 模拟练习 Tab</td><td>PC 后台</td><td><span class="drawer-tag new">新增</span></td><td>Tab 页签切换，展示模拟练习列表 + 新增/编辑弹窗</td></tr>
+        <tr><td>2</td><td>模拟练习新增/编辑弹窗</td><td>PC 后台</td><td><span class="drawer-tag new">新增</span></td><td>草稿/未开始编辑；进行中编辑</td></tr>
+        <tr><td>3</td><td>试卷选择弹窗</td><td>PC 后台</td><td><span class="drawer-tag exist">已有</span></td><td>单选试卷</td></tr>
+        <tr><td>4</td><td>人员选择弹窗</td><td>PC 后台</td><td><span class="drawer-tag exist">已有</span></td><td>多选参与练习的人员或部门</td></tr>
+        <tr><td>5</td><td>小程序工作台</td><td>小程序</td><td><span class="drawer-tag update">优化</span></td><td>新增「模拟练习」入口卡片</td></tr>
+        <tr><td>6</td><td>小程序练习列表</td><td>小程序</td><td><span class="drawer-tag new">新增</span></td><td>展示已发布的模拟练习卡片列表</td></tr>
+        <tr><td>7</td><td>小程序练习页面</td><td>小程序</td><td><span class="drawer-tag new">新增</span></td><td>抽题 + 逐题作答 + 答题卡半屏弹窗 + 提前结束确认</td></tr>
+        <tr><td>8</td><td>小程序练习结束页面</td><td>小程序</td><td><span class="drawer-tag new">新增</span></td><td>练习结果统计 + 答题卡回顾 + 操作入口</td></tr>
+        <tr><td>9</td><td>小程序试卷详情页面</td><td>小程序</td><td><span class="drawer-tag new">新增</span></td><td>逐题查看详情（答案、解析）+ 题目进度条</td></tr>
+        <tr><td>10</td><td>练习记录</td><td>PC 后台</td><td><span class="drawer-tag update">优化</span></td><td>兼容模拟练习模式，合并统计</td></tr>
+      </table>
+    </div>
+
+    <!-- 7. 状态流转 -->
+    <div class="drawer-section">
+      <h4>7. 状态流转</h4>
+      <h5>练习配置生命周期</h5>
+      <div class="mermaid">
+stateDiagram-v2
+    direction LR
+    [*] --> 草稿: 管理员新增
+    草稿 --> 已发布: 发布操作
+    已发布 --> 未开始: 未到开始时间
+    已发布 --> 进行中: 在开放时间范围内
+    已发布 --> 已结束: 已过结束时间
+    草稿 --> [*]: 删除
+      </div>
+
+      <h5>用户练习生命周期</h5>
+      <div class="mermaid">
+flowchart TD
+    A["用户进入练习"] --> B["抽题开始练习 - 每次重新进入均从头开始"]
+    B --> C["逐题作答中"]
+    C --> D{"结束方式"}
+    D -->|提前结束 - 二次确认| E["练习结束页"]
+    D -->|做完所有题 + 手动提交| E
+    C -->|退出 - 不保存进度| F["下次重新开始"]
+    E --> G["查看详情 - 试卷详情页 - 逐题查看解析 - 返回首页 - 下一题"]
+    E --> H["再次练习 - 二次确认 - 重新抽题"]
+    H --> B
+    E --> I["返回 - 导航栏返回"]
+      </div>
+      <p><em>说明：不记录轮次，未提交完成的练习不保留答题记录，用户每次进入练习均从头开始重新抽题。</em></p>
+    </div>
+
+    <!-- 8. 非功能性需求 -->
+    <div class="drawer-section">
+      <h4>8. 非功能性需求</h4>
+      <table>
+        <tr><th>类别</th><th>要求</th></tr>
+        <tr><td>性能</td><td>列表页加载 ≤ 1.5s，练习页首题加载 ≤ 1s</td></tr>
+        <tr><td>可用性</td><td>数据按组织隔离，用户仅可见权限范围内的练习</td></tr>
+        <tr><td>兼容性</td><td>小程序端：iOS 14+ / Android 8.0+；PC 端：Chrome / Edge / Safari 最新版</td></tr>
+        <tr><td>数据安全</td><td>练习答案数据加密存储，防止前端篡改评分</td></tr>
+        <tr><td>并发</td><td>支持 1000+ 用户同时练习，抽题算法保证性能</td></tr>
+        <tr><td>错误处理</td><td>网络异常时保存本地答题记录，网络恢复后同步</td></tr>
+      </table>
+    </div>
+
+    <!-- 9. 与现有系统的关系 -->
+    <div class="drawer-section">
+      <h4>9. 与现有系统的关系</h4>
+      <table>
+        <tr><th>模块</th><th>关系</th><th>说明</th></tr>
+        <tr>
+          <td><strong>专业练习（自由练习）</strong></td>
+          <td>独立并存</td>
+          <td>不受模拟练习影响，保持现有逻辑</td>
+        </tr>
+        <tr>
+          <td><strong>试卷管理</strong></td>
+          <td>依赖</td>
+          <td>需先创建试卷，才能在练习设置中选择。试卷仅用于练习创建时的题目配置来源，练习创建后与试卷解耦，试卷的删除不影响已创建的练习功能</td>
+        </tr>
+        <tr>
+          <td><strong>人员管理</strong></td>
+          <td>依赖</td>
+          <td>通过现有人员选择器指定参与练习的人员或部门</td>
+        </tr>
+        <tr>
+          <td><strong>练习记录</strong></td>
+          <td>优化</td>
+          <td>已有页面，原仅支持自由练习模式，本次兼容模拟练习模式，新增练习模式筛选列与列表列</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- 10. 功能清单 -->
+    <div class="drawer-section">
+      <h4>10. 功能清单</h4>
+      <h5>10.1 PC 后台</h5>
+      <table>
+        <tr><th>#</th><th>端</th><th>类型</th><th>一级菜单</th><th>二级菜单</th><th>功能点</th><th>功能描述</th></tr>
+        <tr>
+          <td>1</td><td>PC</td><td><span class="drawer-tag new">新增</span></td>
+          <td>练习设置</td><td>模拟练习 Tab</td><td>Tab 页签</td>
+          <td>在练习设置页新增「模拟练习」Tab，与「专业练习」Tab 切换</td>
+        </tr>
+        <tr>
+          <td>2</td><td>PC</td><td><span class="drawer-tag new">新增</span></td>
+          <td>练习设置</td><td>模拟练习 Tab</td><td>模拟练习列表</td>
+          <td>展示所有练习配置列表（名称、时间、状态、创建人）。操作：草稿→发布+编辑+删除；未开始→编辑；进行中→编辑；已结束→-</td>
+        </tr>
+        <tr>
+          <td>3</td><td>PC</td><td><span class="drawer-tag new">新增</span></td>
+          <td>练习设置</td><td>模拟练习 Tab</td><td>新增/编辑弹窗</td>
+          <td>弹窗分为4个分组：①基本信息（练习名称≤20字、练习开放时间范围）；②选择试卷（试卷选择器，草稿/未开始可改、进行中置灰）；③练习题目数量（题目总数+各题型数量，未选择试卷前全部禁用）；④练习人员（人员多选弹窗）。底部按钮：草稿编辑→返回+保存+保存并发布；非草稿编辑→返回+保存设置（二次确认）。校验规则11条</td>
+        </tr>
+        <tr>
+          <td>4</td><td>PC</td><td><span class="drawer-tag exist">已有</span></td>
+          <td>练习设置</td><td>模拟练习 Tab</td><td>试卷选择弹窗</td>
+          <td>系统试卷选择器，单选试卷</td>
+        </tr>
+        <tr>
+          <td>5</td><td>PC</td><td><span class="drawer-tag exist">已有</span></td>
+          <td>练习设置</td><td>模拟练习 Tab</td><td>人员选择弹窗</td>
+          <td>多选人员和部门选择器</td>
+        </tr>
+        <tr>
+          <td>6</td><td>PC</td><td><span class="drawer-tag update">优化</span></td>
+          <td>练习设置</td><td>练习记录 Tab</td><td>练习记录列表</td>
+          <td>已有页面，原仅支持自由练习模式。本次兼容模拟练习模式。展示用户练习统计记录（姓名、部门、专业、练习次数、练习题数、首次练习时间、上次练习时间）。支持按姓名、部门、专业筛选，支持查询、重置、导出操作。数据与练习配置解耦，练习删除后记录仍保留</td>
+        </tr>
+      </table>
+
+      <h5>10.2 小程序</h5>
+      <table>
+        <tr><th>#</th><th>端</th><th>类型</th><th>一级菜单</th><th>二级菜单</th><th>功能点</th><th>功能描述</th></tr>
+        <tr>
+          <td>1</td><td>小程序</td><td><span class="drawer-tag update">优化</span></td>
+          <td>工作台</td><td>学习管理</td><td>模拟练习入口</td>
+          <td>新增「模拟练习」入口卡片，点击后统一跳转至列表页。有数据展示练习卡片列表；无数据显示空状态</td>
+        </tr>
+        <tr>
+          <td>2</td><td>小程序</td><td><span class="drawer-tag new">新增</span></td>
+          <td>练习列表</td><td>-</td><td>模拟练习列表</td>
+          <td>展示已发布练习卡片（名称、状态标签、开放时间），进行中状态显示「前往练习」按钮可点击进入</td>
+        </tr>
+        <tr>
+          <td>3</td><td>小程序</td><td><span class="drawer-tag new">新增</span></td>
+          <td>练习页</td><td>-</td><td>练习页</td>
+          <td>导航栏（返回+练习名称+进度）+进度条+题型标签+题目内容+选项列表。底部操作栏（答题卡、提前结束、上一题、下一题）。答题卡半屏弹窗（图例+网格+点击跳转）。提前结束二次确认弹窗</td>
+        </tr>
+        <tr>
+          <td>4</td><td>小程序</td><td><span class="drawer-tag new">新增</span></td>
+          <td>练习结束页</td><td>-</td><td>练习结束页</td>
+          <td>正确率环形图+答题统计（总数+答对数）+鼓励语。答题卡回顾（网格+图例）。底部操作栏：查看详情（跳转试卷详情页）、再次练习（二次确认后重新抽题）</td>
+        </tr>
+        <tr>
+          <td>5</td><td>小程序</td><td><span class="drawer-tag new">新增</span></td>
+          <td>试卷详情页</td><td>-</td><td>试卷详情页</td>
+          <td>导航栏（返回+标题）+题目进度模块（进度条）。逐题卡片：题号+题型标签+选项+答案信息+解析区。底部操作栏：返回首页、下一题（最后一题禁用）</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- 11. 关联文档 -->
+    <div class="drawer-section">
+      <h4>11. 关联文档</h4>
+      <ul>
+        <li><a href="./练习设置_试卷模拟练习_PRD.md" style="color:var(--color-brand);">练习设置 - 模拟练习 PRD</a> — 管理端配置页面 PRD</li>
+        <li><a href="./练习记录_PRD.md" style="color:var(--color-brand);">练习记录 PRD</a> — 管理端记录页面 PRD</li>
+        <li><a href="./小程序练习列表_PRD.md" style="color:var(--color-brand);">小程序练习列表 PRD</a></li>
+        <li><a href="./小程序练习页面_PRD.md" style="color:var(--color-brand);">小程序练习页面 PRD</a></li>
+        <li><a href="./小程序练习结束页面_PRD.md" style="color:var(--color-brand);">小程序练习结束页面 PRD</a></li>
+        <li><a href="./小程序试卷详情页面_PRD.md" style="color:var(--color-brand);">小程序试卷详情页面 PRD</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // =================================================================
+  // 菜单配置
+  // =================================================================
+  const menuConfig = [
+    {
+      type: 'group',
+      id: 'desktop',
+      label: '电脑端',
+      children: [
+        { type: 'page', label: '练习设置', file: '练习设置_20250616.html' },
+        { type: 'page', label: '练习记录', file: '练习记录_20250616.html' }
+      ]
+    },
+    {
+      type: 'group',
+      id: 'miniapp',
+      label: '小程序',
+      children: [
+        { type: 'page', label: '工作台', file: '小程序工作台页面.html' },
+        { type: 'page', label: '练习列表', file: '小程序练习列表.html' },
+        { type: 'page', label: '练习页面', file: '小程序练习页面.html' },
+        { type: 'page', label: '练习结束', file: '小程序练习结束页面.html' },
+        { type: 'page', label: '试卷详情', file: '小程序试卷详情页面.html' }
+      ]
+    }
+  ];
+
+  const defaultExpandedGroups = ['desktop', 'miniapp'];
+
+  // =================================================================
+  // 辅助：从菜单结构中查找页面所属的顶级分组标签
+  // =================================================================
+  function findParentGroupLabel(fileName) {
+    for (var g = 0; g < menuConfig.length; g++) {
+      var group = menuConfig[g];
+      if (group.children) {
+        for (var c = 0; c < group.children.length; c++) {
+          if (group.children[c].file === fileName) {
+            return group.label;
+          }
+        }
+      }
+    }
+    return '';
+  }
+
+  // =================================================================
+  // 渲染逻辑
+  // =================================================================
+
+  /** 递归构建菜单树 */
+  function renderMenu(config, container, level) {
+    config.forEach(function(item) {
+      if (item.type === 'page') {
+        var div = document.createElement('div');
+        div.className = 'nav-item level-' + level;
+        div.setAttribute('data-file', item.file);
+        div.setAttribute('data-label', item.label);
+        div.innerHTML = '<span class="nav-dot"></span>' + item.label;
+        div.addEventListener('click', function() { switchPage(div); });
+        container.appendChild(div);
+      } else if (item.type === 'group') {
+        var groupId = item.id || 'g-' + Math.random().toString(36).substr(2, 6);
+
+        // 计算子页面数量
+        var pageCount = 0;
+        if (item.children) {
+          item.children.forEach(function(child) {
+            if (child.type === 'page') pageCount++;
+          });
+        }
+
+        var header = document.createElement('div');
+        header.className = 'nav-group-header';
+        header.dataset.groupId = groupId;
+        header.id = 'header-' + groupId;
+        header.innerHTML = 
+          '<span class="arrow" id="arrow-' + groupId + '">' +
+            '<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>' +
+          '</span>' +
+          '<span class="nav-group-label">' + item.label + '</span>' +
+          '<span class="badge">' + pageCount + '</span>';
+
+        var childContainer = document.createElement('div');
+        childContainer.className = 'nav-children expanded';
+        childContainer.id = 'children-' + groupId;
+
+        var shouldExpand = defaultExpandedGroups.indexOf(groupId) !== -1;
+        if (!shouldExpand) {
+          childContainer.classList.remove('expanded');
+          header.querySelector('.arrow').classList.remove('open');
+        }
+
+        header.addEventListener('click', function() {
+          toggleGroup(groupId);
+        });
+
+        container.appendChild(header);
+        container.appendChild(childContainer);
+
+        // 递归渲染子项，层级+1，实现菜单缩进
+        renderMenu(item.children, childContainer, level + 1);
+      }
+    });
+  }
+
+  // ===== 分组折叠控制（一级分组） =====
+  var groupStates = {};
+  // 初始化所有分组为展开状态
+  defaultExpandedGroups.forEach(function(id) {
+    groupStates[id] = true;
+  });
+
+  function toggleGroup(groupId) {
+    if (groupStates[groupId] === undefined) {
+      groupStates[groupId] = true;
+    }
+    groupStates[groupId] = !groupStates[groupId];
+    var children = document.getElementById('children-' + groupId);
+    var arrow = document.getElementById('arrow-' + groupId);
+    if (groupStates[groupId]) {
+      children.classList.add('expanded');
+      arrow.classList.add('open');
+    } else {
+      children.classList.remove('expanded');
+      arrow.classList.remove('open');
+    }
+  }
+
+  // ===== 页面切换 =====
+  function switchPage(el) {
+    document.querySelectorAll('.nav-item.active').forEach(function(item) { item.classList.remove('active'); });
+    el.classList.add('active');
+
+    var pageName = el.getAttribute('data-label');
+    var fileName = el.getAttribute('data-file');
+
+    document.getElementById('placeholder').classList.add('hidden');
+    var frame = document.getElementById('content-frame');
+    frame.style.display = 'block';
+    frame.src = fileName;
+
+    // 更新面包屑
+    var platformEl = document.getElementById('breadcrumb-platform');
+    var pageEl = document.getElementById('breadcrumb-page');
+    var parentGroupLabel = findParentGroupLabel(fileName);
+    platformEl.textContent = parentGroupLabel;
+    pageEl.textContent = pageName;
+
+    // 持久化
+    localStorage.setItem('nav-active-page', fileName);
+    localStorage.setItem('nav-active-page-name', pageName);
+    localStorage.setItem('nav-active-platform', parentGroupLabel);
+  }
+
+  // ===== 初始化 =====
+  function init() {
+    var container = document.getElementById('menuContainer');
+    renderMenu(menuConfig, container, 0);
+
+    // 尝试恢复上次选中的页面
+    var savedFile = localStorage.getItem('nav-active-page');
+    var savedName = localStorage.getItem('nav-active-page-name');
+    var savedPlatform = localStorage.getItem('nav-active-platform');
+    if (savedFile && savedName) {
+      var target = document.querySelector('.nav-item[data-file="' + savedFile + '"]');
+      if (target) {
+        document.querySelectorAll('.nav-item.active').forEach(function(item) { item.classList.remove('active'); });
+        target.classList.add('active');
+        document.getElementById('placeholder').classList.add('hidden');
+        var frame = document.getElementById('content-frame');
+        frame.style.display = 'block';
+        frame.src = savedFile;
+        document.getElementById('breadcrumb-page').textContent = savedName;
+        if (savedPlatform) document.getElementById('breadcrumb-platform').textContent = savedPlatform;
+      }
+    }
+  }
+
+  // ===== RESIZER =====
+  (function() {
+    var resizer = document.getElementById('resizer');
+    var sidebar = document.querySelector('.sidebar');
+    var startX, startWidth;
+
+    resizer.addEventListener('mousedown', function(e) {
+      startX = e.clientX;
+      startWidth = sidebar.offsetWidth;
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+      document.body.style.cursor = 'col-resize';
+      document.body.style.userSelect = 'none';
+    });
+
+    function onMouseMove(e) {
+      var dx = e.clientX - startX;
+      var newWidth = startWidth + dx;
+      if (newWidth >= 200 && newWidth <= 400) {
+        sidebar.style.width = newWidth + 'px';
+        sidebar.style.minWidth = newWidth + 'px';
+        document.documentElement.style.setProperty('--sidebar-width', newWidth + 'px');
+      }
+    }
+
+    function onMouseUp() {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    }
+  })();
+
+  // ===== PRD 抽屉开关 =====
+  // Mermaid 已渲染标记（避免重复渲染）
+  var mermaidRendered = false;
+
+  // 初始化 Mermaid
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'default',
+    flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
+    state: { useMaxWidth: true }
+  });
+
+  function openPrdDrawer() {
+    document.getElementById('prdDrawerOverlay').classList.add('is-open');
+    document.getElementById('prdDrawer').classList.add('is-open');
+    // 首次打开时渲染 Mermaid 流程图
+    if (!mermaidRendered) {
+      mermaid.run({ querySelector: '.prd-drawer-body .mermaid' }).then(function() {
+        mermaidRendered = true;
+      }).catch(function(err) {
+        console.warn('Mermaid render error:', err);
+        mermaidRendered = true; // 避免无限重试
+      });
+    }
+  }
+  function closePrdDrawer() {
+    document.getElementById('prdDrawerOverlay').classList.remove('is-open');
+    document.getElementById('prdDrawer').classList.remove('is-open');
+  }
+  // ESC 关闭 PRD 抽屉
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closePrdDrawer();
+  });
+
+  // ===== 侧边栏收起/展开 =====
+  function toggleSidebar() {
+    var sidebar = document.querySelector('.sidebar');
+    var resizer = document.getElementById('resizer');
+    var toggleBtn = document.getElementById('sidebarToggleBtn');
+    var isCollapsed = sidebar.classList.contains('collapsed');
+
+    if (isCollapsed) {
+      // 展开侧边栏
+      sidebar.classList.remove('collapsed');
+      resizer.classList.remove('collapsed');
+      toggleBtn.classList.remove('collapsed');
+      toggleBtn.title = '收起侧边栏';
+      // 恢复之前记录的宽度
+      var savedWidth = localStorage.getItem('sidebar-width');
+      if (savedWidth) {
+        sidebar.style.width = savedWidth + 'px';
+        sidebar.style.minWidth = savedWidth + 'px';
+        document.documentElement.style.setProperty('--sidebar-width', savedWidth + 'px');
+      } else {
+        sidebar.style.width = '';
+        sidebar.style.minWidth = '';
+        document.documentElement.style.setProperty('--sidebar-width', '240px');
+      }
+      localStorage.setItem('sidebar-collapsed', 'false');
+    } else {
+      // 收起侧边栏前先保存当前宽度
+      if (sidebar.style.width && sidebar.style.width !== '0px') {
+        localStorage.setItem('sidebar-width', parseInt(sidebar.style.width));
+      }
+      sidebar.classList.add('collapsed');
+      resizer.classList.add('collapsed');
+      toggleBtn.classList.add('collapsed');
+      toggleBtn.title = '展开侧边栏';
+      localStorage.setItem('sidebar-collapsed', 'true');
+    }
+  }
+
+  // 页面加载时，如果侧边栏是收起状态，保持收起
+  (function restoreSidebarState() {
+    var wasCollapsed = localStorage.getItem('sidebar-collapsed');
+    if (wasCollapsed === 'true') {
+      var sidebar = document.querySelector('.sidebar');
+      var resizer = document.getElementById('resizer');
+      var toggleBtn = document.getElementById('sidebarToggleBtn');
+      sidebar.classList.add('collapsed');
+      resizer.classList.add('collapsed');
+      toggleBtn.classList.add('collapsed');
+      toggleBtn.title = '展开侧边栏';
+    }
+  })();
+
+  // ===== 页面加载后执行 =====
+  init();
+</script>
+
+</body>
+</html>

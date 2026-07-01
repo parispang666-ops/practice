@@ -1,0 +1,3890 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>模拟练习 - 环慧慧 EHS+</title>
+  <style>
+    :root {
+      --color-brand: #1570EF;
+      --color-brand-hover: #2E90FA;
+      --color-brand-active: #175CD3;
+      --color-danger: #F64C41;
+      --color-success: #00C5C3;
+      --color-warning: #FF8340;
+      --color-text-primary: #444F66;
+      --color-text-secondary: #758095;
+      --color-text-placeholder: #9EA4AE;
+      --color-text-disabled: #B3B9C4;
+      --color-bg-page: #F7F8FA;
+      --color-bg-surface: #FFFFFF;
+      --color-bg-muted: #F7F8F9;
+      --color-brand-light: #EFF8FF;
+      --color-border: #DEDFE3;
+      --color-divider: #E6E7EB;
+      --radius-component: 4px;
+      --font-family-ui: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", Arial, sans-serif;
+      --shadow-topbar: 0 1px 4px rgba(31, 42, 55, .10);
+      --shadow-brand: 0 1px 5px rgba(21,112,239,.05), 0 4px 2.5px rgba(21,112,239,.08), 0 2px 2px rgba(21,112,239,.25);
+      --focus-ring: 0 0 0 2px #D9E1FF;
+      --color-topbar-bg: #00254A; --color-topbar-text: rgba(255,255,255,0.90); --color-topbar-sub: rgba(255,255,255,0.60);
+      --color-sidebar-bg: #00254A; --color-sidebar-item-bg: #042240; --color-sidebar-active: #007AFF;
+      --sidebar-width-new: 256px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    body {
+      margin: 0;
+      color: var(--color-text-primary);
+      background: var(--color-bg-page);
+      font-family: var(--font-family-ui);
+      font-size: 14px;
+      line-height: 22px;
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+      letter-spacing: 0;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    img {
+      display: block;
+      object-fit: contain;
+    }
+
+    .app {
+      height: 100vh;
+      overflow: hidden;
+      background: var(--color-bg-page);
+    }
+
+    /* ==================== 顶部导航栏 ==================== */
+    .menu-topbar { position: fixed; z-index: 30; top: 0; left: 0; width: 100%; height: 64px; display: flex; background: var(--color-topbar-bg); overflow: hidden; }
+    .menu-logo { width: var(--sidebar-width-new); height: 64px; position: relative; display: flex; align-items: center; background: var(--color-topbar-bg); overflow: hidden; flex: 0 0 var(--sidebar-width-new); }
+    .menu-logo::before { content:""; position:absolute; width:236px; height:236px; left:10px; top:-33px; background:var(--color-topbar-bg); box-shadow:0px 4px 10px rgba(0,0,0,0.40) inset; border-radius:9999px; }
+    .menu-logo::after { content:""; position:absolute; width:188px; height:188px; left:34px; top:-9px; background:var(--color-topbar-bg); box-shadow:0px 4px 10px rgba(0,0,0,0.30) inset; border-radius:9999px; }
+    .menu-logo-inner { position:absolute; width:138px; height:138px; left:59px; top:16px; background:#002449; box-shadow:0px 4px 10px rgba(0,0,0,0.20) inset; border-radius:9999px; z-index:0; }
+    .menu-logo-icon { position:absolute; left:28px; top:8px; width:48px; height:48px; z-index:1; }
+    .menu-logo-icon img { width:48px; height:48px; }
+    .menu-logo-main { position:absolute; left:88px; top:16px; z-index:1; font-size:20px; font-family:var(--font-family-ui); font-weight:400; color:var(--color-topbar-text); white-space:nowrap; }
+    .menu-logo-brand { color:rgba(58,184,255,0.90); }
+    .menu-logo-sub { position:absolute; left:87px; top:39px; z-index:1; font-size:12px; font-family:var(--font-family-ui); font-weight:400; color:var(--color-topbar-sub); white-space:nowrap; }
+    .menu-logo-sep { position:absolute; left:148px; top:27px; width:3px; height:3px; border-radius:50%; background:rgba(255,255,255,0.30); }
+    .menu-top-nav { flex:1; min-width:0; height:64px; display:flex; align-items:center; background:var(--color-topbar-bg); }
+    .menu-top-track { height:64px; display:flex; align-items:center; gap:32px; padding:0 16px; }
+    .menu-top-item { height:46px; display:inline-flex; align-items:center; padding:0; border:none; background:transparent; color:white; font-size:14px; font-family:var(--font-family-ui); font-weight:400; cursor:pointer; white-space:nowrap; border-bottom:2px solid transparent; }
+    .menu-top-item.is-active { border-bottom-color:var(--color-sidebar-active); }
+    .menu-top-actions { height:64px; display:flex; align-items:center; padding:0 16px 0 12px; color:var(--color-topbar-text); font-size:12px; font-family:var(--font-family-ui); white-space:nowrap; flex-shrink:0; }
+    .menu-actions-icons { display:none; }
+    .menu-icon-btn { display:none; }
+    .menu-user { display:inline-flex; align-items:center; gap:0; color:var(--color-topbar-text); font-size:12px; white-space:nowrap; }
+    .menu-user-avatar { display:none; }
+    .menu-user-meta { height:24px; display:inline-flex; align-items:center; }
+    .menu-user-arrow { display:none; }
+
+    /* ==================== 侧边导航菜单 ==================== */
+    .menu-shell { position:fixed; z-index:20; top:64px; left:0; width:var(--sidebar-width-new); height:calc(100vh - 64px); display:flex; flex-direction:column; justify-content:flex-start; background:var(--color-sidebar-bg); box-shadow:0px 2px 8px rgba(0,0,0,0.25); }
+    .menu-side-list { display:flex; flex-direction:column; margin:0; padding:0; overflow:hidden auto; scrollbar-width:thin; }
+    .menu-side-list::-webkit-scrollbar { width:3px; }
+    .menu-side-list::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.15); border-radius:50px; }
+    .menu-side-item { width:256px; height:52px; display:flex; align-items:center; gap:12px; padding:0 8px 0 24px; border:none; border-radius:0; background:var(--color-sidebar-bg); color:white; font-size:14px; font-family:var(--font-family-ui); font-weight:400; text-align:left; cursor:pointer; transition:background-color 150ms ease; }
+    .menu-side-item:hover { background:rgba(255,255,255,0.06); }
+    .menu-side-item img { width:20px; height:20px; flex:0 0 auto; }
+    .menu-side-item .menu-side-arrow { width:16px; height:16px; flex:0 0 auto; margin-left:auto; margin-right:12px; }
+    .menu-side-item .menu-side-arrow img { width:16px; height:16px; }
+    .menu-side-label { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .menu-sublist { display:none; flex-direction:column; margin:0; padding:0; background:var(--color-sidebar-item-bg); }
+    .menu-sublist.is-open { display:flex; }
+    .menu-side-item.is-expanded { background:rgba(255,255,255,0.08); }
+    .menu-side-arrow { transition:transform 200ms ease; }
+    .menu-side-item.is-expanded .menu-side-arrow { transform:rotate(90deg); }
+    .menu-side-child { width:240px; height:36px; display:flex; align-items:center; margin:8px; padding:0 0 0 36px; border:none; border-radius:4px; background:transparent; color:white; font-size:14px; font-family:var(--font-family-ui); font-weight:400; text-align:left; cursor:pointer; transition:background-color 150ms ease; white-space:nowrap; position:relative; }
+    .menu-side-child::before { content:""; position:absolute; left:16px; top:50%; transform:translateY(-50%); width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.40); }
+    .menu-side-child:hover { background:rgba(255,255,255,0.08); }
+    .menu-side-child.is-active { background:var(--color-sidebar-active); color:white; }
+    .menu-side-child.is-active::before { background:white; }
+    .menu-collapse { display:none; }
+
+    /* ==================== 面包屑栏 ==================== */
+    .menu-breadcrumb { position:fixed; z-index:9; top:64px; left:var(--sidebar-width-new); right:0; height:50px; display:flex; align-items:center; padding:0 24px; background:white; box-shadow:0px 0px 8px 6px rgba(0,0,0,0.02); }
+    .menu-breadcrumb-path { display:inline-flex; align-items:center; height:34px; }
+    .menu-breadcrumb-icon { width:24px; height:34px; display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto; }
+    .menu-breadcrumb-icon img { width:12px; height:12px; }
+    .menu-breadcrumb-tag { display:inline-flex; align-items:center; height:34px; padding:0 0 0 8px; background:#E5F3FF; border-radius:0; }
+    .menu-breadcrumb-tag svg { width:12px; height:12px; flex:0 0 auto; }
+    .menu-breadcrumb-tag span { color:#007AFF; font-size:14px; font-family:var(--font-family-ui); font-weight:400; margin:0 4px; }
+    .menu-breadcrumb-next { width:24px; height:34px; display:inline-flex; align-items:center; justify-content:center; color:#9EA4AE; flex:0 0 auto; }
+    .menu-breadcrumb-next img { width:12px; height:12px; }
+
+    /* ==================== 页面主体 ==================== */
+    .page {
+      min-width: 0;
+      height: 100vh;
+      margin-left: var(--sidebar-width-new);
+      padding: 126px 12px 12px;
+      overflow: hidden;
+    }
+
+    .form-panel {
+      height: 100%;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0px 0px 8px 6px rgba(0,0,0,0.02);
+    }
+
+    .form-header {
+      width: 100%;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--color-divider);
+      background: #fff;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .icon-svg {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      flex: 0 0 16px;
+    }
+
+    .form-title {
+      margin: 0;
+      color: var(--color-text-primary);
+      font-size: 18px;
+      line-height: 26px;
+      font-weight: 400 !important;
+      font-synthesis: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-title::before { display: none; }
+
+    .form-header-actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-body {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+      padding: 32px 24px 24px;
+      scrollbar-color: var(--color-divider) transparent;
+      scrollbar-width: thin;
+    }
+
+    .form-body::-webkit-scrollbar {
+      width: 3px;
+      height: 3px;
+    }
+
+    .form-body::-webkit-scrollbar-button {
+      width: 0;
+      height: 0;
+      display: none;
+    }
+
+    .form-body::-webkit-scrollbar-track { background: transparent; }
+
+    .form-body::-webkit-scrollbar-thumb {
+      border-radius: 50px;
+      background: var(--color-divider);
+    }
+
+    .form-content {
+      width: min(800px, 100%);
+      margin: 0 auto;
+    }
+
+    .form-section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 24px;
+      margin-bottom: 8px;
+      color: var(--color-text-primary);
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+    }
+
+    .form-section-title::before {
+      content: "";
+      width: 3px;
+      height: 14px;
+      background: var(--color-brand);
+    }
+
+    .form-section {
+      margin-bottom: 32px;
+    }
+
+    .form-section:last-child { margin-bottom: 0; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 32px;
+    }
+
+    .form-item {
+      min-width: 0;
+      padding-bottom: 24px;
+    }
+
+    .form-item.no-gap { padding-bottom: 0; }
+
+    .form-item.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-label {
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding-bottom: 8px;
+      color: var(--color-text-primary);
+      font-size: 14px;
+      line-height: 22px;
+      white-space: nowrap;
+    }
+
+    .required {
+      color: var(--color-danger);
+      font-weight: 600;
+    }
+
+    .form-help {
+      width: 16px;
+      height: 16px;
+      color: var(--color-text-placeholder);
+    }
+
+    .field-control,
+    .field-select,
+    .textarea-control {
+      width: 100%;
+      min-width: 0;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-component);
+      background: #fff;
+      color: var(--color-text-primary);
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    .field-control,
+    .field-select {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 8px;
+    }
+
+    .field-control:hover,
+    .field-select:hover,
+    .textarea-control:hover {
+      border-color: var(--color-brand);
+    }
+
+    .field-control:focus-within,
+    .field-select:focus,
+    .field-select:focus-visible,
+    .textarea-control:focus {
+      border-color: var(--color-brand);
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+
+    .field-input,
+    .textarea-control {
+      color: var(--color-text-primary);
+      font-size: 14px;
+      line-height: 22px;
+    }
+
+    .field-input {
+      width: 100%;
+      min-width: 0;
+      height: 22px;
+      padding: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+    }
+
+    .field-input::placeholder,
+    .textarea-control::placeholder,
+    .field-placeholder {
+      color: var(--color-text-placeholder);
+    }
+
+    .field-icon {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 16px;
+      color: var(--color-text-placeholder);
+    }
+
+    .field-select {
+      justify-content: space-between;
+      color: var(--color-text-placeholder);
+    }
+
+    .field-select span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .field-select.has-value span { color: var(--color-text-primary); }
+
+    .helper-text {
+      margin: 2px 0 0;
+      color: var(--color-text-placeholder);
+      font-size: 12px;
+      line-height: 20px;
+    }
+
+    /* ==================== 只读字段 ==================== */
+    .field-control.readonly {
+      background: var(--color-bg-muted);
+      border-color: var(--color-border);
+      cursor: not-allowed;
+    }
+
+    .field-control.readonly .field-input {
+      color: var(--color-text-secondary);
+      cursor: not-allowed;
+    }
+
+    .field-control.readonly:hover {
+      border-color: var(--color-border);
+    }
+
+    .readonly-icon {
+      width: 14px;
+      height: 14px;
+      flex: 0 0 14px;
+      color: var(--color-text-disabled);
+    }
+
+    .readonly-tip {
+      font-size: 12px;
+      color: var(--color-text-disabled);
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ==================== 只读模式 - 平文本展示 ==================== */
+    .form-panel.is-readonly .field-control,
+    .form-panel.is-readonly .field-select,
+    .form-panel.is-readonly .cascade-select {
+      border-color: transparent !important;
+      background: transparent !important;
+      pointer-events: none !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      box-shadow: none !important;
+    }
+
+    .form-panel.is-readonly .field-icon { display: none; }
+
+    .form-panel.is-readonly .field-input,
+    .form-panel.is-readonly .field-select span,
+    .form-panel.is-readonly .cascade-select span {
+      color: var(--color-text-primary) !important;
+      -webkit-text-fill-color: var(--color-text-primary) !important;
+      opacity: 1 !important;
+    }
+
+    .form-panel.is-readonly .field-select:not(.has-value) span,
+    .form-panel.is-readonly .cascade-select:not(.has-value) span {
+      color: var(--color-text-disabled) !important;
+      -webkit-text-fill-color: var(--color-text-disabled) !important;
+    }
+
+    .form-panel.is-readonly .choice { display: none; }
+    .form-panel.is-readonly .choice:has(.radio.checked),
+    .form-panel.is-readonly .choice:has(.check.checked) {
+      display: inline-flex;
+      color: var(--color-text-primary) !important;
+      pointer-events: none;
+    }
+    .form-panel.is-readonly .choice .radio,
+    .form-panel.is-readonly .choice .check { display: none; }
+
+    .form-panel.is-readonly .person-select-group .btn-sm { display: none; }
+
+    .form-panel.is-readonly .readonly-icon { display: none; }
+
+    /* ==================== 单选/多选 ==================== */
+    .choice-group {
+      min-height: 22px;
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px 16px;
+      padding-top: 0;
+    }
+
+    .choice {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--color-text-secondary);
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .radio,
+    .check {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 16px;
+      border: 1px solid #D2D6DC;
+      background: #fff;
+      transition: border-color 150ms ease, background-color 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
+    }
+
+    .radio {
+      border-radius: 50%;
+    }
+
+    .choice:hover .radio:not(.checked),
+    .choice:hover .check:not(.checked):not(.indeterminate) {
+      border-color: var(--color-brand);
+      background: var(--color-bg-muted);
+    }
+
+    .choice:active .radio:not(.checked),
+    .choice:active .check:not(.checked):not(.indeterminate) {
+      border-color: var(--color-brand-active);
+      background: var(--color-bg-muted);
+    }
+
+    .choice:focus-visible {
+      outline: none;
+    }
+
+    .choice:focus-visible .radio,
+    .choice:focus-visible .check {
+      border-color: var(--color-brand);
+      box-shadow: var(--focus-ring);
+    }
+
+    .radio.checked {
+      border-color: var(--color-brand);
+    }
+
+    .radio.checked::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-brand);
+    }
+
+    .check {
+      border-radius: 3px;
+    }
+
+    .check.checked {
+      border-color: var(--color-brand);
+      background: var(--color-brand);
+    }
+
+    .check.checked::after {
+      content: "";
+      width: 7px;
+      height: 4px;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(-45deg) translate(.5px, -1px);
+    }
+
+    /* 只读模式：地址拼接文本 */
+    .address-readonly-text {
+      display: none;
+      height: 32px;
+      line-height: 32px;
+      color: var(--color-text-primary);
+      font-size: 14px;
+    }
+
+    .form-panel.is-readonly .address-combined .cascade-select-group,
+    .form-panel.is-readonly .address-combined .field-control { display: none !important; }
+
+    .form-panel.is-readonly .address-readonly-text { display: block; }
+
+    /* ==================== 省市区三级联动选择器 ==================== */
+    .cascade-select-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .cascade-select {
+      flex: 1;
+      min-width: 0;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 8px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-component);
+      background: #fff;
+      color: var(--color-text-placeholder);
+      cursor: pointer;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    .cascade-select:hover { border-color: var(--color-brand); }
+    .cascade-select:focus,
+    .cascade-select:focus-visible {
+      border-color: var(--color-brand);
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+
+    .cascade-select.has-value { color: var(--color-text-primary); }
+    .cascade-select.disabled {
+      background: var(--color-bg-muted);
+      color: var(--color-text-disabled);
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .cascade-select span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* ==================== 人员选择器按钮 ==================== */
+    .person-select-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .person-select-group .field-control {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .btn {
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 5px 12px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-component);
+      background: #fff;
+      color: var(--color-text-primary);
+      font-size: 14px;
+      line-height: 22px;
+      white-space: nowrap;
+      transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+    }
+
+    .btn.primary {
+      color: #fff;
+      background: var(--color-brand);
+      border-color: var(--color-brand);
+    }
+
+    .btn.primary:hover {
+      background: var(--color-brand-hover);
+      border-color: var(--color-brand-hover);
+    }
+
+    .btn.primary:active {
+      background: var(--color-brand-active);
+      border-color: var(--color-brand-active);
+    }
+
+    .btn.neutral {
+      color: var(--color-text-primary);
+      background: #fff;
+      border-color: var(--color-border);
+    }
+
+    .btn.neutral:hover {
+      background: var(--color-bg-muted);
+    }
+
+    .btn.danger {
+      color: var(--color-danger);
+      background: #fff;
+      border-color: var(--color-danger);
+    }
+
+    .btn.danger:hover {
+      color: #fff;
+      background: var(--color-danger);
+    }
+
+    .btn-sm {
+      height: 32px;
+      padding: 5px 12px;
+      flex: 0 0 auto;
+    }
+
+    /* ==================== 数字输入框 ==================== */
+    .field-input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    .field-input[type="number"]::-webkit-outer-spin-button,
+    .field-input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* ==================== 字段校验错误态 ==================== */
+    .form-item.has-error .field-control,
+    .form-item.has-error .field-select,
+    .form-item.has-error .textarea-control,
+    .form-item.has-error .cascade-select {
+      border-color: var(--color-danger);
+    }
+
+    .form-item.has-error .field-control:focus-within {
+      box-shadow: 0 0 0 2px rgba(246, 76, 65, 0.2);
+    }
+
+    .field-error {
+      margin: 2px 0 0;
+      color: var(--color-danger);
+      font-size: 12px;
+      line-height: 20px;
+      display: none;
+    }
+
+    .form-item.has-error .field-error { display: block; }
+
+    /* ==================== 条件显示区域 ==================== */
+    .conditional-field { display: none; }
+    .conditional-field.visible { display: block; }
+
+    /* ==================== 人员选择弹窗 ==================== */
+    .modal-overlay {
+      position: fixed;
+      z-index: 100;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.45);
+    }
+
+    .modal-overlay.is-open { display: flex; }
+
+    .modal {
+      width: min(680px, calc(100vw - 48px));
+      max-height: min(560px, calc(100vh - 120px));
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border-radius: var(--radius-component);
+      box-shadow: 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 16px 24px 2px rgba(0, 0, 0, 0.08);
+    }
+
+    .modal-header {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 0 0 48px;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--color-divider);
+    }
+
+    .modal-title {
+      color: var(--color-text-primary);
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 500;
+    }
+
+    .modal-close {
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0;
+      border-radius: var(--radius-component);
+      background: transparent;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+    }
+
+    .modal-close:hover { background: var(--color-bg-muted); }
+
+    .modal-search {
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--color-divider);
+    }
+
+    .modal-search .field-control {
+      width: 100%;
+    }
+
+    .modal-body {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+      padding: 0;
+    }
+
+    .modal-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .modal-table th {
+      height: 40px;
+      padding: 0 16px;
+      background: var(--color-bg-muted);
+      color: var(--color-text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      text-align: left;
+      border-bottom: 1px solid var(--color-divider);
+      white-space: nowrap;
+    }
+
+    .modal-table td {
+      height: 44px;
+      padding: 0 16px;
+      color: var(--color-text-primary);
+      font-size: 14px;
+      border-bottom: 1px solid var(--color-divider);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .modal-table tbody tr {
+      cursor: pointer;
+      transition: background-color 120ms ease;
+    }
+
+    .modal-table tbody tr:hover { background: var(--color-bg-muted); }
+    .modal-table tbody tr.selected { background: var(--color-brand-light); }
+
+    .modal-table .col-radio {
+      width: 44px;
+      text-align: center;
+    }
+
+    .modal-footer {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex: 0 0 56px;
+      padding: 0 20px;
+      border-top: 1px solid var(--color-divider);
+    }
+
+    .modal-empty {
+      padding: 48px 20px;
+      text-align: center;
+      color: var(--color-text-placeholder);
+      font-size: 14px;
+    }
+
+    /* ==================== 下拉选项面板（供自定义下拉使用） ==================== */
+    .dropdown-panel {
+      position: absolute;
+      z-index: 50;
+      top: calc(100% + 4px);
+      left: 0;
+      width: 100%;
+      max-height: 200px;
+      overflow: auto;
+      display: none;
+      flex-direction: column;
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-component);
+      box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.06);
+    }
+
+    .dropdown-panel.is-open { display: flex; }
+
+    .dropdown-option {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      flex: 0 0 32px;
+      padding: 0 12px;
+      color: var(--color-text-primary);
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: background-color 120ms ease;
+    }
+
+    .dropdown-option:hover { background: var(--color-bg-muted); }
+    .dropdown-option.selected { color: var(--color-brand); background: var(--color-brand-light); }
+
+    .dropdown-wrapper {
+      position: relative;
+    }
+
+    .dropdown-wrapper.half { width: 50%; }
+
+    .dropdown-panel.drop-up {
+      top: auto;
+      bottom: calc(100% + 4px);
+    }
+
+    /* ==================== 响应式 ==================== */
+    @media (max-width: 1080px) {
+      .menu-actions-icons .menu-icon-btn:nth-last-child(-n+3) {
+        display: none;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <!-- ==================== PRD标注样式 ==================== -->
+  <style>
+    /* 角标样式 */
+    .prd-annotation {
+      position: absolute;
+      top: -8px;
+      right: -4px;
+      z-index: 99;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 4px;
+      background: rgb(250, 173, 20);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 18px;
+      text-align: center;
+      border-radius: 2px;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      transition: transform 150ms ease, box-shadow 150ms ease;
+    }
+    .prd-annotation:hover {
+      transform: scale(1.1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    /* 浮窗样式 */
+    .prd-tooltip {
+      position: fixed;
+      z-index: 1000;
+      width: 450px;
+      max-width: calc(100vw - 48px);
+      background: #fff;
+      border: 2px solid #1890ff;
+      border-radius: 4px;
+      box-shadow: 0 4px 16px rgba(24,144,255,0.2);
+      display: none;
+      flex-direction: column;
+      max-height: 400px;
+    }
+    .prd-tooltip.is-open { display: flex; }
+    .prd-tooltip-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e6e7eb;
+      background: #f7f8fa;
+      border-radius: 2px 2px 0 0;
+    }
+    .prd-tooltip-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+    .prd-tooltip-close {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #666;
+      font-size: 16px;
+      line-height: 1;
+    }
+    .prd-tooltip-close:hover { color: #1890ff; }
+    .prd-tooltip-body {
+      padding: 16px;
+      overflow-y: auto;
+      max-height: 320px;
+      font-size: 13px;
+      line-height: 1.8;
+      color: #333;
+    }
+    .prd-tooltip-body p { margin: 0 0 8px; }
+    .prd-tooltip-body ul { margin: 0; padding-left: 20px; }
+    .prd-tooltip-body li { margin-bottom: 4px; }
+    .prd-tooltip-body strong { color: #1890ff; }
+
+    /* 角标容器 */
+    .annotation-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* 全局PRD抽屉按钮 */
+    .prd-drawer-btn {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 200;
+      height: 36px;
+      padding: 0 16px;
+      background: #1890ff;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(24,144,255,0.3);
+      transition: background-color 150ms ease;
+    }
+    .prd-drawer-btn:hover { background: #2e90fa; }
+
+    /* PRD抽屉 */
+    .prd-drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 300;
+      background: rgba(0,0,0,0.45);
+      display: none;
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+    .prd-drawer-overlay.is-open { display: block; opacity: 1; }
+    .prd-drawer {
+      position: fixed;
+      top: 0;
+      right: -620px;
+      z-index: 301;
+      width: 600px;
+      max-width: calc(100vw - 40px);
+      height: 100vh;
+      background: #fff;
+      box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      transition: right 300ms ease;
+    }
+    .prd-drawer.is-open { right: 0; }
+    .prd-drawer-header {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid #e6e7eb;
+      flex-shrink: 0;
+    }
+    .prd-drawer-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+    .prd-drawer-close {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #666;
+      font-size: 20px;
+      border-radius: 4px;
+    }
+    .prd-drawer-close:hover { background: #f0f0f0; color: #1890ff; }
+    .prd-drawer-tabs {
+      display: flex;
+      border-bottom: 1px solid #e6e7eb;
+      flex-shrink: 0;
+    }
+    .prd-drawer-tab {
+      padding: 12px 20px;
+      font-size: 14px;
+      color: #666;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 150ms ease, border-color 150ms ease;
+    }
+    .prd-drawer-tab:hover { color: #1890ff; }
+    .prd-drawer-tab.is-active {
+      color: #1890ff;
+      border-bottom-color: #1890ff;
+      font-weight: 500;
+    }
+    .prd-drawer-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+    .prd-drawer-content h1 { font-size: 20px; margin: 0 0 16px; color: #1a1a1a; }
+    .prd-drawer-content h2 { font-size: 16px; margin: 24px 0 12px; color: #1a1a1a; }
+    .prd-drawer-content h3 { font-size: 14px; margin: 16px 0 8px; color: #333; }
+    .prd-drawer-content p { font-size: 13px; line-height: 1.8; color: #666; margin: 0 0 8px; }
+    .prd-drawer-content table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 8px 0 16px; }
+    .prd-drawer-content th, .prd-drawer-content td { border: 1px solid #e6e7eb; padding: 8px 12px; text-align: left; }
+    .prd-drawer-content th { background: #f7f8fa; font-weight: 500; color: #333; }
+    .prd-drawer-content td { color: #666; }
+    .prd-drawer-content code { background: #f0f0f0; padding: 2px 6px; border-radius: 2px; font-size: 12px; color: #c7254e; }
+
+    /* 全局标注开关 */
+    .prd-toggle-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 200;
+      width: 40px;
+      height: 40px;
+      background: #1890ff;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(24,144,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: background-color 150ms ease, transform 150ms ease;
+    }
+    .prd-toggle-btn:hover { background: #2e90fa; transform: scale(1.05); }
+    .prd-toggle-btn.hidden { background: #999; }
+
+    /* 隐藏角标 */
+    .prd-annotation.hidden { display: none !important; }
+
+    /* ==================== 练习设置内容区样式 ==================== */
+    .main-content-area { min-width: 0; height: 100vh; margin-left: var(--sidebar-width-new); padding: 114px 12px 12px; }
+    .settings-container { display: flex; flex: 1; height: 100%; min-height: 0; gap: 0;border-radius: 4px;overflow: hidden;box-shadow: 0px 0px 8px 6px rgba(0,0,0,0.02); }
+    .settings-nav { width: 200px; background: white; border-right: 1px solid #EBEBEB; padding: 16px 0; flex-shrink: 0; }
+    .settings-nav-title { padding: 0 24px 16px; font-size: 16px; font-weight: 600; color: #333; }
+    .settings-nav-item { height: 44px; display: flex; align-items: center; padding: 0 24px; cursor: pointer; font-size: 14px; color: #666; transition: all 0.15s; border-left: 3px solid transparent; }
+    .settings-nav-item:hover { color: #007AFF; background: #F7FBFF; }
+    .settings-nav-item.active { color: #007AFF; background: #F7FBFF; border-left-color: #007AFF; font-weight: 500; }
+    .settings-panel { flex: 1; background: white; padding: 32px 40px; overflow-y: auto; min-width: 0; }
+    .settings-panel::-webkit-scrollbar { width: 6px; }
+    .settings-panel::-webkit-scrollbar-thumb { background: #E0E0E0; border-radius: 3px; }
+    .panel-header { margin-bottom: 32px; }
+    .panel-header h1 { font-size: 20px; font-weight: 600; color: #333;margin-bottom: 8px;display: flex;align-items: center;gap: 10px; }
+    .panel-header h1::before { content: ''; width: 4px; height: 20px; background: #307FE2; border-radius: 2px; }
+    .panel-desc { font-size: 14px; color: #888; line-height: 22px; }
+    .es-form-section { margin-bottom: 32px; }
+    .es-form-section-title { font-size: 15px; font-weight: 500; color: #333; margin-bottom: 16px; display: flex; align-items: center; gap: 4px; }
+    .required-star { color: #F54A45; }
+    .es-form-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+    .es-form-label { font-size: 14px; color: #555; min-width: 80px; height: 32px; line-height: 32px; flex-shrink: 0; }
+    .es-input-wrapper { position: relative; display: inline-flex; align-items: center; }
+    .es-form-input { width: 120px; height: 32px; border: 1px solid #D9D9D9; border-radius: 4px; padding: 0 36px 0 10px; font-size: 14px; outline: none; transition: border-color 0.2s; -moz-appearance: textfield; }
+    .es-form-input:focus { border-color: #307FE2; box-shadow: 0 0 0 2px rgba(48,127,226,0.1); }
+    .es-form-input:disabled,.es-type-input:disabled { background: #F5F5F5; color: #999; cursor: not-allowed; }
+    .es-form-input::-webkit-inner-spin-button,.es-form-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    .input-unit { position: absolute; right: 10px; font-size: 14px; color: #999; pointer-events: none; }
+    .input-btn { width: 32px; height: 32px; margin-left: 8px; border: 1px solid #D9D9D9; border-radius: 4px; background: #F5F5F5; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+    .input-btn:hover { background: #EEE; border-color: #BBB; }
+    .input-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .num-stepper { display: inline-flex; align-items: center; gap: 0; }
+    .num-stepper-btn { width: 32px; height: 32px; border: 1px solid #307FE2; background: #307FE2; color: white; border-radius: 4px; font-size: 18px; font-weight: 500; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; user-select: none; line-height: 1; padding: 0; flex-shrink: 0; }
+    .num-stepper-btn:hover { background: #2567C5; border-color: #2567C5; }
+    .num-stepper-btn:active { transform: scale(0.95); }
+    .num-stepper .num-stepper-btn:first-child { margin-right: 0; border-radius: 4px 0 0 4px; }
+    .stepper-row { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .hint-text { font-size: 13px; color: #999; margin-top: 4px; margin-left: 92px; }
+    .type-config-list { margin-left: 92px; margin-bottom: 24px; }
+    .type-config-item { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .type-config-item.disabled .type-label,
+    .type-config-item.disabled .type-hint { opacity: 0.35; }
+    .type-config-item.disabled .es-type-input { opacity: 0.35; pointer-events: none; }
+    .type-config-item.disabled .num-stepper-btn { opacity: 0.35; pointer-events: none; }
+    .type-checkbox { width: 16px; height: 16px; border: 1px solid #D9D9D9; border-radius: 3px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: all 0.15s; }
+    .type-checkbox.checked { background: #307FE2; border-color: #307FE2; }
+    .type-checkbox.checked::after { content: ''; width: 8px; height: 4px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translate(0.5px, -1px); }
+    .type-label { font-size: 14px; color: #555; min-width: 40px; flex-shrink: 0; }
+    .type-input-wrap { display: flex; align-items: center; gap: 4px; }
+    .es-type-input { width: 70px; height: 32px; border: 1px solid #D9D9D9; border-radius: 4px; padding: 0 8px; font-size: 14px; text-align: center; outline: none; transition: border-color 0.2s; -moz-appearance: textfield; }
+    .es-type-input:focus { border-color: #307FE2; }
+    .es-type-input::-webkit-inner-spin-button,.es-type-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    .type-input-unit { font-size: 14px; color: #999; }
+    .type-hint { font-size: 13px; color: #BBB; margin-left: auto; padding-left: 12px; }
+    .type-total-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 14px; color: #333; }
+    .type-total-badge .badge-num { color: #FA8C16; font-weight: 600; }
+    .rule-section { margin-left: 92px; margin-top: 8px; padding: 12px 16px; background: #FAFAFA; border-radius: 4px; }
+    .rule-label { font-size: 14px; color: #666; margin-bottom: 8px; }
+    .rule-link { color: #307FE2; font-size: 14px; text-decoration: none; cursor: pointer; }
+    .rule-link:hover { text-decoration: underline; }
+    .panel-footer { display: flex; justify-content: center; padding-top: 40px; padding-bottom: 60px; }
+    .btn-save { height: 38px; padding: 0 48px; background: #307FE2; color: white; border: none; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+    .btn-save:hover { background: #2567C5; }
+    .btn-save-outline { height: 38px; padding: 0 24px; background: #fff; color: #307FE2; border: 1px solid #307FE2; border-radius: 4px; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+    .btn-save-outline:hover { background: #EBF3FD; }
+    .btn-save-publish { height: 38px; padding: 0 24px; background: #307FE2; color: white; border: none; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+    .btn-save-publish:hover { background: #2567C5; }
+    .btn-cancel { height: 38px; padding: 0 48px; background: #fff; color: #666; border: 1px solid #D9D9D9; border-radius: 4px; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+    .btn-cancel:hover { border-color: #307FE2; color: #307FE2; }
+
+    /* ==================== 工具栏 ==================== */
+    .toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .btn-primary { height: 36px; padding: 0 20px; background: #307FE2; color: white; border: none; border-radius: 4px; font-size: 14px; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-primary:hover { background: #2567C5; }
+    .btn-primary::before { content: '+'; font-size: 18px; font-weight: 400; line-height: 1; }
+
+    /* ==================== 表格样式 ==================== */
+    .data-table-wrap { overflow-x: auto; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table thead th { background: #FAFBFC; color: #666; font-weight: 500; padding: 12px 16px; text-align: left; border-bottom: 1px solid #E8E8E8; white-space: nowrap; }
+    .data-table tbody td { padding: 14px 16px; color: #333; border-bottom: 1px solid #F0F0F0; }
+    .data-table tbody tr:hover { background: #F7FBFF; }
+    .data-table .empty-row td { text-align: center; padding: 60px 16px; color: #999; font-size: 14px; }
+    .table-actions { display: flex; gap: 12px; }
+    .action-link { color: #307FE2; font-size: 14px; cursor: pointer; text-decoration: none; background: none; border: none; padding: 0; }
+    .action-link:hover { color: #2567C5; text-decoration: underline; }
+    .action-link.danger { color: #F54A45; }
+    .action-link.danger:hover { color: #D9363E; }
+    .status-draft { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 13px; color: #595959; background: #FAFAFA; border: 1px solid #D9D9D9; }
+    .status-pending { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 13px; color: #FA8C16; background: #FFF7E6; border: 1px solid #FFD591; }
+    .status-active { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 13px; color: #52C41A; background: #F6FFED; border: 1px solid #B7EB8F; }
+    .status-ended { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 13px; color: #999; background: #F5F5F5; border: 1px solid #D9D9D9; }
+
+    /* ==================== 模拟练习左右分栏 ==================== */
+    .exam-layout { display: flex; height: 100%; gap: 0; min-height: 0; overflow: hidden; }
+    .exam-list-panel { flex: 1; min-width: 0; overflow: auto; display: flex; flex-direction: column; }
+    .exam-list-panel.hidden { display: none; }
+    .exam-form-panel { display: none; flex: 1; min-width: 0; overflow: hidden; border-left: 1px solid #EBEBEB; flex-direction: column; background: #fff; }
+    .exam-form-panel.active { display: flex; }
+    .exam-form-header { display: flex; align-items: center; padding: 16px 24px; border-bottom: 1px solid #F0F0F0; flex-shrink: 0; }
+    .exam-form-back { border: none; background: none; color: #307FE2; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; padding: 0; }
+    .exam-form-back:hover { color: #2567C5; }
+    .exam-form-header-text { font-size: 16px; font-weight: 600; color: #1F2329; margin: 0 0 0 12px; }
+    .exam-form-body { flex: 1; padding: 24px; overflow-y: auto; }
+    .exam-form-footer { display: flex; justify-content: center; gap: 12px; padding: 16px 24px; border-top: 1px solid #F0F0F0; flex-shrink: 0; }
+
+    /* 表单分组 */
+    .exam-form-section { margin-bottom: 32px; }
+    .exam-form-section:last-child { margin-bottom: 0; }
+    .exam-form-section-title { font-size: 16px; font-weight: 600; color: #1F2329; margin: 0 0 20px 0; padding-bottom: 12px; border-bottom: 1px solid #F0F0F0; }
+
+    /* 左侧返回图标 */
+    .exam-form-back-icon { width: 32px; height: 32px; border: none; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #646A73; border-radius: 4px; transition: all 0.15s; padding: 0; margin-right: 4px; flex-shrink: 0; }
+    .exam-form-back-icon:hover { background: #F5F5F5; color: #1F2329; }
+    .exam-form-back-icon svg { width: 20px; height: 20px; }
+
+    /* 居中返回按钮 */
+    .btn-return-outline { height: 38px; padding: 0 24px; background: #fff; color: #646A73; border: 1px solid #D9D9D9; border-radius: 4px; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+    .btn-return-outline:hover { border-color: #307FE2; color: #307FE2; }
+
+    /* 练习类型单选 */
+    .exam-type-radio-group { display: flex; gap: 24px; align-items: center; }
+    .exam-type-radio-item { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; color: #1F2329; user-select: none; }
+    .exam-type-radio-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #D9D9D9; display: inline-block; flex-shrink: 0; transition: all 0.15s; }
+    .exam-type-radio-dot.checked { border-color: #307FE2; border-width: 5px; }
+    .exam-type-radio-item.disabled { cursor: not-allowed; opacity: 0.6; }
+
+    /* 练习类型变化过渡 */
+    .exam-type-content { transition: opacity 0.2s; }
+
+    /* 题目范围区域 */
+    .exam-question-range { min-height: 80px; }
+    .exam-question-range-hint { color: #999; font-size: 13px; padding: 12px 0; }
+    .exam-question-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; border: 1px dashed #D9D9D9; border-radius: 4px; background: #FAFBFC; }
+    .exam-question-empty-text { color: #999; font-size: 14px; margin-bottom: 12px; }
+
+    /* 添加题目按钮 */
+    .btn-add-question { height: 32px; padding: 0 16px; border: 1px dashed #307FE2; border-radius: 4px; background: #F7FBFF; color: #307FE2; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: all 0.15s; }
+    .btn-add-question:hover { background: #EBF3FD; }
+    .btn-add-question::before { content: '+'; font-size: 16px; font-weight: 500; }
+
+    /* 已选题目列表 */
+    .question-list { background: #fff; border: 1px solid #EBEBEB; border-radius: 4px; overflow: hidden; margin-top: 12px; }
+    .question-list-item { display: flex; align-items: center; padding: 10px 12px; border-bottom: 1px solid #F0F0F0; font-size: 13px; }
+    .question-list-item:last-child { border-bottom: none; }
+    .question-list-item .q-index { color: #999; width: 28px; flex-shrink: 0; }
+    .question-list-item .q-name { flex: 1; color: #1F2329; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .question-list-item .q-type-tag { display: inline-block; padding: 0 6px; border-radius: 3px; font-size: 11px; background: #F0F5FF; color: #307FE2; margin-right: 8px; flex-shrink: 0; }
+    .question-list-item .q-remove { color: #F54A45; cursor: pointer; font-size: 16px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 4px; border: none; background: none; flex-shrink: 0; }
+    .question-list-item .q-remove:hover { background: #FFF1F0; }
+
+    /* 题目选择弹窗 */
+    .question-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.45); z-index: 9999; display: none; }
+    .question-modal-overlay.show { display: block; }
+    .question-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 720px; max-height: 80vh; background: white; border-radius: 6px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 10000; display: none; flex-direction: column; overflow: hidden; }
+    .question-modal.show { display: flex; }
+    .question-modal-header { height: 52px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 1px solid #E8E8E8; flex-shrink: 0; }
+    .question-modal-header h3 { font-size: 16px; font-weight: 600; color: #333; }
+    .question-modal-close { width: 28px; height: 28px; border: none; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: background 0.15s; }
+    .question-modal-close:hover { background: #F5F5F5; }
+    .question-modal-body { padding: 20px; overflow-y: auto; flex: 1; }
+    .question-modal-footer { height: 56px; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 0 20px; border-top: 1px solid #E8E8E8; flex-shrink: 0; }
+
+    /* ==================== 弹窗/模态框 ==================== */
+    .modal-overlay { display: none; position: fixed; z-index: 100; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.45); align-items: center; justify-content: center; }
+    .modal-overlay.is-open { display: flex; }
+    .modal { width: 780px; max-height: 88vh; background: white; border-radius: 8px; box-shadow: 0 8px 40px rgba(0,0,0,0.15); display: flex; flex-direction: column; overflow: hidden; }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px 0; flex-shrink: 0; }
+    .modal-header h2 { font-size: 18px; font-weight: 600; color: #1F2329; margin: 0; }
+    .modal-close { width: 32px; height: 32px; border: none; background: none; font-size: 20px; color: #999; cursor: pointer; border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+    .modal-close:hover { background: #F5F5F5; color: #333; }
+    .modal-body { padding: 24px; overflow-y: auto; flex: 1; }
+    .modal-footer { display: flex; justify-content: flex-end; gap: 12px; padding: 16px 24px; border-top: 1px solid #F0F0F0; flex-shrink: 0; }
+    .modal-form-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
+    .modal-form-row:last-child { margin-bottom: 0; }
+    .modal-form-label { font-size: 14px; color: #555; min-width: 80px; height: 32px; line-height: 32px; flex-shrink: 0; }
+    .modal-form-label .required { color: #F54A45; margin-right: 2px; }
+    .modal-form-control { flex: 1; min-width: 0; }
+    .modal-input { width: 100%; height: 32px; border: 1px solid #D9D9D9; border-radius: 4px; padding: 0 10px; font-size: 14px; outline: none; transition: border-color 0.2s; }
+    .modal-input:focus { border-color: #307FE2; box-shadow: 0 0 0 2px rgba(48,127,226,0.1); }
+    .modal-input:disabled { background: #F5F5F5; color: #999; cursor: not-allowed; }
+    .name-input-wrap { position: relative; display: block; max-width: 480px; }
+    .name-input-wrap .modal-input { padding-right: 48px; width: 100%; }
+    .name-char-count { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 12px; color: #BBB; pointer-events: none; white-space: nowrap; }
+    .modal-select { width: 100%; height: 32px; border: 1px solid #D9D9D9; border-radius: 4px; padding: 0 30px 0 10px; font-size: 14px; outline: none; cursor: pointer; background: white; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%23999' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+    .modal-select:focus { border-color: #307FE2; }
+    .modal-type-row { display: flex; align-items: center; gap: 12px; }
+    .modal-type-row .type-checkbox { width: 16px; height: 16px; border: 1px solid #D9D9D9; border-radius: 3px; cursor: pointer; flex-shrink: 0; transition: all 0.15s; position: relative; display: inline-flex; align-items: center; justify-content: center; }
+    .modal-type-row .type-checkbox.checked { background: #307FE2; border-color: #307FE2; }
+    .modal-type-row .type-checkbox.checked::after { content: ''; width: 8px; height: 4px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translate(0.5px, -1px); }
+    .modal-type-row .type-label { font-size: 14px; color: #555; min-width: 40px; }
+    .modal-type-row .modal-input { width: 100px; }
+    .modal-type-row .type-unit { font-size: 14px; color: #999; }
+    .modal-type-row.disabled .type-label,
+    .modal-type-row.disabled .type-unit,
+    .modal-type-row.disabled .type-hint { opacity: 0.35; }
+    .modal-type-row.disabled .modal-input { opacity: 0.35; pointer-events: none; background: #F5F5F5; }
+    .modal-type-summary { font-size: 13px; color: #FA8C16; margin-top: 8px; }
+
+    /* ==================== 系统现有组件标注横幅 ==================== */
+    .sys-comp-banner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 20px 16px;
+      padding: 10px 16px;
+      background: #FFF7E6;
+      border: 2px solid #FFA940;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #AD4E00;
+      line-height: 20px;
+    }
+    .sys-comp-banner .scb-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .sys-comp-banner .scb-text strong {
+      color: #D4380D;
+      font-size: 14px;
+    }
+    /* 试卷选择触发器 */
+    .modal-paper-trigger { position: relative; display: block; max-width: 480px; }
+    .modal-paper-trigger .modal-input-arrow { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 11px; color: #999; pointer-events: none; }
+    .modal-paper-trigger .modal-input { padding-right: 32px; }
+
+    /* 试卷信息条 */
+    .paper-info-bar { margin-top: 10px; padding: 10px 14px; background: #F6F8FA; border-radius: 4px; font-size: 13px; color: #555; line-height: 1.8; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+    .paper-info-bar .pi-label { color: #999; }
+    .paper-info-bar .pi-num { color: #307FE2; font-weight: 500; }
+
+    /* 试卷选择弹窗 - 行选中态 */
+    .paper-pick-row { cursor: pointer; transition: background 0.15s; }
+    .paper-pick-row:hover { background: #F7FBFF; }
+    .paper-pick-row.selected { background: #EBF3FD; }
+    .paper-pick-row.selected td:first-child::before { content: ''; display: inline-block; width: 16px; height: 16px; border-radius: 50%; background: #307FE2; }
+    .paper-pick-radio { display: inline-block; width: 16px; height: 16px; border-radius: 50%; border: 2px solid #D9D9D9; vertical-align: middle; transition: all 0.15s; }
+    .paper-pick-row.selected .paper-pick-radio { border-color: #307FE2; background: #307FE2; box-shadow: inset 0 0 0 3px #fff; }
+
+    /* 练习人员单选 */
+    .radio-group { display: flex; align-items: center; }
+    .radio-item { display: inline-flex; align-items: center; cursor: pointer; font-size: 14px; color: #1F2329; user-select: none; }
+    .radio-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #D9D9D9; display: inline-block; margin-right: 8px; transition: all 0.15s; flex-shrink: 0; }
+    .radio-dot.checked { border-color: #307FE2; background: #307FE2; box-shadow: inset 0 0 0 3px #fff; }
+    .radio-item.disabled { cursor: not-allowed; opacity: 0.6; }
+
+    /* 添加人员按钮 */
+    .btn-add-person { display: inline-flex; align-items: center; gap: 4px; height: 32px; padding: 0 14px; border: 1px dashed #307FE2; border-radius: 4px; background: #F7FBFF; color: #307FE2; font-size: 13px; cursor: pointer; transition: all 0.15s; }
+    .btn-add-person:hover { background: #EBF3FD; }
+
+    /* 已选人员/范围卡片分组 */
+    .person-group-card { margin-top: 10px; background: #F7F8FA; border-radius: 6px; overflow: hidden; }
+    .person-group-card + .person-group-card { margin-top: 8px; }
+    .person-group-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: #F7F8FA; border-bottom: 1px solid #E5E6EB; }
+    .person-group-title { font-size: 14px; font-weight: 500; color: #1F2329; }
+    .person-group-count { font-size: 12px; color: #8F959E; margin-left: 6px; font-weight: 400; }
+    .person-group-actions { display: flex; gap: 12px; font-size: 12px; }
+    .person-group-body { padding: 10px 12px; }
+    .person-group-empty { text-align: center; padding: 16px 12px; color: #C9CDD4; font-size: 13px; }
+
+    /* 人员/部门标签 */
+    .person-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .person-tag { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 6px 0 10px; background: #FFFFFF; border: 1px solid #E5E6EB; border-radius: 4px; font-size: 13px; color: #1F2329; }
+    .person-tag .tag-label { max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .person-tag .tag-close { display: flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; color: #8F959E; cursor: pointer; font-size: 12px; line-height: 1; transition: all 0.15s; }
+    .person-tag .tag-close:hover { background: #F54A45; color: #fff; }
+
+    /* 操作链接 */
+    .link-action { font-size: 12px; color: #307FE2; cursor: pointer; text-decoration: none; white-space: nowrap; }
+    .link-action:hover { color: #1E5DB9; }
+    .link-action.danger { color: #F54A45; }
+    .link-action.danger:hover { color: #D93025; }
+
+    /* 人员选择器搜索 */
+    .person-picker-search { padding: 16px 20px; border-bottom: 1px solid #F0F0F0; }
+    .person-picker-search .modal-input { width: 100%; }
+    .person-pick-empty { text-align: center; padding: 40px 20px; color: #999; font-size: 14px; }
+
+    /* 人员选择行 */
+    .person-pick-row { cursor: pointer; transition: background 0.15s; }
+    .person-pick-row:hover { background: #F7FBFF; }
+    .person-pick-row.selected { background: #EBF3FD; }
+    .person-checkbox { display: inline-block; width: 16px; height: 16px; border-radius: 2px; border: 2px solid #D9D9D9; vertical-align: middle; transition: all 0.15s; position: relative; }
+    .person-pick-row.selected .person-checkbox { border-color: #307FE2; background: #307FE2; }
+    .person-pick-row.selected .person-checkbox::after { content: ''; position: absolute; left: 3px; top: 0px; width: 6px; height: 9px; border-right: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(45deg); }
+
+    /* 人员选择器Tab */
+    .person-picker-tabs { display: flex; border-bottom: 1px solid #F0F0F0; padding: 0 20px; }
+    .person-picker-tab { padding: 10px 16px; font-size: 14px; color: #646A73; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s; }
+    .person-picker-tab.active { color: #307FE2; border-bottom-color: #307FE2; font-weight: 500; }
+    .person-picker-tab:hover { color: #307FE2; }
+    .person-picker-panel { display: none; }
+    .person-picker-panel.active { display: block; }
+
+    /* 全选/取消全选 */
+    .select-all-bar { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-bottom: 1px solid #F0F0F0; font-size: 13px; color: #646A73; }
+    .select-all-bar .link-action { font-size: 13px; }
+
+    /* 试卷选择 */
+    .paper-select-trigger-btn { min-width: 280px; height: 36px; padding: 0 32px 0 12px; border: 1px solid #D9D9D9;border-radius: 4px;background: white;font-size: 14px;color: #999;cursor: pointer;transition: all 0.2s;display: inline-flex;align-items: center;justify-content: flex-start;position: relative;text-align: left; }
+    .paper-select-trigger-btn:hover { border-color: #307FE2; }
+    .paper-select-trigger-btn.has-value { color: #333; }
+    .paper-select-trigger-btn::after { content: ''; position: absolute; right: 12px; top: 50%; margin-top: -2.5px; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid #C0C4CC; pointer-events: none; transition: transform 0.25s; }
+    .paper-info-card { margin-left: 92px; margin-top: 12px; padding: 12px 16px; background: #E6F4FF; border-radius: 4px; border-left: 3px solid #307FE2; display: none; }
+    .paper-info-card.show { display: block; }
+    .paper-info-text { font-size: 14px; color: #555; line-height: 22px; }
+    .paper-info-text strong { color: #307FE2; }
+
+    .count-verify-bar { margin-left: 92px; margin-top: 12px; padding: 8px 12px; border-radius: 4px; display: none; align-items: center; gap: 8px; font-size: 13px; }
+    .count-verify-bar.error { background: #FFF1F0; border: 1px solid #FFCCC7; color: #CF1322; display: flex; }
+    .count-verify-bar.success { background: #F6FFED; border: 1px solid #B7EB8F; color: #389E0D; display: flex; }
+    .count-verify-bar svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* 紧凑表单区域 */
+    .prof-form-body { display: flex; flex-direction: column; gap: 24px; }
+    .prof-section { border-bottom: 1px solid #F0F0F0; padding-bottom: 20px; }
+    .prof-section:last-of-type { border-bottom: none; padding-bottom: 0; }
+    .prof-section-title { font-size: 16px; font-weight: 600; color: #1F2329; margin: 0 0 16px 0; display: flex; align-items: center; }
+
+    /* 适用范围勾选组 */
+    .scope-check-group { display: flex; gap: 20px; flex-wrap: wrap; }
+    .scope-check-item { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
+    .scope-check-item input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 16px; height: 16px; border: 1px solid #D9D9D9; border-radius: 3px; cursor: pointer; position: relative; margin: 0; flex-shrink: 0; }
+    .scope-check-item input[type="checkbox"]:checked { background: #C0C4CC; border-color: #C0C4CC; }
+    .scope-check-item input[type="checkbox"]:checked::after { content: ''; position: absolute; left: 4px; top: 1px; width: 5px; height: 8px; border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+    .scope-check-item input[type="checkbox"]:disabled { cursor: not-allowed; }
+    .scope-check-item span { font-size: 14px; color: #333; }
+
+    /* 页面视图 */
+    .page-view { display: none; }
+    .page-view.active { display: block; }
+
+    /* Toast */
+    .es-toast { position: fixed; top: 120px; left: 50%; transform: translateX(-50%); z-index: 9999; padding: 10px 20px; border-radius: 4px; background: #FFF1F0; border: 1px solid #FFCCC7; color: #CF1322; display: none; font-size: 13px; max-width: 400px; text-align: center; }
+    .es-toast.show { display: block; animation: toastIn2 0.25s ease forwards; }
+    @keyframes toastIn2 { from { opacity: 0; transform: translateX(-50%) translateY(-5px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+    .es-toast.success { background: #F6FFED; border-color: #B7EB8F; color: #389E0D; }
+
+    /* 字段错误 */
+    .es-field-error { border-color: #F5222D !important; box-shadow: 0 0 0 2px rgba(245,34,45,0.1) !important; }
+
+    /* 模拟练习列表 */
+    .paper-practice-list { background: #fff; border-radius: 8px; overflow: hidden; }
+    .paper-practice-item { display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid #F0F0F0; transition: background 0.15s; }
+    .paper-practice-item:last-child { border-bottom: none; }
+    .paper-practice-item:hover { background: #F7FAFC; }
+    .paper-practice-info { flex: 1; display: flex; align-items: center; gap: 40px; }
+    .paper-practice-field { display: flex; flex-direction: column; gap: 4px; }
+    .paper-practice-field.practice-name { min-width: 180px; }
+    .paper-practice-field.paper-name { min-width: 160px; }
+    .paper-practice-field.question-count { min-width: 120px; }
+    .field-label { font-size: 12px; color: #999; }
+    .field-value { font-size: 14px; color: #333; font-weight: 500; }
+    .paper-practice-actions { display: flex; gap: 12px; margin-left: 20px; }
+    .action-icon-btn { width: 32px; height: 32px; border: none; background: transparent; cursor: pointer; border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+    .action-icon-btn:hover { background: #F0F0F0; }
+    .action-icon-btn.delete:hover { background: #FFF1F0; }
+    .action-icon-btn svg { width: 18px; height: 18px; color: #666; }
+    .action-icon-btn.delete svg { color: #F5222D; }
+    .btn-add-new { height: 36px; padding: 0 20px; background: #307FE2; color: white; border: none; border-radius: 4px; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: background 0.15s; }
+    .btn-add-new:hover { background: #2666CC; }
+    .btn-add-new svg { width: 16px; height: 16px; }
+    .list-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .list-title { font-size: 16px; font-weight: 500; color: #333; }
+
+    /* 弹窗表单 */
+    .form-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.45); z-index: 9998; display: none; align-items: center; justify-content: center; }
+    .form-modal-overlay.show { display: flex; }
+    .form-modal { background: white; border-radius: 8px; width: 560px; max-height: 90vh; overflow-y: auto; box-shadow: 0 4px 24px rgba(0,0,0,0.15); }
+    .form-modal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid #F0F0F0; }
+    .form-modal-header h3 { font-size: 16px; font-weight: 500; color: #333; }
+    .form-modal-close { width: 32px; height: 32px; border: none; background: transparent; cursor: pointer; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+    .form-modal-close:hover { background: #F5F5F5; }
+    .form-modal-body { padding: 20px; }
+    .form-modal .es-form-row { display: flex; align-items: flex-start; margin-bottom: 16px; }
+    .form-modal .es-form-label { width: 100px; padding-top: 8px; font-size: 14px; color: #333; text-align: right; padding-right: 12px;min-width:100px;height:auto;line-height:normal; }
+    .form-modal .es-form-label .required-star { color: #F5222D; margin-right: 2px; }
+    .form-content-area { flex: 1; }
+    .form-modal .es-form-input { height: 36px; border: 1px solid #D9D9D9; border-radius: 4px; padding: 0 12px; font-size: 14px; width: 100%; outline: none; transition: border-color 0.15s; }
+    .form-modal .es-form-input:focus { border-color: #307FE2; }
+    .form-modal .es-form-input:disabled { background: #F5F5F5; cursor: not-allowed; }
+    .form-modal .paper-select-trigger-btn { height: 36px; border: 1px solid #D9D9D9; border-radius: 4px; padding: 0 12px; font-size: 14px; background: white; cursor: pointer; display: flex; align-items: center; gap: 8px; min-width: 200px; }
+    .form-modal .paper-select-trigger-btn:hover { border-color: #307FE2; }
+    .form-modal .paper-select-trigger-btn:disabled { background: #F5F5F5; cursor: not-allowed; }
+    .paper-info-display { margin-top: 8px; padding: 12px; background: #F7FAFC; border-radius: 4px; font-size: 13px; color: #666; line-height: 1.6; }
+    .paper-info-display strong { color: #333; }
+    .form-modal .type-config-list { margin-left: 0; margin-top: 12px; }
+    .form-modal-footer { display: flex; justify-content: flex-end; gap: 12px; padding: 16px 20px; border-top: 1px solid #F0F0F0; }
+    .btn-cancel { height: 36px; padding: 0 20px; border: 1px solid #D9D9D9; border-radius: 4px; font-size: 14px; background: white; cursor: pointer; }
+    .btn-cancel:hover { border-color: #307FE2; color: #307FE2; }
+    .btn-confirm { height: 36px; padding: 0 20px; border: none; border-radius: 4px; font-size: 14px; background: #307FE2; color: white; cursor: pointer; }
+    .btn-confirm:hover { background: #2666CC; }
+    .btn-confirm:disabled { background: #CCC; cursor: not-allowed; }
+    .empty-list-state { text-align: center; padding: 60px 20px; color: #999; }
+    .empty-list-state svg { width: 64px; height: 64px; margin-bottom: 12px; opacity: 0.5; }
+    .empty-list-state p { font-size: 14px; }
+
+    /* 试卷弹窗 */
+    .paper-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.45); z-index: 9999; display: none; }
+    .paper-modal-overlay.show { display: block; }
+    .paper-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 720px; max-height: 80vh; background: white; border-radius: 6px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 10000; display: none; flex-direction: column; overflow: hidden; }
+    .paper-modal.show { display: flex; }
+    .paper-modal-header { height: 52px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 1px solid #E8E8E8; flex-shrink: 0; }
+    .paper-modal-header h3 { font-size: 16px; font-weight: 600; color: #333; }
+    .paper-modal-close { width: 28px; height: 28px; border: none; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: background 0.15s; }
+    .paper-modal-close:hover { background: #F5F5F5; }
+    .paper-modal-body { padding: 20px; overflow-y: auto; flex: 1; }
+    .paper-search-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #F0F0F0; }
+    .paper-search-label { font-size: 14px; color: #555; white-space: nowrap; }
+    .paper-search-input { width: 220px; height: 32px; border: 1px solid #D9D9D9; border-radius: 4px; padding: 0 10px; font-size: 14px; outline: none; transition: border-color 0.2s; }
+    .paper-search-input:focus { border-color: #307FE2; box-shadow: 0 0 0 2px rgba(48,127,226,0.1); }
+    .btn-query { height: 32px; padding: 0 18px; background: #307FE2; color: white; border: none; border-radius: 4px; font-size: 14px; cursor: pointer; transition: background 0.2s; }
+    .btn-query:hover { background: #2567C5; }
+    .btn-reset { height: 32px; padding: 0 18px; background: white; color: #333; border: 1px solid #D9D9D9; border-radius: 4px; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+    .btn-reset:hover { border-color: #BBB; color: #307FE2; }
+    .paper-list-area { border: 1px solid #EBEBEB; border-radius: 4px; min-height: 300px; }
+    .paper-list-header { height: 40px; display: flex; align-items: center; padding: 0 16px; background: #F7FAFC; border-bottom: 1px solid #EBEBEB; font-size: 14px; font-weight: 500; color: #666; }
+    .col-name { flex: 1; } .col-action { width: 40px; text-align: right; }
+    .paper-row { height: 44px; display: flex; align-items: center; padding: 0 16px; border-bottom: 1px solid #F0F0F0; cursor: pointer; transition: background 0.15s; }
+    .paper-row:last-child { border-bottom: none; }
+    .paper-row:hover { background: #F7FBFF; }
+    .paper-row.selected { background: #E6F4FF; }
+    .paper-radio-wrap { position: relative; display: inline-flex; align-items: center; margin-right: 12px; cursor: pointer; flex-shrink: 0; }
+    .paper-radio-wrap input[type="radio"] { appearance: none; -webkit-appearance: none; width: 16px; height: 16px; border: 1px solid #D9D9D9; border-radius: 50%; outline: none; cursor: pointer; position: relative; margin: 0; }
+    .paper-radio-wrap input[type="radio"]:checked { border-color: #307FE2; border-width: 5px; }
+    .paper-name { font-size: 14px; color: #333; }
+    .paper-pagination { display: flex; align-items: center; justify-content: center; gap: 8px; padding-top: 16px; flex-wrap: wrap; }
+    .page-info { font-size: 13px; color: #666; }
+    .page-size-select { height: 28px; border: 1px solid #D9D9D9; border-radius: 4px; padding: 0 8px; font-size: 13px; color: #333; outline: none; }
+    .page-btn { width: 30px; height: 28px; border: 1px solid #D9D9D9; border-radius: 4px; background: white; font-size: 13px; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; justify-content: center; color: #333; padding: 0; }
+    .page-btn:hover { border-color: #307FE2; color: #307FE2; }
+    .page-btn.active { background: #307FE2; border-color: #307FE2; color: white; }
+    .page-go-label { font-size: 13px; color: #666; }
+    .page-go-input { width: 42px; height: 28px; border: 1px solid #D9D9D9; border-radius: 4px; text-align: center; font-size: 13px; outline: none; }
+    .page-go-unit { font-size: 13px; color: #666; }
+    .paper-modal-footer { height: 56px; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 0 20px; border-top: 1px solid #E8E8E8; flex-shrink: 0; }
+
+    /* 全局标注开关（保留） */
+    .prd-toggle-btn { position: fixed; bottom: 20px; right: 20px; z-index: 200; width: 40px; height: 40px; background: #1890ff; color: #fff; border: none; border-radius: 50%; cursor: pointer; box-shadow: 0 2px 8px rgba(24,144,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background-color 150ms ease, transform 150ms ease; }
+    .prd-toggle-btn:hover { background: #2e90fa; transform: scale(1.05); }
+    .prd-toggle-btn.hidden { background: #999; }
+
+    /* Mermaid 流程图样式 */
+    .prd-drawer-content .mermaid {
+      background: #fff;
+      border: 1px solid #e6e7eb;
+      border-radius: 6px;
+      padding: 16px;
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+    .prd-drawer-content .mermaid svg {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: false, theme: 'base', securityLevel: 'loose' });</script>
+</head>
+<body>
+  <!-- AI TEMPLATE: form page
+       Source: Figma node xL404Oi4tl2krMGrw3A4tY / 4066:15819
+       Contract: ../design.md
+  -->
+  <div class="app">
+    <!-- ==================== 顶部导航栏 ==================== -->
+    <header class="menu-topbar" aria-label="顶部导航">
+      <div class="menu-logo">
+        <div class="menu-logo-inner"></div>
+        <span class="menu-logo-icon"><img src="../../assets/CodeBuddyAssets/696_1660/14.svg" alt=""></span>
+        <span class="menu-logo-main">环慧慧<span class="menu-logo-brand">EHS+</span></span>
+        <span class="menu-logo-sub">Enterprise&nbsp;Edition</span>
+        <span class="menu-logo-sep"></span>
+      </div>
+      <nav class="menu-top-nav" aria-label="一级模块导航">
+        <div class="menu-top-track">
+          <button class="menu-top-item" type="button">环境</button>
+          <button class="menu-top-item" type="button">安全</button>
+          <button class="menu-top-item is-active" type="button">EHS教育</button>
+          <button class="menu-top-item" type="button">系统管理</button>
+          <button class="menu-top-item" type="button">外包管理</button>
+        </div>
+      </nav>
+      <div class="menu-top-actions">
+        <span class="menu-user"><span class="menu-user-meta"><span>庞刚(系统管理员)</span></span></span>
+      </div>
+    </header>
+
+    <!-- ==================== 侧边导航菜单 ==================== -->
+    <aside class="menu-shell" aria-label="侧边导航菜单">
+      <div class="menu-side-list">
+        <!-- 学习中心 -->
+        <button class="menu-side-item" type="button" onclick="toggleMenuSublist(this)">
+          <img src="../../assets/CodeBuddyAssets/696_1660/1.svg" alt="">
+          <span class="menu-side-label">学习中心</span>
+          <span class="menu-side-arrow"><img src="../../assets/CodeBuddyAssets/696_1660/2.svg" alt=""></span>
+        </button>
+        <div class="menu-sublist">
+          <button class="menu-side-child" type="button">课件管理</button>
+          <button class="menu-side-child" type="button">课程管理</button>
+          <button class="menu-side-child" type="button">学习记录</button>
+        </div>
+        <!-- 设置 -->
+        <button class="menu-side-item" type="button" onclick="toggleMenuSublist(this)">
+          <img src="../../assets/CodeBuddyAssets/696_1660/13.svg" alt="">
+          <span class="menu-side-label">设置</span>
+          <span class="menu-side-arrow"><img src="../../assets/CodeBuddyAssets/696_1660/12.svg" alt=""></span>
+        </button>
+        <div class="menu-sublist is-open">
+          <button class="menu-side-child" type="button">课件类型管理</button>
+          <button class="menu-side-child is-active" type="button">练习设置</button>
+        </div>
+        <!-- 教育报表 -->
+        <button class="menu-side-item" type="button" onclick="toggleMenuSublist(this)">
+          <img src="../../assets/CodeBuddyAssets/696_1660/1.svg" alt="">
+          <span class="menu-side-label">教育报表</span>
+          <span class="menu-side-arrow"><img src="../../assets/CodeBuddyAssets/696_1660/2.svg" alt=""></span>
+        </button>
+        <div class="menu-sublist"></div>
+        <!-- 积分中心 -->
+        <button class="menu-side-item" type="button" onclick="toggleMenuSublist(this)">
+          <img src="../../assets/CodeBuddyAssets/696_1660/13.svg" alt="">
+          <span class="menu-side-label">积分中心</span>
+          <span class="menu-side-arrow"><img src="../../assets/CodeBuddyAssets/696_1660/12.svg" alt=""></span>
+        </button>
+        <div class="menu-sublist"></div>
+        <!-- 考试中心 -->
+        <button class="menu-side-item" type="button" onclick="toggleMenuSublist(this)">
+          <img src="../../assets/CodeBuddyAssets/696_1660/1.svg" alt="">
+          <span class="menu-side-label">考试中心</span>
+          <span class="menu-side-arrow"><img src="../../assets/CodeBuddyAssets/696_1660/2.svg" alt=""></span>
+        </button>
+        <div class="menu-sublist"></div>
+      </div>
+    </aside>
+
+    <!-- ==================== 面包屑栏 ==================== -->
+    <div class="menu-breadcrumb" aria-label="面包屑导航">
+      <div class="menu-breadcrumb-path">
+        <div class="menu-breadcrumb-icon">
+          <img src="../../assets/CodeBuddyAssets/696_1751/1.svg" alt="">
+        </div>
+        <div class="menu-breadcrumb-tag">
+          <img src="../../assets/CodeBuddyAssets/696_1751/2.svg" alt="">
+          <span>练习设置</span>
+          <img src="../../assets/CodeBuddyAssets/696_1751/3.svg" alt="">
+        </div>
+        <div class="menu-breadcrumb-next">
+          <img src="../../assets/CodeBuddyAssets/696_1751/4.svg" alt="">
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 页面主体 ==================== -->
+    <main class="main-content-area">
+      <div class="settings-container">
+
+        <!-- 左侧二级菜单 -->
+        <nav class="settings-nav">
+          <div class="settings-nav-title">设置</div>
+          <div class="settings-nav-item" data-view="prof">专业题目练习</div>
+          <div class="settings-nav-item active" data-view="exam" style="position:relative;">
+            模拟练习
+            <span class="annotation-wrapper" style="position:absolute;top:10px;right:10px;">
+              <span class="prd-annotation" data-badge-id="1" data-title="[1] 模拟练习页签 - 新增功能" data-content="<p><strong>功能背景：</strong>环慧慧 EHS+ 系统原先仅支持「按专业类型进行自由练习」。本次在练习设置页新增「模拟练习」页签，为管理员提供一种全新的练习模式。</p><p><strong>功能定义：</strong>管理员基于试卷，配置练习参数（题目总数、各题型数量、练习开放时间、练习人员），员工在小程序端按配置进行刷题练习。</p><p><strong>与原有模式关系：</strong></p><table style='width:100%;font-size:11px;border-collapse:collapse;'><tr style='background:#f7f8fa;'><th style='padding:4px 8px;border:1px solid #e6e7eb;'>对比项</th><th style='padding:4px 8px;border:1px solid #e6e7eb;'>模拟练习（新增）</th><th style='padding:4px 8px;border:1px solid #e6e7eb;'>专业题目练习（原有）</th></tr><tr><td style='padding:4px 8px;border:1px solid #e6e7eb;'>题目来源</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>固定试卷（管理员选择）</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>通用题库+专业题库动态抽题</td></tr><tr style='background:#f7f8fa;'><td style='padding:4px 8px;border:1px solid #e6e7eb;'>题目范围</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>按试卷结构配置题目数</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>按专业身份自动匹配</td></tr><tr><td style='padding:4px 8px;border:1px solid #e6e7eb;'>适用场景</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>考前冲刺、能力评估</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>日常巩固练习</td></tr><tr style='background:#f7f8fa;'><td style='padding:4px 8px;border:1px solid #e6e7eb;'>管理模式</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>新增/编辑/删除/发布</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>专业分类设置</td></tr></table><p><strong>两种模式并存，互不影响。</strong></p>">1</span>
+            </span>
+          </div>
+        </nav>
+
+        <!-- 右侧设置面板 -->
+        <div class="settings-panel">
+
+          <!-- ========== 专业题目练习 ========== -->
+          <div class="page-view" id="profView">
+
+          <div class="panel-header">
+            <h1>专业题目练习</h1>
+            <p class="panel-desc">基于用户所属专业身份，从通用题库和专业题库中动态随机抽题，实现日常巩固练习。</p>
+          </div>
+
+          <div class="prof-form-body">
+
+            <!-- 练习题目总数 -->
+            <div class="prof-section">
+              <h3 class="prof-section-title">练习题目总数</h3>
+              <div class="es-form-row">
+                <label class="es-form-label">练习题目总数</label>
+                <div class="stepper-row">
+                  <button class="num-stepper-btn" type="button" onclick="adjustValue('profTotalInput', -1)">−</button>
+                  <div class="es-input-wrapper" style="margin-left:8px;margin-right:8px;">
+                    <input type="number" class="es-form-input" id="profTotalInput" value="300" min="1" oninput="updateProfTotal()" style="width:80px;text-align:center;padding:0 4px;">
+                    <span class="input-unit">道</span>
+                  </div>
+                  <button class="num-stepper-btn" type="button" onclick="adjustValue('profTotalInput', 1)">+</button>
+                </div>
+              </div>
+              <div class="hint-text">仅支持输入整数</div>
+            </div>
+
+            <!-- 题目类型 -->
+            <div class="prof-section">
+              <h3 class="prof-section-title">
+                题目类型
+                <span class="type-total-badge" style="font-weight:400;margin-left:12px;">( <span class="badge-num" id="profTypeTotal">300</span>/300 )</span>
+              </h3>
+              <div class="type-config-list">
+                <div class="type-config-item">
+                  <span class="type-checkbox checked" data-type="single" onclick="toggleCheckbox(this)"></span>
+                  <span class="type-label">单选</span>
+                  <button class="num-stepper-btn" type="button" style="width:32px;height:32px;" onclick="adjustValue('profSingleInput', -1)">−</button>
+                  <div class="type-input-wrap" style="margin-left:8px;margin-right:8px;">
+                    <input type="number" class="es-type-input" value="100" id="profSingleInput" oninput="updateProfTotal()" min="0">
+                    <span class="type-input-unit">道</span>
+                  </div>
+                  <button class="num-stepper-btn" type="button" style="width:32px;height:32px;" onclick="adjustValue('profSingleInput', 1)">+</button>
+                  <span class="type-hint">仅支持输入小于等于「题目总数」的数字。</span>
+                </div>
+
+                <div class="type-config-item">
+                  <span class="type-checkbox checked" data-type="multi" onclick="toggleCheckbox(this)"></span>
+                  <span class="type-label">多选</span>
+                  <button class="num-stepper-btn" type="button" style="width:32px;height:32px;" onclick="adjustValue('profMultiInput', -1)">−</button>
+                  <div class="type-input-wrap" style="margin-left:8px;margin-right:8px;">
+                    <input type="number" class="es-type-input" value="100" id="profMultiInput" oninput="updateProfTotal()" min="0">
+                    <span class="type-input-unit">道</span>
+                  </div>
+                  <button class="num-stepper-btn" type="button" style="width:32px;height:32px;" onclick="adjustValue('profMultiInput', 1)">+</button>
+                  <span class="type-hint">仅支持输入小于等于「题目总数」的数字。</span>
+                </div>
+
+                <div class="type-config-item">
+                  <span class="type-checkbox checked" data-type="judge" onclick="toggleCheckbox(this)"></span>
+                  <span class="type-label">判断</span>
+                  <button class="num-stepper-btn" type="button" style="width:32px;height:32px;" onclick="adjustValue('profJudgeInput', -1)">−</button>
+                  <div class="type-input-wrap" style="margin-left:8px;margin-right:8px;">
+                    <input type="number" class="es-type-input" value="100" id="profJudgeInput" oninput="updateProfTotal()" min="0">
+                    <span class="type-input-unit">道</span>
+                  </div>
+                  <button class="num-stepper-btn" type="button" style="width:32px;height:32px;" onclick="adjustValue('profJudgeInput', 1)">+</button>
+                  <span class="type-hint">仅支持输入小于等于「题目总数」的数字。</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 出题规则 -->
+            <div class="prof-section">
+              <h3 class="prof-section-title">出题规则</h3>
+              <div class="rule-section" style="margin-left:0;">
+                <div class="rule-label">系统随机组合出题</div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="panel-footer">
+            <button class="btn-save" onclick="saveExamConfig()">保存</button>
+          </div>
+
+          </div>
+          <!-- /profView -->
+
+          <!-- ========== 模拟练习 ========== -->
+          <div class="page-view active" id="examView">
+            <div class="exam-layout">
+              <!-- 左侧：列表 -->
+              <div class="exam-list-panel" id="examListPanel">
+                <div class="panel-header" style="position:relative;">
+                  <h1>模拟练习</h1>
+                  <p class="panel-desc">模拟练习支持灵活划定题目范围，进行针对性强化训练，适用于考前冲刺与阶段性能力评估</p>
+                  <span class="annotation-wrapper" style="position:absolute;top:8px;right:24px;">
+                    <span class="prd-annotation" data-badge-id="2" data-title="[2] 模拟练习列表" data-content="<p><strong>功能概述：</strong>以列表+弹窗表单方式管理多条模拟练习配置，支持新增/编辑/删除/发布。</p><p><strong>列表字段（6列）：</strong></p><ul><li><strong>练习名称：</strong>管理员自定义名称，≤20字，单行展示</li><li><strong>开始时间：</strong>练习开放开始时间</li><li><strong>结束时间：</strong>练习开放结束时间</li><li><strong>状态：</strong>草稿/未开始/进行中/已结束</li><li><strong>创建人：</strong>创建该练习的管理员姓名</li><li><strong>创建时间：</strong>创建时间（倒序排列）</li></ul><p><strong>行操作：</strong>草稿→发布+编辑+删除；未开始→编辑；进行中→编辑；已结束→-</p><p><strong>空列表：</strong>显示「暂无数据」</p>">2</span>
+                  </span>
+                </div>
+                <div class="toolbar" style="position:relative;">
+                  <span class="annotation-wrapper" style="position:relative;display:inline-block;">
+                    <button class="btn-primary" onclick="openExamModal()">新增</button>
+                    <span class="prd-annotation" data-badge-id="3" data-title="[3] 新增按钮" data-content="<p><strong>点击行为：</strong>右侧打开「新增模拟练习」表单页，表单重置为默认值。</p><p><strong>底部按钮：</strong>返回（蓝文字）| 保存（蓝描边，草稿）| 保存并发布（蓝填充，已发布）</p><p><em>表单字段详见弹窗角标 [6]</em></p>">3</span>
+                  </span>
+                </div>
+                <div class="data-table-wrap">
+                  <table class="data-table" id="examTable">
+                    <thead>
+                      <tr>
+                        <th>练习名称</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                        <th>状态</th>
+                        <th>创建人</th>
+                        <th>创建时间</th>
+                        <th style="position:relative;">
+                          操作
+                          <span class="annotation-wrapper" style="position:relative;display:inline-block;margin-left:4px;">
+                            <span style="display:inline-block;font-size:11px;color:#52C41A;position:relative;margin-right:4px;">发布</span>
+                            <span class="prd-annotation" data-badge-id="8" data-title="[8] 发布操作" data-content="<p><strong>显示条件：</strong>状态为「草稿」</p><p><strong>点击行为：</strong>直接发布，无需弹窗确认。</p><p><strong>发布前校验：</strong></p><ul><li>练习开放时间必须完整填写，否则提示「请先编辑练习，填写完整的练习开放时间后再发布」</li><li>结束时间必须大于开始时间，否则提示「结束时间必须大于开始时间，请先修改后再发布」</li><li>开始时间必须大于当前时间，否则提示「开始时间必须大于当前时间，请先修改后再发布」</li></ul><p><strong>执行逻辑：</strong></p><ul><li>将是否已发布设为已发布</li><li>刷新列表</li></ul><p><strong>反馈：</strong>提示「发布成功」，3秒后自动消失。</p><p><strong>状态变化：</strong>草稿 → 未开始/进行中/已结束（由开放时间决定）</p>">8</span>
+                          </span>
+                          <span class="annotation-wrapper" style="position:relative;display:inline-block;margin-left:4px;">
+                            <span style="display:inline-block;font-size:11px;color:#1890ff;position:relative;margin-right:4px;">编辑</span>
+                            <span class="prd-annotation" data-badge-id="4" data-title="[4] 编辑操作" data-content="<p><strong>显示条件：</strong>草稿（显示）| 未开始（显示）| 进行中（显示）| 已结束（不显示）</p><p><strong>编辑限制：</strong></p><ul><li><strong>草稿：</strong>全部字段可编辑，底部「返回+保存+保存并发布」</li><li><strong>未开始：</strong>全部字段可编辑，试卷可选可改，底部「返回+保存设置」（二次确认）</li><li><strong>进行中：</strong>试卷选择、名称、题目数量、开始时间不可修改（置灰），底部「返回+保存设置」（二次确认）</li></ul><p><em>表单字段详见弹窗角标 [7]</em></p>">4</span>
+                          </span>
+                          <span class="annotation-wrapper" style="position:relative;display:inline-block;margin-left:4px;">
+                            <span style="display:inline-block;font-size:11px;color:#F54A45;position:relative;margin-right:4px;">删除</span>
+                            <span class="prd-annotation" data-badge-id="5" data-title="[5] 删除操作" data-content="<p><strong>显示条件：</strong>仅草稿状态（未开始/进行中/已结束均不显示）</p><p><strong>点击行为：</strong>弹出浏览器原生确认弹窗。</p><p><strong>确认文案：</strong>「确定要删除该练习吗？此操作不可恢复。」</p><p><strong>确认后：</strong>从数据列表移除，刷新表格。</p><p><strong>反馈：</strong>提示「删除成功」，3秒后自动消失。进行中状态若绕开触发则提示「进行中的练习不可删除」。</p>">5</span>
+                          </span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id="examTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- /examListPanel -->
+
+              <!-- 右侧：新增/编辑表单页 -->
+              <div class="exam-form-panel" id="examFormPanel">
+                <div class="exam-form-header" style="position:relative;display:flex;align-items:center;justify-content:flex-start;">
+                  <button class="exam-form-back-icon" onclick="closeExamModal()" title="返回列表">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                  </button>
+                  <span class="exam-form-header-text" id="examModalTitle" style="margin:0;">新增模拟练习</span>
+                  <span class="annotation-wrapper" style="position:absolute;top:8px;right:24px;">
+                    <span class="prd-annotation" id="examModalBadge" data-badge-id="6" data-title="[6] 新增/编辑页面 - 整体规则" data-content="<h3 style='margin:0 0 8px;font-size:13px;color:#FF8340;'>一、新增 vs 编辑</h3><table style='width:100%;font-size:11px;border-collapse:collapse;'><tr style='background:#f7f8fa;'><th style='padding:4px 8px;border:1px solid #e6e7eb;'>对比</th><th style='padding:4px 8px;border:1px solid #e6e7eb;'>新增</th><th style='padding:4px 8px;border:1px solid #e6e7eb;'>编辑</th></tr><tr><td style='padding:4px 8px;border:1px solid #e6e7eb;'>标题</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>新增模拟练习</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>编辑模拟练习</td></tr><tr style='background:#f7f8fa;'><td style='padding:4px 8px;border:1px solid #e6e7eb;'>试卷选择</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>可点击</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>草稿/未开始可编辑 / 进行中置灰禁用</td></tr><tr><td style='padding:4px 8px;border:1px solid #e6e7eb;'>底部按钮</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>返回+保存+保存并发布</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>草稿：返回+保存+保存并发布 / 未开始/进行中：返回+保存设置（二次确认）</td></tr><tr style='background:#f7f8fa;'><td style='padding:4px 8px;border:1px solid #e6e7eb;'>初始数据</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>默认值</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>回填已有数据</td></tr></table><h3 style='margin:10px 0 6px;font-size:13px;color:#FF8340;'>二、底部按钮</h3><p style='font-size:11px;margin:0 0 6px;'><strong>新增 / 草稿编辑：</strong></p><table style='width:100%;font-size:11px;border-collapse:collapse;'><tr style='background:#f7f8fa;'><th style='padding:4px 8px;border:1px solid #e6e7eb;'>按钮</th><th style='padding:4px 8px;border:1px solid #e6e7eb;'>样式</th><th style='padding:4px 8px;border:1px solid #e6e7eb;'>行为</th></tr><tr><td style='padding:4px 8px;border:1px solid #e6e7eb;'>返回</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>灰色描边</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>返回左侧列表，不保存</td></tr><tr style='background:#f7f8fa;'><td style='padding:4px 8px;border:1px solid #e6e7eb;'>保存</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>蓝色描边</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>校验通过后保存，isPublished=false（草稿）</td></tr><tr><td style='padding:4px 8px;border:1px solid #e6e7eb;'>保存并发布</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>蓝色填充</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>校验通过后保存，isPublished=true（已发布）</td></tr></table><p style='font-size:11px;margin:8px 0 6px;'><strong>未开始 / 进行中编辑：</strong></p><table style='width:100%;font-size:11px;border-collapse:collapse;'><tr style='background:#f7f8fa;'><th style='padding:4px 8px;border:1px solid #e6e7eb;'>按钮</th><th style='padding:4px 8px;border:1px solid #e6e7eb;'>样式</th><th style='padding:4px 8px;border:1px solid #e6e7eb;'>行为</th></tr><tr><td style='padding:4px 8px;border:1px solid #e6e7eb;'>返回</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>灰色描边</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>返回左侧列表，不保存</td></tr><tr style='background:#f7f8fa;'><td style='padding:4px 8px;border:1px solid #e6e7eb;'>保存设置</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>蓝色填充</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>弹出confirm二次确认「确定要保存当前设置吗？」，确认后校验通过则保存</td></tr></table><h3 style='margin:10px 0 6px;font-size:13px;color:#FF8340;'>三、校验规则（依次执行，共10条）</h3><ol style='font-size:11px;'><li>练习名称必填 →「请输入练习名称」</li><li>试卷必选 →「请选择试卷」</li><li>题目总数&gt;0 →「请输入有效的题目总数」</li><li>总数≤试卷总数 →「不能超过试卷题目总数（N道）」</li><li>至少选一种题型 →「请至少选择一种题目类型」</li><li>各题型之和=总数 →「各题型数量之和需等于题目总数」</li><li>单选≤试卷上限 →「单选题数量不能超过试卷单选数量（N道）」</li><li>多选≤试卷上限 →「多选题数量不能超过试卷多选数量（N道）」</li><li>判断≤试卷上限 →「判断题数量不能超过试卷判断数量（N道）」</li><li>练习人员必填；须添加人员 →「请选择练习人员」/「请至少添加一个人员或部门」</li></ol><p style='margin-top:8px;font-size:11px;'><strong>编辑模式保存规则：</strong>「保存」保持原发布状态不变；「保存并发布」将草稿覆盖为已发布；「保存设置」（非草稿）保存当前设置。</p>">6</span>
+                  </span>
+                </div>
+                <div class="exam-form-body">
+
+                  <!-- ===== 基本信息 ===== -->
+                  <div class="exam-form-section">
+                    <h3 class="exam-form-section-title">基本信息</h3>
+                    <div class="modal-form-row">
+                      <label class="modal-form-label"><span class="required">*</span>练习名称</label>
+                      <div class="modal-form-control">
+                        <div class="name-input-wrap">
+                          <input type="text" class="modal-input" id="examNameInput" placeholder="请输入练习名称" maxlength="20" oninput="updateNameCharCount()">
+                          <span class="name-char-count" id="nameCharCount">0/20</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-form-row">
+                      <label class="modal-form-label"><span class="required">*</span>练习开放时间</label>
+                      <div class="modal-form-control" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                        <input type="datetime-local" class="modal-input" id="examOpenTimeStartInput" style="width:200px;" placeholder="开始时间" onchange="onStartTimeChange()">
+                        <span style="color:#999;font-size:13px;">至</span>
+                        <input type="datetime-local" class="modal-input" id="examOpenTimeEndInput" style="width:200px;" placeholder="结束时间">
+                        <span style="font-size:13px;color:#999;">员工可以在练习开放时间内进行练习</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ===== 选择试卷 ===== -->
+                  <div class="exam-form-section">
+                    <h3 class="exam-form-section-title">选择试卷</h3>
+                    <div class="modal-form-row" style="margin-bottom:0;">
+                      <label class="modal-form-label"><span class="required">*</span>选择试卷</label>
+                      <div class="modal-form-control">
+                        <div class="modal-paper-trigger" id="paperTrigger" onclick="openPaperPickerModal()" style="position:relative;">
+                          <input type="text" class="modal-input" id="examPaperDisplay" placeholder="请选择试卷" readonly style="cursor:pointer;background:#fff;padding-right:32px;">
+                          <input type="hidden" id="examPaperSelect" value="">
+                          <span class="modal-input-arrow" id="paperArrow">▼</span>
+                        </div>
+                        <div class="paper-info-bar" id="paperInfoBar" style="display:none;"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ===== 练习题目数量 ===== -->
+                  <div class="exam-form-section">
+                    <h3 class="exam-form-section-title">练习题目数量</h3>
+                    <div class="modal-form-row" style="position:relative;">
+                      <label class="modal-form-label"><span class="required">*</span>练习题目总数</label>
+                      <div class="modal-form-control">
+                        <input type="number" class="modal-input" id="examTotalInput" value="" min="1" disabled oninput="updateExamTypeTotal()" style="width:120px;" placeholder="请先选择试卷">
+                        <span style="font-size:14px;color:#999;margin-left:8px;">道</span>
+                      </div>
+                    </div>
+                    <div class="modal-form-row">
+                      <label class="modal-form-label"><span class="required">*</span>各题型数量</label>
+                      <div class="modal-form-control">
+                        <div class="modal-type-row" style="margin-bottom:10px;">
+                          <span class="type-checkbox checked" data-etype="single" onclick="toggleExamTypeCheckbox(this)"></span>
+                          <span class="type-label">单选</span>
+                          <input type="number" class="modal-input" id="examSingleInput" value="" min="0" disabled oninput="updateExamTypeTotal()" style="width:100px;" placeholder="请先选择试卷">
+                          <span class="type-unit">道</span>
+                          <span class="type-hint" style="font-size:13px;color:#BBB;margin-left:8px;">仅支持输入小于等于「题目总数」的数字。</span>
+                        </div>
+                        <div class="modal-type-row" style="margin-bottom:10px;">
+                          <span class="type-checkbox checked" data-etype="multi" onclick="toggleExamTypeCheckbox(this)"></span>
+                          <span class="type-label">多选</span>
+                          <input type="number" class="modal-input" id="examMultiInput" value="" min="0" disabled oninput="updateExamTypeTotal()" style="width:100px;" placeholder="请先选择试卷">
+                          <span class="type-unit">道</span>
+                          <span class="type-hint" style="font-size:13px;color:#BBB;margin-left:8px;">仅支持输入小于等于「题目总数」的数字。</span>
+                        </div>
+                        <div class="modal-type-row">
+                          <span class="type-checkbox checked" data-etype="judge" onclick="toggleExamTypeCheckbox(this)"></span>
+                          <span class="type-label">判断</span>
+                          <input type="number" class="modal-input" id="examJudgeInput" value="" min="0" disabled oninput="updateExamTypeTotal()" style="width:100px;" placeholder="请先选择试卷">
+                          <span class="type-unit">道</span>
+                          <span class="type-hint" style="font-size:13px;color:#BBB;margin-left:8px;">仅支持输入小于等于「题目总数」的数字。</span>
+                        </div>
+                        <div class="modal-type-summary" id="examTypeSummary">( 0 / 0 )</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ===== 练习人员 ===== -->
+                  <div class="exam-form-section">
+                    <h3 class="exam-form-section-title">练习人员</h3>
+                    <div class="modal-form-row">
+                      <label class="modal-form-label"><span class="required">*</span>练习人员</label>
+                      <div class="modal-form-control">
+                        <div id="specifiedPersonArea" style="margin-top:0;">
+                          <button class="btn-add-person" id="btnAddPerson" onclick="openPersonPicker()">添加人员</button>
+                          <!-- 指定用户卡片 -->
+                          <div class="person-group-card" id="personGroupCard">
+                            <div class="person-group-header">
+                              <div>
+                                <span class="person-group-title">指定用户</span>
+                                <span class="person-group-count" id="personGroupCount">0人</span>
+                              </div>
+                              <div class="person-group-actions">
+                                <span class="link-action danger" onclick="removeAllPersons()">全部移除</span>
+                              </div>
+                            </div>
+                            <div class="person-group-body">
+                              <div class="person-tags" id="personTags"></div>
+                              <div class="person-group-empty" id="personGroupEmpty">暂无指定用户</div>
+                            </div>
+                          </div>
+                          <!-- 部门范围卡片 -->
+                          <div class="person-group-card" id="deptGroupCard">
+                            <div class="person-group-header">
+                              <div>
+                                <span class="person-group-title">部门范围</span>
+                                <span class="person-group-count" id="deptGroupCount">0个部门</span>
+                              </div>
+                              <div class="person-group-actions">
+                                <span class="link-action danger" onclick="removeAllDepts()">全部移除</span>
+                              </div>
+                            </div>
+                            <div class="person-group-body">
+                              <div class="person-tags" id="deptTags"></div>
+                              <div class="person-group-empty" id="deptGroupEmpty">暂未选择部门范围</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="exam-form-footer">
+                  <button class="btn-return-outline" id="btnExamReturn" onclick="closeExamModal()">返回</button>
+                  <button class="btn-save-outline" id="btnExamSaveDraft" onclick="saveExamPractice('draft')">保存</button>
+                  <button class="btn-save-publish" id="btnExamSavePublish" onclick="saveExamPractice('publish')">保存并发布</button>
+                  <button class="btn-save-publish" id="btnExamSaveSettings" onclick="saveExamPracticeWithConfirm()" style="display:none;">保存设置</button>
+                </div>
+              </div>
+              <!-- /examFormPanel -->
+            </div>
+          </div>
+          <!-- /examView -->
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ==================== 试卷选择弹窗 ==================== -->
+  <div class="modal-overlay" id="paperPickerOverlay">
+    <div class="modal" style="width:600px;">
+      <div class="modal-header" style="position:relative;">
+        <h2>选择试卷</h2>
+        <span class="annotation-wrapper" style="position:absolute;top:12px;right:40px;">
+          <span class="prd-annotation" data-badge-id="12" data-title="[12] 试卷选择弹窗 - 使用系统现有组件" data-content="<div style='background:#FFF7E6;border:2px solid #FFA940;border-radius:4px;padding:8px 12px;margin-bottom:10px;'><strong style='color:#D4380D;font-size:14px;'>⚠️ 使用系统现有组件：试卷选择器</strong><p style='margin:4px 0 0;font-size:12px;color:#AD4E00;'>此弹窗应直接复用系统中已有的「试卷选择器」组件，无需重新开发。仅需配置调用参数（如展示列、选中回调）即可。</p></div><p><strong>触发入口：</strong>弹窗中点击「选择试卷」字段区域</p><p><strong>弹窗内容：</strong></p><table style='width:100%;font-size:12px;border-collapse:collapse;'><tr style='background:#f7f8fa;'><th style='padding:4px 8px;border:1px solid #e6e7eb;text-align:left;'>列名</th><th style='padding:4px 8px;border:1px solid #e6e7eb;text-align:left;'>说明</th></tr><tr><td style='padding:4px 8px;border:1px solid #e6e7eb;'>单选按钮</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>圆形 radio，选中填充蓝色</td></tr><tr style='background:#f7f8fa;'><td style='padding:4px 8px;border:1px solid #e6e7eb;'>试卷名称</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>试卷名称</td></tr><tr><td style='padding:4px 8px;border:1px solid #e6e7eb;'>题目总数</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>该试卷总题目数</td></tr><tr style='background:#f7f8fa;'><td style='padding:4px 8px;border:1px solid #e6e7eb;'>创建时间</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>试卷创建时间</td></tr></table><p style='margin-top:8px;'><strong>交互规则：</strong></p><ul><li>单行选中，整行可点击切换</li><li>选中行高亮蓝色背景 #EBF3FD</li><li>点击「确认」→ 回填到主表单，展示试卷信息条，自动设置各题型输入上限</li><li>点击「取消」或遮罩层 → 关闭弹窗</li><li>编辑模式下此弹窗不触发打开</li></ul>">12</span>
+        </span>
+        <button class="modal-close" onclick="closePaperPickerModal()">×</button>
+      </div>
+      <div class="modal-body" style="padding:0;">
+        <div class="sys-comp-banner">
+          <span class="scb-icon">⚠️</span>
+          <span class="scb-text"><strong>使用系统现有组件：试卷选择器</strong><br/>此弹窗应直接复用系统中已有的「试卷选择器」组件，该组件已提供试卷列表查询、单选、搜索过滤等标准交互能力。开发时无需重新实现，仅需配置调用参数（如展示列、选中回调）即可。</span>
+        </div>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width:50px;"></th>
+                <th>试卷名称</th>
+                <th>题目总数</th>
+                <th>创建时间</th>
+              </tr>
+            </thead>
+            <tbody id="paperPickerBody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closePaperPickerModal()">取消</button>
+        <button class="btn-save" onclick="confirmPaperPicker()">确认</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 人员选择弹窗 ==================== -->
+  <div class="modal-overlay" id="personPickerOverlay">
+    <div class="modal" style="width:600px;">
+      <div class="modal-header" style="position:relative;">
+        <h2>选择练习人员</h2>
+        <span class="annotation-wrapper" style="position:absolute;top:12px;right:40px;">
+          <span class="prd-annotation" data-badge-id="13" data-title="[13] 人员选择弹窗 - 使用系统现有组件" data-content="<div style='background:#FFF7E6;border:2px solid #FFA940;border-radius:4px;padding:8px 12px;margin-bottom:10px;'><strong style='color:#D4380D;font-size:14px;'>⚠️ 使用系统现有组件：人员选择器</strong><p style='margin:4px 0 0;font-size:12px;color:#AD4E00;'>此弹窗应直接复用系统中已有的「人员选择器」组件，无需重新开发。仅需配置调用参数（如 Tab 类型、多选模式、确认回调）即可。</p></div><p><strong>触发入口：</strong>弹窗中点击「添加人员」按钮</p><p><strong>人员 Tab：</strong></p><table style='width:100%;font-size:12px;border-collapse:collapse;'><tr style='background:#f7f8fa;'><th style='padding:4px 8px;border:1px solid #e6e7eb;text-align:left;'>列名</th><th style='padding:4px 8px;border:1px solid #e6e7eb;text-align:left;'>说明</th></tr><tr><td style='padding:4px 8px;border:1px solid #e6e7eb;'>多选复选框</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>方形 check，选中填充蓝色+白色勾</td></tr><tr style='background:#f7f8fa;'><td style='padding:4px 8px;border:1px solid #e6e7eb;'>姓名</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>人员姓名</td></tr><tr><td style='padding:4px 8px;border:1px solid #e6e7eb;'>部门</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>所属部门</td></tr><tr style='background:#f7f8fa;'><td style='padding:4px 8px;border:1px solid #e6e7eb;'>职位</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>职位名称</td></tr></table><p><strong>部门范围 Tab：</strong>按部门分组展示，可全选部门下所有人员。</p><p style='margin-top:8px;'><strong>交互规则：</strong></p><ul><li>支持按姓名、部门搜索过滤</li><li>多选，整行可点击切换选中/取消</li><li>搜索无结果时显示「未找到匹配人员」</li><li>点击「确认」→ 已选人员和部门范围渲染到主表单列表中</li><li>点击「取消」或遮罩层 → 关闭弹窗</li></ul>">13</span>
+        </span>
+        <button class="modal-close" onclick="closePersonPicker()">×</button>
+      </div>
+      <div class="sys-comp-banner" style="margin:12px 20px 4px;">
+        <span class="scb-icon">⚠️</span>
+        <span class="scb-text"><strong>使用系统现有组件：人员选择器</strong><br/>此弹窗应直接复用系统中已有的「人员选择器」组件，该组件已提供人员列表查询、部门范围筛选、多选、搜索过滤等标准交互能力。开发时无需重新实现，仅需配置调用参数（如 Tab 类型、多选模式、确认回调）即可。</span>
+      </div>
+      <div class="person-picker-tabs">
+        <div class="person-picker-tab" data-tab="dept" onclick="switchPickerTab('dept')">部门范围</div>
+      </div>
+      <!-- 人员 Tab -->
+      <div class="person-picker-panel active" id="pickerPanelPerson">
+        <div class="person-picker-search">
+          <input type="text" class="modal-input" id="personSearchInput" placeholder="搜索人员姓名" oninput="filterPersonList()">
+        </div>
+        <div class="select-all-bar">
+          <input type="checkbox" id="personPickSelectAll" onchange="togglePickSelectAll('person')">
+          <span>全选当前列表</span>
+        </div>
+        <div class="data-table-wrap" style="max-height:300px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width:50px;"></th>
+                <th>姓名</th>
+                <th>部门</th>
+                <th>职位</th>
+              </tr>
+            </thead>
+            <tbody id="personPickerBody"></tbody>
+          </table>
+          <div class="person-pick-empty" id="personPickEmpty" style="display:none;">未找到匹配人员</div>
+        </div>
+      </div>
+      <!-- 部门范围 Tab -->
+      <div class="person-picker-panel" id="pickerPanelDept">
+        <div class="person-picker-search">
+          <input type="text" class="modal-input" id="deptSearchInput" placeholder="搜索部门名称" oninput="filterDeptList()">
+        </div>
+        <div class="select-all-bar">
+          <input type="checkbox" id="deptPickSelectAll" onchange="togglePickSelectAll('dept')">
+          <span>全选当前列表</span>
+        </div>
+        <div class="data-table-wrap" style="max-height:300px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width:50px;"></th>
+                <th>部门名称</th>
+                <th>包含人数</th>
+              </tr>
+            </thead>
+            <tbody id="deptPickerBody"></tbody>
+          </table>
+          <div class="person-pick-empty" id="deptPickEmpty" style="display:none;">未找到匹配部门</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closePersonPicker()">取消</button>
+        <button class="btn-save" onclick="confirmPersonPicker()">确认</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+    (function() {
+      'use strict';
+
+      const $ = (sel) => document.querySelector(sel);
+      const $$ = (sel) => document.querySelectorAll(sel);
+
+      // ==================== 侧边菜单折叠 ====================
+      window.toggleMenuSublist = function(btn) {
+        var sublist = btn.nextElementSibling;
+        if (sublist && sublist.classList.contains('menu-sublist')) {
+          var isOpen = sublist.classList.toggle('is-open');
+          btn.classList.toggle('is-expanded', isOpen);
+        }
+      };
+
+      // ==================== 数字步进 ====================
+      window.adjustValue = function(inputId, delta) {
+        var input = document.getElementById(inputId);
+        if (!input) return;
+        var val = parseInt(input.value) || 0;
+        var newVal = val + delta;
+        var min = parseInt(input.getAttribute('min')) || 0;
+        if (newVal < min) newVal = min;
+        input.value = newVal;
+        window.updateProfTotal();
+      };
+
+      // ==================== 题型勾选 ====================
+      window.toggleCheckbox = function(el) {
+        var isChecked = el.classList.toggle('checked');
+        var item = el.closest('.type-config-item');
+        if (item) {
+          if (isChecked) {
+            item.classList.remove('disabled');
+          } else {
+            item.classList.add('disabled');
+            // 取消勾选时清零对应的输入框
+            var type = el.getAttribute('data-type');
+            if (type === 'single') { $('#profSingleInput').value = 0; }
+            else if (type === 'multi') { $('#profMultiInput').value = 0; }
+            else if (type === 'judge') { $('#profJudgeInput').value = 0; }
+          }
+        }
+        window.updateProfTotal();
+      };
+
+      // ==================== 更新题目总数校验 ====================
+      window.updateProfTotal = function() {
+        var total = parseInt($('#profTotalInput').value) || 0;
+        var singleCb = document.querySelector('.type-checkbox[data-type="single"]');
+        var multiCb = document.querySelector('.type-checkbox[data-type="multi"]');
+        var judgeCb = document.querySelector('.type-checkbox[data-type="judge"]');
+        var singleChecked = singleCb && singleCb.classList.contains('checked');
+        var multiChecked = multiCb && multiCb.classList.contains('checked');
+        var judgeChecked = judgeCb && judgeCb.classList.contains('checked');
+
+        // 未勾选题型清零
+        if (!singleChecked) { $('#profSingleInput').value = 0; }
+        if (!multiChecked) { $('#profMultiInput').value = 0; }
+        if (!judgeChecked) { $('#profJudgeInput').value = 0; }
+
+        var singleVal = singleChecked ? (parseInt($('#profSingleInput').value) || 0) : 0;
+        var multiVal = multiChecked ? (parseInt($('#profMultiInput').value) || 0) : 0;
+        var judgeVal = judgeChecked ? (parseInt($('#profJudgeInput').value) || 0) : 0;
+
+        var typeSum = singleVal + multiVal + judgeVal;
+
+        // 更新进度
+        var badgeEl = $('#profTypeTotal');
+        if (badgeEl) badgeEl.textContent = typeSum;
+
+        // 输入数字不高于题目总数（仅勾选题型）
+        ['single','multi','judge'].forEach(function(t) {
+          var cb = document.querySelector('.type-checkbox[data-type="'+t+'"]');
+          if (!cb || !cb.classList.contains('checked')) return;
+          var inputId = t === 'single' ? 'profSingleInput' : (t === 'multi' ? 'profMultiInput' : 'profJudgeInput');
+          var inp = $('#' + inputId);
+          if (inp && parseInt(inp.value) > total) { inp.value = total; }
+        });
+      };
+
+      // ==================== Toast ====================
+      function showToast(msg, type) {
+        var toast = document.getElementById('esToast');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = 'esToast';
+          toast.className = 'es-toast';
+          document.body.appendChild(toast);
+        }
+        toast.textContent = msg;
+        toast.className = 'es-toast ' + (type === 'success' ? 'success' : '');
+        toast.classList.add('show');
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(function() {
+          toast.classList.remove('show');
+        }, 3000);
+      }
+
+      // ==================== 保存 ====================
+      window.saveExamConfig = function() {
+        var total = parseInt($('#profTotalInput').value) || 0;
+
+        // 校验题目总数
+        if (!total || total <= 0) {
+          showToast('请输入有效的题目总数');
+          return;
+        }
+        if (!Number.isInteger(total)) {
+          showToast('题目总数仅支持输入整数');
+          return;
+        }
+
+        // 校验至少选择一种题型
+        var singleChecked = document.querySelector('.type-checkbox[data-type="single"]').classList.contains('checked');
+        var multiChecked = document.querySelector('.type-checkbox[data-type="multi"]').classList.contains('checked');
+        var judgeChecked = document.querySelector('.type-checkbox[data-type="judge"]').classList.contains('checked');
+
+        if (!singleChecked && !multiChecked && !judgeChecked) {
+          showToast('请至少选择一种题目类型');
+          return;
+        }
+
+        // 校验题目类型总和 = 题目总数
+        var singleVal = singleChecked ? (parseInt($('#profSingleInput').value) || 0) : 0;
+        var multiVal = multiChecked ? (parseInt($('#profMultiInput').value) || 0) : 0;
+        var judgeVal = judgeChecked ? (parseInt($('#profJudgeInput').value) || 0) : 0;
+        var typeSum = singleVal + multiVal + judgeVal;
+
+        if (typeSum !== total) {
+          showToast('题目类型的数量总和需等于「题目总数」');
+          return;
+        }
+
+        var config = {
+          totalQuestions: total,
+          questionTypes: {}
+        };
+        if (singleChecked) config.questionTypes.single = singleVal;
+        if (multiChecked) config.questionTypes.multi = multiVal;
+        if (judgeChecked) config.questionTypes.judge = judgeVal;
+
+        console.log('试卷配置保存:', JSON.stringify(config, null, 2));
+
+        setTimeout(function() {
+          showToast('保存成功', 'success');
+        }, 300);
+      };
+
+      // ==================== 初始设置菜单展开 ====================
+      // 查找所有 menu-side-item，找到标签为「设置」的按钮，默认展开其子菜单
+      var allSideItems = document.querySelectorAll('.menu-side-item');
+      allSideItems.forEach(function(item) {
+        var label = item.querySelector('.menu-side-label');
+        if (label && label.textContent.trim() === '设置') {
+          var sSublist = item.nextElementSibling;
+          if (sSublist && sSublist.classList.contains('menu-sublist')) {
+            sSublist.classList.add('is-open');
+            item.classList.add('is-expanded');
+          }
+        }
+      });
+
+      // ==================== 页面视图切换 ====================
+      // 左侧二级导航切换
+      var navItems = document.querySelectorAll('.settings-nav-item');
+      navItems.forEach(function(nav) {
+        nav.addEventListener('click', function() {
+          navItems.forEach(function(n) { n.classList.remove('active'); });
+          this.classList.add('active');
+          var viewId = this.dataset.view;
+          // 切换 page-view
+          document.querySelectorAll('.settings-panel .page-view').forEach(function(v) {
+            v.classList.remove('active');
+          });
+          if (viewId === 'prof') {
+            var profView = document.getElementById('profView');
+            if (profView) profView.classList.add('active');
+          } else if (viewId === 'exam') {
+            var examView = document.getElementById('examView');
+            if (examView) examView.classList.add('active');
+          }
+        });
+      });
+
+      // ==================== 试卷选择弹窗 ====================
+      var paperList = [
+        { id: 'paper1', name: '2025年安全知识试卷A', total: 300, types: { single: 100, multi: 100, judge: 100 }, createTime: '2025-06-01 10:00:00' },
+        { id: 'paper2', name: '2025年安全知识试卷B', total: 250, types: { single: 80, multi: 90, judge: 80 }, createTime: '2025-06-05 14:30:00' },
+        { id: 'paper3', name: '2025年消防知识试卷', total: 200, types: { single: 70, multi: 60, judge: 70 }, createTime: '2025-06-10 09:15:00' },
+        { id: 'paper4', name: '电气安全基础试卷', total: 180, types: { single: 60, multi: 60, judge: 60 }, createTime: '2025-06-15 16:00:00' }
+      ];
+      var pendingPickerPaperId = '';
+      var pendingPickerPaperName = '';
+      var tempSelectedPaperId = '';
+      var tempSelectedPaperName = '';
+      var selectedPaperLimits = null; // { total, single, multi, judge }
+
+      window.renderPaperPicker = function() {
+        var tbody = document.getElementById('paperPickerBody');
+        if (!tbody) return;
+        var rows = paperList.map(function(p) {
+          var isSel = p.id === tempSelectedPaperId;
+          return '<tr class="paper-pick-row' + (isSel ? ' selected' : '') + '" onclick="selectPaperRow(\'' + p.id + '\',\'' + p.name.replace(/'/g, "\\'") + '\')">' +
+            '<td><span class="paper-pick-radio"></span></td>' +
+            '<td>' + p.name + '</td>' +
+            '<td>' + p.total + ' 道</td>' +
+            '<td>' + p.createTime + '</td>' +
+            '</tr>';
+        });
+        tbody.innerHTML = rows.join('');
+      };
+
+      window.selectPaperRow = function(id, name) {
+        tempSelectedPaperId = id;
+        tempSelectedPaperName = name;
+        window.renderPaperPicker();
+      };
+
+      window.openPaperPickerModal = function() {
+        // 编辑模式下，仅草稿/未开始状态允许重新选择试卷；进行中状态禁止打开
+        if (editingExamId) {
+          var item = examPracticeData.find(function(d) { return d.id === editingExamId; });
+          if (!item) return;
+          var st = window.getExamStatus(item);
+          if (st.status !== 'draft' && st.status !== 'pending') return;
+        }
+        tempSelectedPaperId = pendingPickerPaperId || '';
+        tempSelectedPaperName = pendingPickerPaperName || '';
+        window.renderPaperPicker();
+        $('#paperPickerOverlay').classList.add('is-open');
+      };
+
+      window.closePaperPickerModal = function() {
+        $('#paperPickerOverlay').classList.remove('is-open');
+      };
+
+      window.confirmPaperPicker = function() {
+        if (!tempSelectedPaperId) {
+          showToast('请选择一份试卷');
+          return;
+        }
+        pendingPickerPaperId = tempSelectedPaperId;
+        pendingPickerPaperName = tempSelectedPaperName;
+        $('#examPaperSelect').value = tempSelectedPaperId;
+        $('#examPaperDisplay').value = tempSelectedPaperName;
+        window.updatePaperInfoBar(tempSelectedPaperId);
+
+        // 选择试卷后自动填充题目总数和各题型数量
+        var paper = paperList.find(function(p) { return p.id === tempSelectedPaperId; });
+        if (paper) {
+          var types = paper.types || {};
+          $('#examTotalInput').value = paper.total;
+          $('#examSingleInput').value = types.single || '';
+          $('#examMultiInput').value = types.multi || '';
+          $('#examJudgeInput').value = types.judge || '';
+          // 更新勾选状态：有对应题型的勾选，没有的不勾选并置灰
+          document.querySelectorAll('.type-checkbox[data-etype]').forEach(function(cb) {
+            var etype = cb.dataset.etype;
+            var row = cb.closest('.modal-type-row');
+            if (types[etype] && types[etype] > 0) {
+              cb.classList.add('checked');
+              if (row) row.classList.remove('disabled');
+            } else {
+              cb.classList.remove('checked');
+              if (row) row.classList.add('disabled');
+              // 无此题型时清零
+              var inputId = 'exam' + etype.charAt(0).toUpperCase() + etype.slice(1) + 'Input';
+              var inp = $('#' + inputId);
+              if (inp) inp.value = 0;
+            }
+          });
+          window.updateExamTypeTotal();
+        }
+
+        closePaperPickerModal();
+      };
+
+      // 更新试卷信息条 & 设置输入上限
+      window.updatePaperInfoBar = function(paperId) {
+        var bar = $('#paperInfoBar');
+        if (!bar) return;
+        if (!paperId) {
+          bar.style.display = 'none';
+          bar.innerHTML = '';
+          selectedPaperLimits = null;
+          // 清除输入上限并禁用
+          ['examTotalInput','examSingleInput','examMultiInput','examJudgeInput'].forEach(function(id) {
+            var el = $('#' + id); if (el) { el.removeAttribute('max'); el.value = ''; el.disabled = true; }
+          });
+          return;
+        }
+        var paper = paperList.find(function(p) { return p.id === paperId; });
+        if (!paper) {
+          bar.style.display = 'none';
+          selectedPaperLimits = null;
+          return;
+        }
+        var types = paper.types || {};
+        selectedPaperLimits = { total: paper.total, single: types.single || 0, multi: types.multi || 0, judge: types.judge || 0 };
+
+        // 设置输入上限并启用
+        var totalEl = $('#examTotalInput');
+        if (totalEl) { totalEl.setAttribute('max', paper.total); totalEl.setAttribute('min', 1); totalEl.disabled = false; }
+        var singleEl = $('#examSingleInput');
+        if (singleEl) { singleEl.setAttribute('max', types.single || 0); singleEl.disabled = false; }
+        var multiEl = $('#examMultiInput');
+        if (multiEl) { multiEl.setAttribute('max', types.multi || 0); multiEl.disabled = false; }
+        var judgeEl = $('#examJudgeInput');
+        if (judgeEl) { judgeEl.setAttribute('max', types.judge || 0); judgeEl.disabled = false; }
+
+        var parts = [];
+        parts.push('<span><span class="pi-label">题目总数：</span><span class="pi-num">' + paper.total + '</span> 道</span>');
+        if (types.single) parts.push('<span><span class="pi-label">单选：</span><span class="pi-num">' + types.single + '</span> 道</span>');
+        if (types.multi) parts.push('<span><span class="pi-label">多选：</span><span class="pi-num">' + types.multi + '</span> 道</span>');
+        if (types.judge) parts.push('<span><span class="pi-label">判断：</span><span class="pi-num">' + types.judge + '</span> 道</span>');
+        bar.innerHTML = parts.join('');
+        bar.style.display = 'flex';
+      };
+
+      // 点击遮罩关闭试卷选择弹窗
+      $('#paperPickerOverlay').addEventListener('click', function(e) {
+        if (e.target === this) closePaperPickerModal();
+      });
+
+      // ==================== 人员选择器 ====================
+      // 租户类型：'group' = 集团 | 'subsidiary' = 下级单位
+      var tenantType = 'group';
+
+      // 人员数据（unitType: 'own'=本单位 'sub'=下级单位）
+      var personList = [
+        { id: 'p1', name: '庞刚', dept: '安全管理部', title: '安全总监', unitType: 'own' },
+        { id: 'p2', name: '李明明', dept: '生产运营部', title: '运营经理', unitType: 'own' },
+        { id: 'p3', name: '张伟', dept: '设备管理部', title: '设备工程师', unitType: 'own' },
+        { id: 'p4', name: '王芳', dept: '人力资源部', title: 'HR经理', unitType: 'own' },
+        { id: 'p5', name: '赵磊', dept: '质量管理部', title: '质量主管', unitType: 'sub' },
+        { id: 'p6', name: '陈静', dept: '安全管理部', title: '安全专员', unitType: 'own' },
+        { id: 'p7', name: '刘洋', dept: '生产运营部', title: '班组长', unitType: 'own' },
+        { id: 'p8', name: '孙丽', dept: '行政部', title: '行政主管', unitType: 'sub' },
+        { id: 'p9', name: '周杰', dept: '技术研发部', title: '高级工程师', unitType: 'sub' },
+        { id: 'p10', name: '吴敏', dept: '设备管理部', title: '维修主管', unitType: 'own' }
+      ];
+
+      // 部门范围数据（根据人员列表推导）
+      var deptMap = {};
+      var deptList = [];
+      personList.forEach(function(p) {
+        if (!deptMap[p.dept]) {
+          deptMap[p.dept] = { name: p.dept, count: 0, personIds: [] };
+          deptList.push(deptMap[p.dept]);
+        }
+        deptMap[p.dept].count++;
+        deptMap[p.dept].personIds.push(p.id);
+      });
+
+      var selectedItems = [];           // 已确认选中的 [{type: 'person'|'dept', id, name, dept?}]
+      var tempSelectedItems = { persons: [], depts: [] };  // 弹窗中临时勾选
+      var currentPickerTab = 'person';  // 弹窗当前Tab
+
+      // ==================== 主表单已选人员/范围卡片 ====================
+
+      // 渲染已选人员/范围（两个卡片：指定用户 + 部门范围）
+      window.renderPersonList = function() {
+        var personTags = $('#personTags');
+        var deptTags = $('#deptTags');
+        var personEmpty = $('#personGroupEmpty');
+        var deptEmpty = $('#deptGroupEmpty');
+        var personCount = $('#personGroupCount');
+        var deptCount = $('#deptGroupCount');
+        var personCard = $('#personGroupCard');
+        var deptCard = $('#deptGroupCard');
+
+        // 分类
+        var persons = selectedItems.filter(function(i) { return i.type === 'person'; });
+        var depts = selectedItems.filter(function(i) { return i.type === 'dept'; });
+
+        // 指定用户
+        if (personCount) personCount.textContent = persons.length + '人';
+        if (personTags) {
+          if (persons.length === 0) {
+            personTags.innerHTML = '';
+            if (personEmpty) personEmpty.style.display = 'block';
+          } else {
+            if (personEmpty) personEmpty.style.display = 'none';
+            personTags.innerHTML = persons.map(function(p) {
+              return '<span class="person-tag">' +
+                '<span class="tag-label" title="' + p.name + (p.dept ? ' · ' + p.dept : '') + '">' + p.name + '</span>' +
+                '<span class="tag-close" onclick="removeItemByKey(\'person\',\'' + p.id + '\')">×</span>' +
+                '</span>';
+            }).join('');
+          }
+        }
+
+        // 部门范围
+        if (deptCount) deptCount.textContent = depts.length + '个部门';
+        if (deptTags) {
+          if (depts.length === 0) {
+            deptTags.innerHTML = '';
+            if (deptEmpty) deptEmpty.style.display = 'block';
+          } else {
+            if (deptEmpty) deptEmpty.style.display = 'none';
+            deptTags.innerHTML = depts.map(function(d) {
+              var cnt = deptMap[d.name] ? deptMap[d.name].count : 0;
+              return '<span class="person-tag">' +
+                '<span class="tag-label" title="' + d.name + ' · ' + cnt + '人">' + d.name + '</span>' +
+                '<span class="tag-close" onclick="removeItemByKey(\'dept\',\'' + d.name.replace(/'/g, "\\'") + '\')">×</span>' +
+                '</span>';
+            }).join('');
+          }
+        }
+
+        // 无任何选择时不显示卡片
+        if (selectedItems.length === 0) {
+          if (personCard) personCard.style.display = 'none';
+          if (deptCard) deptCard.style.display = 'none';
+        } else {
+          if (personCard) personCard.style.display = persons.length > 0 ? 'block' : 'none';
+          if (deptCard) deptCard.style.display = depts.length > 0 ? 'block' : 'none';
+        }
+      };
+
+      // 按类型+key删除单项
+      window.removeItemByKey = function(type, key) {
+        selectedItems = selectedItems.filter(function(item) {
+          if (item.type === 'person') return !(type === 'person' && item.id === key);
+          if (item.type === 'dept') return !(type === 'dept' && item.name === key);
+          return true;
+        });
+        window.renderPersonList();
+      };
+
+      // 查看所有指定用户
+      window.viewAllPersons = function() {
+        var persons = selectedItems.filter(function(i) { return i.type === 'person'; });
+        if (persons.length === 0) { alert('暂无指定用户'); return; }
+        var text = persons.map(function(p) { return p.name + (p.dept ? '（' + p.dept + '）' : ''); }).join('\n');
+        alert('指定用户（' + persons.length + '人）：\n' + text);
+      };
+
+      // 查看所有部门范围
+      window.viewAllDepts = function() {
+        var depts = selectedItems.filter(function(i) { return i.type === 'dept'; });
+        if (depts.length === 0) { alert('暂未选择部门范围'); return; }
+        var text = depts.map(function(d) {
+          var cnt = deptMap[d.name] ? deptMap[d.name].count : 0;
+          return d.name + '（' + cnt + '人）';
+        }).join('\n');
+        alert('部门范围（' + depts.length + '个部门）：\n' + text);
+      };
+
+      // 全部移除指定用户
+      window.removeAllPersons = function() {
+        selectedItems = selectedItems.filter(function(i) { return i.type !== 'person'; });
+        window.renderPersonList();
+      };
+
+      // 获取所有人员
+      function getVisiblePersons() {
+        return personList;
+      }
+
+      // 获取所有部门
+      function getVisibleDepts() {
+        return deptList;
+      }
+
+      // 全部移除部门范围
+      window.removeAllDepts = function() {
+        selectedItems = selectedItems.filter(function(i) { return i.type !== 'dept'; });
+        window.renderPersonList();
+      };
+
+      // ==================== 人员选择弹窗 ====================
+
+      // 切换弹窗Tab
+      window.switchPickerTab = function(tab) {
+        currentPickerTab = tab;
+        var tabs = document.querySelectorAll('.person-picker-tab');
+        var panels = document.querySelectorAll('.person-picker-panel');
+        tabs.forEach(function(t) { t.classList.remove('active'); });
+        panels.forEach(function(p) { p.classList.remove('active'); });
+        var activeTab = document.querySelector('.person-picker-tab[data-tab="' + tab + '"]');
+        if (activeTab) activeTab.classList.add('active');
+        var panel = $('#pickerPanel' + (tab === 'person' ? 'Person' : 'Dept'));
+        if (panel) panel.classList.add('active');
+        if (tab === 'person') {
+          $('#personSearchInput').value = '';
+          window.renderPersonPicker();
+        } else {
+          $('#deptSearchInput').value = '';
+          window.renderDeptPicker();
+        }
+      };
+
+      // 打开人员选择弹窗
+      window.openPersonPicker = function() {
+        tempSelectedItems = {
+          persons: selectedItems.filter(function(i) { return i.type === 'person'; }).map(function(i) { return i.id; }),
+          depts: selectedItems.filter(function(i) { return i.type === 'dept'; }).map(function(i) { return i.name; })
+        };
+        currentPickerTab = 'person';
+        // 重置Tab状态
+        var tabs = document.querySelectorAll('.person-picker-tab');
+        var panels = document.querySelectorAll('.person-picker-panel');
+        tabs.forEach(function(t) { t.classList.remove('active'); });
+        panels.forEach(function(p) { p.classList.remove('active'); });
+        var firstTab = document.querySelector('.person-picker-tab[data-tab="person"]');
+        if (firstTab) firstTab.classList.add('active');
+        var firstPanel = $('#pickerPanelPerson');
+        if (firstPanel) firstPanel.classList.add('active');
+        $('#personSearchInput').value = '';
+        $('#deptSearchInput').value = '';
+        window.renderPersonPicker();
+        window.renderDeptPicker();
+        $('#personPickerOverlay').classList.add('is-open');
+      };
+
+      // 关闭人员选择弹窗
+      window.closePersonPicker = function() {
+        $('#personPickerOverlay').classList.remove('is-open');
+      };
+
+      // 渲染人员选择表格
+      window.renderPersonPicker = function(filterText) {
+        var tbody = $('#personPickerBody');
+        var emptyEl = $('#personPickEmpty');
+        if (!tbody) return;
+        var visiblePersons = getVisiblePersons();
+        var searchText = (filterText || '').trim().toLowerCase();
+        var filtered = searchText ? visiblePersons.filter(function(p) {
+          return p.name.toLowerCase().indexOf(searchText) !== -1 ||
+            p.dept.toLowerCase().indexOf(searchText) !== -1;
+        }) : visiblePersons;
+        if (filtered.length === 0) {
+          tbody.innerHTML = '';
+          if (emptyEl) emptyEl.style.display = 'block';
+          return;
+        }
+        if (emptyEl) emptyEl.style.display = 'none';
+        tbody.innerHTML = filtered.map(function(p) {
+          var isChecked = tempSelectedItems.persons.indexOf(p.id) !== -1;
+          return '<tr class="person-pick-row' + (isChecked ? ' selected' : '') + '" onclick="togglePersonPick(\'' + p.id + '\')">' +
+            '<td><span class="person-checkbox"></span></td>' +
+            '<td>' + p.name + '</td>' +
+            '<td>' + p.dept + '</td>' +
+            '<td>' + p.title + '</td>' +
+            '</tr>';
+        }).join('');
+      };
+
+      // 渲染部门范围选择表格
+      window.renderDeptPicker = function(filterText) {
+        var tbody = $('#deptPickerBody');
+        var emptyEl = $('#deptPickEmpty');
+        if (!tbody) return;
+        var visibleDepts = getVisibleDepts();
+        var searchText = (filterText || '').trim().toLowerCase();
+        var filtered = searchText ? visibleDepts.filter(function(d) {
+          return d.name.toLowerCase().indexOf(searchText) !== -1;
+        }) : visibleDepts;
+        if (filtered.length === 0) {
+          tbody.innerHTML = '';
+          if (emptyEl) emptyEl.style.display = 'block';
+          return;
+        }
+        if (emptyEl) emptyEl.style.display = 'none';
+        tbody.innerHTML = filtered.map(function(d) {
+          var isChecked = tempSelectedItems.depts.indexOf(d.name) !== -1;
+          return '<tr class="person-pick-row' + (isChecked ? ' selected' : '') + '" onclick="toggleDeptPick(\'' + d.name.replace(/'/g, "\\'") + '\')">' +
+            '<td><span class="person-checkbox"></span></td>' +
+            '<td>' + d.name + '</td>' +
+            '<td>' + d.count + '人</td>' +
+            '</tr>';
+        }).join('');
+      };
+
+      // 勾选/取消人员
+      window.togglePersonPick = function(id) {
+        var idx = tempSelectedItems.persons.indexOf(id);
+        if (idx !== -1) {
+          tempSelectedItems.persons.splice(idx, 1);
+        } else {
+          tempSelectedItems.persons.push(id);
+        }
+        window.renderPersonPicker($('#personSearchInput').value);
+      };
+
+      // 勾选/取消部门
+      window.toggleDeptPick = function(deptName) {
+        var idx = tempSelectedItems.depts.indexOf(deptName);
+        if (idx !== -1) {
+          tempSelectedItems.depts.splice(idx, 1);
+        } else {
+          tempSelectedItems.depts.push(deptName);
+        }
+        window.renderDeptPicker($('#deptSearchInput').value);
+      };
+
+      // 全选/取消全选（弹窗内）
+      window.togglePickSelectAll = function(type) {
+        var checkEl = type === 'person' ? $('#personPickSelectAll') : $('#deptPickSelectAll');
+        var isChecked = checkEl ? checkEl.checked : false;
+        if (type === 'person') {
+          var visiblePersons = getVisiblePersons();
+          var searchText = ($('#personSearchInput').value || '').trim().toLowerCase();
+          var filtered = searchText ? visiblePersons.filter(function(p) {
+            return p.name.toLowerCase().indexOf(searchText) !== -1 || p.dept.toLowerCase().indexOf(searchText) !== -1;
+          }) : visiblePersons;
+          var existingSet = {};
+          tempSelectedItems.persons.forEach(function(id) { existingSet[id] = true; });
+          if (isChecked) {
+            filtered.forEach(function(p) { existingSet[p.id] = true; });
+          } else {
+            filtered.forEach(function(p) { delete existingSet[p.id]; });
+          }
+          tempSelectedItems.persons = Object.keys(existingSet);
+        } else {
+          var visibleDepts = getVisibleDepts();
+          var searchText2 = ($('#deptSearchInput').value || '').trim().toLowerCase();
+          var filtered2 = searchText2 ? visibleDepts.filter(function(d) {
+            return d.name.toLowerCase().indexOf(searchText2) !== -1;
+          }) : visibleDepts;
+          var existingSet2 = {};
+          tempSelectedItems.depts.forEach(function(d) { existingSet2[d] = true; });
+          if (isChecked) {
+            filtered2.forEach(function(d) { existingSet2[d.name] = true; });
+          } else {
+            filtered2.forEach(function(d) { delete existingSet2[d.name]; });
+          }
+          tempSelectedItems.depts = Object.keys(existingSet2);
+        }
+        if (type === 'person') {
+          window.renderPersonPicker($('#personSearchInput').value);
+        } else {
+          window.renderDeptPicker($('#deptSearchInput').value);
+        }
+      };
+
+      // 搜索人员
+      window.filterPersonList = function() {
+        window.renderPersonPicker($('#personSearchInput').value);
+      };
+
+      // 搜索部门
+      window.filterDeptList = function() {
+        window.renderDeptPicker($('#deptSearchInput').value);
+      };
+
+      // 确认人员选择
+      window.confirmPersonPicker = function() {
+        var items = [];
+        // 人员
+        tempSelectedItems.persons.forEach(function(id) {
+          var p = personList.find(function(pl) { return pl.id === id; });
+          if (p) items.push({ type: 'person', id: p.id, name: p.name, dept: p.dept });
+        });
+        // 部门范围 - 排除已在人员列表中单独选择的
+        var selectedPersonIds = {};
+        tempSelectedItems.persons.forEach(function(id) { selectedPersonIds[id] = true; });
+        tempSelectedItems.depts.forEach(function(deptName) {
+          items.push({ type: 'dept', id: 'dept_' + deptName, name: deptName });
+        });
+        selectedItems = items;
+        window.renderPersonList();
+        window.closePersonPicker();
+      };
+
+      // 人员选择弹窗背景点击关闭
+      $('#personPickerOverlay').addEventListener('click', function(e) {
+        if (e.target === this) closePersonPicker();
+      });
+
+      // ==================== 模拟练习数据 ====================
+      var examPracticeData = [
+        { id: 1, name: '2026年安全知识练习', paper: '2026年安全知识试卷A', paperId: 'paper1', total: 300, types: { single: 100, multi: 100, judge: 100 }, creator: '庞刚', createTime: '2026-06-15 09:30:00', openTimeStart: '2026-06-10 08:00', openTimeEnd: '2026-07-10 20:00', persons: [], selectedRanges: [], isPublished: true },
+        { id: 2, name: '2026年消防知识练习', paper: '2026年消防知识试卷', paperId: 'paper3', total: 200, types: { single: 80, multi: 60, judge: 60 }, creator: '李明明', createTime: '2026-06-18 14:22:00', openTimeStart: '2026-08-01 09:00', openTimeEnd: '2026-09-01 18:00', persons: [{ id: 'p1', name: '庞刚', dept: '安全管理部' }, { id: 'p3', name: '张伟', dept: '生产运营部' }], selectedRanges: [{ type: 'person', id: 'p1', name: '庞刚', dept: '安全管理部' }, { type: 'person', id: 'p3', name: '张伟', dept: '生产运营部' }], isPublished: true },
+        { id: 3, name: '安全基础知识考核', paper: '2026年安全知识试卷B', paperId: 'paper2', total: 150, types: { single: 50, multi: 50, judge: 50 }, creator: '庞刚', createTime: '2026-05-20 10:15:00', openTimeStart: '2026-05-01 10:00', openTimeEnd: '2026-05-31 10:00', persons: [], selectedRanges: [], isPublished: true },
+        { id: 4, name: '2026年安全生产月练习', paper: '2026年安全知识试卷C', paperId: 'paper4', total: 200, types: { single: 80, multi: 60, judge: 60 }, creator: '张伟', createTime: '2026-06-25 16:00:00', openTimeStart: '2026-07-01 09:00', openTimeEnd: '2026-09-01 18:00', persons: [], isPublished: false }
+      ];
+      var examNextId = 5;
+      var editingExamId = null;
+
+      // 获取练习状态（基于发布时间与开放时间）
+      window.getExamStatus = function(item) {
+        if (!item.isPublished) return { status: 'draft', label: '草稿', cls: 'status-draft' };
+        var now = new Date();
+        var start = item.openTimeStart ? new Date(item.openTimeStart.replace(' ', 'T')) : null;
+        var end = item.openTimeEnd ? new Date(item.openTimeEnd.replace(' ', 'T')) : null;
+        if (!start || !end) return { status: 'draft', label: '草稿', cls: 'status-draft' };
+        if (now < start) return { status: 'pending', label: '未开始', cls: 'status-pending' };
+        if (now <= end) return { status: 'active', label: '进行中', cls: 'status-active' };
+        return { status: 'ended', label: '已结束', cls: 'status-ended' };
+      };
+
+      // 渲染模拟练习表格
+      window.renderExamTable = function() {
+        var tbody = document.getElementById('examTableBody');
+        if (!tbody) return;
+        if (examPracticeData.length === 0) {
+          tbody.innerHTML = '<tr class="empty-row"><td colspan="7">暂无数据</td></tr>';
+          return;
+        }
+        // 按创建时间倒序排列
+        var sortedData = examPracticeData.slice().sort(function(a, b) {
+          return (b.createTime || '').localeCompare(a.createTime || '');
+        });
+        var rows = sortedData.map(function(item) {
+          var st = window.getExamStatus(item);
+          var startTime = item.openTimeStart || '-';
+          var endTime = item.openTimeEnd || '-';
+          // 操作按钮：草稿→发布+编辑+删除，未开始→编辑，进行中→编辑，已结束→-
+          var actionBtn = '';
+          if (st.status === 'draft') {
+            actionBtn = '<button class="action-link" style="color:#52C41A;" onclick="publishExamPractice(' + item.id + ')">发布</button>';
+          }
+          var editDeleteBtns = '';
+          if (st.status === 'draft') {
+            editDeleteBtns = '<button class="action-link" onclick="editExamPractice(' + item.id + ')">编辑</button>' +
+            '<button class="action-link danger" onclick="deleteExamPractice(' + item.id + ')">删除</button>';
+          } else if (st.status === 'pending' || st.status === 'active') {
+            editDeleteBtns = '<button class="action-link" onclick="editExamPractice(' + item.id + ')">编辑</button>';
+          }
+          // 已结束：不显示任何操作按钮
+          return '<tr>' +
+            '<td>' + item.name + '</td>' +
+            '<td style="white-space:nowrap;">' + startTime + '</td>' +
+            '<td style="white-space:nowrap;">' + endTime + '</td>' +
+            '<td style="text-align:center;"><span class="' + st.cls + '">' + st.label + '</span></td>' +
+            '<td>' + item.creator + '</td>' +
+            '<td>' + item.createTime + '</td>' +
+            '<td><div class="table-actions">' +
+            actionBtn +
+            editDeleteBtns +
+            '</div></td>' +
+            '</tr>';
+        });
+        tbody.innerHTML = rows.join('');
+      };
+
+      // 弹窗 - 更新题型总数
+      window.updateExamTypeTotal = function() {
+        var total = parseInt($('#examTotalInput').value) || 0;
+        var singleCb = document.querySelector('.type-checkbox[data-etype="single"]');
+        var multiCb = document.querySelector('.type-checkbox[data-etype="multi"]');
+        var judgeCb = document.querySelector('.type-checkbox[data-etype="judge"]');
+        var singleChecked = singleCb && singleCb.classList.contains('checked');
+        var multiChecked = multiCb && multiCb.classList.contains('checked');
+        var judgeChecked = judgeCb && judgeCb.classList.contains('checked');
+
+        // 未勾选题型清零
+        if (!singleChecked) { $('#examSingleInput').value = 0; }
+        if (!multiChecked) { $('#examMultiInput').value = 0; }
+        if (!judgeChecked) { $('#examJudgeInput').value = 0; }
+
+        var s = singleChecked ? (parseInt($('#examSingleInput').value) || 0) : 0;
+        var m = multiChecked ? (parseInt($('#examMultiInput').value) || 0) : 0;
+        var j = judgeChecked ? (parseInt($('#examJudgeInput').value) || 0) : 0;
+        var sum = s + m + j;
+        var summaryEl = $('#examTypeSummary');
+        if (summaryEl) summaryEl.textContent = '( ' + sum + ' / ' + total + ' )';
+      };
+
+      // 弹窗 - 题型勾选
+      window.toggleExamTypeCheckbox = function(el) {
+        // 未选择试卷时禁用操作
+        var etype = el.getAttribute('data-etype');
+        var inputMap = { single: 'examSingleInput', multi: 'examMultiInput', judge: 'examJudgeInput' };
+        var inputEl = $('#' + inputMap[etype]);
+        if (inputEl && inputEl.disabled) return;
+        
+        var isChecked = el.classList.toggle('checked');
+        var row = el.closest('.modal-type-row');
+        if (row) {
+          if (isChecked) {
+            row.classList.remove('disabled');
+          } else {
+            row.classList.add('disabled');
+            // 取消勾选时清零对应的输入框
+            if (etype === 'single') { inputEl.value = 0; }
+            else if (etype === 'multi') { inputEl.value = 0; }
+            else if (etype === 'judge') { inputEl.value = 0; }
+          }
+        }
+        window.updateExamTypeTotal();
+      };
+
+      // 练习名称字数统计
+      window.updateNameCharCount = function() {
+        var input = $('#examNameInput');
+        var counter = $('#nameCharCount');
+        if (!input || !counter) return;
+        var len = input.value.length;
+        counter.textContent = len + '/20';
+        counter.style.color = len >= 20 ? '#F54A45' : (len > 15 ? '#FA8C16' : '#BBB');
+      };
+
+      // 开始时间变化 → 更新结束时间的 min 限制（确保结束 ≥ 开始）
+      window.onStartTimeChange = function() {
+        var startInput = $('#examOpenTimeStartInput');
+        var endInput = $('#examOpenTimeEndInput');
+        if (!startInput || !endInput) return;
+        if (startInput.value) {
+          endInput.setAttribute('min', startInput.value);
+          // 如果结束时间早于新的开始时间，清空结束时间
+          if (endInput.value && endInput.value < startInput.value) {
+            endInput.value = '';
+          }
+        } else {
+          endInput.removeAttribute('min');
+        }
+      };
+
+      // 切换弹窗角标：新增[6] / 编辑[7]
+      window.updateExamModalBadge = function(mode) {
+        var badge = document.getElementById('examModalBadge');
+        if (!badge) return;
+        if (mode === 'edit') {
+          badge.setAttribute('data-badge-id', '7');
+          badge.setAttribute('data-title', '[7] 编辑模拟练习弹窗');
+          badge.setAttribute('data-content',
+            '<h3 style="margin:0 0 8px;font-size:13px;color:#F54A45;">编辑模式 vs 新增模式差异</h3>' +
+            '<table style="width:100%;font-size:11px;border-collapse:collapse;margin-bottom:10px;">' +
+            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">对比项</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">编辑</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">新增</th></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">标题</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">编辑模拟练习</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">新增模拟练习</td></tr>' +
+            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">试卷选择</td><td style="padding:4px 8px;border:1px solid #e6e7eb;color:#F54A45;">草稿/未开始→可编辑；进行中→置灰禁用</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">可点击打开试卷选择弹窗</td></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">初始数据</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填已有数据（全部字段）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">全部默认值（空/空人员）</td></tr>' +
+            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">底部按钮</td><td style="padding:4px 8px;border:1px solid #e6e7eb;color:#F54A45;">草稿→返回+保存+保存并发布；未开始/进行中→返回+保存设置（二次确认）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">返回+保存+保存并发布</td></tr>' +
+            '</table>' +
+            '<h3 style="margin:10px 0 6px;font-size:13px;color:#1890ff;">一、表单字段（共5个，全部必填✓）</h3>' +
+            '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
+            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">字段</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">控件类型</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">编辑模式行为</th></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">1. 练习名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">文本输入框（≤20字）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填原名称；实时显示字数计数0/20；草稿/未开始可编辑；进行中置灰</td></tr>' +
+            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;color:#F54A45;">2. 选择试卷</td><td style="padding:4px 8px;border:1px solid #e6e7eb;color:#F54A45;">草稿/未开始→可编辑；进行中→置灰禁用</td><td style="padding:4px 8px;border:1px solid #e6e7eb;color:#F54A45;">草稿/未开始→可点击打开试卷选择弹窗；进行中→置灰不可点击</td></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">3. 练习开放时间</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">两个datetime-local输入框</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">草稿/未开始→开始与结束均可编辑；进行中→开始时间禁用，结束时间可延长</td></tr>' +
+            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">4. 练习题目总数</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">数字输入框（带单位「道」）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填原题目总数；上限≤试卷题目总数；oninput实时更新题型汇总；草稿/未开始可编辑；进行中置灰</td></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">5. 各题型数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">复选框+数字输入（单选/多选/判断 共3行）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填原各题型数量和勾选状态；勾选复选框激活对应输入；每行带提示文字；底部实时显示汇总(N/total)；草稿/未开始可编辑；进行中置灰</td></tr>' +
+            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">6. 练习人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">添加人员按钮+已选标签回显</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填已选人员/部门标签；可修改；标签可逐个×移除；可编辑</td></tr>' +
+            '</table>' +
+            '<h3 style="margin:10px 0 6px;font-size:13px;color:#1890ff;">二、底部按钮</h3>' +
+            '<p style="font-size:11px;margin:0 0 6px;"><strong>草稿编辑：</strong></p>' +
+            '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
+            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">按钮</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">行为</th></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">返回</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">关闭弹窗，不保存任何修改</td></tr>' +
+            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">保存</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">校验通过后保存；保持原发布状态不变；更新数据→关闭弹窗→刷新列表→提示「修改成功」</td></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">保存并发布</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">校验通过后保存；将草稿状态覆盖为已发布；更新数据→关闭弹窗→刷新列表→提示「修改成功」</td></tr>' +
+            '</table>' +
+            '<p style="font-size:11px;margin:8px 0 6px;color:#F54A45;"><strong>未开始/进行中编辑：</strong></p>' +
+            '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
+            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">按钮</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">行为</th></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">返回</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">关闭弹窗，不保存任何修改</td></tr>' +
+            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">保存设置</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">弹出确认弹窗二次确认「确定要保存当前设置吗？」→确认后校验通过则保存→关闭弹窗→刷新列表→提示「修改成功」</td></tr>' +
+            '</table>' +
+            '<h3 style="margin:10px 0 6px;font-size:13px;color:#1890ff;">三、表单校验规则（依次执行，共10条）</h3>' +
+            '<ol style="font-size:11px;padding-left:18px;line-height:1.8;">' +
+            '<li>练习名称必填 → Toast「请输入练习名称」</li>' +
+            '<li>试卷必选 → Toast「请选择试卷」</li>' +
+            '<li>题目总数 > 0 → Toast「请输入有效的题目总数」</li>' +
+            '<li>总数 ≤ 试卷题目总数 → Toast「不能超过试卷题目总数（N道）」</li>' +
+            '<li>至少选一种题型 → Toast「请至少选择一种题目类型」</li>' +
+            '<li>各题型之和 = 总数 → Toast「各题型数量之和需等于题目总数」</li>' +
+            '<li>单选题数 ≤ 试卷单选上限 → Toast「单选题数量不能超过试卷单选数量（N道）」</li>' +
+            '<li>多选题数 ≤ 试卷多选上限 → Toast「多选题数量不能超过试卷多选数量（N道）」</li>' +
+            '<li>判断题数 ≤ 试卷判断上限 → Toast「判断题数量不能超过试卷判断数量（N道）」</li>' +
+            '<li>练习人员必填；须添加至少一人或一部门 → Toast「请至少添加一个人员或部门」</li>' +
+            '</ol>' +
+            '<p style="margin-top:6px;font-size:11px;"><strong>校验失败：</strong>Toast提示错误，保留弹窗和已填内容。<strong>校验通过：</strong>更新数据→关闭弹窗→刷新列表→Toast「修改成功」。</p>' +
+            '<h3 style="margin:10px 0 6px;font-size:13px;color:#1890ff;">四、弹窗交互规则</h3>' +
+            '<ul style="font-size:11px;line-height:1.6;">' +
+            '<li>弹窗以浮层形式展示，包含遮罩层</li>' +
+            '<li>点击遮罩层不关闭弹窗</li>' +
+            '<li>关闭方式：×按钮 / 返回按钮 / 保存成功后自动关闭</li>' +
+            '<li>编辑模式打开时，草稿/未开始全部字段可编辑；进行中仅可编辑部分字段</li>' +
+            '<li>进行中编辑时试卷选择器区域背景变灰（#F5F5F5），箭头隐藏，点击无响应</li>' +
+            '<li>题型复选框勾选/取消勾选实时更新底部汇总</li>' +
+            '</ul>'
+          );
+          badge.textContent = '7';
+        } else {
+          badge.setAttribute('data-badge-id', '6');
+          badge.setAttribute('data-title', '[6] 新增模拟练习弹窗');
+          badge.setAttribute('data-content',
+            '<h3 style="margin:0 0 8px;font-size:13px;color:#1890ff;">一、表单字段及默认值（共5个，全部必填✓）</h3>' +
+            '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
+            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">字段</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">控件类型</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">默认值</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">交互说明</th></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">1. 练习名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">文本输入框（≤20字）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">实时显示字数计数0/20；超过20字不再允许输入</td></tr>' +
+            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">2. 选择试卷</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">只读输入框+触发器▼</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空（placeholder：请选择试卷）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">点击打开系统试卷选择弹窗（单选）；选中后展示试卷结构信息条（题目总数/单选/多选/判断数量）；自动填充题目总数和各题型数量</td></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">3. 练习开放时间</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">两个datetime-local输入框</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">格式yyyy-MM-dd HH:mm；开始时间至结束时间；旁注「员工可以在练习开放时间内进行练习」</td></tr>' +
+            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">4. 练习题目总数</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">数字输入框（带单位「道」）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空（选择试卷后自动填充为试卷题目总数）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">用户可手动修改；上限≤试卷题目总数；oninput实时更新题型汇总</td></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">5. 各题型数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">复选框+数字输入（单选/多选/判断 共3行）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空（选择试卷后自动填充为试卷对应题型数量）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">勾选复选框激活对应输入；用户可手动修改；每行带提示「仅支持输入≤题目总数的数字」；各≤试卷对应类型上限；底部实时显示汇总(N/total)</td></tr>' +
+            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">6. 练习人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">添加人员按钮+已选标签回显</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">点击「添加人员」打开系统人员选择弹窗（多选，支持按姓名/部门搜索+按部门批量选择）；已选人员/部门以标签回显，可逐个×移除</td></tr>' +
+            '</table>' +
+            '<h3 style="margin:10px 0 6px;font-size:13px;color:#1890ff;">二、底部按钮</h3>' +
+            '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
+            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">按钮</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">行为</th></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">返回</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">关闭弹窗，不保存任何修改</td></tr>' +
+            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">保存</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">校验通过后保存；状态为未发布（草稿）；关闭弹窗→刷新列表→提示「新增成功」</td></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">保存并发布</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">校验通过后保存；状态为已发布；关闭弹窗→刷新列表→提示「新增成功」</td></tr>' +
+            '</table>' +
+            '<h3 style="margin:10px 0 6px;font-size:13px;color:#1890ff;">三、表单校验规则（依次执行，共10条）</h3>' +
+            '<ol style="font-size:11px;padding-left:18px;line-height:1.8;">' +
+            '<li>练习名称必填 → Toast「请输入练习名称」</li>' +
+            '<li>试卷必选 → Toast「请选择试卷」</li>' +
+            '<li>题目总数 > 0 → Toast「请输入有效的题目总数」</li>' +
+            '<li>总数 ≤ 试卷题目总数 → Toast「不能超过试卷题目总数（N道）」</li>' +
+            '<li>至少选一种题型 → Toast「请至少选择一种题目类型」</li>' +
+            '<li>各题型之和 = 总数 → Toast「各题型数量之和需等于题目总数」</li>' +
+            '<li>单选题数 ≤ 试卷单选上限 → Toast「单选题数量不能超过试卷单选数量（N道）」</li>' +
+            '<li>多选题数 ≤ 试卷多选上限 → Toast「多选题数量不能超过试卷多选数量（N道）」</li>' +
+            '<li>判断题数 ≤ 试卷判断上限 → Toast「判断题数量不能超过试卷判断数量（N道）」</li>' +
+            '<li>练习人员必填；须添加至少一人或一部门 → Toast「请至少添加一个人员或部门」</li>' +
+            '</ol>' +
+            '<p style="margin-top:6px;font-size:11px;"><strong>校验失败：</strong>Toast提示错误，保留弹窗和已填内容。<strong>校验通过：</strong>追加数据→关闭弹窗→刷新列表→Toast「新增成功」。</p>' +
+            '<h3 style="margin:10px 0 6px;font-size:13px;color:#1890ff;">四、弹窗交互规则</h3>' +
+            '<ul style="font-size:11px;line-height:1.6;">' +
+            '<li>弹窗以浮层形式展示，包含遮罩层</li>' +
+            '<li>点击遮罩层不关闭弹窗</li>' +
+            '<li>关闭方式：×按钮 / 返回按钮 / 保存成功后自动关闭</li>' +
+            '<li>题型复选框勾选/取消勾选实时更新底部汇总</li>' +
+            '</ul>'
+          );
+          badge.textContent = '6';
+        }
+      };
+
+      // 打开新增弹窗
+      window.openExamModal = function() {
+        editingExamId = null;
+        pendingPickerPaperId = '';
+        pendingPickerPaperName = '';
+        $('#examModalTitle').textContent = '新增模拟练习';
+        $('#examNameInput').value = '';
+        $('#examNameInput').disabled = false;
+        window.updateNameCharCount();
+        $('#examPaperSelect').value = '';
+        $('#examPaperDisplay').value = '';
+        window.updatePaperInfoBar(null);
+        $('#examTotalInput').value = '';
+        $('#examTotalInput').disabled = true;
+        $('#examSingleInput').value = '';
+        $('#examSingleInput').disabled = true;
+        $('#examMultiInput').value = '';
+        $('#examMultiInput').disabled = true;
+        $('#examJudgeInput').value = '';
+        $('#examJudgeInput').disabled = true;
+        document.querySelectorAll('.type-checkbox[data-etype]').forEach(function(cb) {
+          cb.classList.add('checked');
+          var row = cb.closest('.modal-type-row');
+          if (row) row.classList.remove('disabled');
+        });
+        window.updateExamTypeTotal();
+        // 恢复试卷选择为可编辑状态
+        var trigger = $('#paperTrigger');
+        var display = $('#examPaperDisplay');
+        var arrow = $('#paperArrow');
+        if (trigger) { trigger.onclick = function() { openPaperPickerModal(); }; trigger.style.cursor = 'pointer'; }
+        if (display) { display.style.cursor = 'pointer'; display.style.background = '#fff'; display.readOnly = true; }
+        if (arrow) arrow.style.display = '';
+        // 重置人员选择
+        selectedItems = [];
+        window.renderPersonList();
+        // 重置练习开放时间
+        var startInput = $('#examOpenTimeStartInput');
+        var endInput = $('#examOpenTimeEndInput');
+        startInput.value = '';
+        startInput.disabled = false;
+        endInput.value = '';
+        endInput.removeAttribute('min');
+        window.updateExamModalBadge('add');
+        // 新增模式：显示全部三按钮
+        window.setExamFooterForStatus('draft');
+        $('#examListPanel').classList.add('hidden');
+        $('#examFormPanel').classList.add('active');
+      };
+
+      // 返回列表
+      window.closeExamModal = function() {
+        $('#examFormPanel').classList.remove('active');
+        $('#examListPanel').classList.remove('hidden');
+        editingExamId = null;
+      };
+
+      // 根据练习状态切换底部按钮
+      window.setExamFooterForStatus = function(status) {
+        var isDraft = status === 'draft';
+        $('#btnExamSaveDraft').style.display = isDraft ? '' : 'none';
+        $('#btnExamSavePublish').style.display = isDraft ? '' : 'none';
+        $('#btnExamSaveSettings').style.display = isDraft ? 'none' : '';
+      };
+
+      // 保存设置（二次确认）
+      window.saveExamPracticeWithConfirm = function() {
+        if (!confirm('确定要保存当前设置吗？')) return;
+        window.saveExamPractice('update');
+      };
+
+      // 编辑
+      window.editExamPractice = function(id) {
+        var item = examPracticeData.find(function(d) { return d.id === id; });
+        if (!item) return;
+        editingExamId = id;
+        pendingPickerPaperId = item.paperId;
+        pendingPickerPaperName = item.paper;
+        var st = window.getExamStatus(item);
+        var isDraft = st.status === 'draft';
+        var isPending = st.status === 'pending';
+        var isActive = st.status === 'active';
+        var isEditable = isDraft || isPending;
+
+        $('#examModalTitle').textContent = '编辑模拟练习';
+        $('#examNameInput').value = item.name;
+        window.updateNameCharCount();
+        // 练习名称：草稿/未开始可编辑，进行中禁用
+        $('#examNameInput').disabled = !isEditable;
+        $('#examPaperSelect').value = item.paperId;
+        $('#examPaperDisplay').value = item.paper;
+        window.updatePaperInfoBar(item.paperId);
+        $('#examTotalInput').value = item.total;
+        $('#examSingleInput').value = item.types.single || 0;
+        $('#examMultiInput').value = item.types.multi || 0;
+        $('#examJudgeInput').value = item.types.judge || 0;
+        // 题目数量：草稿/未开始可编辑，进行中禁用
+        $('#examTotalInput').disabled = !isEditable;
+        $('#examSingleInput').disabled = !isEditable;
+        $('#examMultiInput').disabled = !isEditable;
+        $('#examJudgeInput').disabled = !isEditable;
+        // 恢复题型勾选状态
+        document.querySelectorAll('.type-checkbox[data-etype]').forEach(function(cb) {
+          var etype = cb.dataset.etype;
+          var row = cb.closest('.modal-type-row');
+          if (item.types[etype] !== undefined && item.types[etype] > 0) {
+            cb.classList.add('checked');
+            if (row) row.classList.remove('disabled');
+          } else {
+            cb.classList.remove('checked');
+            if (row) row.classList.add('disabled');
+          }
+        });
+        window.updateExamTypeTotal();
+        // 试卷选择：草稿/未开始可编辑，进行中禁用
+        var trigger = $('#paperTrigger');
+        var display = $('#examPaperDisplay');
+        var arrow = $('#paperArrow');
+        if (isEditable) {
+          if (trigger) { trigger.onclick = function() { openPaperPickerModal(); }; trigger.style.cursor = 'pointer'; }
+          if (display) { display.style.cursor = 'pointer'; display.style.background = '#fff'; display.readOnly = true; }
+          if (arrow) arrow.style.display = '';
+        } else {
+          if (trigger) { trigger.onclick = null; trigger.style.cursor = 'default'; }
+          if (display) { display.style.cursor = 'default'; display.style.background = '#F5F5F5'; }
+          if (arrow) arrow.style.display = 'none';
+        }
+        // 恢复人员选择
+        selectedItems = (item.selectedRanges && item.selectedRanges.length > 0)
+          ? JSON.parse(JSON.stringify(item.selectedRanges))
+          : (item.persons || []).map(function(p) { return { type: 'person', id: p.id, name: p.name, dept: p.dept || '' }; });
+        window.renderPersonList();
+        // 恢复练习开放时间 (datetime-local 格式: yyyy-MM-ddTHH:mm)
+        var startInput = $('#examOpenTimeStartInput');
+        var endInput = $('#examOpenTimeEndInput');
+        if (item.openTimeStart) {
+          startInput.value = item.openTimeStart.replace(' ', 'T');
+          // 进行中状态：开始时间不可编辑
+          if (isActive) {
+            startInput.disabled = true;
+          } else {
+            startInput.disabled = false;
+          }
+        } else {
+          startInput.value = '';
+          startInput.disabled = false;
+        }
+        if (item.openTimeEnd) {
+          endInput.value = item.openTimeEnd.replace(' ', 'T');
+        } else {
+          endInput.value = '';
+        }
+        // 根据开始时间更新结束时间的 min 限制；进行中时下限取 max(当前时间, 开始时间)，只能延长不能缩短
+        var endMin = startInput.value || '';
+        if (isActive) {
+          var nowForMin = new Date();
+          var nowStr = nowForMin.getFullYear() + '-' +
+            String(nowForMin.getMonth() + 1).padStart(2, '0') + '-' +
+            String(nowForMin.getDate()).padStart(2, '0') + 'T' +
+            String(nowForMin.getHours()).padStart(2, '0') + ':' +
+            String(nowForMin.getMinutes()).padStart(2, '0');
+          if (!endMin || nowStr > endMin) endMin = nowStr;
+        }
+        if (endMin) {
+          endInput.setAttribute('min', endMin);
+        } else {
+          endInput.removeAttribute('min');
+        }
+        window.updateExamModalBadge('edit');
+        // 底部按钮：草稿显示全部三按钮；未开始/进行中仅显示「返回」+「保存设置」
+        window.setExamFooterForStatus(st.status);
+        $('#examListPanel').classList.add('hidden');
+        $('#examFormPanel').classList.add('active');
+      };
+
+      // 删除
+      window.deleteExamPractice = function(id) {
+        var item = examPracticeData.find(function(d) { return d.id === id; });
+        if (!item) return;
+        var st = window.getExamStatus(item);
+        if (st.status === 'active') {
+          showToast('进行中的练习不可删除'); return;
+        }
+        if (!confirm('确定要删除该练习吗？此操作不可恢复。')) return;
+        examPracticeData = examPracticeData.filter(function(d) { return d.id !== id; });
+        window.renderExamTable();
+        showToast('删除成功', 'success');
+      };
+
+      // 发布
+      window.publishExamPractice = function(id) {
+        var item = examPracticeData.find(function(d) { return d.id === id; });
+        if (!item) return;
+        // 校验草稿的起止时间
+        var openTimeStart = item.openTimeStart;
+        var openTimeEnd = item.openTimeEnd;
+        if (!openTimeStart || !openTimeEnd) {
+          showToast('请先编辑练习，填写完整的练习开放时间后再发布'); return;
+        }
+        var startDt = new Date(openTimeStart.replace(' ', 'T'));
+        var endDt = new Date(openTimeEnd.replace(' ', 'T'));
+        if (isNaN(startDt.getTime()) || isNaN(endDt.getTime())) {
+          showToast('练习开放时间格式不正确，请重新编辑设置'); return;
+        }
+        if (endDt <= startDt) {
+          showToast('结束时间必须大于开始时间，请先修改后再发布'); return;
+        }
+        if (startDt <= new Date()) {
+          showToast('开始时间必须大于当前时间，请先修改后再发布'); return;
+        }
+        item.isPublished = true;
+        window.renderExamTable();
+        showToast('发布成功', 'success');
+      };
+
+      // 保存 — mode: 'draft' | 'publish'
+      window.saveExamPractice = function(mode) {
+        var name = ($('#examNameInput').value || '').trim();
+        var paperId = $('#examPaperSelect').value;
+        var paperText = ($('#examPaperDisplay').value || '').trim();
+        var total = parseInt($('#examTotalInput').value) || 0;
+
+        // 基础校验
+        if (!name) { showToast('请输入练习名称'); return; }
+        if (!paperId) { showToast('请选择试卷'); return; }
+        if (total <= 0) { showToast('请输入有效的题目总数'); return; }
+        if (selectedPaperLimits && total > selectedPaperLimits.total) {
+          showToast('题目总数不能超过试卷题目总数（' + selectedPaperLimits.total + ' 道）'); return;
+        }
+
+        // 题型校验
+        var singleCb = document.querySelector('.type-checkbox[data-etype="single"]');
+        var multiCb = document.querySelector('.type-checkbox[data-etype="multi"]');
+        var judgeCb = document.querySelector('.type-checkbox[data-etype="judge"]');
+        var singleChecked = singleCb && singleCb.classList.contains('checked');
+        var multiChecked = multiCb && multiCb.classList.contains('checked');
+        var judgeChecked = judgeCb && judgeCb.classList.contains('checked');
+        if (!singleChecked && !multiChecked && !judgeChecked) { showToast('请至少选择一种题目类型'); return; }
+
+        var s = singleChecked ? (parseInt($('#examSingleInput').value) || 0) : 0;
+        var m = multiChecked ? (parseInt($('#examMultiInput').value) || 0) : 0;
+        var j = judgeChecked ? (parseInt($('#examJudgeInput').value) || 0) : 0;
+        if (s + m + j !== total) { showToast('各题型数量之和需等于题目总数'); return; }
+        if (selectedPaperLimits) {
+          if (singleChecked && s > selectedPaperLimits.single) { showToast('单选题数量不能超过试卷单选数量（' + selectedPaperLimits.single + ' 道）'); return; }
+          if (multiChecked && m > selectedPaperLimits.multi) { showToast('多选题数量不能超过试卷多选数量（' + selectedPaperLimits.multi + ' 道）'); return; }
+          if (judgeChecked && j > selectedPaperLimits.judge) { showToast('判断题数量不能超过试卷判断数量（' + selectedPaperLimits.judge + ' 道）'); return; }
+        }
+
+        // 人员校验
+        if (selectedItems.length === 0) { showToast('请至少添加一个人员或部门'); return; }
+
+        var typesData = {};
+        if (singleChecked) typesData.single = s;
+        if (multiChecked) typesData.multi = m;
+        if (judgeChecked) typesData.judge = j;
+
+        // 解析练习开放时间 (datetime-local → yyyy-MM-dd HH:mm)
+        var openTimeStartRaw = ($('#examOpenTimeStartInput').value || '').trim();
+        var openTimeEndRaw = ($('#examOpenTimeEndInput').value || '').trim();
+        var openTimeStart = openTimeStartRaw ? openTimeStartRaw.replace('T', ' ') : '';
+        var openTimeEnd = openTimeEndRaw ? openTimeEndRaw.replace('T', ' ') : '';
+
+        // 时间校验
+        if (!openTimeStart || !openTimeEnd) { showToast('请填写完整的练习开放时间'); return; }
+        var startDt = new Date(openTimeStartRaw);
+        var endDt = new Date(openTimeEndRaw);
+        if (endDt <= startDt) { showToast('结束时间必须大于开始时间'); return; }
+        if (!editingExamId) {
+          // 新增：开始时间必须大于当前时间
+          if (startDt <= new Date()) { showToast('开始时间必须大于当前时间'); return; }
+        } else {
+          // 编辑：获取原数据，如果原开始时间已过则不校验新开始时间（此时禁用不可改）
+          var originalItem = examPracticeData.find(function(d) { return d.id === editingExamId; });
+          if (originalItem && originalItem.openTimeStart) {
+            var origStartDt = new Date(originalItem.openTimeStart.replace(' ', 'T'));
+            if (origStartDt <= new Date()) {
+              // 已开始的练习，不允许修改开始时间
+              if (openTimeStart !== originalItem.openTimeStart.replace(' ', ' ')) {
+                showToast('练习已开始，不允许修改开始时间'); return;
+              }
+            } else {
+              // 未开始，可以修改开始时间，但必须大于当前时间
+              if (startDt <= new Date()) { showToast('开始时间必须大于当前时间'); return; }
+            }
+          }
+        }
+
+        // 弹窗核心返回值 - 将selectedItems扁平化为人员列表
+        var flatPersons = [];
+        var seenIds = {};
+        selectedItems.forEach(function(item) {
+          if (item.type === 'person') {
+            if (!seenIds[item.id]) {
+              flatPersons.push({ id: item.id, name: item.name, dept: item.dept || '' });
+              seenIds[item.id] = true;
+            }
+          } else if (item.type === 'dept') {
+            var d = deptMap[item.name];
+            if (d && d.personIds) {
+              d.personIds.forEach(function(pid) {
+                if (!seenIds[pid]) {
+                  var p = personList.find(function(pl) { return pl.id === pid; });
+                  if (p) {
+                    flatPersons.push({ id: p.id, name: p.name, dept: p.dept });
+                    seenIds[pid] = true;
+                  }
+                }
+              });
+            }
+          }
+        });
+        if (editingExamId) {
+          var idx = examPracticeData.findIndex(function(d) { return d.id === editingExamId; });
+          if (idx >= 0) {
+            examPracticeData[idx].name = name;
+            examPracticeData[idx].paper = paperText;
+            examPracticeData[idx].paperId = paperId;
+            examPracticeData[idx].total = total;
+            examPracticeData[idx].types = typesData;
+            examPracticeData[idx].openTimeStart = openTimeStart;
+            examPracticeData[idx].openTimeEnd = openTimeEnd;
+            examPracticeData[idx].persons = flatPersons;
+            examPracticeData[idx].selectedRanges = JSON.parse(JSON.stringify(selectedItems));
+            // 编辑时：保存并发布才覆盖为已发布，仅保存保持原状态不变
+            if (mode === 'publish') {
+              examPracticeData[idx].isPublished = true;
+            }
+          }
+          showToast('修改成功', 'success');
+        } else {
+          var nowStr = new Date().toISOString().replace('T', ' ').substring(0, 19);
+          examPracticeData.push({
+            id: examNextId++,
+            name: name,                           // 练习名称
+            paper: paperText,                     // 试卷名称
+            paperId: paperId,
+            total: total,
+            types: typesData,
+            openTimeStart: openTimeStart,             // 练习开放开始时间
+            openTimeEnd: openTimeEnd,                 // 练习开放结束时间
+            persons: flatPersons,
+            selectedRanges: JSON.parse(JSON.stringify(selectedItems)),
+            creator: '庞刚',
+            createTime: nowStr,
+            isPublished: (mode === 'publish')
+          });
+          showToast('新增成功', 'success');
+        }
+        window.renderExamTable();
+        closeExamModal();
+      };
+
+
+
+      // 初始渲染表格
+      window.renderExamTable();
+
+      console.log('练习设置页面已就绪');
+    })();
+  </script>
+
+  <!-- ==================== PRD标注全局按钮 ==================== -->
+  <button class="prd-drawer-btn" id="prdDrawerBtn" type="button">PRD 说明</button>
+
+  <!-- ==================== PRD标注全局开关 ==================== -->
+  <button class="prd-toggle-btn" id="prdToggleBtn" type="button" title="显示/隐藏标注">👁</button>
+
+  <!-- ==================== PRD标注浮窗 ==================== -->
+  <div class="prd-tooltip" id="prdTooltip">
+    <div class="prd-tooltip-header">
+      <span class="prd-tooltip-title" id="prdTooltipTitle"></span>
+      <button class="prd-tooltip-close" id="prdTooltipClose">×</button>
+    </div>
+    <div class="prd-tooltip-body" id="prdTooltipBody"></div>
+  </div>
+
+  <!-- ==================== PRD标注抽屉 ==================== -->
+  <div class="prd-drawer-overlay" id="prdDrawerOverlay"></div>
+  <div class="prd-drawer" id="prdDrawer">
+    <div class="prd-drawer-header">
+      <span class="prd-drawer-title">练习设置 - PRD 说明</span>
+      <button class="prd-drawer-close" id="prdDrawerClose">×</button>
+    </div>
+    <div class="prd-drawer-tabs">
+      <div class="prd-drawer-tab is-active" data-tab="page" id="prdTabPage">页面PRD</div>
+    </div>
+        <div class="prd-drawer-content" id="prdDrawerContentPage" style="display:block;">
+      <h1>练习设置 - 模拟练习 PRD（产品需求文档）</h1>
+
+      <h2>1. 引言</h2>
+
+      <h3>1.1 背景</h3>
+      <p>在练习设置页新增「模拟练习」Tab，管理员选择关联标准试卷，按试卷结构配置练习参数（题目总数、各题型数量、练习开放时间、练习人员）。模拟练习支持灵活划定题目范围，进行针对性强化训练，适用于考前冲刺与阶段性能力评估。员工在小程序端按配置进行刷题练习。本需求仅覆盖模拟练习相关功能，不涉及已存在的「专业练习」Tab。</p>
+
+      <h3>1.2 使用角色</h3>
+      <ul>
+        <li><strong>管理员</strong>：可查看、新增、编辑、删除、发布模拟练习配置</li>
+        <li><strong>平台员工</strong>：无此页面访问权限（仅在小程序端参与练习）</li>
+      </ul>
+
+      <h3>1.3 前置条件</h3>
+      <ul>
+        <li>用户已登录系统</li>
+        <li>用户具有「练习设置」菜单权限（管理员角色）</li>
+        <li>系统中已存在试卷数据（用于选择器）</li>
+      </ul>
+      <p><strong>注意：</strong>试卷仅用于创建练习时的题目配置来源，练习创建后与试卷解耦。试卷的删除不影响已创建的练习功能，已发布的练习仍可正常使用。</p>
+
+      <h3>1.4 功能清单</h3>
+      <table>
+        <tr><th>模块</th><th>功能</th><th>功能描述</th></tr>
+        <tr><td>列表区</td><td>模拟练习列表</td><td>以表格形式展示所有模拟练习配置（名称、时间、状态、创建人、创建时间），支持按创建时间倒序排列</td></tr>
+        <tr><td>操作区</td><td>行操作</td><td>根据状态显示不同操作：草稿→发布+编辑+删除；未开始→编辑；进行中→编辑；已结束→-</td></tr>
+        <tr><td>弹窗</td><td>新增练习</td><td>弹窗表单（4个分组），录入练习配置，支持保存草稿或保存并发布</td></tr>
+        <tr><td>弹窗</td><td>编辑练习</td><td>回填已有数据。草稿/未开始：全部字段可编辑，底部「返回+保存+保存并发布」（草稿）或「返回+保存设置」（未开始，点击保存设置二次确认后保存）；进行中：仅可编辑部分字段，底部「返回+保存设置」（点击保存设置二次确认后保存）</td></tr>
+        <tr><td>选择器</td><td>试卷选择弹窗</td><td>已有组件，系统试卷单选</td></tr>
+        <tr><td>选择器</td><td>人员选择弹窗</td><td>已有组件，按姓名/部门多选参与练习的人员或部门</td></tr>
+      </table>
+
+      <h2>2. 页面菜单与权限规划</h2>
+
+      <h3>2.1 页面菜单</h3>
+      <p><strong>菜单路径：</strong>练习设置 / 模拟练习</p>
+
+      <h3>2.2 权限规划</h3>
+      <table>
+        <tr><th>权限点名称</th><th>操作范围</th><th>数据范围</th></tr>
+        <tr><td>查看</td><td>查看模拟练习列表</td><td>全量（按组织隔离）</td></tr>
+        <tr><td>编辑</td><td>新增、编辑、删除、发布</td><td>全量（按组织隔离）</td></tr>
+      </table>
+
+      <h3>2.3 页面布局（ASCII 结构图）</h3>
+      <pre><code>+-----------------------------------------------------------------------------------+
+|  练习设置                                                                          |
+|  ┌────────────────┐ ┌──────────────────────────────────────────────────────────┐  |
+|  │ 设置 (侧边导航)  │ │ [模拟练习] Tab                                            │  |
+|  │ · 专业题目练习   │ │                                                          │  |
+|  │ · 模拟练习◀     │ │  模拟练习                                                 │  |
+|  │                │ │  模拟练习支持灵活划定题目范围，进行针对性强化训练，            │  |
+|  │                │ │  适用于考前冲刺与阶段性能力评估                             │  |
+|  │                │ │                                                          │  |
+|  │                │ │  [新增]                                                   │  |
+|  │                │ │                                                          │  |
+|  │                │ │  ┌──────────┬──────────┬──────────┬──────┬──────┬──────┬──────┐ │
+|  │                │ │  │ 练习名称  │ 开始时间  │ 结束时间  │ 状态  │创建人│创建时间│ 操作  │ │
+|  │                │ │  ├──────────┼──────────┼──────────┼──────┼──────┼──────┼──────┤ │
+|  │                │ │  │ ...      │ ...      │ ...      │ 草稿  │ ...  │ ...  │发布/编辑/删除│
+|  │                │ │  │ ...      │ ...      │ ...      │未开始 │ ...  │ ...  │    编辑    │ │
+|  │                │ │  │ ...      │ ...      │ ...      │进行中 │ ...  │ ...  │   编辑    │ │
+|  │                │ │  │ ...      │ ...      │ ...      │已结束 │ ...  │ ...  │    -      │ │
+|  │                │ │  └──────────┴──────────┴──────────┴──────┴──────┴──────┴──────┘ │
+|  │                │ │                                                          │  |
+|  └────────────────┘ └──────────────────────────────────────────────────────────┘  |
++-----------------------------------------------------------------------------------+
+
+弹窗（右侧表单页，4个分组）：
++-------------------------------------------------------+
+|  ← 新增模拟练习 / 编辑模拟练习                              |
++-------------------------------------------------------+
+|                                                        |
+|  ▸ 基本信息                                             |
+|    * 练习名称  [___________________] 0/20               |
+|    * 练习开放时间  [年-月-日 时:分] 至 [年-月-日 时:分] |
+|      员工可以在练习开放时间内进行练习                       |
+|                                                        |
+|  ▸ 选择试卷                                             |
+|    * 选择试卷  [_______________] ▼                     |
+|    ┌─试卷结构信息条───────────────────┐                  |
+|                                                        |
+|  ▸ 练习题目数量  (未选择试卷前全部禁用)                    |
+|    * 练习题目总数  [____] 道                           |
+|    * 各题型数量                                         |
+|      ☑ 单选  [____] 道                                 |
+|      ☑ 多选  [____] 道                                 |
+|      ☑ 判断  [____] 道                                 |
+|      ( 0 / 0 )                                         |
+|                                                        |
+|  ▸ 练习人员                                             |
+|    * 练习人员                                           |
+|      [+ 添加人员]                                       |
+|      指定用户 [标签×]  部门范围 [标签×]                    |
+|                                                        |
++-------------------------------------------------------+
+|         [返回]    [保存]    [保存并发布]  (草稿)        |
+|         [返回]    [保存设置]             (未开始/进行中) |
++-------------------------------------------------------+</code></pre>
+
+      <h2>3. 需求说明</h2>
+
+      <h3>3.1 列表区</h3>
+      <p><strong>列表字段：</strong></p>
+      <table>
+        <tr><th>列表字段</th><th>字段说明</th><th>排序</th></tr>
+        <tr><td>练习名称</td><td>管理员自定义名称，≤20 字，单行展示</td><td>否</td></tr>
+        <tr><td>开始时间</td><td>练习开放开始时间（年-月-日 时:分）</td><td>否</td></tr>
+        <tr><td>结束时间</td><td>练习开放结束时间（年-月-日 时:分）</td><td>否</td></tr>
+        <tr><td>状态</td><td>草稿/未开始/进行中/已结束</td><td>否</td></tr>
+        <tr><td>创建人</td><td>创建该练习的管理员姓名</td><td>否</td></tr>
+        <tr><td>创建时间</td><td>创建时间（年-月-日 时:分:秒）</td><td>是（倒序）</td></tr>
+      </table>
+      <p><strong>排序规则：</strong>按创建时间倒序，最新创建的排在前面。</p>
+      <p><strong>空状态：</strong>列表无数据时显示「暂无数据」。</p>
+
+      <h3>3.2 行操作说明</h3>
+      <p>根据练习状态，每行末尾显示不同操作按钮：</p>
+      <table>
+        <tr><th>状态</th><th>操作按钮</th><th>说明</th></tr>
+        <tr><td>草稿</td><td>发布 + 编辑 + 删除</td><td>可发布、编辑、删除</td></tr>
+        <tr><td>未开始</td><td>编辑</td><td>仅可编辑</td></tr>
+        <tr><td>进行中</td><td>编辑</td><td>仅可编辑</td></tr>
+        <tr><td>已结束</td><td>-</td><td>不可操作</td></tr>
+      </table>
+
+      <h4>3.2.1 发布</h4>
+      <ul>
+        <li><strong>显示条件：</strong>状态为「草稿」</li>
+        <li><strong>行为：</strong>发布前先校验练习开放时间：须完整填写、结束&gt;开始、开始&gt;当前时间。校验通过后将是否已发布设为已发布，刷新列表</li>
+        <li><strong>状态变化：</strong>草稿 → 未开始/进行中/已结束（由开放时间与当前时间关系自动判定）</li>
+        <li><strong>反馈：</strong>提示「发布成功」，3 秒后自动消失</li>
+      </ul>
+      <p><strong>发布前校验（按顺序）：</strong></p>
+      <ol>
+        <li>练习开放时间必须完整填写 →「请先编辑练习，填写完整的练习开放时间后再发布」</li>
+        <li>结束时间必须大于开始时间 →「结束时间必须大于开始时间，请先修改后再发布」</li>
+        <li>开始时间必须大于当前时间 →「开始时间必须大于当前时间，请先修改后再发布」</li>
+      </ol>
+
+      <h4>3.2.2 编辑</h4>
+      <ul>
+        <li><strong>显示条件：</strong>草稿、未开始、进行中（已结束不显示）</li>
+        <li><strong>行为：</strong>打开右侧表单页，回填全部已有数据
+          <ul>
+            <li><strong>草稿状态：</strong>全部字段可编辑，试卷可选</li>
+            <li><strong>未开始状态：</strong>全部字段可编辑，试卷可选可改</li>
+            <li><strong>进行中状态：</strong>试卷选择器、练习名称、题目数量、开始时间置灰不可修改，结束时间仅可延长（下限取当前时间和开始时间的较大值），可编辑练习人员</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h4>3.2.3 删除</h4>
+      <ul>
+        <li><strong>显示条件：</strong>草稿</li>
+        <li><strong>行为：</strong>弹出确认弹窗，文案「确定要删除该练习吗？此操作不可恢复。」</li>
+        <li><strong>确认后：</strong>从数据列表移除，刷新表格</li>
+        <li><strong>反馈：</strong>提示「删除成功」，3 秒后自动消失</li>
+        <li><strong>禁用情况：</strong>进行中状态下提示「进行中的练习不可删除」；已结束状态不显示删除入口</li>
+      </ul>
+
+      <h3>3.3 新增/编辑弹窗</h3>
+      <p>弹窗以右侧表单页形式展示（替代浮层弹窗），左侧列表隐藏，右侧显示完整表单页，左上角有返回箭头按钮。</p>
+      <p><strong>表单分组（4 个分组，从上到下依次为）：</strong></p>
+      <table>
+        <tr><th>分组</th><th>说明</th></tr>
+        <tr><td>基本信息</td><td>练习名称 + 练习开放时间</td></tr>
+        <tr><td>选择试卷</td><td>试卷选择器 + 试卷结构信息条</td></tr>
+        <tr><td>练习题目数量</td><td>题目总数 + 各题型数量，未选择试卷前全部禁用</td></tr>
+        <tr><td>练习人员</td><td>人员选择器</td></tr>
+      </table>
+
+      <p><strong>新增模式 vs 编辑模式：</strong></p>
+      <table>
+        <tr><th>对比项</th><th>新增模式</th><th>编辑模式</th></tr>
+        <tr><td>标题</td><td>「新增模拟练习」</td><td>「编辑模拟练习」</td></tr>
+        <tr><td>练习名称</td><td>可编辑</td><td>草稿/未开始可编辑；进行中置灰禁用</td></tr>
+        <tr><td>试卷选择</td><td>可点击打开选择器</td><td>草稿/未开始可编辑；进行中置灰禁用，不可点击</td></tr>
+        <tr><td>题目数量</td><td>选试卷后可编辑</td><td>草稿/未开始可编辑；进行中置灰禁用</td></tr>
+        <tr><td>开始时间</td><td>可编辑</td><td>进行中置灰禁用；草稿/未开始可编辑</td></tr>
+        <tr><td>结束时间</td><td>可编辑</td><td>进行中仅可延长（下限取当前时间和开始时间的较大值）；草稿/未开始可自由编辑</td></tr>
+        <tr><td>初始数据</td><td>全部默认值（空）</td><td>回填已有数据</td></tr>
+      </table>
+
+      <h4>3.3.1 表单字段</h4>
+      <table>
+        <tr><th>字段标签</th><th>控件类型</th><th>必填</th><th>默认值（新增）</th><th>校验规则</th><th>交互说明</th></tr>
+        <tr><td>练习名称</td><td>文本输入框</td><td>✓</td><td>空</td><td>≤20 字</td><td>实时显示字数计数 0/20</td></tr>
+        <tr><td>练习开放时间</td><td>两个日期时间输入框</td><td>✓</td><td>空</td><td>结束&gt;开始；新增时开始&gt;当前时间</td><td>格式 年-月-日 时:分；开始时间 至 结束时间；右侧提示「员工可以在练习开放时间内进行练习」</td></tr>
+        <tr><td>选择试卷</td><td>只读输入框 + 触发器</td><td>✓</td><td>空</td><td>必选</td><td>点击打开系统试卷选择弹窗（单选）；选中后展示试卷结构信息条；草稿状态可选可改，已发布后置灰不可点击</td></tr>
+        <tr><td>练习题目总数</td><td>数字输入框</td><td>✓</td><td>空（禁用状态）</td><td>&gt;0 且 ≤ 试卷题目总数</td><td>带单位「道」；选择试卷后自动启用；占位文本显示「请先选择试卷」</td></tr>
+        <tr><td>各题型数量</td><td>复选框 + 数字输入（3 行）</td><td>✓</td><td>空（禁用状态）</td><td>至少选一种题型；各题型之和 = 总数；各题型 ≤ 试卷对应类型上限</td><td>选择试卷后自动启用；每行带提示文字「仅支持输入小于等于「题目总数」的数字。」；底部实时显示汇总 (N / 总题数)</td></tr>
+        <tr><td>练习人员</td><td>人员选择弹窗（多选）</td><td>✓</td><td>—</td><td>须至少添加一个人员或部门</td><td>点击打开系统人员选择弹窗（多选，支持按姓名/部门搜索），分为「人员」和「部门范围」两个页签；已选人员/部门以标签展示，按指定用户和部门范围分组，标签可逐个 × 移除，支持「全部移除」</td></tr>
+      </table>
+
+      <h4>3.3.2 底部按钮</h4>
+      <p><strong>新增模式 / 草稿编辑模式：</strong></p>
+      <table>
+        <tr><th>按钮</th><th>行为</th></tr>
+        <tr><td>返回</td><td>返回左侧列表，不保存任何修改</td></tr>
+        <tr><td>保存</td><td>校验通过后保存，状态为未发布，列表显示「草稿」；提示「新增成功」/「修改成功」</td></tr>
+        <tr><td>保存并发布</td><td>校验通过后保存，状态为已发布，列表根据时间范围显示对应状态；提示「新增成功」/「修改成功」</td></tr>
+      </table>
+
+      <p><strong>未开始 / 进行中编辑模式：</strong></p>
+      <table>
+        <tr><th>按钮</th><th>行为</th></tr>
+        <tr><td>返回</td><td>返回左侧列表，不保存任何修改</td></tr>
+        <tr><td>保存设置</td><td>点击弹出确认弹窗二次确认「确定要保存当前设置吗？」，确认后校验通过则保存，提示「修改成功」</td></tr>
+      </table>
+      <p><strong>编辑模式保存规则：</strong>「保存」保持原发布状态不变（草稿仍为草稿，已发布仍为已发布）；「保存并发布」将草稿状态覆盖为已发布。</p>
+
+      <h4>3.3.3 表单校验规则（依次执行）</h4>
+      <p>校验不通过时通过提示对应错误文案，不关闭弹窗：</p>
+      <ol>
+        <li>练习名称必填 →「请输入练习名称」</li>
+        <li>试卷必选 →「请选择试卷」</li>
+        <li>练习开放时间必须完整填写 →「请填写完整的练习开放时间」</li>
+        <li>结束时间 &gt; 开始时间 →「结束时间必须大于开始时间」</li>
+        <li>新增时开始时间 &gt; 当前时间 →「开始时间必须大于当前时间」（编辑时若已开始的练习不可修改开始时间）</li>
+        <li>题目总数 &gt; 0 →「请输入有效的题目总数」</li>
+        <li>总数 ≤ 试卷题目总数 →「题目总数不能超过试卷题目总数（N 道）」</li>
+        <li>至少选一种题型 →「请至少选择一种题目类型」</li>
+        <li>各题型之和 = 总数 →「各题型数量之和需等于题目总数」</li>
+        <li>各题型数量 ≤ 试卷对应类型上限 →「不能超过试卷单选/多选/判断题数量（N 道）」</li>
+        <li>练习人员必填，须至少添加一个人员或部门 →「请至少添加一个人员或部门」</li>
+      </ol>
+
+      <h2>4. 交互设计</h2>
+      <h3>4.1 页面加载交互</h3>
+      <ul>
+        <li>首次进入「模拟练习」Tab 时自动加载列表数据</li>
+        <li>与「专业题目练习」Tab 之间切换不重新请求数据（前端 Tab 切换）</li>
+      </ul>
+
+      <h3>4.2 列表交互</h3>
+      <ul>
+        <li>行操作即时生效：发布/编辑/删除操作完成后立即刷新列表</li>
+      </ul>
+
+      <h3>4.3 弹窗交互</h3>
+      <ul>
+        <li>弹窗采用右侧表单页形式，打开时左侧列表隐藏，左上角返回箭头切换回列表</li>
+        <li>关闭弹窗仅通过：点击左上角返回箭头 / 点击底部「返回」按钮、保存成功后自动返回列表</li>
+        <li>编辑模式打开时：
+          <ul>
+            <li>草稿状态：全部字段可编辑，底部显示「返回」「保存」「保存并发布」三个按钮</li>
+            <li>未开始状态：全部字段可编辑，试卷可选可改，底部显示「返回」「保存设置」两个按钮</li>
+            <li>进行中状态：试卷选择器、练习名称、题目数量、开始时间区域置灰禁用；结束时间仅可延长（下限取当前时间和开始时间的较大值）；底部显示「返回」「保存设置」两个按钮</li>
+            <li>非草稿状态点击「保存设置」后弹出确认弹窗二次确认「确定要保存当前设置吗？」，确认后才执行保存</li>
+          </ul>
+        </li>
+        <li>题型复选框勾选/取消勾选实时更新底部汇总显示</li>
+      </ul>
+
+      <h3>4.4 操作反馈</h3>
+      <ul>
+        <li>操作成功：提示，3 秒后自动消失</li>
+        <li>操作失败/校验不通过：提示</li>
+        <li>删除 / 保存设置（非草稿编辑）：弹出浏览器原生确认弹窗</li>
+      </ul>
+
+      <h2>5. 异常处理</h2>
+      <table>
+        <tr><th>异常场景</th><th>处理方式</th></tr>
+        <tr><td>数据加载失败</td><td>列表显示「暂无数据」</td></tr>
+        <tr><td>表单校验失败</td><td>提示具体错误信息，保留弹窗和已填内容</td></tr>
+        <tr><td>网络异常</td><td>操作静默失败（当前为前端模拟数据）</td></tr>
+        <tr><td>无数据</td><td>列表区域显示「暂无数据」</td></tr>
+      </table>
+
+      <h2>6. 数据模型</h2>
+
+      <h3>6.1 模拟练习配置数据结构</h3>
+      <table>
+        <tr><th>数据字段</th><th>类型</th><th>说明</th></tr>
+        <tr><td>唯一标识</td><td>数字</td><td>唯一标识</td></tr>
+        <tr><td>练习名称</td><td>文本</td><td>练习名称，≤20 字</td></tr>
+        <tr><td>关联试卷名称</td><td>文本</td><td>关联试卷名称</td></tr>
+        <tr><td>关联试卷ID</td><td>文本</td><td>关联试卷 ID</td></tr>
+        <tr><td>题目总数</td><td>数字</td><td>练习题目总数</td></tr>
+        <tr><td>题型数量</td><td>对象</td><td>题型数量（单选、多选、判断）</td></tr>
+        <tr><td>开始时间</td><td>文本</td><td>练习开放开始时间（年-月-日 时:分）</td></tr>
+        <tr><td>结束时间</td><td>文本</td><td>练习开放结束时间（年-月-日 时:分）</td></tr>
+        <tr><td>人员列表</td><td>数组</td><td>选定参与练习的人员列表（含标识、姓名、部门）</td></tr>
+        <tr><td>原始选择范围</td><td>数组</td><td>原始选择范围</td></tr>
+        <tr><td>创建人</td><td>文本</td><td>创建人姓名</td></tr>
+        <tr><td>创建时间</td><td>文本</td><td>创建时间（年-月-日 时:分:秒）</td></tr>
+        <tr><td>是否已发布</td><td>布尔</td><td>是否已发布</td></tr>
+      </table>
+
+      <h3>6.2 状态判定</h3>
+      <p>状态由是否已发布和练习开放时间共同决定：</p>
+      <table>
+        <tr><th>条件</th><th>状态值</th><th>标签</th></tr>
+        <tr><td>未发布</td><td>草稿</td><td>草稿</td></tr>
+        <tr><td>已发布 且 当前时间 &lt; 开始时间</td><td>未开始</td><td>未开始</td></tr>
+        <tr><td>已发布 且 开始时间 ≤ 当前时间 ≤ 结束时间</td><td>进行中</td><td>进行中</td></tr>
+        <tr><td>已发布 且 当前时间 &gt; 结束时间</td><td>已结束</td><td>已结束</td></tr>
+      </table>
+
+      <h2>7. 关联文档</h2>
+      <ul>
+        <li><a href="./练习功能整体PRD.md">练习功能整体 PRD</a> – 包含名词解释、业务流程图、用例图等全局内容</li>
+        <li>练习设置页面实现 – 页面 HTML 实现文件</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== PRD标注交互脚本 ==================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // 标注元素引用
+      const $ = (sel) => document.querySelector(sel);
+      const $$ = (sel) => document.querySelectorAll(sel);
+
+      // 状态
+      let annotationsVisible = true;
+      let activeTooltip = null;
+      let isDragging = false;
+      let dragOffsetX = 0, dragOffsetY = 0;
+      // 初始化标注交互
+      function initAnnotations() {
+        // 角标 hover 显示浮窗 + 点击也可显示
+        $$('.prd-annotation').forEach(anno => {
+          anno.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const title = this.dataset.title || '';
+            const content = this.dataset.content || '';
+            showTooltip(this, title, content);
+          });
+        });
+
+        // 浮窗关闭按钮
+        $('#prdTooltipClose').addEventListener('click', function(e) {
+          e.stopPropagation();
+          hideTooltip();
+        });
+
+        // 点击其他地方关闭浮窗
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.prd-tooltip') && !e.target.closest('.prd-annotation')) {
+            hideTooltip();
+          }
+        });
+
+        // 浮窗拖拽支持
+        var tooltip = $('#prdTooltip');
+        tooltip.addEventListener('mousedown', function(e) {
+          if (e.target === $('#prdTooltipClose')) return;
+          isDragging = true;
+          var rect = tooltip.getBoundingClientRect();
+          dragOffsetX = e.clientX - rect.left;
+          dragOffsetY = e.clientY - rect.top;
+          e.preventDefault();
+        });
+        document.addEventListener('mousemove', function(e) {
+          if (!isDragging) return;
+          tooltip.style.left = (e.clientX - dragOffsetX) + 'px';
+          tooltip.style.top = (e.clientY - dragOffsetY) + 'px';
+        });
+        document.addEventListener('mouseup', function() {
+          isDragging = false;
+        });
+
+        // 全局标注开关
+        $('#prdToggleBtn').addEventListener('click', toggleAnnotations);
+
+        // PRD抽屉按钮
+        $('#prdDrawerBtn').addEventListener('click', openDrawer);
+
+        // PRD抽屉关闭
+        $('#prdDrawerClose').addEventListener('click', closeDrawer);
+        $('#prdDrawerOverlay').addEventListener('click', closeDrawer);
+
+        // ESC关闭抽屉和浮窗
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            closeDrawer();
+            hideTooltip();
+          }
+        });
+      }
+
+      function showTooltip(targetEl, title, content) {
+        var tooltip = $('#prdTooltip');
+        var titleEl = $('#prdTooltipTitle');
+        var bodyEl = $('#prdTooltipBody');
+
+        titleEl.textContent = title;
+        bodyEl.innerHTML = content;
+
+        // 计算位置
+        var rect = targetEl.getBoundingClientRect();
+
+        var top = rect.bottom + 8;
+        var left = rect.left;
+
+        // 边界检测
+        if (left + 450 > window.innerWidth) {
+          left = window.innerWidth - 460;
+        }
+        if (left < 0) left = 8;
+
+        if (top + 400 > window.innerHeight) {
+          top = rect.top - 408;
+        }
+        if (top < 0) top = 8;
+
+        tooltip.style.top = top + 'px';
+        tooltip.style.left = left + 'px';
+        tooltip.style.transform = 'none';
+        tooltip.classList.add('is-open');
+        activeTooltip = tooltip;
+      }
+
+      function hideTooltip() {
+        var tooltip = $('#prdTooltip');
+        if (tooltip) {
+          tooltip.classList.remove('is-open');
+          activeTooltip = null;
+        }
+      }
+
+      function toggleAnnotations() {
+        annotationsVisible = !annotationsVisible;
+        var btn = $('#prdToggleBtn');
+        $$('.prd-annotation').forEach(function(a) {
+          if (annotationsVisible) {
+            a.classList.remove('hidden');
+          } else {
+            a.classList.add('hidden');
+          }
+        });
+        // 更新按钮图标
+        btn.innerHTML = annotationsVisible ? '👁' : '🚫';
+        btn.style.background = annotationsVisible ? '#1890ff' : '#999';
+      }
+
+      // 渲染 Mermaid 图表
+      function renderMermaidInPanel(panelId) {
+        if (typeof mermaid === 'undefined') return;
+        var panel = document.getElementById(panelId);
+        if (!panel) return;
+        var nodes = panel.querySelectorAll('.mermaid');
+        if (!nodes.length) return;
+        // 清除 data-processed 属性，确保 Mermaid 重新渲染
+        nodes.forEach(function(n) { n.removeAttribute('data-processed'); });
+        mermaid.run({ nodes: nodes });
+      }
+
+      function openDrawer() {
+        $('#prdDrawerOverlay').classList.add('is-open');
+        $('#prdDrawer').classList.add('is-open');
+        setTimeout(function() { renderMermaidInPanel('prdDrawerContentPage'); }, 150);
+      }
+
+      function closeDrawer() {
+        $('#prdDrawerOverlay').classList.remove('is-open');
+        $('#prdDrawer').classList.remove('is-open');
+      }
+
+      // 页面加载完成后初始化
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initAnnotations);
+      } else {
+        initAnnotations();
+      }
+    })();
+  </script>
+</body>
+</html>

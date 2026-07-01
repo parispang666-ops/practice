@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>试卷详情 · 环慧慧EHS+</title>
+  <style>
+    /* 样式复用自由练习，与自由练习试卷详情页面完全一致 */
+    :root {
+      --color-brand: #1570EF; --color-brand-hover: #2E90FA; --color-success: #52C41A;
+      --color-warning: #FA8C16; --color-danger: #F54A45; --color-text-primary: #1A1A1A;
+      --color-text-secondary: #666666; --color-text-placeholder: #999999;
+      --color-bg-page: #F5F5F5; --color-bg-surface: #FFFFFF;
+      --color-border: #E5E5E5; --color-divider: #EEEEEE;
+      --radius-card: 12px;
+      --font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family); font-size: 15px; line-height: 1.5;
+      color: var(--color-text-primary); background: var(--color-bg-page);
+      max-width: 414px; margin: 0 auto; min-height: 100vh;
+      -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+    }
+
+    .status-bar { height: env(safe-area-inset-top, 20px); background: #fff; }
+
+    .nav-bar { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid var(--color-divider); }
+    .nav-inner { height: 44px; display: flex; align-items: center; justify-content: center; padding: 0 16px; position: relative; }
+    .nav-back { position: absolute; left: 12px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: transparent; border: 0; color: var(--color-text-primary); cursor: pointer; }
+    .nav-back svg { width: 20px; height: 20px; }
+    .nav-title { font-size: 17px; font-weight: 500; color: var(--color-text-primary); }
+
+    .progress-section { background: #fff; border-radius: var(--radius-card); padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); position: relative; }
+    .progress-text { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .progress-label { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+    .progress-count { font-size: 13px; color: var(--color-text-placeholder); }
+    .progress-count .current { color: var(--color-brand); font-weight: 600; }
+    .progress-bar-wrap { height: 6px; background: #EDEDED; border-radius: 3px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: var(--color-brand); border-radius: 3px; transition: width 300ms ease; }
+
+    .question-card { background: #fff; border-radius: var(--radius-card); padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); position: relative; }
+    .question-header { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 16px; }
+    .question-number { font-size: 15px; font-weight: 600; color: var(--color-text-primary); flex-shrink: 0; min-width: 28px; }
+    .question-type-tag { display: inline-flex; align-items: center; padding: 2px 8px; font-size: 12px; font-weight: 500; border-radius: 4px; flex-shrink: 0; }
+    .tag-single { background: #E8F4FF; color: var(--color-brand); }
+    .tag-multi { background: #FFF7E6; color: var(--color-warning); }
+    .tag-judge { background: #F0FFF4; color: var(--color-success); }
+    .question-status { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; }
+    .status-correct { background: #F0FFF4; color: var(--color-success); }
+    .status-correct::before { content: '✓'; }
+    .status-wrong { background: #FFF1F0; color: var(--color-danger); }
+    .status-wrong::before { content: '✗'; }
+    .question-text { font-size: 15px; color: var(--color-text-primary); line-height: 1.6; margin-bottom: 16px; }
+
+    .options-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .option-item { display: flex; align-items: center; padding: 12px 14px; border-radius: 8px; font-size: 14px; border: 1px solid var(--color-border); background: #F8F9FA; color: var(--color-text-secondary); }
+    .option-item.correct-answer { background: #F0FFF4; border-color: #B7EB8F; color: var(--color-success); }
+    .option-item.user-wrong { background: #FFF1F0; border-color: #FFA39E; color: var(--color-danger); }
+    .option-item.user-correct { background: #F0FFF4; border-color: #B7EB8F; color: var(--color-success); }
+    .option-item.unselected { background: #FAFAFA; border-color: var(--color-border); color: var(--color-text-placeholder); }
+    .option-label { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 12px; font-weight: 600; margin-right: 10px; flex-shrink: 0; }
+    .correct-answer .option-label, .user-correct .option-label { background: var(--color-success); color: #fff; }
+    .user-wrong .option-label { background: var(--color-danger); color: #fff; }
+    .unselected .option-label { background: var(--color-border); color: var(--color-text-placeholder); }
+    .option-icon { margin-left: auto; font-size: 16px; flex-shrink: 0; }
+    .correct-answer .option-icon { color: var(--color-success); }
+    .user-wrong .option-icon { color: var(--color-danger); }
+    .unselected .option-icon { color: var(--color-text-placeholder); }
+
+    .answer-info { margin-top: 16px; }
+    .info-row { display: flex; align-items: flex-start; margin-bottom: 8px; font-size: 13px; }
+    .info-label { color: var(--color-text-placeholder); min-width: 56px; flex-shrink: 0; }
+    .info-value { color: var(--color-text-primary); font-weight: 500; }
+    .info-value.correct { color: var(--color-success); }
+    .info-value.wrong { color: var(--color-danger); }
+    .explanation-box { background: #F8F9FA; border-radius: 8px; padding: 12px 14px; }
+    .explanation-label { font-size: 12px; color: var(--color-text-placeholder); margin-bottom: 4px; }
+    .explanation-text { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+
+    .bottom-bar { position: fixed; left: 50%; transform: translateX(-50%); width: 100%; max-width: 414px; bottom: 0; background: #fff; border-top: 1px solid var(--color-divider); padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 16px)); z-index: 100; }
+    .bottom-actions { display: flex; gap: 12px; }
+    .btn { height: 44px; padding: 0 20px; border-radius: 8px; font-size: 15px; font-weight: 500; cursor: pointer; border: none; display: flex; align-items: center; justify-content: center; transition: all 150ms ease; flex: 1; }
+    .btn-default { background: #fff; border: 1px solid var(--color-border); color: var(--color-text-primary); }
+    .btn-default:active { background: #F5F5F5; }
+    .btn-primary { background: var(--color-brand); color: #fff; }
+    .btn-primary:active { background: var(--color-brand-hover); }
+    .btn-primary:disabled { background: #CCC; color: #fff; cursor: not-allowed; }
+
+    /* ========== 角标样式 ========== */
+    .prd-badge {
+      display: inline-block !important; vertical-align: top !important;
+      font-size: 10px !important; font-weight: bold !important; line-height: 14px !important;
+      padding: 0px 4px !important; border-radius: 2px !important;
+      color: #fff !important; cursor: pointer !important;
+      position: absolute !important; top: -8px !important; right: -4px !important;
+      z-index: 900 !important; white-space: nowrap !important;
+      font-family: var(--font-family) !important;
+    }
+    .prd-badge.normal { background: rgb(250, 173, 20) !important; }
+    .prd-badge.changed { background: #F54A45 !important; }
+    .badge-wrapper { position: relative; display: inline-block; }
+
+    .prd-tooltip {
+      position: fixed; z-index: 9959;
+      background: #FFFFFF; border: 2px solid #1890ff; border-radius: 4px;
+      box-shadow: 0 6px 16px rgba(0,120,255,0.15);
+      width: 450px; max-width: calc(100vw - 20px);
+      display: none; font-family: var(--font-family); font-size: 13px;
+    }
+    .prd-tooltip-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: #F0F7FF; border-bottom: 1px solid #E8E8E8; cursor: move; user-select: none; }
+    .prd-tooltip-title { font-weight: 600; color: var(--color-text-primary); font-size: 14px; }
+    .prd-tooltip-close { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; color: var(--color-text-placeholder); cursor: pointer; font-size: 16px; border-radius: 2px; }
+    .prd-tooltip-close:hover { background: #E8E8E8; }
+    .prd-tooltip-body { padding: 14px; max-height: 380px; overflow-y: auto; line-height: 1.6; color: var(--color-text-secondary); }
+    .prd-tooltip-body p { margin-bottom: 12px; }
+    .prd-tooltip-body strong { color: var(--color-text-primary); }
+    .prd-tooltip-body ul, .prd-tooltip-body ol { padding-left: 18px; margin-bottom: 12px; }
+    .prd-tooltip-body li { margin-bottom: 4px; }
+    .prd-tooltip-body blockquote { border-left: 3px solid #E8E8E8; padding-left: 10px; margin: 0 0 12px; color: var(--color-text-placeholder); }
+    .prd-tooltip-body table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 12px; }
+    .prd-tooltip-body th, .prd-tooltip-body td { border: 1px solid #E8E8E8; padding: 4px 8px; text-align: left; }
+    .prd-tooltip-body th { background: #FAFAFA; font-weight: 600; }
+
+    .prd-drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.45); z-index: 10000; display: none; }
+    .prd-drawer-overlay.is-open { display: block; }
+    .prd-drawer { position: fixed; top: 0; right: -600px; width: 600px; max-width: 100vw; height: 100vh; background: #fff; z-index: 10001; transition: right 300ms ease; display: flex; flex-direction: column; box-shadow: -4px 0 16px rgba(0,0,0,0.1); }
+    .prd-drawer.is-open { right: 0; }
+    .prd-drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--color-divider); flex-shrink: 0; }
+    .prd-drawer-title { font-size: 17px; font-weight: 600; color: var(--color-text-primary); }
+    .prd-drawer-close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; font-size: 20px; color: var(--color-text-secondary); cursor: pointer; }
+    .prd-drawer-body { flex: 1; overflow-y: auto; padding: 20px; line-height: 1.6; }
+    .prd-drawer-body h1, .prd-drawer-body h2, .prd-drawer-body h3 { color: var(--color-text-primary); margin: 20px 0 10px; }
+    .prd-drawer-body h1 { font-size: 20px; } .prd-drawer-body h2 { font-size: 17px; border-bottom: 1px solid var(--color-divider); padding-bottom: 6px; } .prd-drawer-body h3 { font-size: 15px; }
+    .prd-drawer-body p { margin-bottom: 10px; color: var(--color-text-secondary); }
+    .prd-drawer-body ul, .prd-drawer-body ol { padding-left: 20px; margin-bottom: 10px; }
+    .prd-drawer-body li { margin-bottom: 4px; }
+    .prd-drawer-body table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+    .prd-drawer-body th, .prd-drawer-body td { border: 1px solid #E8E8E8; padding: 6px 10px; text-align: left; }
+    .prd-drawer-body th { background: #FAFAFA; font-weight: 600; }
+    .prd-drawer-body blockquote { border-left: 3px solid var(--color-brand); padding-left: 12px; margin: 0 0 12px; color: var(--color-text-placeholder); background: #F8F9FA; padding: 8px 12px; }
+
+    .badge-toggle-btn { position: fixed !important; bottom: 20px !important; right: 20px !important; z-index: 10001 !important; width: 44px !important; height: 44px !important; border-radius: 50% !important; background: #307FE2 !important; border: none !important; color: #fff !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important; }
+    .badge-toggle-btn svg { width: 20px; height: 20px; }
+    .prd-nav-btns { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); display: flex; gap: 6px; }
+    .prd-nav-btn { height: 26px; padding: 0 8px; border-radius: 4px; font-size: 11px; font-weight: 500; background: #F0F7FF; border: 1px solid #1890ff; color: #1890ff; cursor: pointer; white-space: nowrap; }
+  </style>
+</head>
+<body>
+
+  <div class="status-bar"></div>
+
+  <div class="nav-bar">
+    <div class="nav-inner">
+      <button class="nav-back" type="button" aria-label="返回" id="backBtn">
+        <span class="badge-wrapper" style="position:absolute;top:-4px;right:2px;">
+          <span class="prd-badge normal" data-badge-id="1">1</span>
+        </span>
+        <svg viewBox="0 0 48 48" fill="currentColor"><path d="M30.83 37.17L17.66 24 30.83 10.83 28 8 12 24l16 16z"/></svg>
+      </button>
+      <span class="badge-wrapper">
+        <span class="nav-title">试卷详情</span>
+        <span class="prd-badge normal" data-badge-id="2">2</span>
+      </span>
+      <div class="prd-nav-btns">
+        <button class="prd-nav-btn" onclick="openDrawer()" title="查看页面PRD">📄 页面PRD</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-list" id="questionList">
+    <div class="progress-section">
+      <span class="badge-wrapper" style="position:absolute;top:-8px;right:12px;">
+        <span class="prd-badge normal" data-badge-id="3">3</span>
+      </span>
+      <div class="progress-text">
+        <span class="progress-label">题目进度</span>
+        <span class="progress-count"><span class="current" id="currentNum">1</span><span id="totalNum">/4</span></span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressFill" style="width:25%;"></div>
+      </div>
+    </div>
+    <div id="questionCard"></div>
+  </div>
+
+  <!-- 底部按钮 -->
+  <div class="bottom-bar">
+    <span class="badge-wrapper" style="position:absolute;top:-8px;left:16px;">
+      <span class="prd-badge normal" data-badge-id="5">5</span>
+    </span>
+    <div class="bottom-actions">
+      <button class="btn btn-default" id="homeBtn">返回首页</button>
+      <button class="btn btn-default" id="prevBtn" style="display:none;">上一题</button>
+      <button class="btn btn-primary" id="nextBtn">下一题</button>
+    </div>
+  </div>
+
+  <!-- ========== 标注浮窗容器 ========== -->
+  <div class="prd-tooltip" id="tooltip-1"></div>
+  <div class="prd-tooltip" id="tooltip-2"></div>
+  <div class="prd-tooltip" id="tooltip-3"></div>
+  <div class="prd-tooltip" id="tooltip-4"></div>
+  <div class="prd-tooltip" id="tooltip-5"></div>
+  <div class="prd-tooltip" id="tooltip-6"></div>
+
+  <div class="prd-drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+  <div class="prd-drawer" id="drawer">
+    <div class="prd-drawer-header">
+      <span class="prd-drawer-title">📄 小程序试卷详情页面 · 页面 PRD</span>
+      <button class="prd-drawer-close" onclick="closeDrawer()">×</button>
+    </div>
+    <div class="prd-drawer-body" id="drawerBody"></div>
+  </div>
+
+  <button class="badge-toggle-btn" id="badgeToggle" title="显示/隐藏标注">
+    <svg id="toggleEyeOn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+    <svg id="toggleEyeOff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+  </button>
+
+<script>
+// ==================== 标注数据 ====================
+var badgeData = {
+  "1": {
+    title: "需求描述：返回按钮",
+    content: "" +
+      "<p><strong>来自PRD 2.2 导航栏：</strong></p>" +
+      "<table><tr><th>元素</th><th>位置</th><th>行为</th></tr>" +
+      "<tr><td>返回按钮 ←</td><td>左侧</td><td>点击返回练习结束页面</td></tr></table>"
+  },
+  "2": {
+    title: "需求描述：导航标题",
+    content: "" +
+      "<p><strong>来自PRD 2.2 导航栏：</strong></p>" +
+      "<table><tr><th>元素</th><th>位置</th><th>行为</th></tr>" +
+      "<tr><td>标题「试卷详情」</td><td>居中</td><td>纯文本展示</td></tr></table>"
+  },
+  "3": {
+    title: "需求描述：进度模块",
+    content: "" +
+      "<p><strong>来自PRD 3 进度模块：</strong></p>" +
+      "<table><tr><th>元素</th><th>说明</th></tr>" +
+      "<tr><td>标签</td><td>「题目进度」</td></tr>" +
+      "<tr><td>计数器</td><td>当前题号 / 总题数，格式 1 / 4</td></tr>" +
+      "<tr><td>进度条</td><td>填充条，按 (当前题/总题数) 比例</td></tr></table>"
+  },
+  "4": {
+    title: "需求描述：试题企业统一",
+    content: "" +
+      "<p><strong>来自PRD 1.1 页面概述：</strong></p>" +
+      "<p>本页面复用自由练习的试卷详情页面，样式与自由练习完全一致，<strong>题目来源改为模拟练习的答题记录</strong>。模拟练习的题目来自企业统一配置的试卷，由管理员在后台练习设置中选择试卷并配置参数后，员工在小程序端按统一试卷进行练习。</p>" +
+      "<p><strong>来自PRD 7.1 题目数据：</strong></p>" +
+      "<table><tr><th>数据项</th><th>来源</th><th>说明</th></tr>" +
+      "<tr><td>题目列表</td><td>本轮练习的答题记录</td><td>包含题目、用户答案、正确答案、解析</td></tr>" +
+      "<tr><td>答对/答错状态</td><td>答题记录</td><td>对比用户答案与正确答案判定</td></tr>" +
+      "<tr><td>题目进度计数</td><td>答题记录</td><td>总题数 = 本次练习题目总数</td></tr></table>" +
+      "<p><strong>与自由练习的区别：</strong>自由练习题目来自通用题库+专业题库动态抽题；模拟练习题目来自企业统一的固定试卷</p>"
+  },
+  "5": {
+    title: "需求描述：底部操作栏",
+    content: "" +
+      "<p><strong>来自PRD 5.1 按钮：</strong></p>" +
+      "<table><tr><th>按钮</th><th>位置</th><th>行为</th></tr>" +
+      "<tr><td>返回首页</td><td>左侧</td><td>跳转练习列表页</td></tr>" +
+      "<tr><td>上一题</td><td>中间</td><td>回到上一题，查看前一题的答题详情</td></tr>" +
+      "<tr><td>下一题</td><td>右侧</td><td>切换到下一题；最后一题变为「返回结果」</td></tr></table>" +
+      "<p><strong>来自PRD 5.3 上一题按钮状态：</strong></p>" +
+      "<table><tr><th>当前题</th><th>按钮状态</th></tr>" +
+      "<tr><td>第一题（题号 1）</td><td>隐藏不显示</td></tr>" +
+      "<tr><td>第二题起（题号 ≥ 2）</td><td>显示「上一题」，正常可点击</td></tr></table>" +
+      "<p><strong>来自PRD 5.2 下一题/返回结果按钮状态：</strong></p>" +
+      "<table><tr><th>当前题</th><th>按钮状态</th></tr>" +
+      "<tr><td>不是最后一题</td><td>正常可点击，文案「下一题」</td></tr>" +
+      "<tr><td>最后一题</td><td><strong>文案变为「返回结果」，点击跳转到练习结束页面</strong></td></tr></table>" +
+      "<p><strong>来自PRD 6 核心交互：</strong>点击「返回结果」→ 跳转到练习结束页面</p>"
+  },
+  "6": {
+    title: "需求描述：题目卡片及异常处理",
+    content: "" +
+      "<p><strong>来自PRD 4.1 卡片元素：</strong></p>" +
+      "<table><tr><th>元素</th><th>说明</th></tr>" +
+      "<tr><td>题号+题型标签</td><td>左上角显示</td></tr>" +
+      "<tr><td>状态标签</td><td>右上角 ✓答对 / ✗答错</td></tr>" +
+      "<tr><td>选项列表</td><td>正确答案✓标记、错选✗标记</td></tr>" +
+      "<tr><td>解析区</td><td>正确答案、我的答案、题目解析</td></tr></table>" +
+      "<p><strong>来自PRD 4.3 分页逻辑：</strong>一题一页，通过按钮逐题切换，切换时更新进度条、计数器和题目卡片内容</p>" +
+      "<p><strong>来自PRD 8 异常处理：</strong></p>" +
+      "<table><tr><th>异常场景</th><th>处理方式</th></tr>" +
+      "<tr><td>无答题记录数据</td><td>展示空状态「暂无答题详情」</td></tr>" +
+      "<tr><td>数据加载失败</td><td>轻提示「加载失败，请稍后重试」</td></tr>" +
+      "<tr><td>关联试卷已删除</td><td>不影响已完成的练习结果数据，仍可正常查看试卷详情</td></tr>" +
+      "<tr><td>用户被移除练习人员范围</td><td>不影响已生成的结果数据，仍可从练习结束页进入查看</td></tr></table>"
+  }
+};
+
+// ==================== PRD 抽屉内容 ====================
+var pagePrdContent = '<h1>小程序试卷详情页面 · 页面 PRD</h1>\n' +
+  '<blockquote><strong>页面类型：</strong>用户前台类（小程序端） | <strong>所属模块：</strong>模拟练习 | <strong>最后更新：</strong>2026-07-01</blockquote>\n' +
+  '<h2>1. 引言</h2>\n' +
+  '<h3>1.1 页面概述</h3>\n' +
+  '<p>小程序试卷详情页面从练习结束页点击「查看详情」进入，逐题展示正确答案、用户答案和题目解析。<strong>本页面复用自由练习的试卷详情页面，样式与自由练习完全一致</strong>，题目来源改为模拟练习的答题记录。</p>\n' +
+  '<h3>1.2 使用角色</h3>\n' +
+  '<table><tr><th>角色</th><th>访问权限</th></tr><tr><td>普通员工</td><td>✓ 从练习结束页进入</td></tr><tr><td>部门负责人</td><td>✓ 从练习结束页进入</td></tr></table>\n' +
+  '<h3>1.3 前置条件</h3>\n' +
+  '<ul><li>用户已完成一轮模拟练习并提交（或提前结束）</li><li>从练习结束页点击「查看详情」进入</li></ul>\n' +
+  '<h2>[1][2] 2. 页面结构</h2>\n' +
+  '<h3>2.1 页面布局</h3>\n' +
+  '<pre>┌──────────────────────────────┐\n│  ←     试卷详情                │  导航栏\n├──────────────────────────────┤\n│  题目进度              1/4    │  进度模块\n├──────────────────────────────┤\n│  1. 单选题      ✓答对          │  题目卡片\n│  [选项列表 + 答案 + 解析]      │\n├──────────────────────────────┤\n│ [返回首页] [上一题] [下一题]    │  底部操作栏\n└──────────────────────────────┘</pre>\n' +
+  '<h3>[1][2] 2.2 导航栏</h3>\n' +
+  '<table><tr><th>元素</th><th>位置</th><th>行为</th></tr><tr><td>返回按钮</td><td>左侧</td><td>返回练习结束页面</td></tr><tr><td>标题</td><td>居中</td><td>纯文本展示「试卷详情」</td></tr></table>\n' +
+  '<h2>[3] 3. 进度模块</h2>\n' +
+  '<table><tr><th>元素</th><th>说明</th></tr><tr><td>标签</td><td>「题目进度」</td></tr><tr><td>计数器</td><td>当前题号/总题数</td></tr><tr><td>进度条</td><td>按比例填充</td></tr></table>\n' +
+  '<h2>[4][6] 4. 题目卡片</h2>\n' +
+  '<h3>4.1 卡片元素</h3>\n' +
+  '<table><tr><th>元素</th><th>说明</th></tr><tr><td>题号</td><td>题号+题型标签</td></tr><tr><td>状态标签</td><td>✓答对 / ✗答错</td></tr><tr><td>选项列表</td><td>正确答案✓、错选✗标记</td></tr><tr><td>解析区</td><td>正确答案、我的答案、题目解析</td></tr></table>\n' +
+  '<h3>4.2 选项状态</h3>\n' +
+  '<table><tr><th>状态</th><th>图标</th></tr><tr><td>正确答案+答对</td><td>✓</td></tr><tr><td>正确答案+未选</td><td>✓</td></tr><tr><td>用户错选</td><td>✗</td></tr><tr><td>其他未选</td><td>-</td></tr></table>\n' +
+  '<h2>[5] 5. 底部操作栏</h2>\n' +
+  '<h3>5.1 按钮</h3>\n' +
+  '<table><tr><th>按钮</th><th>行为</th></tr><tr><td>返回首页</td><td>跳转练习列表</td></tr><tr><td>上一题</td><td>回到上一题</td></tr><tr><td>下一题</td><td>切换下一题；最后一题→返回结果</td></tr></table>\n' +
+  '<h3>[5] 5.2 下一题/返回结果</h3>\n' +
+  '<table><tr><th>当前题</th><th>按钮状态</th></tr><tr><td>不是最后一题</td><td>正常可点击「下一题」</td></tr><tr><td>最后一题</td><td>「返回结果」，点击跳转练习结束页</td></tr></table>\n' +
+  '<h3>[5] 5.3 上一题按钮状态</h3>\n' +
+  '<table><tr><th>当前题</th><th>按钮状态</th></tr><tr><td>第一题</td><td>隐藏不显示</td></tr><tr><td>第二题起</td><td>显示「上一题」</td></tr></table>\n' +
+  '<h2>6. 核心交互</h2>\n' +
+  '<table><tr><th>操作</th><th>行为</th></tr><tr><td>进入页面</td><td>渲染第一题，不显示「上一题」</td></tr><tr><td>下一题</td><td>切换下一题；到第2题后显示「上一题」</td></tr><tr><td>上一题</td><td>切换回上一题</td></tr><tr><td>返回结果</td><td>跳转练习结束页面</td></tr></table>\n' +
+  '<h2>7. 数据来源</h2>\n' +
+  '<table><tr><th>数据项</th><th>来源</th></tr><tr><td>题目列表</td><td>本轮练习答题记录</td></tr><tr><td>答对/答错状态</td><td>对比判定</td></tr><tr><td>进度计数</td><td>总题数=本次练习题目总数</td></tr></table>\n' +
+  '<h2>[4][5] 7.2 与自由练习的关系</h2>\n' +
+  '<table><tr><th>对比项</th><th>自由练习</th><th>模拟练习</th></tr><tr><td><strong>返回首页</strong></td><td>返回首页</td><td>不变</td></tr></table>\n' +
+  '<h2>[6] 8. 异常处理</h2>\n' +
+  '<table><tr><th>异常场景</th><th>处理方式</th></tr><tr><td>无答题记录</td><td>「暂无答题详情」</td></tr><tr><td>数据加载失败</td><td>「加载失败，请稍后重试」</td></tr></table>';
+
+// ==================== 通用浮窗交互 ====================
+var activeTooltip=null,tooltipTimers={};
+function showTooltip(id,e){
+  var tip=document.getElementById('tooltip-'+id),data=badgeData[id];
+  if(!tip||!data)return;
+  if(tooltipTimers[id])clearTimeout(tooltipTimers[id]);
+  if(activeTooltip&&activeTooltip!==tip)activeTooltip.style.display='none';
+  tip.innerHTML='<div class="prd-tooltip-header"><span class="prd-tooltip-title">'+data.title+'</span><button class="prd-tooltip-close" onclick="closeTooltip(\''+id+'\')">×</button></div><div class="prd-tooltip-body">'+data.content+'</div>';
+  var badge=document.querySelector('.prd-badge[data-badge-id="'+id+'"]');
+  var rect=badge?badge.getBoundingClientRect():{top:e.clientY,left:e.clientX};
+  var left=rect.left+rect.width/2-225;if(left<10)left=10;if(left+450>window.innerWidth-10)left=window.innerWidth-460;
+  var top=rect.bottom+8;if(top+400>window.innerHeight)top=rect.top-408;
+  tip.style.left=left+'px';tip.style.top=top+'px';tip.style.display='block';tip.style.zIndex='9959';activeTooltip=tip;
+}
+function closeTooltip(id){var tip=document.getElementById('tooltip-'+id);if(tip){tip.style.display='none';if(activeTooltip===tip)activeTooltip=null;}}
+function bindBadgeHover(b){b.addEventListener('mouseenter',function(e){showTooltip(b.getAttribute('data-badge-id'),e)});b.addEventListener('mouseleave',function(e){var id=b.getAttribute('data-badge-id');tooltipTimers[id]=setTimeout(function(){closeTooltip(id)},200)})}
+document.querySelectorAll('.prd-badge').forEach(function(b){bindBadgeHover(b)});
+document.querySelectorAll('.prd-tooltip').forEach(function(t){t.addEventListener('mouseenter',function(){var id=t.id.replace('tooltip-','');if(tooltipTimers[id])clearTimeout(tooltipTimers[id])});t.addEventListener('mouseleave',function(){closeTooltip(t.id.replace('tooltip-',''))})});
+var dragTarget=null,dx=0,dy=0;
+document.addEventListener('mousedown',function(e){var h=e.target.closest('.prd-tooltip-header');if(!h)return;dragTarget=h.closest('.prd-tooltip');if(dragTarget){dx=e.clientX-dragTarget.offsetLeft;dy=e.clientY-dragTarget.offsetTop}});
+document.addEventListener('mousemove',function(e){if(!dragTarget)return;dragTarget.style.left=(e.clientX-dx)+'px';dragTarget.style.top=(e.clientY-dy)+'px'});
+document.addEventListener('mouseup',function(){dragTarget=null});
+function openDrawer(){document.getElementById('drawerBody').innerHTML=pagePrdContent;document.getElementById('drawerOverlay').classList.add('is-open');document.getElementById('drawer').classList.add('is-open')}
+function closeDrawer(){document.getElementById('drawerOverlay').classList.remove('is-open');document.getElementById('drawer').classList.remove('is-open')}
+var badgesVisible=true;
+document.getElementById('badgeToggle').addEventListener('click',function(){badgesVisible=!badgesVisible;var b=document.querySelectorAll('.prd-badge');for(var i=0;i<b.length;i++)b[i].style.display=badgesVisible?'':'none';document.getElementById('toggleEyeOn').style.display=badgesVisible?'':'none';document.getElementById('toggleEyeOff').style.display=badgesVisible?'none':''});
+
+// ==================== 原有业务逻辑 ====================
+var currentIndex=0;
+var questions=[{id:1,type:'single',typeLabel:'单选题',tag:'tag-single',title:'安全生产的第一责任人是？',options:[{label:'A',text:'企业主要负责人'},{label:'B',text:'安全管理人员'},{label:'C',text:'班组长'},{label:'D',text:'普通员工'}],correctAnswer:'A',userAnswer:'A',status:'correct',explanation:'根据《安全生产法》规定，企业主要负责人是安全生产的第一责任人，对本单位的安全生产工作全面负责。'},{id:2,type:'multi',typeLabel:'多选题',tag:'tag-multi',title:'以下哪些属于安全防护措施？',options:[{label:'A',text:'佩戴安全帽'},{label:'B',text:'穿戴防护服'},{label:'C',text:'使用防护手套'},{label:'D',text:'佩戴护目镜'}],correctAnswer:'ABCD',userAnswer:'AB',status:'wrong',explanation:'安全防护措施包括头部防护、躯体防护、手部防护和眼部防护等。佩戴安全帽、穿戴防护服、使用防护手套和佩戴护目镜均属于基本的安全防护措施。'},{id:3,type:'judge',typeLabel:'判断题',tag:'tag-judge',title:'在进行高空作业时，必须系好安全带。',options:[{label:'A',text:'正确'},{label:'B',text:'错误'}],correctAnswer:'A',userAnswer:'A',status:'correct',explanation:'根据高处作业安全规范，凡在坠落高度基准面2米及以上有可能坠落的高处进行作业，均需使用安全带或其他防坠落设施。'},{id:4,type:'single',typeLabel:'单选题',tag:'tag-single',title:'作业场所噪声超过多少分贝时需要配置听力防护用品？',options:[{label:'A',text:'75分贝'},{label:'B',text:'80分贝'},{label:'C',text:'85分贝'},{label:'D',text:'90分贝'}],correctAnswer:'C',userAnswer:'B',status:'wrong',explanation:'根据《工作场所职业卫生管理规定》，作业场所噪声超过85分贝应予配备听力防护用品，超过80分贝应当开展听力监测。'}];
+
+function getOptionClass(optLabel,correctAnswer,userAnswer,status){
+  var isCorrect=correctAnswer.indexOf(optLabel)!==-1;
+  var isUser=userAnswer.indexOf(optLabel)!==-1;
+  if(isCorrect&&isUser)return'correct-answer';
+  if(isCorrect&&!isUser)return'correct-answer';
+  if(!isCorrect&&isUser)return'user-wrong';
+  return'unselected';
+}
+function getOptionIcon(optLabel,correctAnswer,userAnswer,status){
+  var isCorrect=correctAnswer.indexOf(optLabel)!==-1;
+  var isUser=userAnswer.indexOf(optLabel)!==-1;
+  if(isCorrect)return'✓';
+  if(!isCorrect&&isUser)return'✗';
+  return'';
+}
+function renderCurrentQuestion(){
+  var q=questions[currentIndex],statusClass=q.status==='correct'?'status-correct':'status-wrong',statusText=q.status==='correct'?'答对':'答错';
+  var optionsHtml='';
+  for(var j=0;j<q.options.length;j++){
+    var opt=q.options[j],cls=getOptionClass(opt.label,q.correctAnswer,q.userAnswer,q.status),icon=getOptionIcon(opt.label,q.correctAnswer,q.userAnswer,q.status);
+    optionsHtml+='<div class="option-item '+cls+'"><span class="option-label">'+opt.label+'</span><span>'+opt.text+'</span><span class="option-icon">'+icon+'</span></div>';
+  }
+  var html='<div class="question-card"><span class="badge-wrapper" style="position:absolute;top:-8px;right:12px;"><span class="prd-badge normal" data-badge-id="4">4</span></span><div class="question-header"><span class="question-number">'+q.id+'.</span><span class="question-type-tag '+q.tag+'">'+q.typeLabel+'</span><span class="question-status '+statusClass+'">'+statusText+'</span></div><div class="question-text">'+q.title+'</div><div class="options-list">'+optionsHtml+'</div><div class="answer-info"><div class="info-row"><span class="info-label">正确答案</span><span class="info-value correct">'+q.correctAnswer+'</span></div><div class="info-row"><span class="info-label">我的答案</span><span class="info-value '+(q.status==='correct'?'correct':'wrong')+'">'+(q.userAnswer||'未作答')+'</span></div></div><div class="explanation-box"><div class="explanation-label">解析</div><div class="explanation-text">'+q.explanation+'</div></div></div>';
+  document.getElementById('questionCard').innerHTML=html;
+  document.getElementById('currentNum').textContent=(currentIndex+1);
+  document.getElementById('totalNum').textContent='/'+questions.length;
+  document.getElementById('progressFill').style.width=((currentIndex+1)/questions.length*100)+'%';
+
+  var nextBtn=document.getElementById('nextBtn'),prevBtn=document.getElementById('prevBtn');
+  if(currentIndex===0){prevBtn.style.display='none';}else{prevBtn.style.display='';}
+  if(currentIndex>=questions.length-1){nextBtn.textContent='返回结果';}else{nextBtn.textContent='下一题';}
+
+  var newBadge=document.querySelector('#questionCard .prd-badge[data-badge-id="4"]');
+  if(newBadge){bindBadgeHover(newBadge);}
+}
+document.getElementById('prevBtn').addEventListener('click',function(){if(currentIndex>0){currentIndex--;renderCurrentQuestion()}});
+document.getElementById('backBtn').addEventListener('click',function(){window.location.href='小程序练习结束页面.html'});
+document.getElementById('homeBtn').addEventListener('click',function(){window.location.href='小程序练习列表.html'});
+document.getElementById('nextBtn').addEventListener('click',function(){if(currentIndex<questions.length-1){currentIndex++;renderCurrentQuestion()}else{window.location.href='小程序练习结束页面.html'}});
+renderCurrentQuestion();
+</script>
+</body>
+</html>
