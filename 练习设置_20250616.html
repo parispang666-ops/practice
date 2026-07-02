@@ -1376,7 +1376,15 @@
     .btn-add-person { display: inline-flex; align-items: center; gap: 4px; height: 32px; padding: 0 14px; border: 1px dashed #307FE2; border-radius: 4px; background: #F7FBFF; color: #307FE2; font-size: 13px; cursor: pointer; transition: all 0.15s; }
     .btn-add-person:hover { background: #EBF3FD; }
 
-    /* 已选人员/范围卡片分组 */
+    /* 人员选择顶部栏 */
+    .person-select-bar { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+    .person-total-count { font-size: 14px; color: #307FE2; font-weight: 500; }
+
+    /* 查看已选按钮 */
+  .person-group-actions .link-action.view-selected { color: #307FE2; }
+  .person-group-actions .link-action.view-selected::before { content: ''; display: inline-block; width: 12px; height: 12px; margin-right: 4px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23307FE2'%3E%3Cpath d='M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; vertical-align: -1px; }
+
+  /* 已选列表弹窗 */
     .person-group-card { margin-top: 10px; background: #F7F8FA; border-radius: 6px; overflow: hidden; }
     .person-group-card + .person-group-card { margin-top: 8px; }
     .person-group-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: #F7F8FA; border-bottom: 1px solid #E5E6EB; }
@@ -1393,11 +1401,39 @@
     .person-tag .tag-close { display: flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; color: #8F959E; cursor: pointer; font-size: 12px; line-height: 1; transition: all 0.15s; }
     .person-tag .tag-close:hover { background: #F54A45; color: #fff; }
 
-    /* 操作链接 */
-    .link-action { font-size: 12px; color: #307FE2; cursor: pointer; text-decoration: none; white-space: nowrap; }
-    .link-action:hover { color: #1E5DB9; }
-    .link-action.danger { color: #F54A45; }
-    .link-action.danger:hover { color: #D93025; }
+    /* 温馨提示 */
+    .person-warm-tip { margin-top: 12px; font-size: 13px; color: #8F959E; line-height: 1.6; }
+
+  /* 操作链接 */
+  .link-action { font-size: 12px; color: #307FE2; cursor: pointer; text-decoration: none; white-space: nowrap; }
+  .link-action:hover { color: #1E5DB9; }
+  .link-action.danger { color: #F54A45; }
+  .link-action.danger:hover { color: #D93025; }
+
+  /* 查看已选按钮 */
+  .person-group-actions .link-action.view-selected { color: #307FE2; }
+  .person-group-actions .link-action.view-selected::before { content: ''; display: inline-block; width: 12px; height: 12px; margin-right: 4px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23307FE2'%3E%3Cpath d='M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; vertical-align: -1px; }
+
+  /* 已选列表弹窗 */
+  .selected-list-overlay .modal { width: 720px; }
+  .selected-list-search { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid #F0F0F0; }
+  .selected-list-search .modal-input { width: 220px; height: 32px; }
+  .selected-list-search .search-label { font-size: 14px; color: #1F2329; }
+  .selected-list-search .btn-search { height: 32px; padding: 0 16px; border: 1px solid #307FE2; border-radius: 4px; background: #fff; color: #307FE2; font-size: 13px; cursor: pointer; }
+  .selected-list-search .btn-search:hover { background: #F7FBFF; }
+  .selected-list-search .btn-reset { height: 32px; padding: 0 16px; border: 1px solid #D9D9D9; border-radius: 4px; background: #fff; color: #646A73; font-size: 13px; cursor: pointer; }
+  .selected-list-search .btn-reset:hover { border-color: #307FE2; color: #307FE2; }
+  .selected-list-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; border-bottom: 1px solid #F0F0F0; }
+  .selected-list-toolbar .batch-delete { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 10px; border: 1px solid #D9D9D9; border-radius: 4px; background: #fff; color: #F54A45; font-size: 13px; cursor: pointer; }
+  .selected-list-toolbar .batch-delete:hover { border-color: #F54A45; background: #FFF5F5; }
+  .selected-list-toolbar .selected-info { font-size: 13px; color: #646A73; }
+  .selected-list-table-wrap { max-height: 360px; overflow: auto; }
+  .selected-list-table-wrap .data-table th { background: #F7F8FA; font-weight: 500; }
+  .selected-list-table-wrap .data-table td { padding: 10px 12px; font-size: 13px; }
+  .selected-list-empty { text-align: center; padding: 40px 20px; color: #999; font-size: 14px; }
+  .selected-list-back { text-align: center; padding: 12px 0; }
+  .selected-list-back .btn-back { height: 32px; padding: 0 24px; border: 1px solid #D9D9D9; border-radius: 4px; background: #fff; color: #646A73; font-size: 13px; cursor: pointer; }
+  .selected-list-back .btn-back:hover { border-color: #307FE2; color: #307FE2; }
 
     /* 人员选择器搜索 */
     .person-picker-search { padding: 16px 20px; border-bottom: 1px solid #F0F0F0; }
@@ -1940,15 +1976,53 @@
                       <label class="modal-form-label"><span class="required">*</span>练习人员</label>
                       <div class="modal-form-control">
                         <div id="specifiedPersonArea" style="margin-top:0;">
-                          <button class="btn-add-person" id="btnAddPerson" onclick="openPersonPicker()">添加人员</button>
+                          <div class="person-select-bar">
+                            <button class="btn-add-person" id="btnAddPerson" onclick="openPersonPicker()">+选择</button>
+                            <span class="person-total-count" id="personTotalCount">共计人员：0人</span>
+                          </div>
+                          <!-- 部门范围卡片 -->
+                          <div class="person-group-card" id="deptGroupCard">
+                            <div class="person-group-header">
+                              <div>
+                                <span class="person-group-title">部门</span>
+                                <span class="person-group-count" id="deptGroupCount">（0个）</span>
+                              </div>
+                              <div class="person-group-actions">
+                                <span class="link-action view-selected" onclick="openSelectedList('dept')">查看已选</span>
+                                <span class="link-action danger" onclick="removeAllDepts()">全部移除</span>
+                              </div>
+                            </div>
+                            <div class="person-group-body">
+                              <div class="person-tags" id="deptTags"></div>
+                              <div class="person-group-empty" id="deptGroupEmpty">暂未选择部门范围</div>
+                            </div>
+                          </div>
+                          <!-- 岗位范围卡片 -->
+                          <div class="person-group-card" id="positionGroupCard">
+                            <div class="person-group-header">
+                              <div>
+                                <span class="person-group-title">岗位</span>
+                                <span class="person-group-count" id="positionGroupCount">（0个）</span>
+                              </div>
+                              <div class="person-group-actions">
+                                <span class="link-action view-selected" onclick="openSelectedList('position')">查看已选</span>
+                                <span class="link-action danger" onclick="removeAllPositions()">全部移除</span>
+                              </div>
+                            </div>
+                            <div class="person-group-body">
+                              <div class="person-tags" id="positionTags"></div>
+                              <div class="person-group-empty" id="positionGroupEmpty">暂未选择岗位范围</div>
+                            </div>
+                          </div>
                           <!-- 指定用户卡片 -->
                           <div class="person-group-card" id="personGroupCard">
                             <div class="person-group-header">
                               <div>
-                                <span class="person-group-title">指定用户</span>
-                                <span class="person-group-count" id="personGroupCount">0人</span>
+                                <span class="person-group-title">人员</span>
+                                <span class="person-group-count" id="personGroupCount">（0个）</span>
                               </div>
                               <div class="person-group-actions">
+                                <span class="link-action view-selected" onclick="openSelectedList('person')">查看已选</span>
                                 <span class="link-action danger" onclick="removeAllPersons()">全部移除</span>
                               </div>
                             </div>
@@ -1957,21 +2031,8 @@
                               <div class="person-group-empty" id="personGroupEmpty">暂无指定用户</div>
                             </div>
                           </div>
-                          <!-- 部门范围卡片 -->
-                          <div class="person-group-card" id="deptGroupCard">
-                            <div class="person-group-header">
-                              <div>
-                                <span class="person-group-title">部门范围</span>
-                                <span class="person-group-count" id="deptGroupCount">0个部门</span>
-                              </div>
-                              <div class="person-group-actions">
-                                <span class="link-action danger" onclick="removeAllDepts()">全部移除</span>
-                              </div>
-                            </div>
-                            <div class="person-group-body">
-                              <div class="person-tags" id="deptTags"></div>
-                              <div class="person-group-empty" id="deptGroupEmpty">暂未选择部门范围</div>
-                            </div>
+                          <div class="person-warm-tip" id="personWarmTip">
+                            温馨提示：系统会自动将被多次选中的人员进行去重操作，确保每个人只参与一次。
                           </div>
                         </div>
                       </div>
@@ -2045,7 +2106,9 @@
         <span class="scb-text"><strong>使用系统现有组件：人员选择器</strong><br/>此弹窗应直接复用系统中已有的「人员选择器」组件，该组件已提供人员列表查询、部门范围筛选、多选、搜索过滤等标准交互能力。开发时无需重新实现，仅需配置调用参数（如 Tab 类型、多选模式、确认回调）即可。</span>
       </div>
       <div class="person-picker-tabs">
+        <div class="person-picker-tab active" data-tab="person" onclick="switchPickerTab('person')">人员</div>
         <div class="person-picker-tab" data-tab="dept" onclick="switchPickerTab('dept')">部门范围</div>
+        <div class="person-picker-tab" data-tab="position" onclick="switchPickerTab('position')">岗位范围</div>
       </div>
       <!-- 人员 Tab -->
       <div class="person-picker-panel active" id="pickerPanelPerson">
@@ -2094,9 +2157,73 @@
           <div class="person-pick-empty" id="deptPickEmpty" style="display:none;">未找到匹配部门</div>
         </div>
       </div>
+      <!-- 岗位范围 Tab -->
+      <div class="person-picker-panel" id="pickerPanelPosition">
+        <div class="person-picker-search">
+          <input type="text" class="modal-input" id="positionSearchInput" placeholder="搜索岗位名称" oninput="filterPositionList()">
+        </div>
+        <div class="select-all-bar">
+          <input type="checkbox" id="positionPickSelectAll" onchange="togglePickSelectAll('position')">
+          <span>全选当前列表</span>
+        </div>
+        <div class="data-table-wrap" style="max-height:300px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width:50px;"></th>
+                <th>岗位名称</th>
+                <th>包含人数</th>
+              </tr>
+            </thead>
+            <tbody id="positionPickerBody"></tbody>
+          </table>
+          <div class="person-pick-empty" id="positionPickEmpty" style="display:none;">未找到匹配岗位</div>
+        </div>
+      </div>
       <div class="modal-footer">
         <button class="btn-cancel" onclick="closePersonPicker()">取消</button>
         <button class="btn-save" onclick="confirmPersonPicker()">确认</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 已选列表弹窗 ==================== -->
+  <div class="modal-overlay selected-list-overlay" id="selectedListOverlay">
+    <div class="modal">
+      <div class="modal-header" style="position:relative;">
+        <h2 id="selectedListTitle">已选人员</h2>
+        <button class="modal-close" onclick="closeSelectedList()">×</button>
+      </div>
+      <div class="selected-list-search" id="selectedListSearch">
+        <span class="search-label" id="selectedListSearchLabel">姓名</span>
+        <input type="text" class="modal-input" id="selectedListSearchInput" placeholder="请输入">
+        <button class="btn-search" onclick="searchSelectedList()">查询</button>
+        <button class="btn-reset" onclick="resetSelectedListSearch()">重置</button>
+      </div>
+      <div class="selected-list-toolbar">
+        <button class="batch-delete" onclick="batchDeleteSelectedList()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          批量删除
+        </button>
+        <span class="selected-info" id="selectedListInfo">已选 0 项</span>
+      </div>
+      <div class="selected-list-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width:50px;"><input type="checkbox" id="selectedListSelectAll" onchange="toggleSelectedListSelectAll()"></th>
+              <th id="selectedListColName">姓名</th>
+              <th id="selectedListColCount">部门</th>
+              <th id="selectedListColExtra2">岗位</th>
+              <th style="width:80px;">操作</th>
+            </tr>
+          </thead>
+          <tbody id="selectedListBody"></tbody>
+        </table>
+        <div class="selected-list-empty" id="selectedListEmpty" style="display:none;">暂无数据</div>
+      </div>
+      <div class="selected-list-back">
+        <button class="btn-back" onclick="closeSelectedList()">返回选择</button>
       </div>
     </div>
   </div>
@@ -2460,46 +2587,47 @@
         deptMap[p.dept].personIds.push(p.id);
       });
 
-      var selectedItems = [];           // 已确认选中的 [{type: 'person'|'dept', id, name, dept?}]
-      var tempSelectedItems = { persons: [], depts: [] };  // 弹窗中临时勾选
+      // 岗位范围数据（根据人员列表中的 title 推导）
+      var positionMap = {};
+      var positionList = [];
+      personList.forEach(function(p) {
+        if (!p.title) return;
+        if (!positionMap[p.title]) {
+          positionMap[p.title] = { name: p.title, count: 0, personIds: [] };
+          positionList.push(positionMap[p.title]);
+        }
+        positionMap[p.title].count++;
+        positionMap[p.title].personIds.push(p.id);
+      });
+
+      var selectedItems = [];           // 已确认选中的 [{type: 'person'|'dept'|'position', id, name, dept?}]
+      var tempSelectedItems = { persons: [], depts: [], positions: [] };  // 弹窗中临时勾选
       var currentPickerTab = 'person';  // 弹窗当前Tab
 
       // ==================== 主表单已选人员/范围卡片 ====================
 
-      // 渲染已选人员/范围（两个卡片：指定用户 + 部门范围）
+      // 渲染已选人员/范围（三个卡片：部门 + 岗位 + 人员）
       window.renderPersonList = function() {
         var personTags = $('#personTags');
         var deptTags = $('#deptTags');
+        var positionTags = $('#positionTags');
         var personEmpty = $('#personGroupEmpty');
         var deptEmpty = $('#deptGroupEmpty');
+        var positionEmpty = $('#positionGroupEmpty');
         var personCount = $('#personGroupCount');
         var deptCount = $('#deptGroupCount');
+        var positionCount = $('#positionGroupCount');
         var personCard = $('#personGroupCard');
         var deptCard = $('#deptGroupCard');
+        var positionCard = $('#positionGroupCard');
 
         // 分类
         var persons = selectedItems.filter(function(i) { return i.type === 'person'; });
         var depts = selectedItems.filter(function(i) { return i.type === 'dept'; });
-
-        // 指定用户
-        if (personCount) personCount.textContent = persons.length + '人';
-        if (personTags) {
-          if (persons.length === 0) {
-            personTags.innerHTML = '';
-            if (personEmpty) personEmpty.style.display = 'block';
-          } else {
-            if (personEmpty) personEmpty.style.display = 'none';
-            personTags.innerHTML = persons.map(function(p) {
-              return '<span class="person-tag">' +
-                '<span class="tag-label" title="' + p.name + (p.dept ? ' · ' + p.dept : '') + '">' + p.name + '</span>' +
-                '<span class="tag-close" onclick="removeItemByKey(\'person\',\'' + p.id + '\')">×</span>' +
-                '</span>';
-            }).join('');
-          }
-        }
+        var positions = selectedItems.filter(function(i) { return i.type === 'position'; });
 
         // 部门范围
-        if (deptCount) deptCount.textContent = depts.length + '个部门';
+        if (deptCount) deptCount.textContent = '（' + depts.length + '个）';
         if (deptTags) {
           if (depts.length === 0) {
             deptTags.innerHTML = '';
@@ -2516,13 +2644,69 @@
           }
         }
 
+        // 岗位范围
+        if (positionCount) positionCount.textContent = '（' + positions.length + '个）';
+        if (positionTags) {
+          if (positions.length === 0) {
+            positionTags.innerHTML = '';
+            if (positionEmpty) positionEmpty.style.display = 'block';
+          } else {
+            if (positionEmpty) positionEmpty.style.display = 'none';
+            positionTags.innerHTML = positions.map(function(d) {
+              var cnt = positionMap[d.name] ? positionMap[d.name].count : 0;
+              return '<span class="person-tag">' +
+                '<span class="tag-label" title="' + d.name + ' · ' + cnt + '人">' + d.name + '</span>' +
+                '<span class="tag-close" onclick="removeItemByKey(\'position\',\'' + d.name.replace(/'/g, "\\'") + '\')">×</span>' +
+                '</span>';
+            }).join('');
+          }
+        }
+
+        // 指定用户
+        if (personCount) personCount.textContent = '（' + persons.length + '个）';
+        if (personTags) {
+          if (persons.length === 0) {
+            personTags.innerHTML = '';
+            if (personEmpty) personEmpty.style.display = 'block';
+          } else {
+            if (personEmpty) personEmpty.style.display = 'none';
+            personTags.innerHTML = persons.map(function(p) {
+              return '<span class="person-tag">' +
+                '<span class="tag-label" title="' + p.name + (p.dept ? ' · ' + p.dept : '') + '">' + p.name + '</span>' +
+                '<span class="tag-close" onclick="removeItemByKey(\'person\',\'' + p.id + '\')">×</span>' +
+                '</span>';
+            }).join('');
+          }
+        }
+
+        // 计算并展示去重后的总人数
+        var totalSet = {};
+        persons.forEach(function(p) { totalSet[p.id] = true; });
+        depts.forEach(function(d) {
+          var deptItem = deptMap[d.name];
+          if (deptItem && deptItem.personIds) {
+            deptItem.personIds.forEach(function(pid) { totalSet[pid] = true; });
+          }
+        });
+        positions.forEach(function(d) {
+          var posItem = positionMap[d.name];
+          if (posItem && posItem.personIds) {
+            posItem.personIds.forEach(function(pid) { totalSet[pid] = true; });
+          }
+        });
+        var totalCount = Object.keys(totalSet).length;
+        var totalEl = $('#personTotalCount');
+        if (totalEl) totalEl.textContent = '共计人员：' + totalCount + '人';
+
         // 无任何选择时不显示卡片
         if (selectedItems.length === 0) {
           if (personCard) personCard.style.display = 'none';
           if (deptCard) deptCard.style.display = 'none';
+          if (positionCard) positionCard.style.display = 'none';
         } else {
           if (personCard) personCard.style.display = persons.length > 0 ? 'block' : 'none';
           if (deptCard) deptCard.style.display = depts.length > 0 ? 'block' : 'none';
+          if (positionCard) positionCard.style.display = positions.length > 0 ? 'block' : 'none';
         }
       };
 
@@ -2531,6 +2715,7 @@
         selectedItems = selectedItems.filter(function(item) {
           if (item.type === 'person') return !(type === 'person' && item.id === key);
           if (item.type === 'dept') return !(type === 'dept' && item.name === key);
+          if (item.type === 'position') return !(type === 'position' && item.name === key);
           return true;
         });
         window.renderPersonList();
@@ -2577,6 +2762,12 @@
         window.renderPersonList();
       };
 
+      // 全部移除岗位范围
+      window.removeAllPositions = function() {
+        selectedItems = selectedItems.filter(function(i) { return i.type !== 'position'; });
+        window.renderPersonList();
+      };
+
       // ==================== 人员选择弹窗 ====================
 
       // 切换弹窗Tab
@@ -2588,14 +2779,18 @@
         panels.forEach(function(p) { p.classList.remove('active'); });
         var activeTab = document.querySelector('.person-picker-tab[data-tab="' + tab + '"]');
         if (activeTab) activeTab.classList.add('active');
-        var panel = $('#pickerPanel' + (tab === 'person' ? 'Person' : 'Dept'));
+        var panelId = tab === 'person' ? 'Person' : (tab === 'dept' ? 'Dept' : 'Position');
+        var panel = $('#pickerPanel' + panelId);
         if (panel) panel.classList.add('active');
         if (tab === 'person') {
           $('#personSearchInput').value = '';
           window.renderPersonPicker();
-        } else {
+        } else if (tab === 'dept') {
           $('#deptSearchInput').value = '';
           window.renderDeptPicker();
+        } else {
+          $('#positionSearchInput').value = '';
+          window.renderPositionPicker();
         }
       };
 
@@ -2603,7 +2798,8 @@
       window.openPersonPicker = function() {
         tempSelectedItems = {
           persons: selectedItems.filter(function(i) { return i.type === 'person'; }).map(function(i) { return i.id; }),
-          depts: selectedItems.filter(function(i) { return i.type === 'dept'; }).map(function(i) { return i.name; })
+          depts: selectedItems.filter(function(i) { return i.type === 'dept'; }).map(function(i) { return i.name; }),
+          positions: selectedItems.filter(function(i) { return i.type === 'position'; }).map(function(i) { return i.name; })
         };
         currentPickerTab = 'person';
         // 重置Tab状态
@@ -2617,8 +2813,10 @@
         if (firstPanel) firstPanel.classList.add('active');
         $('#personSearchInput').value = '';
         $('#deptSearchInput').value = '';
+        $('#positionSearchInput').value = '';
         window.renderPersonPicker();
         window.renderDeptPicker();
+        window.renderPositionPicker();
         $('#personPickerOverlay').classList.add('is-open');
       };
 
@@ -2681,6 +2879,53 @@
         }).join('');
       };
 
+      // 获取所有岗位
+      function getVisiblePositions() {
+        return positionList;
+      }
+
+      // 渲染岗位范围选择表格
+      window.renderPositionPicker = function(filterText) {
+        var tbody = $('#positionPickerBody');
+        var emptyEl = $('#positionPickEmpty');
+        if (!tbody) return;
+        var visiblePositions = getVisiblePositions();
+        var searchText = (filterText || '').trim().toLowerCase();
+        var filtered = searchText ? visiblePositions.filter(function(d) {
+          return d.name.toLowerCase().indexOf(searchText) !== -1;
+        }) : visiblePositions;
+        if (filtered.length === 0) {
+          tbody.innerHTML = '';
+          if (emptyEl) emptyEl.style.display = 'block';
+          return;
+        }
+        if (emptyEl) emptyEl.style.display = 'none';
+        tbody.innerHTML = filtered.map(function(d) {
+          var isChecked = tempSelectedItems.positions.indexOf(d.name) !== -1;
+          return '<tr class="person-pick-row' + (isChecked ? ' selected' : '') + '" onclick="togglePositionPick(\'' + d.name.replace(/'/g, "\\'") + '\')">' +
+            '<td><span class="person-checkbox"></span></td>' +
+            '<td>' + d.name + '</td>' +
+            '<td>' + d.count + '人</td>' +
+            '</tr>';
+        }).join('');
+      };
+
+      // 搜索岗位
+      window.filterPositionList = function() {
+        window.renderPositionPicker($('#positionSearchInput').value);
+      };
+
+      // 勾选/取消岗位
+      window.togglePositionPick = function(positionName) {
+        var idx = tempSelectedItems.positions.indexOf(positionName);
+        if (idx !== -1) {
+          tempSelectedItems.positions.splice(idx, 1);
+        } else {
+          tempSelectedItems.positions.push(positionName);
+        }
+        window.renderPositionPicker($('#positionSearchInput').value);
+      };
+
       // 勾选/取消人员
       window.togglePersonPick = function(id) {
         var idx = tempSelectedItems.persons.indexOf(id);
@@ -2705,7 +2950,7 @@
 
       // 全选/取消全选（弹窗内）
       window.togglePickSelectAll = function(type) {
-        var checkEl = type === 'person' ? $('#personPickSelectAll') : $('#deptPickSelectAll');
+        var checkEl = type === 'person' ? $('#personPickSelectAll') : (type === 'dept' ? $('#deptPickSelectAll') : $('#positionPickSelectAll'));
         var isChecked = checkEl ? checkEl.checked : false;
         if (type === 'person') {
           var visiblePersons = getVisiblePersons();
@@ -2721,7 +2966,7 @@
             filtered.forEach(function(p) { delete existingSet[p.id]; });
           }
           tempSelectedItems.persons = Object.keys(existingSet);
-        } else {
+        } else if (type === 'dept') {
           var visibleDepts = getVisibleDepts();
           var searchText2 = ($('#deptSearchInput').value || '').trim().toLowerCase();
           var filtered2 = searchText2 ? visibleDepts.filter(function(d) {
@@ -2735,11 +2980,27 @@
             filtered2.forEach(function(d) { delete existingSet2[d.name]; });
           }
           tempSelectedItems.depts = Object.keys(existingSet2);
+        } else {
+          var visiblePositions = getVisiblePositions();
+          var searchText3 = ($('#positionSearchInput').value || '').trim().toLowerCase();
+          var filtered3 = searchText3 ? visiblePositions.filter(function(d) {
+            return d.name.toLowerCase().indexOf(searchText3) !== -1;
+          }) : visiblePositions;
+          var existingSet3 = {};
+          tempSelectedItems.positions.forEach(function(d) { existingSet3[d] = true; });
+          if (isChecked) {
+            filtered3.forEach(function(d) { existingSet3[d.name] = true; });
+          } else {
+            filtered3.forEach(function(d) { delete existingSet3[d.name]; });
+          }
+          tempSelectedItems.positions = Object.keys(existingSet3);
         }
         if (type === 'person') {
           window.renderPersonPicker($('#personSearchInput').value);
-        } else {
+        } else if (type === 'dept') {
           window.renderDeptPicker($('#deptSearchInput').value);
+        } else {
+          window.renderPositionPicker($('#positionSearchInput').value);
         }
       };
 
@@ -2761,11 +3022,13 @@
           var p = personList.find(function(pl) { return pl.id === id; });
           if (p) items.push({ type: 'person', id: p.id, name: p.name, dept: p.dept });
         });
-        // 部门范围 - 排除已在人员列表中单独选择的
-        var selectedPersonIds = {};
-        tempSelectedItems.persons.forEach(function(id) { selectedPersonIds[id] = true; });
+        // 部门范围
         tempSelectedItems.depts.forEach(function(deptName) {
           items.push({ type: 'dept', id: 'dept_' + deptName, name: deptName });
+        });
+        // 岗位范围
+        tempSelectedItems.positions.forEach(function(positionName) {
+          items.push({ type: 'position', id: 'position_' + positionName, name: positionName });
         });
         selectedItems = items;
         window.renderPersonList();
@@ -2777,11 +3040,223 @@
         if (e.target === this) closePersonPicker();
       });
 
+      // ==================== 已选列表弹窗 ====================
+      var selectedListType = 'person';   // 'person' | 'dept' | 'position'
+      var selectedListSearchText = '';
+      var selectedListCheckedKeys = [];  // 当前弹窗中勾选的key（人员为id，部门/岗位为name）
+
+      window.openSelectedList = function(type) {
+        selectedListType = type;
+        selectedListSearchText = '';
+        selectedListCheckedKeys = [];
+
+        var titleEl = $('#selectedListTitle');
+        var labelEl = $('#selectedListSearchLabel');
+        var inputEl = $('#selectedListSearchInput');
+        var colName = $('#selectedListColName');
+        var colCount = $('#selectedListColCount');
+        var colExtra2 = $('#selectedListColExtra2');
+
+        if (titleEl) {
+          titleEl.textContent = type === 'person' ? '已选人员' : (type === 'dept' ? '已选部门' : '已选岗位');
+        }
+        if (labelEl) {
+          labelEl.textContent = type === 'person' ? '姓名' : (type === 'dept' ? '部门名称' : '岗位名称');
+        }
+        if (inputEl) {
+          inputEl.value = '';
+          inputEl.placeholder = type === 'person' ? '请输入姓名' : '请输入';
+        }
+        if (colName) {
+          colName.textContent = type === 'person' ? '姓名' : (type === 'dept' ? '部门名称' : '岗位名称');
+        }
+        if (colCount) colCount.textContent = type === 'person' ? '部门' : '人数';
+        if (colExtra2) colExtra2.style.display = type === 'person' ? 'table-cell' : 'none';
+
+        var selectAll = $('#selectedListSelectAll');
+        if (selectAll) selectAll.checked = false;
+
+        window.renderSelectedList();
+        $('#selectedListOverlay').classList.add('is-open');
+      };
+
+      window.closeSelectedList = function() {
+        $('#selectedListOverlay').classList.remove('is-open');
+      };
+
+      function getSelectedListItems() {
+        if (selectedListType === 'person') {
+          return selectedItems.filter(function(i) { return i.type === 'person'; }).map(function(p) {
+            var pInfo = personList.find(function(pl) { return pl.id === p.id; }) || {};
+            return { key: p.id, name: p.name, extra1: p.dept || '-', extra2: pInfo.title || '-' };
+          });
+        } else if (selectedListType === 'dept') {
+          return selectedItems.filter(function(i) { return i.type === 'dept'; }).map(function(d) {
+            var cnt = deptMap[d.name] ? deptMap[d.name].count : 0;
+            return { key: d.name, name: d.name, extra1: cnt, extra2: '' };
+          });
+        } else {
+          return selectedItems.filter(function(i) { return i.type === 'position'; }).map(function(d) {
+            var cnt = positionMap[d.name] ? positionMap[d.name].count : 0;
+            return { key: d.name, name: d.name, extra1: cnt, extra2: '' };
+          });
+        }
+      }
+
+      window.renderSelectedList = function() {
+        var tbody = $('#selectedListBody');
+        var emptyEl = $('#selectedListEmpty');
+        if (!tbody) return;
+
+        var items = getSelectedListItems();
+        if (selectedListSearchText) {
+          var lower = selectedListSearchText.toLowerCase();
+          items = items.filter(function(item) {
+            return item.name.toLowerCase().indexOf(lower) !== -1 ||
+              (item.extra1 && String(item.extra1).toLowerCase().indexOf(lower) !== -1);
+          });
+        }
+
+        window.updateSelectedListInfo(items.length);
+
+        if (items.length === 0) {
+          tbody.innerHTML = '';
+          if (emptyEl) emptyEl.style.display = 'block';
+          return;
+        }
+        if (emptyEl) emptyEl.style.display = 'none';
+
+        tbody.innerHTML = items.map(function(item) {
+          var isChecked = selectedListCheckedKeys.indexOf(item.key) !== -1;
+          var extra1Cell = selectedListType === 'person' ? '<td>' + escapeHtml(item.extra1) + '</td>' : '<td>' + item.extra1 + '人</td>';
+          var extra2Cell = selectedListType === 'person' ? '<td>' + escapeHtml(item.extra2) + '</td>' : '<td></td>';
+          var keyArg = selectedListType === 'person' ? item.key : item.key.replace(/'/g, "\\'");
+          return '<tr>' +
+            '<td><input type="checkbox" ' + (isChecked ? 'checked' : '') + ' onchange="toggleSelectedListRow(\'' + keyArg + '\', this.checked)"></td>' +
+            '<td>' + escapeHtml(item.name) + '</td>' +
+            extra1Cell +
+            extra2Cell +
+            '<td><span class="link-action" onclick="removeSelectedListItem(\'' + keyArg + '\')">移除</span></td>' +
+            '</tr>';
+        }).join('');
+      };
+
+      function escapeHtml(text) {
+        return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      window.searchSelectedList = function() {
+        selectedListSearchText = ($('#selectedListSearchInput').value || '').trim();
+        window.renderSelectedList();
+      };
+
+      window.resetSelectedListSearch = function() {
+        $('#selectedListSearchInput').value = '';
+        selectedListSearchText = '';
+        window.renderSelectedList();
+      };
+
+      window.toggleSelectedListRow = function(key, checked) {
+        var idx = selectedListCheckedKeys.indexOf(key);
+        if (checked) {
+          if (idx === -1) selectedListCheckedKeys.push(key);
+        } else {
+          if (idx !== -1) selectedListCheckedKeys.splice(idx, 1);
+        }
+        window.updateSelectedListSelectAllState();
+      };
+
+      window.toggleSelectedListSelectAll = function() {
+        var selectAll = $('#selectedListSelectAll');
+        var checked = selectAll ? selectAll.checked : false;
+        var items = getSelectedListItems();
+        if (selectedListSearchText) {
+          var lower = selectedListSearchText.toLowerCase();
+          items = items.filter(function(item) {
+            return item.name.toLowerCase().indexOf(lower) !== -1 ||
+              (item.extra1 && String(item.extra1).toLowerCase().indexOf(lower) !== -1);
+          });
+        }
+        if (checked) {
+          items.forEach(function(item) {
+            if (selectedListCheckedKeys.indexOf(item.key) === -1) selectedListCheckedKeys.push(item.key);
+          });
+        } else {
+          items.forEach(function(item) {
+            var idx = selectedListCheckedKeys.indexOf(item.key);
+            if (idx !== -1) selectedListCheckedKeys.splice(idx, 1);
+          });
+        }
+        window.renderSelectedList();
+      };
+
+      window.updateSelectedListSelectAllState = function() {
+        var selectAll = $('#selectedListSelectAll');
+        if (!selectAll) return;
+        var items = getSelectedListItems();
+        if (selectedListSearchText) {
+          var lower = selectedListSearchText.toLowerCase();
+          items = items.filter(function(item) {
+            return item.name.toLowerCase().indexOf(lower) !== -1 ||
+              (item.extra1 && String(item.extra1).toLowerCase().indexOf(lower) !== -1);
+          });
+        }
+        if (items.length === 0) {
+          selectAll.checked = false;
+          return;
+        }
+        selectAll.checked = items.every(function(item) {
+          return selectedListCheckedKeys.indexOf(item.key) !== -1;
+        });
+      };
+
+      window.updateSelectedListInfo = function(count) {
+        var unit = selectedListType === 'person' ? '人' : '个';
+        var infoEl = $('#selectedListInfo');
+        if (infoEl) infoEl.textContent = '已选 ' + count + unit;
+      };
+
+      window.removeSelectedListItem = function(key) {
+        selectedItems = selectedItems.filter(function(item) {
+          if (selectedListType === 'person') return !(item.type === 'person' && item.id === key);
+          if (selectedListType === 'dept') return !(item.type === 'dept' && item.name === key);
+          if (selectedListType === 'position') return !(item.type === 'position' && item.name === key);
+          return true;
+        });
+        var idx = selectedListCheckedKeys.indexOf(key);
+        if (idx !== -1) selectedListCheckedKeys.splice(idx, 1);
+        window.renderPersonList();
+        window.renderSelectedList();
+      };
+
+      window.batchDeleteSelectedList = function() {
+        if (selectedListCheckedKeys.length === 0) {
+          showToast('请至少选择一项');
+          return;
+        }
+        var keysToDelete = selectedListCheckedKeys.slice();
+        selectedItems = selectedItems.filter(function(item) {
+          if (selectedListType === 'person') return !(item.type === 'person' && keysToDelete.indexOf(item.id) !== -1);
+          if (selectedListType === 'dept') return !(item.type === 'dept' && keysToDelete.indexOf(item.name) !== -1);
+          if (selectedListType === 'position') return !(item.type === 'position' && keysToDelete.indexOf(item.name) !== -1);
+          return true;
+        });
+        selectedListCheckedKeys = [];
+        window.renderPersonList();
+        window.renderSelectedList();
+        window.updateSelectedListSelectAllState();
+      };
+
+      // 已选列表弹窗背景点击关闭
+      $('#selectedListOverlay').addEventListener('click', function(e) {
+        if (e.target === this) closeSelectedList();
+      });
+
       // ==================== 模拟练习数据 ====================
       var examPracticeData = [
         { id: 1, name: '2026年安全知识练习', paper: '2026年安全知识试卷A', paperId: 'paper1', total: 300, types: { single: 100, multi: 100, judge: 100 }, creator: '庞刚', createTime: '2026-06-15 09:30:00', openTimeStart: '2026-06-10 08:00', openTimeEnd: '2026-07-10 20:00', persons: [], selectedRanges: [], isPublished: true },
         { id: 2, name: '2026年消防知识练习', paper: '2026年消防知识试卷', paperId: 'paper3', total: 200, types: { single: 80, multi: 60, judge: 60 }, creator: '李明明', createTime: '2026-06-18 14:22:00', openTimeStart: '2026-08-01 09:00', openTimeEnd: '2026-09-01 18:00', persons: [{ id: 'p1', name: '庞刚', dept: '安全管理部' }, { id: 'p3', name: '张伟', dept: '生产运营部' }], selectedRanges: [{ type: 'person', id: 'p1', name: '庞刚', dept: '安全管理部' }, { type: 'person', id: 'p3', name: '张伟', dept: '生产运营部' }], isPublished: true },
-        { id: 3, name: '安全基础知识考核', paper: '2026年安全知识试卷B', paperId: 'paper2', total: 150, types: { single: 50, multi: 50, judge: 50 }, creator: '庞刚', createTime: '2026-05-20 10:15:00', openTimeStart: '2026-05-01 10:00', openTimeEnd: '2026-05-31 10:00', persons: [], selectedRanges: [], isPublished: true },
+        { id: 3, name: '安全基础知识考核', paper: '2026年安全知识试卷B', paperId: 'paper2', total: 150, types: { single: 50, multi: 50, judge: 50 }, creator: '庞刚', createTime: '2026-05-20 10:15:00', openTimeStart: '2026-05-01 10:00', openTimeEnd: '2026-05-31 10:00', persons: [], selectedRanges: [{ type: 'dept', id: 'dept_安全管理部', name: '安全管理部' }, { type: 'position', id: 'position_安全总监', name: '安全总监' }], isPublished: true },
         { id: 4, name: '2026年安全生产月练习', paper: '2026年安全知识试卷C', paperId: 'paper4', total: 200, types: { single: 80, multi: 60, judge: 60 }, creator: '张伟', createTime: '2026-06-25 16:00:00', openTimeStart: '2026-07-01 09:00', openTimeEnd: '2026-09-01 18:00', persons: [], selectedRanges: [], isPublished: false }
       ];
       var examNextId = 5;
@@ -3375,7 +3850,7 @@
         }
 
         // 人员校验
-        if (selectedItems.length === 0) { showToast('请至少添加一个人员或部门'); return; }
+        if (selectedItems.length === 0) { showToast('请至少添加一个人员、部门或岗位'); return; }
 
         var typesData = {};
         if (singleChecked) typesData.single = s;
@@ -3426,6 +3901,19 @@
             var d = deptMap[item.name];
             if (d && d.personIds) {
               d.personIds.forEach(function(pid) {
+                if (!seenIds[pid]) {
+                  var p = personList.find(function(pl) { return pl.id === pid; });
+                  if (p) {
+                    flatPersons.push({ id: p.id, name: p.name, dept: p.dept });
+                    seenIds[pid] = true;
+                  }
+                }
+              });
+            }
+          } else if (item.type === 'position') {
+            var pos = positionMap[item.name];
+            if (pos && pos.personIds) {
+              pos.personIds.forEach(function(pid) {
                 if (!seenIds[pid]) {
                   var p = personList.find(function(pl) { return pl.id === pid; });
                   if (p) {
