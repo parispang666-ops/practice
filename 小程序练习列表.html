@@ -335,251 +335,108 @@
       display: none !important;
     }
 
-    /* ==================== PRD标注样式 ==================== */
-    .prd-annotation {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 18px;
-      height: 18px;
-      background: #FF8340;
-      color: #fff;
-      font-size: 10px;
-      font-weight: 700;
-      border-radius: 2px;
-      cursor: pointer;
-      box-shadow: 0 1px 3px rgba(255,131,64,0.3);
-      flex-shrink: 0;
-      line-height: 1;
+    /* ========== 角标样式 ========== */
+    .prd-badge {
+      display: inline-block !important; vertical-align: top !important;
+      font-size: 10px !important; font-weight: bold !important; line-height: 14px !important;
+      padding: 0px 4px !important; border-radius: 2px !important;
+      color: #fff !important; cursor: pointer !important;
+      position: absolute !important; top: -8px !important; right: -4px !important;
+      z-index: 900 !important; white-space: nowrap !important;
+      font-family: var(--font-family) !important;
     }
-    .prd-annotation.hidden { display: none !important; }
+    .prd-badge.normal { background: rgb(250, 173, 20) !important; }
+    .prd-badge.changed { background: #F54A45 !important; }
 
-    .annotation-wrapper {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
+    .badge-wrapper { position: relative; display: inline-block; }
 
-    /* 浮窗 */
+    /* ========== 浮窗样式 ========== */
     .prd-tooltip {
-      position: fixed;
-      z-index: 1000;
-      width: 320px;
-      max-width: calc(100vw - 32px);
-      background: #fff;
-      border: 2px solid #FF8340;
-      border-radius: 4px;
-      box-shadow: 0 4px 16px rgba(255,131,64,0.2);
-      display: none;
-      flex-direction: column;
-      max-height: 360px;
+      position: fixed; z-index: 9959;
+      background: #FFFFFF; border: 2px solid #1890ff; border-radius: 4px;
+      box-shadow: 0 6px 16px rgba(0,120,255,0.15);
+      width: 450px; max-width: calc(100vw - 20px);
+      display: none; font-family: var(--font-family); font-size: 13px;
     }
-    .prd-tooltip.is-open { display: flex; }
     .prd-tooltip-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-      border-bottom: 1px solid #e6e7eb;
-      background: #f7f8fa;
-      border-radius: 2px 2px 0 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; background: #F0F7FF; border-bottom: 1px solid #E8E8E8;
+      cursor: move; user-select: none;
     }
-    .prd-tooltip-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: #1a1a1a;
-    }
+    .prd-tooltip-title { font-weight: 600; color: var(--color-text-primary); font-size: 14px; }
     .prd-tooltip-close {
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      color: #666;
-      font-size: 16px;
-      line-height: 1;
+      width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+      background: transparent; border: none; color: var(--color-text-placeholder);
+      cursor: pointer; font-size: 16px; border-radius: 2px;
     }
-    .prd-tooltip-body {
-      padding: 12px 14px;
-      overflow-y: auto;
-      max-height: 270px;
-      font-size: 12px;
-      line-height: 1.7;
-      color: #333;
+    .prd-tooltip-close:hover { background: #E8E8E8; }
+    .prd-tooltip-body { padding: 14px; max-height: 380px; overflow-y: auto; line-height: 1.6; color: var(--color-text-secondary); }
+    .prd-tooltip-body p { margin-bottom: 12px; }
+    .prd-tooltip-body strong { color: var(--color-text-primary); }
+    .prd-tooltip-body ul, .prd-tooltip-body ol { padding-left: 18px; margin-bottom: 12px; }
+    .prd-tooltip-body li { margin-bottom: 4px; }
+    .prd-tooltip-body blockquote {
+      border-left: 3px solid #E8E8E8; padding-left: 10px; margin: 0 0 12px; color: var(--color-text-placeholder);
     }
-    .prd-tooltip-body p { margin: 0 0 6px; }
-    .prd-tooltip-body ul { margin: 0; padding-left: 18px; }
-    .prd-tooltip-body li { margin-bottom: 3px; }
-    .prd-tooltip-body strong { color: #FF8340; }
-    .prd-tooltip-body table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 11px;
-      margin: 6px 0;
-    }
-    .prd-tooltip-body th,
-    .prd-tooltip-body td {
-      padding: 3px 6px;
-      border: 1px solid #e6e7eb;
-      text-align: left;
-    }
-    .prd-tooltip-body th { background: #f7f8fa; font-weight: 500; }
+    .prd-tooltip-body table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 12px; }
+    .prd-tooltip-body th, .prd-tooltip-body td { border: 1px solid #E8E8E8; padding: 4px 8px; text-align: left; }
+    .prd-tooltip-body th { background: #FAFAFA; font-weight: 600; }
 
-    /* PRD抽屉按钮 */
-    .prd-drawer-btn {
-      position: fixed;
-      top: 56px;
-      right: 12px;
-      z-index: 200;
-      height: 32px;
-      padding: 0 12px;
-      background: #FF8340;
-      color: #fff;
-      font-size: 13px;
-      font-weight: 500;
-      border: none;
-      border-radius: 16px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(255,131,64,0.3);
-    }
-    .prd-drawer-btn:hover { background: #FF9A5C; }
-
-    /* 标注开关按钮 */
-    .prd-toggle-btn {
-      position: fixed;
-      top: 56px;
-      right: 96px;
-      z-index: 200;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: #FF8340;
-      color: #fff;
-      font-size: 14px;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 8px rgba(255,131,64,0.3);
-    }
-
-    /* PRD抽屉 */
+    /* ========== PRD 抽屉 ========== */
     .prd-drawer-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 300;
-      background: rgba(0,0,0,0.45);
-      display: none;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.45); z-index: 10000; display: none;
     }
     .prd-drawer-overlay.is-open { display: block; }
     .prd-drawer {
-      position: fixed;
-      top: 0;
-      right: -100vw;
-      z-index: 301;
-      width: 100vw;
-      max-width: 414px;
-      height: 100vh;
-      height: 100dvh;
-      background: #fff;
-      box-shadow: -4px 0 20px rgba(0,0,0,0.15);
-      display: flex;
-      flex-direction: column;
-      transition: right 300ms ease;
+      position: fixed; top: 0; right: -600px; width: 600px; max-width: 100vw; height: 100vh;
+      background: #fff; z-index: 10001; transition: right 300ms ease;
+      display: flex; flex-direction: column; box-shadow: -4px 0 16px rgba(0,0,0,0.1);
     }
     .prd-drawer.is-open { right: 0; }
     .prd-drawer-header {
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-      border-bottom: 1px solid #e6e7eb;
-      flex-shrink: 0;
-      background: #f7f8fa;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; border-bottom: 1px solid var(--color-divider); flex-shrink: 0;
     }
-    .prd-drawer-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: #1a1a1a;
-    }
+    .prd-drawer-title { font-size: 17px; font-weight: 600; color: var(--color-text-primary); }
     .prd-drawer-close {
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      color: #666;
-      font-size: 18px;
-      border-radius: 4px;
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+      background: transparent; border: none; font-size: 20px; color: var(--color-text-secondary); cursor: pointer;
     }
-    .prd-drawer-close:hover { background: #f0f0f0; color: #FF8340; }
-    .prd-drawer-tabs {
-      display: flex;
-      border-bottom: 1px solid #e6e7eb;
-      flex-shrink: 0;
+    .prd-drawer-body { flex: 1; overflow-y: auto; padding: 20px; line-height: 1.6; }
+    .prd-drawer-body h1, .prd-drawer-body h2, .prd-drawer-body h3 { color: var(--color-text-primary); margin: 20px 0 10px; }
+    .prd-drawer-body h1 { font-size: 20px; }
+    .prd-drawer-body h2 { font-size: 17px; border-bottom: 1px solid var(--color-divider); padding-bottom: 6px; }
+    .prd-drawer-body h3 { font-size: 15px; }
+    .prd-drawer-body p { margin-bottom: 10px; color: var(--color-text-secondary); }
+    .prd-drawer-body ul, .prd-drawer-body ol { padding-left: 20px; margin-bottom: 10px; }
+    .prd-drawer-body li { margin-bottom: 4px; }
+    .prd-drawer-body table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+    .prd-drawer-body th, .prd-drawer-body td { border: 1px solid #E8E8E8; padding: 6px 10px; text-align: left; }
+    .prd-drawer-body th { background: #FAFAFA; font-weight: 600; }
+    .prd-drawer-body blockquote { border-left: 3px solid var(--color-brand); padding-left: 12px; margin: 0 0 12px; color: var(--color-text-placeholder); background: #F8F9FA; padding: 8px 12px; }
+
+    /* ========== 标注开关 ========== */
+    .badge-toggle-btn {
+      position: fixed !important; bottom: 20px !important; right: 20px !important;
+      z-index: 10001 !important; width: 44px !important; height: 44px !important;
+      border-radius: 50% !important; background: #307FE2 !important; border: none !important;
+      color: #fff !important; cursor: pointer !important; display: flex !important;
+      align-items: center !important; justify-content: center !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
     }
-    .prd-drawer-tab {
-      padding: 10px 20px;
-      font-size: 13px;
-      color: #666;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: all 150ms;
+    .badge-toggle-btn svg { width: 20px; height: 20px; }
+
+    /* ========== PRD 按钮 ========== */
+    .prd-nav-btns {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      display: flex; gap: 6px;
     }
-    .prd-drawer-tab.is-active {
-      color: #FF8340;
-      border-bottom-color: #FF8340;
-      font-weight: 500;
+    .prd-nav-btn {
+      height: 26px; padding: 0 8px; border-radius: 4px; font-size: 11px; font-weight: 500;
+      background: #F0F7FF; border: 1px solid #1890ff; color: #1890ff; cursor: pointer;
+      white-space: nowrap;
     }
-    .prd-drawer-content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px;
-      font-size: 13px;
-      line-height: 1.8;
-      color: #333;
-      display: none;
-    }
-    .prd-drawer-content.is-active { display: block; }
-    .prd-drawer-content h1 { font-size: 17px; margin: 0 0 12px; color: #1a1a1a; }
-    .prd-drawer-content h2 { font-size: 15px; margin: 20px 0 8px; color: #1a1a1a; border-bottom: 1px solid #f0f0f0; padding-bottom: 4px; }
-    .prd-drawer-content h3 { font-size: 14px; margin: 14px 0 6px; color: #333; }
-    .prd-drawer-content p { margin: 0 0 8px; }
-    .prd-drawer-content ul, .prd-drawer-content ol { margin: 0 0 8px; padding-left: 20px; }
-    .prd-drawer-content li { margin-bottom: 4px; }
-    .prd-drawer-content table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-      margin: 8px 0;
-    }
-    .prd-drawer-content th, .prd-drawer-content td {
-      padding: 4px 8px;
-      border: 1px solid #e6e7eb;
-      text-align: left;
-    }
-    .prd-drawer-content th { background: #f7f8fa; font-weight: 500; }
-    .prd-drawer-content pre {
-      font-size: 11px;
-      line-height: 1.6;
-      background: #f7f8fa;
-      padding: 10px;
-      border-radius: 4px;
-      overflow-x: auto;
-    }
-    .prd-drawer-content strong { color: #FF8340; }
   </style>
 </head>
 <body>
@@ -587,12 +444,17 @@
   <div class="status-bar"></div>
 
   <div class="nav-bar" style="position:relative;">
-    <span class="prd-annotation" data-badge-id="1" data-title="[1] 页面路由逻辑" data-content="<p><strong>页面展示由有效模拟练习数量决定：</strong></p><table><tr><th>用户可见试卷数</th><th>展示结果</th></tr><tr><td>0 条</td><td>展示<strong>列表空数据</strong>（提示「暂无数据」）</td></tr><tr><td>≥1 条</td><td>展示<strong>模拟练习列表</strong></td></tr></table><p>用户可见试卷数 = 已发布 + 当前用户在练习人员范围内的试卷数量。</p><p>用户在「练习人员」列表中则可见，不在则不可见。</p>" style="position:absolute;top:-2px;left:4px;z-index:110;width:16px;height:16px;font-size:9px;">1</span>
+    <span class="badge-wrapper" style="position:absolute;top:2px;left:6px;z-index:110;">
+      <span class="prd-badge changed" style="position:static !important;" data-badge-id="1">1</span>
+    </span>
     <div class="nav-inner">
       <button class="nav-back" type="button" aria-label="返回" id="backBtn">
         <svg viewBox="0 0 48 48" fill="currentColor"><path d="M30.83 37.17L17.66 24 30.83 10.83 28 8 12 24l16 16z"/></svg>
       </button>
       <span class="nav-title" id="navTitle">模拟练习</span>
+      <div class="prd-nav-btns">
+        <button class="prd-nav-btn" onclick="openDrawer()" title="查看页面PRD">📄 页面PRD</button>
+      </div>
     </div>
   </div>
 
@@ -644,9 +506,13 @@
 
       container.innerHTML = `
         <div class="paper-section" style="position:relative;padding-top:8px;">
-          <span class="prd-annotation" data-badge-id="2" data-title="[2] 模拟练习列表" data-content="<p><strong>列表内容：</strong>展示当前用户有权限参与的模拟练习，每条显示练习名称、状态标签、开放时间和前往练习按钮（仅进行中）。</p><p><strong>排序规则：</strong>按创建时间<strong>倒序</strong>排列（最新创建的练习排在最前）。</p><p><strong>数据来源：</strong>管理后台「练习设置 → 模拟练习」中已发布的练习配置。</p>" style="position:absolute;top:0;right:8px;z-index:10;width:16px;height:16px;font-size:9px;">2</span>
+          <span class="badge-wrapper" style="position:absolute;top:0;right:18px;z-index:10;">
+            <span class="prd-badge changed" style="position:static !important;" data-badge-id="2">2</span>
+          </span>
           <div class="paper-cards" style="position:relative;">
-            <span class="prd-annotation" data-badge-id="3" data-title="[3] 试卷卡片" data-content="<p><strong>卡片元素：</strong></p><ul><li><strong>练习名称：</strong>卡片左上，管理后台配置的名称，单行截断</li><li><strong>状态标签：</strong>卡片右上，三种状态：未开始 / 进行中 / 已结束</li><li><strong>开放时间：</strong>名称下方，显示「开放时间」+ 开始时间 ~ 结束时间</li><li><strong>前往练习按钮：</strong>卡片底部，<strong>仅「进行中」状态显示</strong></li></ul><p><strong>卡片交互：</strong></p><ul><li>点击「进行中」卡片 → 跳转该模拟练习页面</li><li>点击「未开始」或「已结束」卡片 → 不响应跳转</li></ul>" style="position:absolute;top:4px;right:0;z-index:10;width:16px;height:16px;font-size:9px;">3</span>
+            <span class="badge-wrapper" style="position:absolute;top:4px;right:10px;z-index:10;">
+              <span class="prd-badge changed" style="position:static !important;" data-badge-id="3">3</span>
+            </span>
             ${paperPractices.map(item => {
               var st = getPracticeStatus(item);
               var isActive = st.status === 'inProgress';
@@ -710,322 +576,236 @@
     init();
   </script>
 
-  <!-- ==================== PRD标注全局按钮 ==================== -->
-  <button class="prd-drawer-btn" id="prdDrawerBtn" type="button">PRD 说明</button>
+  <!-- ========== 标注浮窗容器 ========== -->
+  <div class="prd-tooltip" id="tooltip-1"></div>
+  <div class="prd-tooltip" id="tooltip-2"></div>
+  <div class="prd-tooltip" id="tooltip-3"></div>
 
-  <!-- ==================== PRD标注全局开关 ==================== -->
-  <button class="prd-toggle-btn" id="prdToggleBtn" type="button" title="显示/隐藏标注">👁</button>
-
-  <!-- ==================== PRD标注浮窗 ==================== -->
-  <div class="prd-tooltip" id="prdTooltip">
-    <div class="prd-tooltip-header">
-      <span class="prd-tooltip-title" id="prdTooltipTitle"></span>
-      <button class="prd-tooltip-close" id="prdTooltipClose">×</button>
-    </div>
-    <div class="prd-tooltip-body" id="prdTooltipBody"></div>
-  </div>
-
-  <!-- ==================== PRD标注抽屉 ==================== -->
-  <div class="prd-drawer-overlay" id="prdDrawerOverlay"></div>
-  <div class="prd-drawer" id="prdDrawer">
+  <!-- ========== PRD 抽屉 ========== -->
+  <div class="prd-drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+  <div class="prd-drawer" id="drawer">
     <div class="prd-drawer-header">
-      <span class="prd-drawer-title">小程序练习列表 - PRD 说明</span>
-      <button class="prd-drawer-close" id="prdDrawerClose">×</button>
+      <span class="prd-drawer-title">📄 小程序练习列表 · 页面 PRD</span>
+      <button class="prd-drawer-close" onclick="closeDrawer()">×</button>
     </div>
-    <div class="prd-drawer-tabs" style="display:none;"></div>
-    <style>
-      .prd-drawer-tabs { display: none !important; }
-    </style>
-    <div class="prd-drawer-content is-active" id="prdDrawerContentPage">
-      <h1>小程序练习列表 · 页面 PRD</h1>
-      <blockquote><strong>页面类型</strong>：用户前台类（小程序端）<br><strong>所属模块</strong>：模拟练习<br><strong>最后更新</strong>：2026-07-01</blockquote>
-
-      <h2>1. 引言</h2>
-      <h3>1.1 页面概述</h3>
-      <p>小程序练习列表页面是员工在小程序端进入「模拟练习」模式时的中间页，用于展示当前用户有权限参与的所有模拟练习卡片，供用户选择并进入具体练习。</p>
-
-      <h3>1.2 使用角色</h3>
-      <table>
-        <tr><th>角色</th><th>访问权限</th></tr>
-        <tr><td>普通员工</td><td>✓ 可见且有权限的练习</td></tr>
-        <tr><td>部门负责人</td><td>✓ 可见且有权限的练习</td></tr>
-        <tr><td>超级管理员</td><td>✗（使用管理后台）</td></tr>
-        <tr><td>安全管理员</td><td>✗（使用管理后台）</td></tr>
-      </table>
-
-      <h3>1.3 前置条件</h3>
-      <ul>
-        <li>管理后台已开启练习功能的资源授权</li>
-        <li>小程序工作台已集成「练习」入口图标</li>
-        <li>满足以上两点即可进入练习列表（无有效练习时展示空数据）</li>
-      </ul>
-
-      <h2>2. 页面路由逻辑</h2>
-      <p>页面展示由有效模拟练习数量决定：</p>
-      <table>
-        <tr><th>用户可见试卷数</th><th>展示结果</th></tr>
-        <tr><td>0 条</td><td>展示<strong>列表空数据</strong>（提示「暂无数据」）</td></tr>
-        <tr><td>≥1 条</td><td>展示<strong>模拟练习列表</strong></td></tr>
-      </table>
-      <blockquote><strong>用户可见试卷数</strong> = 已发布 + 当前用户在练习人员范围内 的试卷数量。<br><br>「练习人员范围」判定逻辑：<br>· 用户在该练习的「练习人员」列表中：可见<br>· 用户不在该练习的「练习人员」列表中：不可见</blockquote>
-
-      <h2>3. 页面结构</h2>
-      <h3>3.1 页面布局（ASCII 线框图）</h3>
-      <pre>
-┌──────────────────────────────┐
-│       ··· (状态栏)            │
-├──────────────────────────────┤
-│  ←     模拟练习               │  导航栏
-├──────────────────────────────┤
-│                              │
-│  ┌──────────────────────────────┐
-│  │ 练习名称          [未开始]  │
-│  │ 🕐 开放时间 06-10 ~ 07-10 │  试卷卡片（不显示前往练习按钮）
-│  └──────────────────────────────┘
-│  ┌──────────────────────────────┐
-│  │ 练习名称          [进行中]  │
-│  │ 🕐 开放时间 08-01 ~ 09-01 │
-│  │          [前往练习]        │
-│  └──────────────────────────────┘
-│  ┌──────────────────────────────┐
-│  │ 练习名称          [已结束]  │
-│  │ 🕐 开放时间 05-01 ~ 05-31 │
-│  └──────────────────────────────┘
-│                              │
-└──────────────────────────────┘
-      </pre>
-
-      <h3>3.2 空数据页面</h3>
-      <p>当有效模拟练习数量 = 0 时展示：</p>
-      <pre>
-┌──────────────────────────────┐
-│       ··· (状态栏)            │
-├──────────────────────────────┤
-│          模拟练习              │  导航栏（返回按钮不隐藏）
-├──────────────────────────────┤
-│                              │
-│           [图标]              │
-│                              │
-│          暂无数据             │
-│                              │
-└──────────────────────────────┘
-      </pre>
-
-      <h2>4. 试卷卡片</h2>
-      <h3>4.1 卡片元素</h3>
-      <table>
-        <tr><th>元素</th><th>位置</th><th>说明</th></tr>
-        <tr><td>练习名称</td><td>卡片左上</td><td>管理后台配置的名称，单行截断</td></tr>
-        <tr><td>状态标签</td><td>卡片右上</td><td>三种状态：未开始 / 进行中 / 已结束</td></tr>
-        <tr><td>开放时间</td><td>名称下方</td><td>显示「开放时间」+ 开始时间 ~ 结束时间</td></tr>
-        <tr><td>前往练习按钮</td><td>卡片底部</td><td><strong>仅「进行中」状态显示</strong></td></tr>
-      </table>
-
-      <h3>4.2 状态标签规则</h3>
-      <table>
-        <tr><th>状态</th><th>判定条件</th><th>标签文案</th></tr>
-        <tr><td>未开始</td><td>当前时间早于练习开始时间</td><td>未开始</td></tr>
-        <tr><td>进行中</td><td>当前时间在练习开始时间和结束时间之间，或无结束时间</td><td>进行中</td></tr>
-        <tr><td>已结束</td><td>当前时间晚于练习结束时间</td><td>已结束</td></tr>
-      </table>
-      <blockquote>若未设置开放时间，状态显示为「无」。</blockquote>
-
-      <h3>4.3 卡片排序</h3>
-      <p>按<strong>创建时间倒序</strong>排列（最新创建的练习排在最前）。</p>
-
-      <h3>4.4 卡片交互</h3>
-      <table>
-        <tr><th>交互操作</th><th>行为</th></tr>
-        <tr><td>点击「进行中」卡片（任意位置）</td><td>跳转该模拟练习页面</td></tr>
-        <tr><td>点击「未开始」卡片</td><td>不响应跳转</td></tr>
-        <tr><td>点击「已结束」卡片</td><td>不响应跳转</td></tr>
-      </table>
-
-      <h2>5. 导航栏</h2>
-      <table>
-        <tr><th>元素</th><th>位置</th><th>行为</th></tr>
-        <tr><td>返回按钮 ←</td><td>左侧</td><td>点击返回工作台页面</td></tr>
-        <tr><td>标题「模拟练习」</td><td>居中</td><td>纯文本展示</td></tr>
-      </table>
-      <p>空数据时返回按钮正常显示，可返回上一页。</p>
-
-      <h2>6. 数据来源</h2>
-      <h3>6.1 后台配置字段</h3>
-      <p>数据来源于管理后台「练习设置 → 模拟练习」中已保存的练习配置：</p>
-      <table>
-        <tr><th>字段</th><th>类型</th><th>说明</th></tr>
-        <tr><td>练习编号</td><td>文本</td><td>练习唯一标识</td></tr>
-        <tr><td>练习名称</td><td>文本</td><td>管理后台配置的练习名称</td></tr>
-        <tr><td>开放开始时间</td><td>日期时间</td><td>练习开放起始时间</td></tr>
-        <tr><td>开放结束时间</td><td>日期时间</td><td>练习开放截止时间</td></tr>
-        <tr><td>创建时间</td><td>日期时间</td><td>用于排序，最新创建排前</td></tr>
-        <tr><td>是否已发布</td><td>是/否</td><td>标记是否已发布</td></tr>
-        <tr><td>练习人员</td><td>人员列表</td><td>指定可参与练习的人员</td></tr>
-      </table>
-
-      <h2>7. 异常处理</h2>
-      <table>
-        <tr><th>异常场景</th><th>处理方式</th></tr>
-        <tr><td>无有效模拟练习</td><td>展示列表空状态：「暂无数据」</td></tr>
-        <tr><td>接口请求失败</td><td>轻提示「加载失败，请稍后重试」（不展示空状态，保留上次数据）</td></tr>
-        <tr><td>用户无权限（被排除在人员范围外）</td><td>对应试卷不展示在列表中，逻辑等同于无数据</td></tr>
-      </table>
-    </div>
-
+    <div class="prd-drawer-body" id="drawerBody"></div>
   </div>
+
+  <!-- ========== 标注开关 ========== -->
+  <button class="badge-toggle-btn" id="badgeToggle" title="显示/隐藏标注">
+    <svg id="toggleEyeOn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </svg>
+    <svg id="toggleEyeOff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+      <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/>
+      <line x1="1" y1="1" x2="23" y2="23"/>
+    </svg>
+  </button>
 
   <!-- ==================== PRD标注交互脚本 ==================== -->
   <script>
-    (function() {
-      'use strict';
+    'use strict';
 
-      var $ = function(sel) { return document.querySelector(sel); };
-      var $$ = function(sel) { return document.querySelectorAll(sel); };
+    // ==================== 标注数据 ====================
+    var badgeData = {
+      "1": {
+        title: "需求描述：页面路由逻辑",
+        content: "<p><strong>页面展示由有效模拟练习数量决定：</strong></p>" +
+          "<table><tr><th>用户可见试卷数</th><th>展示结果</th></tr>" +
+          "<tr><td>0 条</td><td>展示<strong>列表空数据</strong>（提示「暂无数据」）</td></tr>" +
+          "<tr><td>≥1 条</td><td>展示<strong>模拟练习列表</strong></td></tr></table>" +
+          "<p>用户可见试卷数 = 已发布 + 当前用户在练习人员范围内的试卷数量。</p>" +
+          "<p>用户在「练习人员」列表中则可见，不在则不可见。</p>"
+      },
+      "2": {
+        title: "需求描述：模拟练习列表",
+        content: "<p><strong>列表内容：</strong>展示当前用户有权限参与的模拟练习，每条显示练习名称、状态标签、开放时间和前往练习按钮（仅进行中）。</p>" +
+          "<p><strong>排序规则：</strong>按创建时间<strong>倒序</strong>排列（最新创建的练习排在最前）。</p>" +
+          "<p><strong>数据来源：</strong>管理后台「练习设置 → 模拟练习」中已发布的练习配置。</p>"
+      },
+      "3": {
+        title: "需求描述：试卷卡片",
+        content: "<p><strong>卡片元素：</strong></p><ul><li><strong>练习名称：</strong>卡片左上，管理后台配置的名称，单行截断</li>" +
+          "<li><strong>状态标签：</strong>卡片右上，三种状态：未开始 / 进行中 / 已结束</li>" +
+          "<li><strong>开放时间：</strong>名称下方，显示「开放时间」+ 开始时间 ~ 结束时间</li>" +
+          "<li><strong>前往练习按钮：</strong>卡片底部，<strong>仅「进行中」状态显示</strong></li></ul>" +
+          "<p><strong>卡片交互：</strong></p><ul><li>点击「进行中」卡片 → 跳转该模拟练习页面</li>" +
+          "<li>点击「未开始」或「已结束」卡片 → 不响应跳转</li></ul>"
+      }
+    };
 
-      var annotationsVisible = true;
-      var activeTooltip = null;
-      var isDragging = false;
-      var dragOffsetX = 0, dragOffsetY = 0;
+    // ==================== PRD 抽屉内容 ====================
+    var pagePrdContent = '<h1>小程序练习列表 · 页面 PRD</h1>\n' +
+      '<blockquote><strong>页面类型：</strong>用户前台类（小程序端） | <strong>所属模块：</strong>模拟练习 | <strong>最后更新：</strong>2026-07-01</blockquote>\n' +
+      '<h2>[1] [2] 1. 引言</h2>\n' +
+      '<h3>1.1 页面概述</h3>\n' +
+      '<p>小程序练习列表页面是员工在小程序端进入「模拟练习」模式时的中间页，用于展示当前用户有权限参与的所有模拟练习卡片，供用户选择并进入具体练习。</p>\n' +
+      '<h3>1.2 使用角色</h3>\n' +
+      '<table><tr><th>角色</th><th>访问权限</th></tr><tr><td>普通员工</td><td>✓ 可见且有权限的练习</td></tr><tr><td>部门负责人</td><td>✓ 可见且有权限的练习</td></tr><tr><td>超级管理员</td><td>✗（使用管理后台）</td></tr><tr><td>安全管理员</td><td>✗（使用管理后台）</td></tr></table>\n' +
+      '<h3>1.3 前置条件</h3>\n' +
+      '<ul><li>管理后台已开启练习功能的资源授权</li><li>小程序工作台已集成「练习」入口图标</li><li>满足以上两点即可进入练习列表（无有效练习时展示空数据）</li></ul>\n' +
+      '<h2>[1] 2. 页面路由逻辑</h2>\n' +
+      '<p>页面展示由有效模拟练习数量决定：</p>\n' +
+      '<table><tr><th>用户可见试卷数</th><th>展示结果</th></tr><tr><td>0 条</td><td>展示<strong>列表空数据</strong>（提示「暂无数据」）</td></tr><tr><td>≥1 条</td><td>展示<strong>模拟练习列表</strong></td></tr></table>\n' +
+      '<blockquote><strong>用户可见试卷数</strong> = 已发布 + 当前用户在练习人员范围内 的试卷数量。<br><br>「练习人员范围」判定逻辑：<br>· 用户在该练习的「练习人员」列表中：可见<br>· 用户不在该练习的「练习人员」列表中：不可见</blockquote>\n' +
+      '<h2>[2] 3. 页面结构</h2>\n' +
+      '<h3>3.1 页面布局（ASCII 线框图）</h3>\n' +
+      '<pre>┌──────────────────────────────┐\n│       ··· (状态栏)            │\n├──────────────────────────────┤\n│  ←     模拟练习               │  导航栏\n├──────────────────────────────┤\n│                              │\n│  ┌──────────────────────────────┐\n│  │ 练习名称          [未开始]  │\n│  │ 🕐 开放时间 06-10 ~ 07-10 │  试卷卡片\n│  └──────────────────────────────┘\n│  ┌──────────────────────────────┐\n│  │ 练习名称          [进行中]  │\n│  │ 🕐 开放时间 08-01 ~ 09-01 │\n│  │          [前往练习]        │\n│  └──────────────────────────────┘\n│  ┌──────────────────────────────┐\n│  │ 练习名称          [已结束]  │\n│  │ 🕐 开放时间 05-01 ~ 05-31 │\n│  └──────────────────────────────┘\n│                              │\n└──────────────────────────────┘</pre>\n' +
+      '<h3>3.2 空数据页面</h3>\n' +
+      '<pre>┌──────────────────────────────┐\n│       ··· (状态栏)            │\n├──────────────────────────────┤\n│          模拟练习              │  导航栏\n├──────────────────────────────┤\n│                              │\n│           [图标]              │\n│                              │\n│          暂无数据             │\n│                              │\n└──────────────────────────────┘</pre>\n' +
+      '<h2>[3] 4. 试卷卡片</h2>\n' +
+      '<h3>4.1 卡片元素</h3>\n' +
+      '<table><tr><th>元素</th><th>位置</th><th>说明</th></tr><tr><td>练习名称</td><td>卡片左上</td><td>管理后台配置的名称，单行截断</td></tr><tr><td>状态标签</td><td>卡片右上</td><td>三种状态：未开始 / 进行中 / 已结束</td></tr><tr><td>开放时间</td><td>名称下方</td><td>显示「开放时间」+ 开始时间 ~ 结束时间</td></tr><tr><td>前往练习按钮</td><td>卡片底部</td><td><strong>仅「进行中」状态显示</strong></td></tr></table>\n' +
+      '<h3>4.2 状态标签规则</h3>\n' +
+      '<table><tr><th>状态</th><th>判定条件</th><th>标签文案</th></tr><tr><td>未开始</td><td>当前时间早于练习开始时间</td><td>未开始</td></tr><tr><td>进行中</td><td>当前时间在练习开始时间和结束时间之间</td><td>进行中</td></tr><tr><td>已结束</td><td>当前时间晚于练习结束时间</td><td>已结束</td></tr></table>\n' +
+      '<blockquote>若未设置开放时间，状态显示为「无」。</blockquote>\n' +
+      '<h3>4.3 卡片排序</h3>\n' +
+      '<p>按<strong>创建时间倒序</strong>排列（最新创建的练习排在最前）。</p>\n' +
+      '<h3>4.4 卡片交互</h3>\n' +
+      '<table><tr><th>交互操作</th><th>行为</th></tr><tr><td>点击「进行中」卡片（任意位置）</td><td>跳转该模拟练习页面</td></tr><tr><td>点击「未开始」卡片</td><td>不响应跳转</td></tr><tr><td>点击「已结束」卡片</td><td>不响应跳转</td></tr></table>\n' +
+      '<h2>5. 导航栏</h2>\n' +
+      '<table><tr><th>元素</th><th>位置</th><th>行为</th></tr><tr><td>返回按钮 ←</td><td>左侧</td><td>点击返回工作台页面</td></tr><tr><td>标题「模拟练习」</td><td>居中</td><td>纯文本展示</td></tr></table>\n' +
+      '<p>空数据时返回按钮正常显示，可返回上一页。</p>\n' +
+      '<h2>6. 数据来源</h2>\n' +
+      '<table><tr><th>字段</th><th>类型</th><th>说明</th></tr><tr><td>练习编号</td><td>文本</td><td>练习唯一标识</td></tr><tr><td>练习名称</td><td>文本</td><td>管理后台配置的练习名称</td></tr><tr><td>开放开始时间</td><td>日期时间</td><td>练习开放起始时间</td></tr><tr><td>开放结束时间</td><td>日期时间</td><td>练习开放截止时间</td></tr><tr><td>创建时间</td><td>日期时间</td><td>用于排序，最新创建排前</td></tr><tr><td>是否已发布</td><td>是/否</td><td>标记是否已发布</td></tr><tr><td>练习人员</td><td>人员列表</td><td>指定可参与练习的人员</td></tr></table>\n' +
+      '<h2>7. 异常处理</h2>\n' +
+      '<table><tr><th>异常场景</th><th>处理方式</th></tr><tr><td>无有效模拟练习</td><td>展示列表空状态：「暂无数据」</td></tr><tr><td>接口请求失败</td><td>轻提示「加载失败，请稍后重试」</td></tr><tr><td>用户无权限</td><td>对应试卷不展示，逻辑等同于无数据</td></tr></table>';
 
-      // ===== 初始化标注（支持动态渲染的元素） =====
-      function initAnnotations() {
-        // 使用事件委托处理角标点击
-        document.body.addEventListener('click', function(e) {
-          var anno = e.target.closest('.prd-annotation');
-          if (anno) {
-            e.stopPropagation();
-            var title = anno.dataset.title || '';
-            var content = anno.dataset.content || '';
-            showTooltip(anno, title, content);
-            return;
-          }
-          // 点击其他地方关闭浮窗
-          if (!e.target.closest('.prd-tooltip')) {
-            hideTooltip();
-          }
-        });
+    // ==================== 通用浮窗交互 ====================
+    var activeTooltip = null;
+    var tooltipTimers = {};
 
-        // 浮窗关闭按钮
-        document.getElementById('prdTooltipClose').addEventListener('click', function(e) {
-          e.stopPropagation();
-          hideTooltip();
-        });
+    function showTooltip(badgeId, e) {
+      var tip = document.getElementById('tooltip-' + badgeId);
+      var data = badgeData[badgeId];
+      if (!tip || !data) return;
 
-        // 浮窗拖拽支持
-        var tooltip = document.getElementById('prdTooltip');
-        tooltip.addEventListener('mousedown', function(e) {
-          if (e.target === document.getElementById('prdTooltipClose')) return;
-          isDragging = true;
-          var rect = tooltip.getBoundingClientRect();
-          dragOffsetX = e.clientX - rect.left;
-          dragOffsetY = e.clientY - rect.top;
-          e.preventDefault();
-        });
-        document.addEventListener('mousemove', function(e) {
-          if (!isDragging) return;
-          tooltip.style.left = (e.clientX - dragOffsetX) + 'px';
-          tooltip.style.top = (e.clientY - dragOffsetY) + 'px';
-        });
-        document.addEventListener('mouseup', function() {
-          isDragging = false;
-        });
-        // 触摸拖拽
-        tooltip.addEventListener('touchstart', function(e) {
-          if (e.target === document.getElementById('prdTooltipClose')) return;
-          isDragging = true;
-          var rect = tooltip.getBoundingClientRect();
-          dragOffsetX = e.touches[0].clientX - rect.left;
-          dragOffsetY = e.touches[0].clientY - rect.top;
-        }, { passive: false });
-        document.addEventListener('touchmove', function(e) {
-          if (!isDragging) return;
-          tooltip.style.left = (e.touches[0].clientX - dragOffsetX) + 'px';
-          tooltip.style.top = (e.touches[0].clientY - dragOffsetY) + 'px';
-        });
-        document.addEventListener('touchend', function() {
-          isDragging = false;
-        });
+      if (tooltipTimers[badgeId]) { clearTimeout(tooltipTimers[badgeId]); }
 
-        // 全局标注开关
-        document.getElementById('prdToggleBtn').addEventListener('click', toggleAnnotations);
-
-        // PRD抽屉按钮
-        document.getElementById('prdDrawerBtn').addEventListener('click', openDrawer);
-
-        // PRD抽屉关闭
-        document.getElementById('prdDrawerClose').addEventListener('click', closeDrawer);
-        document.getElementById('prdDrawerOverlay').addEventListener('click', closeDrawer);
-
-        // ESC关闭
-        document.addEventListener('keydown', function(e) {
-          if (e.key === 'Escape') {
-            closeDrawer();
-            hideTooltip();
-          }
-        });
+      if (activeTooltip && activeTooltip !== tip) {
+        activeTooltip.style.display = 'none';
       }
 
-      function showTooltip(targetEl, title, content) {
-        var tooltip = document.getElementById('prdTooltip');
-        document.getElementById('prdTooltipTitle').textContent = title;
-        document.getElementById('prdTooltipBody').innerHTML = content;
+      tip.innerHTML = '<div class="prd-tooltip-header">' +
+        '<span class="prd-tooltip-title">' + data.title + '</span>' +
+        '<button class="prd-tooltip-close" onclick="closeTooltip(\'' + badgeId + '\')">×</button>' +
+        '</div>' +
+        '<div class="prd-tooltip-body">' + data.content + '</div>';
 
-        var rect = targetEl.getBoundingClientRect();
-        var top = rect.bottom + 8;
-        var left = rect.left;
+      var badge = document.querySelector('.prd-badge[data-badge-id="' + badgeId + '"]');
+      var rect = badge ? badge.getBoundingClientRect() : { top: e.clientY, left: e.clientX };
 
-        // 边界检测
-        if (left + 320 > window.innerWidth) {
-          left = window.innerWidth - 328;
-        }
-        if (left < 8) left = 8;
-        if (top + 360 > window.innerHeight) {
-          top = rect.top - 368;
-        }
-        if (top < 8) top = 8;
+      var tipWidth = 450;
+      var left = rect.left + rect.width / 2 - tipWidth / 2;
+      if (left < 10) left = 10;
+      if (left + tipWidth > window.innerWidth - 10) left = window.innerWidth - tipWidth - 10;
 
-        tooltip.style.top = top + 'px';
-        tooltip.style.left = left + 'px';
-        tooltip.style.transform = 'none';
-        tooltip.classList.add('is-open');
-        activeTooltip = tooltip;
+      var top = rect.bottom + 8;
+      if (top + 400 > window.innerHeight) top = rect.top - 400 - 8;
+
+      tip.style.left = left + 'px';
+      tip.style.top = top + 'px';
+      tip.style.display = 'block';
+      tip.style.zIndex = '9959';
+      activeTooltip = tip;
+    }
+
+    function closeTooltip(badgeId) {
+      var tip = document.getElementById('tooltip-' + badgeId);
+      if (tip) {
+        tip.style.display = 'none';
+        if (activeTooltip === tip) activeTooltip = null;
       }
+    }
 
-      function hideTooltip() {
-        var tooltip = document.getElementById('prdTooltip');
-        if (tooltip) {
-          tooltip.classList.remove('is-open');
-          activeTooltip = null;
-        }
-      }
+    function isMouseInTooltip(badgeId) {
+      var tip = document.getElementById('tooltip-' + badgeId);
+      if (!tip || tip.style.display === 'none') return false;
+      var rect = tip.getBoundingClientRect();
+      var mx = window.mouseX || 0, my = window.mouseY || 0;
+      return mx >= rect.left && mx <= rect.right && my >= rect.top && my <= rect.bottom;
+    }
 
-      function toggleAnnotations() {
-        annotationsVisible = !annotationsVisible;
-        var btn = document.getElementById('prdToggleBtn');
-        $$('.prd-annotation').forEach(function(a) {
-          if (annotationsVisible) {
-            a.classList.remove('hidden');
-          } else {
-            a.classList.add('hidden');
-          }
+    // ===== 角标 hover 事件（使用 MutationObserver 支持动态元素） =====
+    function bindBadgeEvents() {
+      document.querySelectorAll('.prd-badge:not([data-bound])').forEach(function(badge) {
+        badge.setAttribute('data-bound', '1');
+        badge.addEventListener('mouseenter', function(e) {
+          var id = badge.getAttribute('data-badge-id');
+          showTooltip(id, e);
         });
-        btn.innerHTML = annotationsVisible ? '👁' : '🚫';
-        btn.style.background = annotationsVisible ? '#FF8340' : '#999';
-      }
+        badge.addEventListener('mouseleave', function(e) {
+          var id = badge.getAttribute('data-badge-id');
+          tooltipTimers[id] = setTimeout(function() {
+            if (!isMouseInTooltip(id)) closeTooltip(id);
+          }, 200);
+        });
+      });
 
-      function openDrawer() {
-        document.getElementById('prdDrawerOverlay').classList.add('is-open');
-        document.getElementById('prdDrawer').classList.add('is-open');
-      }
+      document.querySelectorAll('.prd-tooltip:not([data-bound])').forEach(function(tip) {
+        tip.setAttribute('data-bound', '1');
+        tip.addEventListener('mouseenter', function() {
+          var badgeId = tip.id.replace('tooltip-', '');
+          if (tooltipTimers[badgeId]) clearTimeout(tooltipTimers[badgeId]);
+        });
+        tip.addEventListener('mouseleave', function() {
+          var badgeId = tip.id.replace('tooltip-', '');
+          closeTooltip(badgeId);
+        });
+      });
+    }
 
-      function closeDrawer() {
-        document.getElementById('prdDrawerOverlay').classList.remove('is-open');
-        document.getElementById('prdDrawer').classList.remove('is-open');
-      }
+    // 初始绑定 + 动态监听
+    bindBadgeEvents();
+    var observer = new MutationObserver(function() { bindBadgeEvents(); });
+    observer.observe(document.body, { childList: true, subtree: true });
 
-      // 启动
-      initAnnotations();
-    })();
+    document.addEventListener('mousemove', function(e) { window.mouseX = e.clientX; window.mouseY = e.clientY; });
+
+    // ===== 浮窗拖拽 =====
+    var dragTarget = null, dragOffsetX = 0, dragOffsetY = 0;
+    document.addEventListener('mousedown', function(e) {
+      var header = e.target.closest('.prd-tooltip-header');
+      if (!header) return;
+      dragTarget = header.closest('.prd-tooltip');
+      if (dragTarget) {
+        dragOffsetX = e.clientX - dragTarget.offsetLeft;
+        dragOffsetY = e.clientY - dragTarget.offsetTop;
+      }
+    });
+    document.addEventListener('mousemove', function(e) {
+      if (!dragTarget) return;
+      dragTarget.style.left = (e.clientX - dragOffsetX) + 'px';
+      dragTarget.style.top = (e.clientY - dragOffsetY) + 'px';
+    });
+    document.addEventListener('mouseup', function() { dragTarget = null; });
+
+    // ==================== PRD 抽屉 ====================
+    function openDrawer() {
+      document.getElementById('drawerBody').innerHTML = pagePrdContent;
+      document.getElementById('drawerOverlay').classList.add('is-open');
+      document.getElementById('drawer').classList.add('is-open');
+    }
+    function closeDrawer() {
+      document.getElementById('drawerOverlay').classList.remove('is-open');
+      document.getElementById('drawer').classList.remove('is-open');
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    // ==================== 全局标注开关 ====================
+    var badgesVisible = true;
+    document.getElementById('badgeToggle').addEventListener('click', function() {
+      badgesVisible = !badgesVisible;
+      var badges = document.querySelectorAll('.prd-badge');
+      for (var i = 0; i < badges.length; i++) {
+        badges[i].style.display = badgesVisible ? '' : 'none';
+      }
+      document.getElementById('toggleEyeOn').style.display = badgesVisible ? '' : 'none';
+      document.getElementById('toggleEyeOff').style.display = badgesVisible ? 'none' : '';
+    });
   </script>
 
 </body>
