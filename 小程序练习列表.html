@@ -552,9 +552,9 @@
       renderPracticeList();
     }
 
-    // 返回按钮 → 返回工作台页面
+    // 返回按钮 → 返回上一页面（可能是工作台或考试中心）
     document.getElementById('backBtn').addEventListener('click', () => {
-      window.location.href = '小程序工作台页面.html';
+      history.back();
     });
 
     // 事件委托：试卷卡片点击
@@ -616,7 +616,8 @@
           "<tr><td>0 条</td><td>展示<strong>列表空数据</strong>（提示「暂无数据」）</td></tr>" +
           "<tr><td>≥1 条</td><td>展示<strong>模拟练习列表</strong></td></tr></table>" +
           "<p>用户可见试卷数 = 已发布 + 当前用户在练习人员范围内的试卷数量。</p>" +
-          "<p>用户在「练习人员」列表中则可见，不在则不可见。</p>"
+          "<p>用户在「练习人员」列表中则可见，不在则不可见。</p>" +
+          "<p style='color:#F54A45;'><strong>🔥 返回入口变更：</strong>返回按钮使用 <code>history.back()</code>，可返回上一页面（工作台或考试中心），不再固定跳回工作台。</p>"
       },
       "2": {
         title: "需求描述：模拟练习列表",
@@ -644,7 +645,7 @@
       '<h3>1.2 使用角色</h3>\n' +
       '<table><tr><th>角色</th><th>访问权限</th></tr><tr><td>普通员工</td><td>✓ 可见且有权限的练习</td></tr><tr><td>部门负责人</td><td>✓ 可见且有权限的练习</td></tr><tr><td>超级管理员</td><td>✗（使用管理后台）</td></tr><tr><td>安全管理员</td><td>✗（使用管理后台）</td></tr></table>\n' +
       '<h3>1.3 前置条件</h3>\n' +
-      '<ul><li>管理后台已开启练习功能的资源授权</li><li>小程序工作台已集成「练习」入口图标</li><li>满足以上两点即可进入练习列表（无有效练习时展示空数据）</li></ul>\n' +
+      '<ul><li>可从<strong>工作台</strong>或<strong>考试中心</strong>的「模拟练习」入口进入</li><li>考试中心入口不受资源授权和练习权限影响，始终可见</li><li>列表页按练习人员范围过滤可参与的数据（无有效练习时展示空数据）</li></ul>\n' +
       '<h2>[1] 2. 页面路由逻辑</h2>\n' +
       '<p>页面展示由有效模拟练习数量决定：</p>\n' +
       '<table><tr><th>用户可见试卷数</th><th>展示结果</th></tr><tr><td>0 条</td><td>展示<strong>列表空数据</strong>（提示「暂无数据」）</td></tr><tr><td>≥1 条</td><td>展示<strong>模拟练习列表</strong></td></tr></table>\n' +
@@ -665,7 +666,7 @@
       '<h3>4.4 卡片交互</h3>\n' +
       '<table><tr><th>交互操作</th><th>行为</th></tr><tr><td>点击「进行中」卡片（任意位置）</td><td>跳转该模拟练习页面</td></tr><tr><td>点击「未开始」卡片</td><td>不响应跳转</td></tr><tr><td>点击「已结束」卡片</td><td>不响应跳转</td></tr></table>\n' +
       '<h2>5. 导航栏</h2>\n' +
-      '<table><tr><th>元素</th><th>位置</th><th>行为</th></tr><tr><td>返回按钮 ←</td><td>左侧</td><td>点击返回工作台页面</td></tr><tr><td>标题「模拟练习」</td><td>居中</td><td>纯文本展示</td></tr></table>\n' +
+      '<table><tr><th>元素</th><th>位置</th><th>行为</th></tr><tr><td>返回按钮 ←</td><td>左侧</td><td>点击返回上一页面（工作台或考试中心），使用 <code>history.back()</code></td></tr><tr><td>标题「模拟练习」</td><td>居中</td><td>纯文本展示</td></tr></table>\n' +
       '<p>空数据时返回按钮正常显示，可返回上一页。</p>\n' +
       '<h2>6. 数据来源</h2>\n' +
       '<table><tr><th>字段</th><th>类型</th><th>说明</th></tr><tr><td>练习编号</td><td>文本</td><td>练习唯一标识</td></tr><tr><td>练习名称</td><td>文本</td><td>管理后台配置的练习名称</td></tr><tr><td>开放开始时间</td><td>日期时间</td><td>练习开放起始时间</td></tr><tr><td>开放结束时间</td><td>日期时间</td><td>练习开放截止时间</td></tr><tr><td>创建时间</td><td>日期时间</td><td>用于排序，最新创建排前</td></tr><tr><td>是否已发布</td><td>是/否</td><td>标记是否已发布</td></tr><tr><td>练习人员</td><td>人员列表</td><td>指定可参与练习的人员</td></tr></table>\n' +

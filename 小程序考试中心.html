@@ -1,0 +1,987 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>考试中心 · 环慧慧EHS+</title>
+  <style>
+    :root {
+      --color-brand: #1570EF;
+      --color-brand-light: #2E90FA;
+      --color-success: #00C5C3;
+      --color-warning: #FF8340;
+      --color-text-primary: #1A1A1A;
+      --color-text-secondary: #666666;
+      --color-text-placeholder: #999999;
+      --color-bg-page: #F5F5F5;
+      --color-bg-surface: #FFFFFF;
+      --color-border: #E5E5E5;
+      --color-divider: #EEEEEE;
+      --radius-card: 12px;
+      --font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--color-text-primary);
+      background: var(--color-bg-page);
+      max-width: 414px;
+      margin: 0 auto;
+      min-height: 100vh;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---- 状态栏占位 ---- */
+    .status-bar {
+      height: env(safe-area-inset-top, 20px);
+      background: #fff;
+    }
+
+    /* ---- 顶部导航 ---- */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid var(--color-divider);
+    }
+
+    .nav-inner {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 16px;
+      position: relative;
+    }
+
+    .nav-back {
+      position: absolute;
+      left: 12px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 0;
+      color: var(--color-text-primary);
+      cursor: pointer;
+    }
+
+    .nav-back svg { width: 20px; height: 20px; }
+
+    .nav-title {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+
+    /* ---- 用户信息卡片 ---- */
+    .user-card {
+      position: relative;
+      padding: 24px 16px 28px;
+      background: linear-gradient(135deg, #2E90FA 0%, #1570EF 100%);
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .user-card::after {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .user-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .user-avatar svg {
+      width: 32px;
+      height: 32px;
+      color: var(--color-brand);
+    }
+
+    .user-meta { flex: 1; min-width: 0; }
+
+    .user-name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .user-dept {
+      display: inline-block;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.22);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.35);
+    }
+
+    /* ---- 快捷入口图标 ---- */
+    .quick-entry {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      padding: 20px 8px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .quick-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      position: relative;
+      padding: 4px 8px;
+      border-radius: 8px;
+      transition: background 150ms ease;
+    }
+
+    .quick-item:active { background: rgba(255,255,255,0.12); }
+
+    .quick-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quick-icon svg { width: 28px; height: 28px; }
+
+    .quick-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.92);
+      white-space: nowrap;
+    }
+
+    .quick-value {
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1;
+    }
+
+    /* ---- 标签切换 ---- */
+    .tabs-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      padding: 14px 16px 6px;
+      background: #fff;
+      border-bottom: 1px solid var(--color-divider);
+    }
+
+    .tab-item {
+      position: relative;
+      font-size: 15px;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      padding-bottom: 8px;
+      transition: color 150ms ease;
+    }
+
+    .tab-item.active {
+      color: var(--color-brand);
+      font-weight: 500;
+    }
+
+    .tab-item.active::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--color-brand);
+    }
+
+    /* ---- 搜索与筛选 ---- */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: #fff;
+    }
+
+    .search-input {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 38px;
+      padding: 0 12px;
+      border-radius: 19px;
+      background: #F5F7FA;
+      color: var(--color-text-secondary);
+      font-size: 14px;
+    }
+
+    .search-input svg { width: 16px; height: 16px; color: var(--color-text-placeholder); }
+
+    .search-input input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 14px;
+      color: var(--color-text-primary);
+    }
+
+    .search-input input::placeholder { color: var(--color-text-placeholder); }
+
+    .filter-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .filter-btn svg { width: 18px; height: 18px; color: var(--color-brand); }
+
+    /* ---- 考试列表 ---- */
+    .exam-list {
+      padding: 12px 16px 24px;
+    }
+
+    .exam-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px 16px 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .exam-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--color-brand);
+    }
+
+    .exam-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .exam-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .exam-icon {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      color: var(--color-brand);
+    }
+
+    .exam-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .exam-row {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .exam-row .label { color: var(--color-text-placeholder); }
+
+    .exam-score {
+      font-size: 14px;
+      color: var(--color-text-primary);
+      font-weight: 500;
+      margin-bottom: 14px;
+    }
+
+    .exam-score .score-value {
+      color: var(--color-warning);
+      font-weight: 600;
+    }
+
+    .exam-score .score-empty {
+      color: var(--color-warning);
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+
+    .exam-footer {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .exam-btn {
+      height: 34px;
+      padding: 0 22px;
+      border-radius: 17px;
+      border: none;
+      background: var(--color-brand);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 150ms ease;
+    }
+
+    .exam-btn:active { background: var(--color-brand-light); }
+
+    .exam-btn:disabled {
+      background: var(--color-text-placeholder);
+      cursor: not-allowed;
+    }
+
+    /* ---- 空状态 ---- */
+    .empty-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 0;
+      color: var(--color-text-placeholder);
+    }
+
+    .empty-wrap svg {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 12px;
+      opacity: .4;
+    }
+
+    .empty-wrap p { font-size: 14px; }
+
+    /* ---- 底部安全区 ---- */
+    .safe-bottom { height: env(safe-area-inset-bottom, 16px); }
+
+    /* ========== 角标样式 ========== */
+    .prd-badge {
+      display: inline-block !important; vertical-align: top !important;
+      font-size: 10px !important; font-weight: bold !important; line-height: 14px !important;
+      padding: 0px 4px !important; border-radius: 2px !important;
+      color: #fff !important; cursor: pointer !important;
+      position: absolute !important; top: -8px !important; right: -4px !important;
+      z-index: 900 !important; white-space: nowrap !important;
+      font-family: var(--font-family) !important;
+    }
+    .prd-badge.normal { background: rgb(250, 173, 20) !important; }
+    .prd-badge.changed { background: #F54A45 !important; }
+
+    .badge-wrapper { position: relative; display: inline-block; }
+
+    /* ========== 浮窗样式 ========== */
+    .prd-tooltip {
+      position: fixed; z-index: 9959;
+      background: #FFFFFF; border: 2px solid #1890ff; border-radius: 4px;
+      box-shadow: 0 6px 16px rgba(0,120,255,0.15);
+      width: 450px; max-width: calc(100vw - 20px);
+      display: none; font-family: var(--font-family); font-size: 13px;
+    }
+    .prd-tooltip-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; background: #F0F7FF; border-bottom: 1px solid #E8E8E8;
+      cursor: move; user-select: none;
+    }
+    .prd-tooltip-title { font-weight: 600; color: var(--color-text-primary); font-size: 14px; }
+    .prd-tooltip-close {
+      width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+      background: transparent; border: none; color: var(--color-text-placeholder);
+      cursor: pointer; font-size: 16px; border-radius: 2px;
+    }
+    .prd-tooltip-close:hover { background: #E8E8E8; }
+    .prd-tooltip-body { padding: 14px; max-height: 380px; overflow-y: auto; line-height: 1.6; color: var(--color-text-secondary); }
+    .prd-tooltip-body p { margin-bottom: 12px; }
+    .prd-tooltip-body strong { color: var(--color-text-primary); }
+    .prd-tooltip-body ul, .prd-tooltip-body ol { padding-left: 18px; margin-bottom: 12px; }
+    .prd-tooltip-body li { margin-bottom: 4px; }
+    .prd-tooltip-body blockquote {
+      border-left: 3px solid #E8E8E8; padding-left: 10px; margin: 0 0 12px; color: var(--color-text-placeholder);
+    }
+    .prd-tooltip-body table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 12px; }
+    .prd-tooltip-body th, .prd-tooltip-body td { border: 1px solid #E8E8E8; padding: 4px 8px; text-align: left; }
+    .prd-tooltip-body th { background: #FAFAFA; font-weight: 600; }
+
+    /* ========== PRD 抽屉 ========== */
+    .prd-drawer-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.45); z-index: 10000; display: none;
+    }
+    .prd-drawer-overlay.is-open { display: block; }
+    .prd-drawer {
+      position: fixed; top: 0; right: -600px; width: 600px; max-width: 100vw; height: 100vh;
+      background: #fff; z-index: 10001; transition: right 300ms ease;
+      display: flex; flex-direction: column; box-shadow: -4px 0 16px rgba(0,0,0,0.1);
+    }
+    .prd-drawer.is-open { right: 0; }
+    .prd-drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; border-bottom: 1px solid var(--color-divider); flex-shrink: 0;
+    }
+    .prd-drawer-title { font-size: 17px; font-weight: 600; color: var(--color-text-primary); }
+    .prd-drawer-close {
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+      background: transparent; border: none; font-size: 20px; color: var(--color-text-secondary); cursor: pointer;
+    }
+    .prd-drawer-body { flex: 1; overflow-y: auto; padding: 20px; line-height: 1.6; }
+    .prd-drawer-body h1, .prd-drawer-body h2, .prd-drawer-body h3 { color: var(--color-text-primary); margin: 20px 0 10px; }
+    .prd-drawer-body h1 { font-size: 20px; }
+    .prd-drawer-body h2 { font-size: 17px; border-bottom: 1px solid var(--color-divider); padding-bottom: 6px; }
+    .prd-drawer-body h3 { font-size: 15px; }
+    .prd-drawer-body p { margin-bottom: 10px; color: var(--color-text-secondary); }
+    .prd-drawer-body ul, .prd-drawer-body ol { padding-left: 20px; margin-bottom: 10px; }
+    .prd-drawer-body li { margin-bottom: 4px; }
+    .prd-drawer-body table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+    .prd-drawer-body th, .prd-drawer-body td { border: 1px solid #E8E8E8; padding: 6px 10px; text-align: left; }
+    .prd-drawer-body th { background: #FAFAFA; font-weight: 600; }
+    .prd-drawer-body blockquote { border-left: 3px solid var(--color-brand); padding-left: 12px; margin: 0 0 12px; color: var(--color-text-placeholder); background: #F8F9FA; padding: 8px 12px; }
+
+    /* ========== 标注开关 ========== */
+    .badge-toggle-btn {
+      position: fixed !important; bottom: 20px !important; right: 20px !important;
+      z-index: 10001 !important; width: 44px !important; height: 44px !important;
+      border-radius: 50% !important; background: #307FE2 !important; border: none !important;
+      color: #fff !important; cursor: pointer !important; display: flex !important;
+      align-items: center !important; justify-content: center !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    }
+    .badge-toggle-btn svg { width: 20px; height: 20px; }
+
+    /* ========== PRD 按钮 ========== */
+    .prd-nav-btns {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      display: flex; gap: 6px;
+    }
+    .prd-nav-btn {
+      height: 26px; padding: 0 8px; border-radius: 4px; font-size: 11px; font-weight: 500;
+      background: #F0F7FF; border: 1px solid #1890ff; color: #1890ff; cursor: pointer;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="status-bar"></div>
+
+  <div class="nav-bar">
+    <div class="nav-inner">
+      <button class="nav-back" type="button" aria-label="返回" id="backBtn">
+        <svg viewBox="0 0 48 48" fill="currentColor"><path d="M30.83 37.17L17.66 24 30.83 10.83 28 8 12 24l16 16z"/></svg>
+      </button>
+      <span class="nav-title">详情</span>
+      <div class="prd-nav-btns">
+        <button class="prd-nav-btn" onclick="openDrawer()" title="查看页面PRD">📄 页面PRD</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 用户信息卡片 -->
+  <div class="user-card">
+    <div class="user-info">
+      <div class="user-avatar">
+        <svg viewBox="0 0 48 48" fill="currentColor">
+          <path d="M24 26c5.5 0 10-4.5 10-10S29.5 6 24 6s-10 4.5-10 10 4.5 10 10 10z" fill="#E8F0FE"/>
+          <path d="M24 28c-8.8 0-16 7.2-16 16h32c0-8.8-7.2-16-16-16z" fill="#B8D4F7"/>
+        </svg>
+      </div>
+      <div class="user-meta">
+        <div class="user-name">庞柳</div>
+        <div class="user-dept">电气</div>
+      </div>
+    </div>
+
+    <!-- 快捷入口 -->
+    <div class="quick-entry">
+      <!-- 学习积分 -->
+      <div class="quick-item" id="studyPoints">
+        <div class="quick-value">120</div>
+        <div class="quick-label">学习积分</div>
+      </div>
+
+      <!-- 自由练习 -->
+      <div class="quick-item" id="freePractice">
+        <div class="quick-icon">
+          <svg viewBox="0 0 48 48" fill="currentColor">
+            <rect x="8" y="6" width="32" height="32" rx="5" fill="none" stroke="currentColor" stroke-width="2.5"/>
+            <circle cx="20" cy="20" r="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+            <path d="M12 33c0-4.42 3.58-8 8-8h2c4.42 0 8 3.58 8 8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M34 14l-6 6M34 20l-6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="quick-label">自由练习</div>
+      </div>
+
+      <!-- 模拟练习（本次新增） -->
+      <div class="quick-item" id="paperPractice">
+        <span class="badge-wrapper" style="position:absolute;top:0;right:0;">
+          <span class="prd-badge changed" style="position:static !important;" data-badge-id="1">1</span>
+        </span>
+        <div class="quick-icon">
+          <svg viewBox="0 0 48 48" fill="currentColor">
+            <rect x="10" y="4" width="28" height="40" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/>
+            <line x1="16" y1="14" x2="32" y2="14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="16" y1="20" x2="32" y2="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="16" y1="26" x2="24" y2="26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <rect x="14" y="32" width="20" height="3" rx="1" fill="currentColor" opacity="0.25"/>
+            <rect x="14" y="38" width="14" height="3" rx="1" fill="currentColor" opacity="0.25"/>
+          </svg>
+        </div>
+        <div class="quick-label">模拟练习</div>
+      </div>
+
+      <!-- 排行榜 -->
+      <div class="quick-item" id="ranking">
+        <div class="quick-icon">
+          <svg viewBox="0 0 48 48" fill="currentColor">
+            <path d="M8 42h8V20H8v22z" opacity="0.35"/>
+            <path d="M20 42h8V10h-8v32z" opacity="0.65"/>
+            <path d="M32 42h8V26h-8v16z" opacity="0.9"/>
+            <path d="M32 20l4-6 2 3 4-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="42" cy="9" r="3" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="quick-label">排行榜</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 标签切换 -->
+  <div class="tabs-wrap">
+    <div class="tab-item active" data-tab="active">进行中 (1)</div>
+    <div class="tab-item" data-tab="ended">已结束 (36)</div>
+  </div>
+
+  <!-- 搜索与筛选 -->
+  <div class="search-bar">
+    <div class="search-input">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <circle cx="11" cy="11" r="7"/>
+        <path d="M20 20l-4-4" stroke-linecap="round"/>
+      </svg>
+      <input type="text" placeholder="请输入考试名称" id="searchInput">
+    </div>
+    <button class="filter-btn" id="filterBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 4h16l-6 8v8l-4-2v-6L4 4z" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      筛选
+    </button>
+  </div>
+
+  <!-- 考试列表 -->
+  <div class="exam-list" id="examList"></div>
+
+  <div class="safe-bottom"></div>
+
+  <script>
+    // 考试数据
+    const exams = {
+      active: [
+        {
+          id: 1,
+          name: '常规考试：测试选项乱序关闭',
+          endTime: '2026-07-02 23:59:59',
+          score: null,
+          status: 'active'
+        }
+      ],
+      ended: [
+        { id: 2, name: '2026年安全知识期末考试', endTime: '2026-06-15 23:59:59', score: 88, status: 'ended' },
+        { id: 3, name: '消防安全专项考核', endTime: '2026-06-10 23:59:59', score: 92, status: 'ended' },
+        { id: 4, name: '电气安全操作规程考试', endTime: '2026-06-05 23:59:59', score: 76, status: 'ended' }
+      ]
+    };
+
+    let currentTab = 'active';
+
+    function formatDateTime(str) {
+      if (!str) return '-';
+      return str.replace(/-/g, '.').replace(' ', ' ');
+    }
+
+    function renderExams() {
+      const list = document.getElementById('examList');
+      const data = exams[currentTab] || [];
+
+      // 简单搜索过滤
+      const keyword = document.getElementById('searchInput').value.trim();
+      const filtered = keyword
+        ? data.filter(item => item.name.toLowerCase().includes(keyword.toLowerCase()))
+        : data;
+
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div class="empty-wrap">
+            <svg viewBox="0 0 120 120" fill="currentColor"><rect x="20" y="20" width="80" height="80" rx="8" fill="#E8EBF0"/><rect x="32" y="40" width="56" height="8" rx="4" fill="#C4C9D1"/><rect x="32" y="56" width="40" height="8" rx="4" fill="#C4C9D1"/><circle cx="60" cy="60" r="28" fill="none" stroke="#C4C9D1" stroke-width="2"/><path d="M52 60h16M52 64h12" stroke="#C4C9D1" stroke-width="2" stroke-linecap="round"/></svg>
+            <p>暂无数据</p>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = filtered.map(item => {
+        const isActive = item.status === 'active';
+        const scoreHtml = item.score !== null && item.score !== undefined
+          ? `<span class="score-value">${item.score}</span>分`
+          : `<span class="score-empty">--</span>分`;
+
+        return `
+          <div class="exam-card" data-id="${item.id}">
+            <div class="exam-card-header">
+              <div class="exam-title-wrap">
+                <svg class="exam-icon" viewBox="0 0 48 48" fill="currentColor">
+                  <rect x="8" y="7" width="32" height="34" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                  <line x1="16" y1="17" x2="32" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="16" y1="23" x2="28" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="16" y1="23" x2="24" y2="29" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M16 29l8-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <circle cx="34" cy="34" r="7" fill="currentColor" stroke="#fff" stroke-width="1.5"/>
+                  <path d="M31.5 34l2 2 3-3" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="exam-title">${item.name}</div>
+              </div>
+            </div>
+            <div class="exam-row">
+              <span class="label">本次结束时间：</span>
+              <span>${formatDateTime(item.endTime)}</span>
+            </div>
+            <div class="exam-score">考试得分：${scoreHtml}</div>
+            <div class="exam-footer">
+              <button class="exam-btn" ${!isActive ? 'disabled' : ''}>${isActive ? '立刻考试' : '查看详情'}</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 标签切换
+    document.querySelectorAll('.tab-item').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        currentTab = this.dataset.tab;
+        renderExams();
+      });
+    });
+
+    // 搜索
+    document.getElementById('searchInput').addEventListener('input', renderExams);
+
+    // 筛选
+    document.getElementById('filterBtn').addEventListener('click', function() {
+      alert('打开筛选面板');
+    });
+
+    // 快捷入口点击
+    document.getElementById('studyPoints').addEventListener('click', function() { alert('查看学习积分'); });
+    document.getElementById('freePractice').addEventListener('click', function() { window.location.href = '小程序练习页面.html'; });
+    document.getElementById('paperPractice').addEventListener('click', function() { window.location.href = '小程序练习列表.html'; });
+    document.getElementById('ranking').addEventListener('click', function() { alert('查看排行榜'); });
+
+    // 返回按钮 → 返回上一页面（工作台）
+    document.getElementById('backBtn').addEventListener('click', function() {
+      history.back();
+    });
+
+    // 考试卡片点击（事件委托）
+    document.getElementById('examList').addEventListener('click', function(e) {
+      const card = e.target.closest('.exam-card');
+      if (!card) return;
+      const id = card.dataset.id;
+      const item = [...exams.active, ...exams.ended].find(ex => ex.id == id);
+      if (item && item.status === 'active') {
+        alert('进入考试：' + item.name);
+      }
+    });
+
+    // 初始化
+    renderExams();
+  </script>
+
+  <!-- ========== 标注浮窗容器 ========== -->
+  <div class="prd-tooltip" id="tooltip-1"></div>
+
+  <!-- ========== PRD 抽屉 ========== -->
+  <div class="prd-drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+  <div class="prd-drawer" id="drawer">
+    <div class="prd-drawer-header">
+      <span class="prd-drawer-title">📄 小程序考试中心 · 页面优化 PRD</span>
+      <button class="prd-drawer-close" onclick="closeDrawer()">×</button>
+    </div>
+    <div class="prd-drawer-body" id="drawerBody"></div>
+  </div>
+
+  <!-- ========== 标注开关 ========== -->
+  <button class="badge-toggle-btn" id="badgeToggle" title="显示/隐藏标注">
+    <svg id="toggleEyeOn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </svg>
+    <svg id="toggleEyeOff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+      <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/>
+      <line x1="1" y1="1" x2="23" y2="23"/>
+    </svg>
+  </button>
+
+  <!-- ==================== PRD标注交互脚本 ==================== -->
+  <script>
+    'use strict';
+
+    // ==================== 标注数据 ====================
+    var badgeData = {
+      "1": {
+        title: "需求描述：模拟练习快捷入口 🔥新增",
+        content: "<p style='color:#F54A45;'><strong>🔥 变化点：新增快捷入口</strong></p>" +
+          "<p>快捷入口顺序：<strong>学习积分</strong> → 自由练习 → <strong>模拟练习</strong> → 排行榜（共 4 个）。</p>" +
+          "<p>在考试中心顶部快捷入口区，于「学习积分」之后、「自由练习」之前新增「模拟练习」图标。</p>" +
+          "<p>模拟练习入口<strong>不受资源授权和练习权限影响</strong>，始终对所有用户可见。</p>" +
+          "<p><strong>点击行为：</strong>跳转至 <code>小程序练习列表.html</code></p>"
+      }
+    };
+
+    // ==================== PRD 抽屉内容 ====================
+    var pagePrdContent = '<h1>小程序考试中心 · 页面优化 PRD</h1>\n' +
+      '<blockquote><strong>页面类型：</strong>用户前台类（小程序端） | <strong>所属模块：</strong>考试中心 | <strong>最后更新：</strong>2026-07-02</blockquote>\n' +
+      '<hr>\n' +
+      '<h2>[1] 1. 引言</h2>\n' +
+      '<h3>1.1 变更概述</h3>\n' +
+      '<p>小程序考试中心为<strong>已有页面</strong>，是员工查看考试任务与进入练习的入口页。用户通过工作台「考试中心」入口进入，页面提供快捷入口（学习积分、自由练习、模拟练习、排行榜）及考试列表（进行中/已结束）。</p>\n' +
+      '<h3>1.2 使用角色</h3>\n' +
+      '<table><tr><th>角色</th><th>访问权限</th></tr>' +
+      '<tr><td>普通员工</td><td>✓ 可见快捷入口与考试任务</td></tr>' +
+      '<tr><td>部门负责人</td><td>✓ 可见快捷入口与考试任务</td></tr>' +
+      '<tr><td>超级管理员</td><td>✗（使用管理后台）</td></tr>' +
+      '<tr><td>安全管理员</td><td>✗（使用管理后台）</td></tr></table>\n' +
+      '<hr>\n' +
+      '<h2>[1] 2. 变更内容</h2>\n' +
+      '<h3>2.1 快捷入口（变更区域）</h3>\n' +
+      '<p>考试中心顶部快捷入口区域，原有「自由练习」「学习积分」「排行榜」三个入口图标。</p>\n' +
+      '<p><strong>本次变更</strong>：在「学习积分」之后新增「模拟练习」图标。</p>\n' +
+      '<p><strong>变更后快捷入口</strong>（共 4 个）：</p>\n' +
+      '<table><tr><th>#</th><th>入口名称</th><th>图标</th><th>点击行为</th><th>状态</th></tr>' +
+      '<tr><td>1</td><td>学习积分</td><td>积分数字</td><td>查看学习积分</td><td>已有</td></tr>' +
+      '<tr><td>2</td><td>自由练习</td><td>时钟图标</td><td>跳转自由练习刷题页</td><td>已有</td></tr>' +
+      '<tr><td>3</td><td><strong>模拟练习</strong></td><td>试卷图标</td><td><strong>跳转小程序练习列表</strong></td><td><strong>新增</strong></td></tr>' +
+      '<tr><td>4</td><td>排行榜</td><td>📊 图标</td><td>查看排行榜</td><td>已有</td></tr></table>\n' +
+      '<h3>2.2 模拟练习入口详情</h3>\n' +
+      '<table><tr><th>属性</th><th>值</th></tr>' +
+      '<tr><td>位置</td><td>快捷入口区第 3 项，「自由练习」之后</td></tr>' +
+      '<tr><td>图标</td><td>📝 模拟练习</td></tr>' +
+      '<tr><td>点击行为</td><td>跳转至 小程序练习列表.html（模拟练习列表页）</td></tr></table>\n' +
+      '<h3>2.3 模拟练习入口可见性</h3>\n' +
+      '<p style="color:#F54A45;"><strong>模拟练习入口不受资源授权和练习权限影响，入口始终对所有用户可见。</strong></p>\n' +
+      '<hr>\n' +
+      '<h2>3. 交互流程</h2>\n' +
+      '<pre>用户点击考试中心「模拟练习」入口\n' +
+      '         │\n' +
+      '         ▼\n' +
+      '跳转至模拟练习列表页\n' +
+      '         │\n' +
+      '         ├── 有数据 → 展示练习卡片列表\n' +
+      '         └── 无数据 → 展示空状态</pre>\n' +
+      '<hr>\n' +
+      '<h2>4. 与已有功能的关系</h2>\n' +
+      '<table><tr><th>已有组件</th><th>影响</th></tr>' +
+      '<tr><td>考试列表（进行中/已结束）</td><td>无影响</td></tr>' +
+      '<tr><td>用户信息区</td><td>无影响</td></tr>' +
+      '<tr><td>搜索筛选栏</td><td>无影响</td></tr>' +
+      '<tr><td>导航栏</td><td>无影响</td></tr>' +
+      '<tr><td>其他快捷入口（自由练习、学习积分、排行榜）</td><td>无影响，继续正常使用</td></tr></table>\n' +
+      '<hr>\n' +
+      '<h2>5. 数据来源</h2>\n' +
+      '<table><tr><th>数据项</th><th>来源</th><th>说明</th></tr>' +
+      '<tr><td>快捷入口配置</td><td>页面固定配置</td><td>模拟练习入口始终可见，不受菜单资源授权控制</td></tr>' +
+      '<tr><td>模拟练习列表数据</td><td>后端接口</td><td>按用户权限返回已发布练习</td></tr></table>';
+
+    // ==================== 通用浮窗交互 ====================
+    var activeTooltip = null;
+    var tooltipTimers = {};
+
+    function showTooltip(badgeId, e) {
+      var tip = document.getElementById('tooltip-' + badgeId);
+      var data = badgeData[badgeId];
+      if (!tip || !data) return;
+
+      if (tooltipTimers[badgeId]) { clearTimeout(tooltipTimers[badgeId]); }
+
+      if (activeTooltip && activeTooltip !== tip) {
+        activeTooltip.style.display = 'none';
+      }
+
+      tip.innerHTML = '<div class="prd-tooltip-header">' +
+        '<span class="prd-tooltip-title">' + data.title + '</span>' +
+        '<button class="prd-tooltip-close" onclick="closeTooltip(\'' + badgeId + '\')">×</button>' +
+        '</div>' +
+        '<div class="prd-tooltip-body">' + data.content + '</div>';
+
+      var badge = document.querySelector('.prd-badge[data-badge-id="' + badgeId + '"]');
+      var rect = badge ? badge.getBoundingClientRect() : { top: e.clientY, left: e.clientX };
+
+      var tipWidth = 450;
+      var left = rect.left + rect.width / 2 - tipWidth / 2;
+      if (left < 10) left = 10;
+      if (left + tipWidth > window.innerWidth - 10) left = window.innerWidth - tipWidth - 10;
+
+      var top = rect.bottom + 8;
+      if (top + 400 > window.innerHeight) top = rect.top - 400 - 8;
+
+      tip.style.left = left + 'px';
+      tip.style.top = top + 'px';
+      tip.style.display = 'block';
+      tip.style.zIndex = '9959';
+      activeTooltip = tip;
+    }
+
+    function closeTooltip(badgeId) {
+      var tip = document.getElementById('tooltip-' + badgeId);
+      if (tip) {
+        tip.style.display = 'none';
+        if (activeTooltip === tip) activeTooltip = null;
+      }
+    }
+
+    function isMouseInTooltip(badgeId) {
+      var tip = document.getElementById('tooltip-' + badgeId);
+      if (!tip || tip.style.display === 'none') return false;
+      var rect = tip.getBoundingClientRect();
+      var mx = window.mouseX || 0, my = window.mouseY || 0;
+      return mx >= rect.left && mx <= rect.right && my >= rect.top && my <= rect.bottom;
+    }
+
+    function bindBadgeEvents() {
+      document.querySelectorAll('.prd-badge:not([data-bound])').forEach(function(badge) {
+        badge.setAttribute('data-bound', '1');
+        badge.addEventListener('mouseenter', function(e) {
+          var id = badge.getAttribute('data-badge-id');
+          showTooltip(id, e);
+        });
+        badge.addEventListener('mouseleave', function(e) {
+          var id = badge.getAttribute('data-badge-id');
+          tooltipTimers[id] = setTimeout(function() {
+            if (!isMouseInTooltip(id)) closeTooltip(id);
+          }, 200);
+        });
+      });
+
+      document.querySelectorAll('.prd-tooltip:not([data-bound])').forEach(function(tip) {
+        tip.setAttribute('data-bound', '1');
+        tip.addEventListener('mouseenter', function() {
+          var badgeId = tip.id.replace('tooltip-', '');
+          if (tooltipTimers[badgeId]) clearTimeout(tooltipTimers[badgeId]);
+        });
+        tip.addEventListener('mouseleave', function() {
+          var badgeId = tip.id.replace('tooltip-', '');
+          closeTooltip(badgeId);
+        });
+      });
+    }
+
+    bindBadgeEvents();
+    var observer = new MutationObserver(function() { bindBadgeEvents(); });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    document.addEventListener('mousemove', function(e) { window.mouseX = e.clientX; window.mouseY = e.clientY; });
+
+    // 浮窗拖拽
+    var dragTarget = null, dragOffsetX = 0, dragOffsetY = 0;
+    document.addEventListener('mousedown', function(e) {
+      var header = e.target.closest('.prd-tooltip-header');
+      if (!header) return;
+      dragTarget = header.closest('.prd-tooltip');
+      if (dragTarget) {
+        dragOffsetX = e.clientX - dragTarget.offsetLeft;
+        dragOffsetY = e.clientY - dragTarget.offsetTop;
+      }
+    });
+    document.addEventListener('mousemove', function(e) {
+      if (!dragTarget) return;
+      dragTarget.style.left = (e.clientX - dragOffsetX) + 'px';
+      dragTarget.style.top = (e.clientY - dragOffsetY) + 'px';
+    });
+    document.addEventListener('mouseup', function() { dragTarget = null; });
+
+    // PRD 抽屉
+    function openDrawer() {
+      document.getElementById('drawerBody').innerHTML = pagePrdContent;
+      document.getElementById('drawerOverlay').classList.add('is-open');
+      document.getElementById('drawer').classList.add('is-open');
+    }
+    function closeDrawer() {
+      document.getElementById('drawerOverlay').classList.remove('is-open');
+      document.getElementById('drawer').classList.remove('is-open');
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    // 全局标注开关
+    var badgesVisible = true;
+    document.getElementById('badgeToggle').addEventListener('click', function() {
+      badgesVisible = !badgesVisible;
+      var badges = document.querySelectorAll('.prd-badge');
+      for (var i = 0; i < badges.length; i++) {
+        badges[i].style.display = badgesVisible ? '' : 'none';
+      }
+      document.getElementById('toggleEyeOn').style.display = badgesVisible ? '' : 'none';
+      document.getElementById('toggleEyeOff').style.display = badgesVisible ? 'none' : '';
+    });
+  </script>
+
+</body>
+</html>
