@@ -1818,12 +1818,20 @@
                         <th style="position:relative;">
                           操作
                           <span class="annotation-wrapper" style="position:relative;display:inline-block;margin-left:4px;">
+                            <span style="display:inline-block;font-size:11px;color:#307FE2;position:relative;margin-right:4px;">详情</span>
+                            <span class="prd-annotation" data-badge-id="9" data-title="[9] 详情操作" data-content="<p><strong>显示条件：</strong>全部状态均显示「详情」按钮。</p><p><strong>点击行为：</strong>打开只读表单页，标题为「查看模拟练习」。</p><p><strong>只读规则：</strong></p><ul><li><strong>练习名称：</strong>输入框禁用，展示已填名称</li><li><strong>选择试卷：</strong>触发器和箭头隐藏，显示试卷名称和信息条，不可点击</li><li><strong>练习开放时间：</strong>日期时间输入框禁用，展示已设时间</li><li><strong>练习题目数量：</strong>总数和各题型数量禁用，勾选框不可操作</li><li><strong>练习人员：</strong>「添加人员」按钮隐藏，已选人员/部门回显为标签展示，不可移除</li></ul><p><strong>底部按钮：</strong>仅显示「返回」按钮，不修改任何数据。</p><p><em>详细只读规则参见弹窗角标 [14]</em></p>">9</span>
+                          </span>
+                          <span class="annotation-wrapper" style="position:relative;display:inline-block;margin-left:4px;">
                             <span style="display:inline-block;font-size:11px;color:#52C41A;position:relative;margin-right:4px;">发布</span>
                             <span class="prd-annotation" data-badge-id="8" data-title="[8] 发布操作" data-content="<p><strong>显示条件：</strong>状态为「草稿」</p><p><strong>点击行为：</strong>直接发布，无需弹窗确认。</p><p><strong>发布前校验：</strong></p><ul><li>练习开放时间必须完整填写，否则提示「请先编辑练习，填写完整的练习开放时间后再发布」</li><li>结束时间必须大于开始时间，否则提示「结束时间必须大于开始时间，请先修改后再发布」</li><li>开始时间必须大于当前时间，否则提示「开始时间必须大于当前时间，请先修改后再发布」</li></ul><p><strong>执行逻辑：</strong></p><ul><li>将是否已发布设为已发布</li><li>刷新列表</li></ul><p><strong>反馈：</strong>提示「发布成功」，3秒后自动消失。</p><p><strong>状态变化：</strong>草稿 → 未开始/进行中/已结束（由开放时间决定）</p>">8</span>
                           </span>
                           <span class="annotation-wrapper" style="position:relative;display:inline-block;margin-left:4px;">
                             <span style="display:inline-block;font-size:11px;color:#1890ff;position:relative;margin-right:4px;">编辑</span>
                             <span class="prd-annotation" data-badge-id="4" data-title="[4] 编辑操作" data-content="<p><strong>显示条件：</strong>仅草稿状态显示编辑；已发布状态（未开始/进行中/已结束）均不显示编辑。</p><p><strong>编辑限制：</strong></p><ul><li><strong>草稿：</strong>全部字段可编辑，底部「返回+保存」</li><li><strong>未开始：</strong>（已发布）不显示编辑入口，不显示任何操作</li><li><strong>进行中：</strong>（已发布）不显示编辑入口，不显示任何操作</li><li><strong>已结束：</strong>不显示任何操作</li></ul><p><em>表单字段详见弹窗角标 [7]</em></p>">4</span>
+                          </span>
+                          <span class="annotation-wrapper" style="position:relative;display:inline-block;margin-left:4px;">
+                            <span style="display:inline-block;font-size:11px;color:#F54A45;position:relative;margin-right:4px;">删除</span>
+                            <span class="prd-annotation" data-badge-id="10" data-title="[10] 删除操作" data-content="<p><strong>显示条件：</strong>仅草稿状态显示删除。</p><p><strong>删除限制：</strong>进行中的练习不可删除，点击删除时提示「进行中的练习不可删除」。</p><p><strong>点击行为：</strong></p><ul><li>弹出确认对话框：「确定要删除该练习吗？此操作不可恢复。」</li><li>点击「确定」则从数据中移除此条练习记录</li><li>点击「取消」不做任何操作</li></ul><p><strong>执行逻辑：</strong></p><ul><li>校验非进行中状态 → 确认框 → 过滤移除数据 → 刷新列表</li></ul><p><strong>反馈：</strong>Toast 提示「删除成功」。</p>">10</span>
                           </span>
                         </th>
                       </tr>
