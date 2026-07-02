@@ -1,0 +1,567 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner "顶部导航" [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e7]: 环慧慧EHS+
+        - generic [ref=e8]: Enterprise Edition
+      - navigation "一级模块导航" [ref=e10]:
+        - generic [ref=e11]:
+          - button "环境" [ref=e12] [cursor=pointer]
+          - button "安全" [ref=e13] [cursor=pointer]
+          - button "EHS教育" [ref=e14] [cursor=pointer]
+          - button "系统管理" [ref=e15] [cursor=pointer]
+          - button "外包管理" [ref=e16] [cursor=pointer]
+      - generic [ref=e20]: 庞刚(系统管理员)
+    - complementary "侧边导航菜单" [ref=e21]:
+      - generic [ref=e22]:
+        - button "学习中心" [ref=e23] [cursor=pointer]:
+          - generic [ref=e24]: 学习中心
+        - button "设置" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 设置
+        - generic [ref=e29]:
+          - button "课件类型管理" [ref=e30] [cursor=pointer]
+          - button "练习设置" [ref=e31] [cursor=pointer]
+        - button "教育报表" [ref=e32] [cursor=pointer]:
+          - generic [ref=e33]: 教育报表
+        - button "积分中心" [ref=e35] [cursor=pointer]:
+          - generic [ref=e36]: 积分中心
+        - button "考试中心" [ref=e38] [cursor=pointer]:
+          - generic [ref=e39]: 考试中心
+    - generic "面包屑导航" [ref=e41]:
+      - generic [ref=e45]: 练习设置
+    - main [ref=e47]:
+      - generic [ref=e48]:
+        - navigation [ref=e49]:
+          - generic [ref=e50]: 设置
+          - generic [ref=e51] [cursor=pointer]: 专业题目练习
+          - generic [ref=e52] [cursor=pointer]:
+            - text: 模拟练习
+            - generic [ref=e53]: "1"
+        - generic [ref=e57]:
+          - generic [ref=e58]:
+            - heading "模拟练习" [level=1] [ref=e59]
+            - paragraph [ref=e60]: 模拟练习支持灵活划定题目范围，进行针对性强化训练，适用于考前冲刺与阶段性能力评估。
+            - generic [ref=e61] [cursor=pointer]: "2"
+          - generic [ref=e63]:
+            - button "+ 新增" [ref=e64] [cursor=pointer]
+            - generic [ref=e65] [cursor=pointer]: "3"
+          - table [ref=e67]:
+            - rowgroup [ref=e68]:
+              - row "练习名称 开始时间 结束时间 状态 创建人 创建时间 操作 发布 8 编辑 4" [ref=e69]:
+                - columnheader "练习名称" [ref=e70]
+                - columnheader "开始时间" [ref=e71]
+                - columnheader "结束时间" [ref=e72]
+                - columnheader "状态" [ref=e73]
+                - columnheader "创建人" [ref=e74]
+                - columnheader "创建时间" [ref=e75]
+                - columnheader "操作 发布 8 编辑 4" [ref=e76]:
+                  - text: 操作
+                  - generic [ref=e77]:
+                    - generic [ref=e78]: 发布
+                    - generic [ref=e79] [cursor=pointer]: "8"
+                  - generic [ref=e80]:
+                    - generic [ref=e81]: 编辑
+                    - generic [ref=e82] [cursor=pointer]: "4"
+            - rowgroup
+  - button "PRD 说明" [ref=e83] [cursor=pointer]
+  - button "👁" [ref=e84] [cursor=pointer]
+  - generic [ref=e85]:
+    - generic [ref=e86]:
+      - generic [ref=e87]: 练习设置 - PRD 说明
+      - button "×" [ref=e88] [cursor=pointer]
+    - generic [ref=e90] [cursor=pointer]: 页面PRD
+    - generic [ref=e91]:
+      - heading "练习设置 - 模拟练习 PRD（产品需求文档）" [level=1] [ref=e92]
+      - heading "1. 引言" [level=2] [ref=e93]
+      - heading "1.1 背景" [level=3] [ref=e94]
+      - paragraph [ref=e95]: 在练习设置页新增「模拟练习」Tab，管理员选择关联标准试卷，按试卷结构配置练习参数（题目总数、各题型数量、练习开放时间、练习人员）。模拟练习支持灵活划定题目范围，进行针对性强化训练，适用于考前冲刺与阶段性能力评估。员工在小程序端按配置进行刷题练习。本需求仅覆盖模拟练习相关功能，不涉及已存在的「专业练习」Tab。
+      - heading "1.2 使用角色" [level=3] [ref=e96]
+      - list [ref=e97]:
+        - listitem [ref=e98]:
+          - strong [ref=e99]: 管理员
+          - text: ：可查看、新增、编辑、删除、发布模拟练习配置
+        - listitem [ref=e100]:
+          - strong [ref=e101]: 平台员工
+          - text: ：无此页面访问权限（仅在小程序端参与练习）
+      - heading "1.3 前置条件" [level=3] [ref=e102]
+      - list [ref=e103]:
+        - listitem [ref=e104]: 用户已登录系统
+        - listitem [ref=e105]: 用户具有「练习设置」菜单权限（管理员角色）
+        - listitem [ref=e106]: 系统中已存在试卷数据（用于选择器）
+      - paragraph [ref=e107]:
+        - strong [ref=e108]: 注意：
+        - text: 试卷仅用于创建练习时的题目配置来源，练习创建后与试卷解耦。试卷的删除不影响已创建的练习功能，已发布的练习仍可正常使用。
+      - heading "1.4 功能清单" [level=3] [ref=e109]
+      - table [ref=e110]:
+        - rowgroup [ref=e111]:
+          - row "模块 功能 功能描述" [ref=e112]:
+            - columnheader "模块" [ref=e113]
+            - columnheader "功能" [ref=e114]
+            - columnheader "功能描述" [ref=e115]
+          - row "列表区 模拟练习列表 以表格形式展示所有模拟练习配置（名称、时间、状态、创建人、创建时间），支持按创建时间倒序排列" [ref=e116]:
+            - cell "列表区" [ref=e117]
+            - cell "模拟练习列表" [ref=e118]
+            - cell "以表格形式展示所有模拟练习配置（名称、时间、状态、创建人、创建时间），支持按创建时间倒序排列" [ref=e119]
+          - row "操作区 行操作 根据状态显示不同操作：全部状态→详情；草稿→详情+发布+编辑+删除；未开始/进行中/已结束→详情" [ref=e120]:
+            - cell "操作区" [ref=e121]
+            - cell "行操作" [ref=e122]
+            - cell "根据状态显示不同操作：全部状态→详情；草稿→详情+发布+编辑+删除；未开始/进行中/已结束→详情" [ref=e123]
+          - row "弹窗 新增练习 弹窗表单（4个分组），录入练习配置，仅支持保存为草稿" [ref=e124]:
+            - cell "弹窗" [ref=e125]
+            - cell "新增练习" [ref=e126]
+            - cell "弹窗表单（4个分组），录入练习配置，仅支持保存为草稿" [ref=e127]
+          - row "弹窗 编辑练习 回填已有数据。草稿：全部字段可编辑（含人员范围回显），底部「返回+保存」；已发布状态（未开始/进行中/已结束）不提供编辑入口" [ref=e128]:
+            - cell "弹窗" [ref=e129]
+            - cell "编辑练习" [ref=e130]
+            - cell "回填已有数据。草稿：全部字段可编辑（含人员范围回显），底部「返回+保存」；已发布状态（未开始/进行中/已结束）不提供编辑入口" [ref=e131]
+          - row "弹窗 查看详情 所有状态均显示「详情」按钮，打开只读表单页（全部字段禁用、不可编辑），底部仅显示「返回」" [ref=e132]:
+            - cell "弹窗" [ref=e133]
+            - cell "查看详情" [ref=e134]
+            - cell "所有状态均显示「详情」按钮，打开只读表单页（全部字段禁用、不可编辑），底部仅显示「返回」" [ref=e135]
+          - row "选择器 试卷选择弹窗 已有组件，系统试卷单选" [ref=e136]:
+            - cell "选择器" [ref=e137]
+            - cell "试卷选择弹窗" [ref=e138]
+            - cell "已有组件，系统试卷单选" [ref=e139]
+          - row "选择器 人员选择弹窗 已有组件，按姓名/部门多选参与练习的人员或部门" [ref=e140]:
+            - cell "选择器" [ref=e141]
+            - cell "人员选择弹窗" [ref=e142]
+            - cell "已有组件，按姓名/部门多选参与练习的人员或部门" [ref=e143]
+      - heading "2. 页面菜单与权限规划" [level=2] [ref=e144]
+      - heading "2.1 页面菜单" [level=3] [ref=e145]
+      - paragraph [ref=e146]:
+        - strong [ref=e147]: 菜单路径：
+        - text: 练习设置 / 模拟练习
+      - heading "2.2 权限规划" [level=3] [ref=e148]
+      - table [ref=e149]:
+        - rowgroup [ref=e150]:
+          - row "权限点名称 操作范围 数据范围" [ref=e151]:
+            - columnheader "权限点名称" [ref=e152]
+            - columnheader "操作范围" [ref=e153]
+            - columnheader "数据范围" [ref=e154]
+          - row "查看 查看模拟练习列表 全量（按组织隔离）" [ref=e155]:
+            - cell "查看" [ref=e156]
+            - cell "查看模拟练习列表" [ref=e157]
+            - cell "全量（按组织隔离）" [ref=e158]
+          - row "编辑 新增、编辑、删除、发布 全量（按组织隔离）" [ref=e159]:
+            - cell "编辑" [ref=e160]
+            - cell "新增、编辑、删除、发布" [ref=e161]
+            - cell "全量（按组织隔离）" [ref=e162]
+      - heading "2.3 页面布局（ASCII 结构图）" [level=3] [ref=e163]
+      - code [ref=e165]: +-----------------------------------------------------------------------------------+ | 练习设置 | | ┌────────────────┐ ┌──────────────────────────────────────────────────────────┐ | | │ 设置 (侧边导航) │ │ [模拟练习] Tab │ | | │ · 专业题目练习 │ │ │ | | │ · 模拟练习◀ │ │ 模拟练习 │ | | │ │ │ 模拟练习支持灵活划定题目范围，进行针对性强化训练， │ | | │ │ │ 适用于考前冲刺与阶段性能力评估 │ | | │ │ │ │ | | │ │ │ [新增] │ | | │ │ │ │ | | │ │ │ ┌──────────┬──────────┬──────────┬──────┬──────┬──────┬──────┐ │ | │ │ │ │ 练习名称 │ 开始时间 │ 结束时间 │ 状态 │创建人│创建时间│ 操作 │ │ | │ │ │ ├──────────┼──────────┼──────────┼──────┼──────┼──────┼──────┤ │ | │ │ │ │ ... │ ... │ ... │ 草稿 │ ... │ ... │详情/发布/编辑/删除│ | │ │ │ │ ... │ ... │ ... │未开始 │ ... │ ... │ 详情 │ │ | │ │ │ │ ... │ ... │ ... │进行中 │ ... │ ... │ 详情 │ │ | │ │ │ │ ... │ ... │ ... │已结束 │ ... │ ... │ 详情 │ │ | │ │ │ └──────────┴──────────┴──────────┴──────┴──────┴──────┴──────┘ │ | │ │ │ │ | | └────────────────┘ └──────────────────────────────────────────────────────────┘ | +-----------------------------------------------------------------------------------+ 弹窗（右侧表单页，4个分组）： +-------------------------------------------------------+ | ← 新增模拟练习 / 编辑模拟练习 | +-------------------------------------------------------+ | | | ▸ 基本信息 | | * 练习名称 [___________________] 0/20 | | * 练习开放时间 [年-月-日 时:分] 至 [年-月-日 时:分] | | 员工可以在练习开放时间内进行练习 | | | | ▸ 选择试卷 | | * 选择试卷 [_______________] ▼ | | ┌─试卷结构信息条───────────────────┐ | | | | ▸ 练习题目数量 (未选择试卷前全部禁用) | | * 练习题目总数 [____] 道 | | * 各题型数量 | | ☑ 单选 [____] 道 | | ☑ 多选 [____] 道 | | ☑ 判断 [____] 道 | | ( 0 / 0 ) | | | | ▸ 练习人员 | | * 练习人员 | | [+ 添加人员] | | 指定用户 [标签×] 部门范围 [标签×] | | | +-------------------------------------------------------+ | [返回] [保存] (草稿) | | [返回] [保存设置] (未开始/进行中) | +-------------------------------------------------------+
+      - heading "3. 需求说明" [level=2] [ref=e166]
+      - heading "3.1 列表区" [level=3] [ref=e167]
+      - paragraph [ref=e168]:
+        - strong [ref=e169]: 列表字段：
+      - table [ref=e170]:
+        - rowgroup [ref=e171]:
+          - row "列表字段 字段说明 排序" [ref=e172]:
+            - columnheader "列表字段" [ref=e173]
+            - columnheader "字段说明" [ref=e174]
+            - columnheader "排序" [ref=e175]
+          - row "练习名称 管理员自定义名称，≤20 字，单行展示 否" [ref=e176]:
+            - cell "练习名称" [ref=e177]
+            - cell "管理员自定义名称，≤20 字，单行展示" [ref=e178]
+            - cell "否" [ref=e179]
+          - row "开始时间 练习开放开始时间（年-月-日 时:分） 否" [ref=e180]:
+            - cell "开始时间" [ref=e181]
+            - cell "练习开放开始时间（年-月-日 时:分）" [ref=e182]
+            - cell "否" [ref=e183]
+          - row "结束时间 练习开放结束时间（年-月-日 时:分） 否" [ref=e184]:
+            - cell "结束时间" [ref=e185]
+            - cell "练习开放结束时间（年-月-日 时:分）" [ref=e186]
+            - cell "否" [ref=e187]
+          - row "状态 草稿/未开始/进行中/已结束 否" [ref=e188]:
+            - cell "状态" [ref=e189]
+            - cell "草稿/未开始/进行中/已结束" [ref=e190]
+            - cell "否" [ref=e191]
+          - row "创建人 创建该练习的管理员姓名 否" [ref=e192]:
+            - cell "创建人" [ref=e193]
+            - cell "创建该练习的管理员姓名" [ref=e194]
+            - cell "否" [ref=e195]
+          - row "创建时间 创建时间（年-月-日 时:分:秒） 是（倒序）" [ref=e196]:
+            - cell "创建时间" [ref=e197]
+            - cell "创建时间（年-月-日 时:分:秒）" [ref=e198]
+            - cell "是（倒序）" [ref=e199]
+      - paragraph [ref=e200]:
+        - strong [ref=e201]: 排序规则：
+        - text: 按创建时间倒序，最新创建的排在前面。
+      - paragraph [ref=e202]:
+        - strong [ref=e203]: 空状态：
+        - text: 列表无数据时显示「暂无数据」。
+      - heading "3.2 行操作说明" [level=3] [ref=e204]
+      - paragraph [ref=e205]: 根据练习状态，每行末尾显示不同操作按钮：
+      - table [ref=e206]:
+        - rowgroup [ref=e207]:
+          - row "状态 操作按钮 说明" [ref=e208]:
+            - columnheader "状态" [ref=e209]
+            - columnheader "操作按钮" [ref=e210]
+            - columnheader "说明" [ref=e211]
+          - row "草稿 详情 + 发布 + 编辑 + 删除 可查看详情、发布、编辑、删除" [ref=e212]:
+            - cell "草稿" [ref=e213]
+            - cell "详情 + 发布 + 编辑 + 删除" [ref=e214]
+            - cell "可查看详情、发布、编辑、删除" [ref=e215]
+          - row "未开始 详情 可查看详情（只读）" [ref=e216]:
+            - cell "未开始" [ref=e217]
+            - cell "详情" [ref=e218]
+            - cell "可查看详情（只读）" [ref=e219]
+          - row "进行中 详情 可查看详情（只读）" [ref=e220]:
+            - cell "进行中" [ref=e221]
+            - cell "详情" [ref=e222]
+            - cell "可查看详情（只读）" [ref=e223]
+          - row "已结束 详情 可查看详情（只读）" [ref=e224]:
+            - cell "已结束" [ref=e225]
+            - cell "详情" [ref=e226]
+            - cell "可查看详情（只读）" [ref=e227]
+      - heading "3.2.0 查看详情" [level=4] [ref=e228]
+      - list [ref=e229]:
+        - listitem [ref=e230]:
+          - strong [ref=e231]: 显示条件：
+          - text: 全部状态均显示
+        - listitem [ref=e232]:
+          - strong [ref=e233]: 行为：
+          - text: 右侧打开「查看模拟练习」只读表单页，回填全部已有数据，所有字段禁用不可编辑，试卷选择触发器隐藏
+        - listitem [ref=e234]:
+          - strong [ref=e235]: 底部按钮：
+          - text: 仅显示「返回」
+      - heading "3.2.1 发布" [level=4] [ref=e236]
+      - list [ref=e237]:
+        - listitem [ref=e238]:
+          - strong [ref=e239]: 显示条件：
+          - text: 状态为「草稿」
+        - listitem [ref=e240]:
+          - strong [ref=e241]: 行为：
+          - text: 发布前先校验练习开放时间：须完整填写、结束>开始、开始>当前时间。校验通过后将是否已发布设为已发布，刷新列表
+        - listitem [ref=e242]:
+          - strong [ref=e243]: 状态变化：
+          - text: 草稿 → 未开始/进行中/已结束（由开放时间与当前时间关系自动判定）
+        - listitem [ref=e244]:
+          - strong [ref=e245]: 反馈：
+          - text: 提示「发布成功」，3 秒后自动消失
+      - paragraph [ref=e246]:
+        - strong [ref=e247]: 发布前校验（按顺序）：
+      - list [ref=e248]:
+        - listitem [ref=e249]: 练习开放时间必须完整填写 →「请先编辑练习，填写完整的练习开放时间后再发布」
+        - listitem [ref=e250]: 结束时间必须大于开始时间 →「结束时间必须大于开始时间，请先修改后再发布」
+        - listitem [ref=e251]: 开始时间必须大于当前时间 →「开始时间必须大于当前时间，请先修改后再发布」
+      - heading "3.2.2 编辑" [level=4] [ref=e252]
+      - list [ref=e253]:
+        - listitem [ref=e254]:
+          - strong [ref=e255]: 显示条件：
+          - text: 仅草稿状态显示编辑；已发布状态（未开始/进行中/已结束）均不显示编辑
+        - listitem [ref=e256]:
+          - strong [ref=e257]: 行为：
+          - text: 打开右侧表单页，回填全部已有数据（包括练习名称、试卷、题目数量、练习开放时间、人员范围）
+          - list [ref=e258]:
+            - listitem [ref=e259]:
+              - strong [ref=e260]: 草稿状态：
+              - text: 全部字段可编辑，试卷可选，底部「返回+保存」
+            - listitem [ref=e261]:
+              - strong [ref=e262]: 人员范围回显：
+              - text: 编辑草稿时，已选人员/部门以标签形式完整回显，按指定用户和部门范围分组展示，支持逐项移除和重新添加
+      - heading "3.2.3 删除" [level=4] [ref=e263]
+      - list [ref=e264]:
+        - listitem [ref=e265]:
+          - strong [ref=e266]: 显示条件：
+          - text: 草稿
+        - listitem [ref=e267]:
+          - strong [ref=e268]: 行为：
+          - text: 弹出确认弹窗，文案「确定要删除该练习吗？此操作不可恢复。」
+        - listitem [ref=e269]:
+          - strong [ref=e270]: 确认后：
+          - text: 从数据列表移除，刷新表格
+        - listitem [ref=e271]:
+          - strong [ref=e272]: 反馈：
+          - text: 提示「删除成功」，3 秒后自动消失
+        - listitem [ref=e273]:
+          - strong [ref=e274]: 禁用情况：
+          - text: 进行中状态下提示「进行中的练习不可删除」；已结束状态不显示删除入口
+      - heading "3.3 新增/编辑/查看弹窗" [level=3] [ref=e275]
+      - paragraph [ref=e276]: 弹窗以右侧表单页形式展示（替代浮层弹窗），左侧列表隐藏，右侧显示完整表单页，左上角有返回箭头按钮。
+      - paragraph [ref=e277]:
+        - strong [ref=e278]: 表单分组（4 个分组，从上到下依次为）：
+      - table [ref=e279]:
+        - rowgroup [ref=e280]:
+          - row "分组 说明" [ref=e281]:
+            - columnheader "分组" [ref=e282]
+            - columnheader "说明" [ref=e283]
+          - row "基本信息 练习名称 + 练习开放时间" [ref=e284]:
+            - cell "基本信息" [ref=e285]
+            - cell "练习名称 + 练习开放时间" [ref=e286]
+          - row "选择试卷 试卷选择器 + 试卷结构信息条" [ref=e287]:
+            - cell "选择试卷" [ref=e288]
+            - cell "试卷选择器 + 试卷结构信息条" [ref=e289]
+          - row "练习题目数量 题目总数 + 各题型数量，未选择试卷前全部禁用" [ref=e290]:
+            - cell "练习题目数量" [ref=e291]
+            - cell "题目总数 + 各题型数量，未选择试卷前全部禁用" [ref=e292]
+          - row "练习人员 人员选择器" [ref=e293]:
+            - cell "练习人员" [ref=e294]
+            - cell "人员选择器" [ref=e295]
+      - paragraph [ref=e296]:
+        - strong [ref=e297]: 新增模式 vs 编辑模式 vs 查看模式：
+      - table [ref=e298]:
+        - rowgroup [ref=e299]:
+          - row "对比项 新增模式 编辑模式 查看模式" [ref=e300]:
+            - columnheader "对比项" [ref=e301]
+            - columnheader "新增模式" [ref=e302]
+            - columnheader "编辑模式" [ref=e303]
+            - columnheader "查看模式" [ref=e304]
+          - row "标题 「新增模拟练习」 「编辑模拟练习」 「查看模拟练习」" [ref=e305]:
+            - cell "标题" [ref=e306]
+            - cell "「新增模拟练习」" [ref=e307]
+            - cell "「编辑模拟练习」" [ref=e308]
+            - cell "「查看模拟练习」" [ref=e309]
+          - row "练习名称 可编辑 草稿可编辑 只读（禁用）" [ref=e310]:
+            - cell "练习名称" [ref=e311]
+            - cell "可编辑" [ref=e312]
+            - cell "草稿可编辑" [ref=e313]
+            - cell "只读（禁用）" [ref=e314]
+          - row "试卷选择 可点击打开选择器 草稿可编辑 只读（触发器隐藏）" [ref=e315]:
+            - cell "试卷选择" [ref=e316]
+            - cell "可点击打开选择器" [ref=e317]
+            - cell "草稿可编辑" [ref=e318]
+            - cell "只读（触发器隐藏）" [ref=e319]
+          - row "题目数量 选试卷后可编辑 草稿可编辑 只读（禁用）" [ref=e320]:
+            - cell "题目数量" [ref=e321]
+            - cell "选试卷后可编辑" [ref=e322]
+            - cell "草稿可编辑" [ref=e323]
+            - cell "只读（禁用）" [ref=e324]
+          - row "开始时间 可编辑 草稿可编辑 只读（禁用）" [ref=e325]:
+            - cell "开始时间" [ref=e326]
+            - cell "可编辑" [ref=e327]
+            - cell "草稿可编辑" [ref=e328]
+            - cell "只读（禁用）" [ref=e329]
+          - row "结束时间 可编辑 草稿可编辑 只读（禁用）" [ref=e330]:
+            - cell "结束时间" [ref=e331]
+            - cell "可编辑" [ref=e332]
+            - cell "草稿可编辑" [ref=e333]
+            - cell "只读（禁用）" [ref=e334]
+          - row "初始数据 全部默认值（空） 回填已有数据 回填已有数据" [ref=e335]:
+            - cell "初始数据" [ref=e336]
+            - cell "全部默认值（空）" [ref=e337]
+            - cell "回填已有数据" [ref=e338]
+            - cell "回填已有数据" [ref=e339]
+      - heading "3.3.1 表单字段" [level=4] [ref=e340]
+      - table [ref=e341]:
+        - rowgroup [ref=e342]:
+          - row "字段标签 控件类型 必填 默认值（新增） 校验规则 交互说明" [ref=e343]:
+            - columnheader "字段标签" [ref=e344]
+            - columnheader "控件类型" [ref=e345]
+            - columnheader "必填" [ref=e346]
+            - columnheader "默认值（新增）" [ref=e347]
+            - columnheader "校验规则" [ref=e348]
+            - columnheader "交互说明" [ref=e349]
+          - row "练习名称 文本输入框 ✓ 空 ≤20 字 实时显示字数计数 0/20" [ref=e350]:
+            - cell "练习名称" [ref=e351]
+            - cell "文本输入框" [ref=e352]
+            - cell "✓" [ref=e353]
+            - cell "空" [ref=e354]
+            - cell "≤20 字" [ref=e355]
+            - cell "实时显示字数计数 0/20" [ref=e356]
+          - row "练习开放时间 两个日期时间输入框 ✓ 空 结束>开始；新增时开始>当前时间 格式 年-月-日 时:分；开始时间 至 结束时间；右侧提示「员工可以在练习开放时间内进行练习」" [ref=e357]:
+            - cell "练习开放时间" [ref=e358]
+            - cell "两个日期时间输入框" [ref=e359]
+            - cell "✓" [ref=e360]
+            - cell "空" [ref=e361]
+            - cell "结束>开始；新增时开始>当前时间" [ref=e362]
+            - cell "格式 年-月-日 时:分；开始时间 至 结束时间；右侧提示「员工可以在练习开放时间内进行练习」" [ref=e363]
+          - row "选择试卷 只读输入框 + 触发器 ✓ 空 必选 点击打开系统试卷选择弹窗（单选）；选中后展示试卷结构信息条；草稿状态可选可改，已发布后置灰不可点击" [ref=e364]:
+            - cell "选择试卷" [ref=e365]
+            - cell "只读输入框 + 触发器" [ref=e366]
+            - cell "✓" [ref=e367]
+            - cell "空" [ref=e368]
+            - cell "必选" [ref=e369]
+            - cell "点击打开系统试卷选择弹窗（单选）；选中后展示试卷结构信息条；草稿状态可选可改，已发布后置灰不可点击" [ref=e370]
+          - row "练习题目总数 数字输入框 ✓ 空（禁用状态） >0 且 ≤ 试卷题目总数 带单位「道」；选择试卷后自动启用；占位文本显示「请先选择试卷」" [ref=e371]:
+            - cell "练习题目总数" [ref=e372]
+            - cell "数字输入框" [ref=e373]
+            - cell "✓" [ref=e374]
+            - cell "空（禁用状态）" [ref=e375]
+            - cell ">0 且 ≤ 试卷题目总数" [ref=e376]
+            - cell "带单位「道」；选择试卷后自动启用；占位文本显示「请先选择试卷」" [ref=e377]
+          - row "各题型数量 复选框 + 数字输入（3 行） ✓ 空（禁用状态） 至少选一种题型；各题型之和 = 总数；各题型 ≤ 试卷对应类型上限 选择试卷后自动启用；每行带提示文字「仅支持输入小于等于「题目总数」的数字。」；底部实时显示汇总 (N / 总题数)" [ref=e378]:
+            - cell "各题型数量" [ref=e379]
+            - cell "复选框 + 数字输入（3 行）" [ref=e380]
+            - cell "✓" [ref=e381]
+            - cell "空（禁用状态）" [ref=e382]
+            - cell "至少选一种题型；各题型之和 = 总数；各题型 ≤ 试卷对应类型上限" [ref=e383]
+            - cell "选择试卷后自动启用；每行带提示文字「仅支持输入小于等于「题目总数」的数字。」；底部实时显示汇总 (N / 总题数)" [ref=e384]
+          - row "练习人员 人员选择弹窗（多选） ✓ — 须至少添加一个人员或部门 点击打开系统人员选择弹窗（多选，支持按姓名/部门搜索），分为「人员」和「部门范围」两个页签；已选人员/部门以标签展示，按指定用户和部门范围分组，标签可逐个 × 移除，支持「全部移除」" [ref=e385]:
+            - cell "练习人员" [ref=e386]
+            - cell "人员选择弹窗（多选）" [ref=e387]
+            - cell "✓" [ref=e388]
+            - cell "—" [ref=e389]
+            - cell "须至少添加一个人员或部门" [ref=e390]
+            - cell "点击打开系统人员选择弹窗（多选，支持按姓名/部门搜索），分为「人员」和「部门范围」两个页签；已选人员/部门以标签展示，按指定用户和部门范围分组，标签可逐个 × 移除，支持「全部移除」" [ref=e391]
+      - heading "3.3.2 底部按钮" [level=4] [ref=e392]
+      - paragraph [ref=e393]:
+        - strong [ref=e394]: 新增模式 / 草稿编辑模式：
+      - table [ref=e395]:
+        - rowgroup [ref=e396]:
+          - row "按钮 行为" [ref=e397]:
+            - columnheader "按钮" [ref=e398]
+            - columnheader "行为" [ref=e399]
+          - row "返回 返回左侧列表，不保存任何修改" [ref=e400]:
+            - cell "返回" [ref=e401]
+            - cell "返回左侧列表，不保存任何修改" [ref=e402]
+          - row "保存 校验通过后保存，新增状态为未发布（草稿），编辑草稿保持草稿状态；提示「新增成功」/「修改成功」" [ref=e403]:
+            - cell "保存" [ref=e404]
+            - cell "校验通过后保存，新增状态为未发布（草稿），编辑草稿保持草稿状态；提示「新增成功」/「修改成功」" [ref=e405]
+      - paragraph [ref=e406]:
+        - strong [ref=e407]: 查看模式：
+      - table [ref=e408]:
+        - rowgroup [ref=e409]:
+          - row "按钮 行为" [ref=e410]:
+            - columnheader "按钮" [ref=e411]
+            - columnheader "行为" [ref=e412]
+          - row "返回 返回左侧列表，不修改任何数据" [ref=e413]:
+            - cell "返回" [ref=e414]
+            - cell "返回左侧列表，不修改任何数据" [ref=e415]
+      - paragraph [ref=e416]:
+        - strong [ref=e417]: 编辑模式保存规则：
+        - text: 「保存」保持原发布状态不变（草稿仍为草稿）。发布操作统一在列表行中点击「发布」完成。
+      - heading "3.3.3 表单校验规则（依次执行）" [level=4] [ref=e418]
+      - paragraph [ref=e419]: 校验不通过时通过提示对应错误文案，不关闭弹窗：
+      - list [ref=e420]:
+        - listitem [ref=e421]: 练习名称必填 →「请输入练习名称」
+        - listitem [ref=e422]: 试卷必选 →「请选择试卷」
+        - listitem [ref=e423]: 练习开放时间必须完整填写 →「请填写完整的练习开放时间」
+        - listitem [ref=e424]: 结束时间 > 开始时间 →「结束时间必须大于开始时间」
+        - listitem [ref=e425]: 新增时开始时间 > 当前时间 →「开始时间必须大于当前时间」（编辑时若已开始的练习不可修改开始时间）
+        - listitem [ref=e426]: 题目总数 > 0 →「请输入有效的题目总数」
+        - listitem [ref=e427]: 总数 ≤ 试卷题目总数 →「题目总数不能超过试卷题目总数（N 道）」
+        - listitem [ref=e428]: 至少选一种题型 →「请至少选择一种题目类型」
+        - listitem [ref=e429]: 各题型之和 = 总数 →「各题型数量之和需等于题目总数」
+        - listitem [ref=e430]: 各题型数量 ≤ 试卷对应类型上限 →「不能超过试卷单选/多选/判断题数量（N 道）」
+        - listitem [ref=e431]: 练习人员必填，须至少添加一个人员或部门 →「请至少添加一个人员或部门」
+      - heading "4. 交互设计" [level=2] [ref=e432]
+      - heading "4.1 页面加载交互" [level=3] [ref=e433]
+      - list [ref=e434]:
+        - listitem [ref=e435]: 首次进入「模拟练习」Tab 时自动加载列表数据
+        - listitem [ref=e436]: 与「专业题目练习」Tab 之间切换不重新请求数据（前端 Tab 切换）
+      - heading "4.2 列表交互" [level=3] [ref=e437]
+      - list [ref=e438]:
+        - listitem [ref=e439]: 行操作即时生效：发布/编辑/删除操作完成后立即刷新列表
+      - heading "4.3 弹窗交互" [level=3] [ref=e440]
+      - list [ref=e441]:
+        - listitem [ref=e442]: 弹窗采用右侧表单页形式，打开时左侧列表隐藏，左上角返回箭头切换回列表
+        - listitem [ref=e443]: 关闭弹窗仅通过：点击左上角返回箭头 / 点击底部「返回」按钮、保存成功后自动返回列表
+        - listitem [ref=e444]:
+          - text: 编辑模式打开时：
+          - list [ref=e445]:
+            - listitem [ref=e446]: 草稿状态：全部字段可编辑，底部显示「返回」「保存」两个按钮；发布统一由列表行「发布」操作完成
+            - listitem [ref=e447]: 已发布状态（未开始/进行中/已结束）：不显示编辑入口
+        - listitem [ref=e448]: 题型复选框勾选/取消勾选实时更新底部汇总显示
+      - heading "4.4 操作反馈" [level=3] [ref=e449]
+      - list [ref=e450]:
+        - listitem [ref=e451]: 操作成功：提示，3 秒后自动消失
+        - listitem [ref=e452]: 操作失败/校验不通过：提示
+        - listitem [ref=e453]: 删除：弹出浏览器原生确认弹窗
+      - heading "5. 异常处理" [level=2] [ref=e454]
+      - table [ref=e455]:
+        - rowgroup [ref=e456]:
+          - row "异常场景 处理方式" [ref=e457]:
+            - columnheader "异常场景" [ref=e458]
+            - columnheader "处理方式" [ref=e459]
+          - row "数据加载失败 列表显示「暂无数据」" [ref=e460]:
+            - cell "数据加载失败" [ref=e461]
+            - cell "列表显示「暂无数据」" [ref=e462]
+          - row "表单校验失败 提示具体错误信息，保留弹窗和已填内容" [ref=e463]:
+            - cell "表单校验失败" [ref=e464]
+            - cell "提示具体错误信息，保留弹窗和已填内容" [ref=e465]
+          - row "网络异常 操作静默失败（当前为前端模拟数据）" [ref=e466]:
+            - cell "网络异常" [ref=e467]
+            - cell "操作静默失败（当前为前端模拟数据）" [ref=e468]
+          - row "无数据 列表区域显示「暂无数据」" [ref=e469]:
+            - cell "无数据" [ref=e470]
+            - cell "列表区域显示「暂无数据」" [ref=e471]
+      - heading "6. 数据模型" [level=2] [ref=e472]
+      - heading "6.1 模拟练习配置数据结构" [level=3] [ref=e473]
+      - table [ref=e474]:
+        - rowgroup [ref=e475]:
+          - row "数据字段 类型 说明" [ref=e476]:
+            - columnheader "数据字段" [ref=e477]
+            - columnheader "类型" [ref=e478]
+            - columnheader "说明" [ref=e479]
+          - row "唯一标识 数字 唯一标识" [ref=e480]:
+            - cell "唯一标识" [ref=e481]
+            - cell "数字" [ref=e482]
+            - cell "唯一标识" [ref=e483]
+          - row "练习名称 文本 练习名称，≤20 字" [ref=e484]:
+            - cell "练习名称" [ref=e485]
+            - cell "文本" [ref=e486]
+            - cell "练习名称，≤20 字" [ref=e487]
+          - row "关联试卷名称 文本 关联试卷名称" [ref=e488]:
+            - cell "关联试卷名称" [ref=e489]
+            - cell "文本" [ref=e490]
+            - cell "关联试卷名称" [ref=e491]
+          - row "关联试卷ID 文本 关联试卷 ID" [ref=e492]:
+            - cell "关联试卷ID" [ref=e493]
+            - cell "文本" [ref=e494]
+            - cell "关联试卷 ID" [ref=e495]
+          - row "题目总数 数字 练习题目总数" [ref=e496]:
+            - cell "题目总数" [ref=e497]
+            - cell "数字" [ref=e498]
+            - cell "练习题目总数" [ref=e499]
+          - row "题型数量 对象 题型数量（单选、多选、判断）" [ref=e500]:
+            - cell "题型数量" [ref=e501]
+            - cell "对象" [ref=e502]
+            - cell "题型数量（单选、多选、判断）" [ref=e503]
+          - row "开始时间 文本 练习开放开始时间（年-月-日 时:分）" [ref=e504]:
+            - cell "开始时间" [ref=e505]
+            - cell "文本" [ref=e506]
+            - cell "练习开放开始时间（年-月-日 时:分）" [ref=e507]
+          - row "结束时间 文本 练习开放结束时间（年-月-日 时:分）" [ref=e508]:
+            - cell "结束时间" [ref=e509]
+            - cell "文本" [ref=e510]
+            - cell "练习开放结束时间（年-月-日 时:分）" [ref=e511]
+          - row "人员列表 数组 选定参与练习的人员列表（含标识、姓名、部门）" [ref=e512]:
+            - cell "人员列表" [ref=e513]
+            - cell "数组" [ref=e514]
+            - cell "选定参与练习的人员列表（含标识、姓名、部门）" [ref=e515]
+          - row "原始选择范围 数组 原始选择范围" [ref=e516]:
+            - cell "原始选择范围" [ref=e517]
+            - cell "数组" [ref=e518]
+            - cell "原始选择范围" [ref=e519]
+          - row "创建人 文本 创建人姓名" [ref=e520]:
+            - cell "创建人" [ref=e521]
+            - cell "文本" [ref=e522]
+            - cell "创建人姓名" [ref=e523]
+          - row "创建时间 文本 创建时间（年-月-日 时:分:秒）" [ref=e524]:
+            - cell "创建时间" [ref=e525]
+            - cell "文本" [ref=e526]
+            - cell "创建时间（年-月-日 时:分:秒）" [ref=e527]
+          - row "是否已发布 布尔 是否已发布" [ref=e528]:
+            - cell "是否已发布" [ref=e529]
+            - cell "布尔" [ref=e530]
+            - cell "是否已发布" [ref=e531]
+      - heading "6.2 状态判定" [level=3] [ref=e532]
+      - paragraph [ref=e533]: 状态由是否已发布和练习开放时间共同决定：
+      - table [ref=e534]:
+        - rowgroup [ref=e535]:
+          - row "条件 状态值 标签" [ref=e536]:
+            - columnheader "条件" [ref=e537]
+            - columnheader "状态值" [ref=e538]
+            - columnheader "标签" [ref=e539]
+          - row "未发布 草稿 草稿" [ref=e540]:
+            - cell "未发布" [ref=e541]
+            - cell "草稿" [ref=e542]
+            - cell "草稿" [ref=e543]
+          - row "已发布 且 当前时间 < 开始时间 未开始 未开始" [ref=e544]:
+            - cell "已发布 且 当前时间 < 开始时间" [ref=e545]
+            - cell "未开始" [ref=e546]
+            - cell "未开始" [ref=e547]
+          - row "已发布 且 开始时间 ≤ 当前时间 ≤ 结束时间 进行中 进行中" [ref=e548]:
+            - cell "已发布 且 开始时间 ≤ 当前时间 ≤ 结束时间" [ref=e549]
+            - cell "进行中" [ref=e550]
+            - cell "进行中" [ref=e551]
+          - row "已发布 且 当前时间 > 结束时间 已结束 已结束" [ref=e552]:
+            - cell "已发布 且 当前时间 > 结束时间" [ref=e553]
+            - cell "已结束" [ref=e554]
+            - cell "已结束" [ref=e555]
+      - heading "7. 关联文档" [level=2] [ref=e556]
+      - list [ref=e557]:
+        - listitem [ref=e558]:
+          - link "练习功能整体 PRD" [ref=e559] [cursor=pointer]:
+            - /url: ./练习功能整体PRD.md
+          - text: – 包含名词解释、业务流程图、用例图等全局内容
+        - listitem [ref=e560]: 练习设置页面实现 – 页面 HTML 实现文件

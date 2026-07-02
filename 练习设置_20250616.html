@@ -1796,7 +1796,7 @@
                   <h1>模拟练习</h1>
                   <p class="panel-desc">模拟练习支持灵活划定题目范围，进行针对性强化训练，适用于考前冲刺与阶段性能力评估。</p>
                   <span class="annotation-wrapper" style="position:absolute;top:8px;right:24px;">
-                    <span class="prd-annotation" data-badge-id="2" data-title="[2] 模拟练习列表" data-content="<p><strong>功能概述：</strong>以列表+弹窗表单方式管理多条模拟练习配置，支持新增/编辑/删除/发布。</p><p><strong>列表字段（6列）：</strong></p><ul><li><strong>练习名称：</strong>管理员自定义名称，≤20字，单行展示</li><li><strong>开始时间：</strong>练习开放开始时间</li><li><strong>结束时间：</strong>练习开放结束时间</li><li><strong>状态：</strong>草稿/未开始/进行中/已结束</li><li><strong>创建人：</strong>创建该练习的管理员姓名</li><li><strong>创建时间：</strong>创建时间（倒序排列）</li></ul><p><strong>行操作：</strong>草稿→发布+编辑+删除；未开始→-；进行中→-；已结束→-</p><p><strong>空列表：</strong>显示「暂无数据」</p>">2</span>
+                    <span class="prd-annotation" data-badge-id="2" data-title="[2] 模拟练习列表" data-content="<p><strong>功能概述：</strong>以列表+弹窗表单方式管理多条模拟练习配置，支持新增/编辑/删除/发布。</p><p><strong>列表字段（6列）：</strong></p><ul><li><strong>练习名称：</strong>管理员自定义名称，≤20字，单行展示</li><li><strong>开始时间：</strong>练习开放开始时间</li><li><strong>结束时间：</strong>练习开放结束时间</li><li><strong>状态：</strong>草稿/未开始/进行中/已结束</li><li><strong>创建人：</strong>创建该练习的管理员姓名</li><li><strong>创建时间：</strong>创建时间（倒序排列）</li></ul><p><strong>行操作：</strong>全部状态→详情；草稿→详情+发布+编辑+删除；未开始→详情；进行中→详情；已结束→详情</p><p><strong>空列表：</strong>显示「暂无数据」</p>">2</span>
                   </span>
                 </div>
                 <div class="toolbar" style="position:relative;">
@@ -2774,7 +2774,7 @@
         { id: 1, name: '2026年安全知识练习', paper: '2026年安全知识试卷A', paperId: 'paper1', total: 300, types: { single: 100, multi: 100, judge: 100 }, creator: '庞刚', createTime: '2026-06-15 09:30:00', openTimeStart: '2026-06-10 08:00', openTimeEnd: '2026-07-10 20:00', persons: [], selectedRanges: [], isPublished: true },
         { id: 2, name: '2026年消防知识练习', paper: '2026年消防知识试卷', paperId: 'paper3', total: 200, types: { single: 80, multi: 60, judge: 60 }, creator: '李明明', createTime: '2026-06-18 14:22:00', openTimeStart: '2026-08-01 09:00', openTimeEnd: '2026-09-01 18:00', persons: [{ id: 'p1', name: '庞刚', dept: '安全管理部' }, { id: 'p3', name: '张伟', dept: '生产运营部' }], selectedRanges: [{ type: 'person', id: 'p1', name: '庞刚', dept: '安全管理部' }, { type: 'person', id: 'p3', name: '张伟', dept: '生产运营部' }], isPublished: true },
         { id: 3, name: '安全基础知识考核', paper: '2026年安全知识试卷B', paperId: 'paper2', total: 150, types: { single: 50, multi: 50, judge: 50 }, creator: '庞刚', createTime: '2026-05-20 10:15:00', openTimeStart: '2026-05-01 10:00', openTimeEnd: '2026-05-31 10:00', persons: [], selectedRanges: [], isPublished: true },
-        { id: 4, name: '2026年安全生产月练习', paper: '2026年安全知识试卷C', paperId: 'paper4', total: 200, types: { single: 80, multi: 60, judge: 60 }, creator: '张伟', createTime: '2026-06-25 16:00:00', openTimeStart: '2026-07-01 09:00', openTimeEnd: '2026-09-01 18:00', persons: [], isPublished: false }
+        { id: 4, name: '2026年安全生产月练习', paper: '2026年安全知识试卷C', paperId: 'paper4', total: 200, types: { single: 80, multi: 60, judge: 60 }, creator: '张伟', createTime: '2026-06-25 16:00:00', openTimeStart: '2026-07-01 09:00', openTimeEnd: '2026-09-01 18:00', persons: [], selectedRanges: [], isPublished: false }
       ];
       var examNextId = 5;
       var editingExamId = null;
@@ -2807,7 +2807,7 @@
           var st = window.getExamStatus(item);
           var startTime = item.openTimeStart || '-';
           var endTime = item.openTimeEnd || '-';
-          // 操作按钮：草稿→发布+编辑+删除；未开始/进行中/已结束→-
+          // 操作按钮：所有状态→详情；草稿→发布+编辑+删除
           var actionBtn = '';
           if (st.status === 'draft') {
             actionBtn = '<button class="action-link" style="color:#52C41A;" onclick="publishExamPractice(' + item.id + ')">发布</button>';
@@ -2817,7 +2817,8 @@
             editDeleteBtns = '<button class="action-link" onclick="editExamPractice(' + item.id + ')">编辑</button>' +
             '<button class="action-link danger" onclick="deleteExamPractice(' + item.id + ')">删除</button>';
           }
-          // 已结束/进行中/未开始：不显示任何操作按钮
+          // 全部状态均显示详情按钮
+          var detailBtn = '<button class="action-link" style="color:#307FE2;" onclick="viewExamPractice(' + item.id + ')">详情</button>';
           return '<tr>' +
             '<td>' + item.name + '</td>' +
             '<td style="white-space:nowrap;">' + startTime + '</td>' +
@@ -2826,6 +2827,7 @@
             '<td>' + item.creator + '</td>' +
             '<td>' + item.createTime + '</td>' +
             '<td><div class="table-actions">' +
+            detailBtn +
             actionBtn +
             editDeleteBtns +
             '</div></td>' +
@@ -2965,7 +2967,7 @@
             '</ul>'
           );
           badge.textContent = '7';
-        } else {
+        } else if (mode === 'add') {
           badge.setAttribute('data-badge-id', '6');
           badge.setAttribute('data-title', '[6] 新增模拟练习弹窗');
           badge.setAttribute('data-content',
@@ -3008,6 +3010,36 @@
             '</ul>'
           );
           badge.textContent = '6';
+        } else if (mode === 'view') {
+          badge.setAttribute('data-badge-id', '14');
+          badge.setAttribute('data-title', '[14] 查看模拟练习详情');
+          badge.setAttribute('data-content',
+            '<h3 style="margin:0 0 8px;font-size:13px;color:#307FE2;">一、查看详情模式</h3>' +
+            '<p style="font-size:11px;">所有状态的练习均提供「详情」按钮，点击后进入只读表单页。</p>' +
+            '<h3 style="margin:10px 0 6px;font-size:13px;color:#307FE2;">二、只读规则</h3>' +
+            '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
+            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">表单区域</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">只读行为</th></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">输入框禁用，展示已填名称</td></tr>' +
+            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习开放时间</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">日期时间输入框禁用，展示已设时间</td></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">选择试卷</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">触发器和箭头隐藏，显示试卷名称和信息条，不可点击</td></tr>' +
+            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习题目数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">总数和各题型数量禁用，勾选框不可操作</td></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">「添加人员」按钮隐藏，已选人员/部门回显为标签展示，不可移除</td></tr>' +
+            '</table>' +
+            '<h3 style="margin:10px 0 6px;font-size:13px;color:#307FE2;">三、底部按钮</h3>' +
+            '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
+            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">按钮</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">行为</th></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">返回</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">返回列表，不修改任何数据</td></tr>' +
+            '</table>' +
+            '<h3 style="margin:10px 0 6px;font-size:13px;color:#307FE2;">四、详情入口</h3>' +
+            '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
+            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">练习状态</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">操作列显示</th></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">草稿</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">详情 + 发布 + 编辑 + 删除</td></tr>' +
+            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">未开始</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">详情</td></tr>' +
+            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">进行中</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">详情</td></tr>' +
+            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">已结束</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">详情</td></tr>' +
+            '</table>'
+          );
+          badge.textContent = '14';
         }
       };
 
@@ -3016,6 +3048,15 @@
         editingExamId = null;
         pendingPickerPaperId = '';
         pendingPickerPaperName = '';
+        // 清除只读模式
+        $('#examFormPanel').classList.remove('is-readonly');
+        // 恢复添加人员按钮
+        var addBtn = $('#btnAddPerson');
+        if (addBtn) addBtn.style.display = '';
+        // 恢复题型勾选可点击
+        document.querySelectorAll('.type-checkbox[data-etype]').forEach(function(cb) {
+          cb.style.pointerEvents = '';
+        });
         $('#examModalTitle').textContent = '新增模拟练习';
         $('#examNameInput').value = '';
         $('#examNameInput').disabled = false;
@@ -3064,14 +3105,27 @@
       // 返回列表
       window.closeExamModal = function() {
         $('#examFormPanel').classList.remove('active');
+        $('#examFormPanel').classList.remove('is-readonly');
         $('#examListPanel').classList.remove('hidden');
+        // 恢复添加人员按钮
+        var addBtn = $('#btnAddPerson');
+        if (addBtn) addBtn.style.display = '';
+        // 恢复题型勾选可点击
+        document.querySelectorAll('.type-checkbox[data-etype]').forEach(function(cb) {
+          cb.style.pointerEvents = '';
+        });
         editingExamId = null;
       };
 
-      // 根据练习状态切换底部按钮（仅草稿可编辑，始终显示返回+保存）
+      // 根据练习状态切换底部按钮
       window.setExamFooterForStatus = function(status) {
-        // 所有可编辑状态都显示保存按钮（目前只有新增和草稿可编辑）
-        $('#btnExamSaveDraft').style.display = '';
+        if (status === 'readonly') {
+          // 只读模式：隐藏保存按钮
+          $('#btnExamSaveDraft').style.display = 'none';
+        } else {
+          // 可编辑状态：显示保存按钮
+          $('#btnExamSaveDraft').style.display = '';
+        }
       };
 
       // 编辑
@@ -3081,6 +3135,15 @@
         var st = window.getExamStatus(item);
         // 本次需求：仅草稿状态可编辑，已发布状态不显示编辑入口
         if (st.status !== 'draft') return;
+        // 清除只读模式
+        $('#examFormPanel').classList.remove('is-readonly');
+        // 恢复添加人员按钮
+        var addBtn = $('#btnAddPerson');
+        if (addBtn) addBtn.style.display = '';
+        // 恢复题型勾选可点击
+        document.querySelectorAll('.type-checkbox[data-etype]').forEach(function(cb) {
+          cb.style.pointerEvents = '';
+        });
         editingExamId = id;
         pendingPickerPaperId = item.paperId;
         pendingPickerPaperName = item.paper;
@@ -3153,6 +3216,78 @@
         window.updateExamModalBadge('edit');
         // 底部按钮：草稿显示返回+保存
         window.setExamFooterForStatus(st.status);
+        $('#examListPanel').classList.add('hidden');
+        $('#examFormPanel').classList.add('active');
+      };
+
+      // 查看详情（只读模式）
+      window.viewExamPractice = function(id) {
+        var item = examPracticeData.find(function(d) { return d.id === id; });
+        if (!item) return;
+        $('#examModalTitle').textContent = '查看模拟练习';
+        // 基本信息 —— 只读
+        $('#examNameInput').value = item.name;
+        $('#examNameInput').disabled = true;
+        // 试卷 —— 只读
+        $('#examPaperSelect').value = item.paperId;
+        $('#examPaperDisplay').value = item.paper;
+        window.updatePaperInfoBar(item.paperId);
+        var trigger = $('#paperTrigger');
+        var display = $('#examPaperDisplay');
+        var arrow = $('#paperArrow');
+        if (trigger) { trigger.onclick = null; trigger.style.cursor = 'default'; }
+        if (display) { display.style.cursor = 'default'; display.style.background = '#F7F8F9'; display.readOnly = true; }
+        if (arrow) arrow.style.display = 'none';
+        // 题目数量 —— 只读
+        $('#examTotalInput').value = item.total;
+        $('#examTotalInput').disabled = true;
+        $('#examSingleInput').value = item.types.single || 0;
+        $('#examSingleInput').disabled = true;
+        $('#examMultiInput').value = item.types.multi || 0;
+        $('#examMultiInput').disabled = true;
+        $('#examJudgeInput').value = item.types.judge || 0;
+        $('#examJudgeInput').disabled = true;
+        document.querySelectorAll('.type-checkbox[data-etype]').forEach(function(cb) {
+          var etype = cb.dataset.etype;
+          var row = cb.closest('.modal-type-row');
+          if (item.types[etype] !== undefined && item.types[etype] > 0) {
+            cb.classList.add('checked');
+            if (row) row.classList.remove('disabled');
+          } else {
+            cb.classList.remove('checked');
+            if (row) row.classList.add('disabled');
+          }
+          cb.style.pointerEvents = 'none';
+        });
+        window.updateExamTypeTotal();
+        // 人员 —— 只读回显
+        selectedItems = (item.selectedRanges && item.selectedRanges.length > 0)
+          ? JSON.parse(JSON.stringify(item.selectedRanges))
+          : (item.persons || []).map(function(p) { return { type: 'person', id: p.id, name: p.name, dept: p.dept || '' }; });
+        window.renderPersonList();
+        // 隐藏添加人员按钮
+        var addBtn = $('#btnAddPerson');
+        if (addBtn) addBtn.style.display = 'none';
+        // 练习开放时间 —— 只读
+        var startInput = $('#examOpenTimeStartInput');
+        var endInput = $('#examOpenTimeEndInput');
+        if (item.openTimeStart) {
+          startInput.value = item.openTimeStart.replace(' ', 'T');
+        } else {
+          startInput.value = '';
+        }
+        startInput.disabled = true;
+        if (item.openTimeEnd) {
+          endInput.value = item.openTimeEnd.replace(' ', 'T');
+        } else {
+          endInput.value = '';
+        }
+        endInput.disabled = true;
+        // 设置只读模式样式
+        $('#examFormPanel').classList.add('is-readonly');
+        window.updateExamModalBadge('view');
+        // 底部按钮：仅显示返回
+        window.setExamFooterForStatus('readonly');
         $('#examListPanel').classList.add('hidden');
         $('#examFormPanel').classList.add('active');
       };
@@ -3395,9 +3530,10 @@
       <table>
         <tr><th>模块</th><th>功能</th><th>功能描述</th></tr>
         <tr><td>列表区</td><td>模拟练习列表</td><td>以表格形式展示所有模拟练习配置（名称、时间、状态、创建人、创建时间），支持按创建时间倒序排列</td></tr>
-        <tr><td>操作区</td><td>行操作</td><td>根据状态显示不同操作：草稿→发布+编辑+删除；未开始/进行中/已结束→-</td></tr>
+        <tr><td>操作区</td><td>行操作</td><td>根据状态显示不同操作：全部状态→详情；草稿→详情+发布+编辑+删除；未开始/进行中/已结束→详情</td></tr>
         <tr><td>弹窗</td><td>新增练习</td><td>弹窗表单（4个分组），录入练习配置，仅支持保存为草稿</td></tr>
-        <tr><td>弹窗</td><td>编辑练习</td><td>回填已有数据。草稿：全部字段可编辑，底部「返回+保存」；已发布状态（未开始/进行中/已结束）不提供编辑入口</td></tr>
+        <tr><td>弹窗</td><td>编辑练习</td><td>回填已有数据。草稿：全部字段可编辑（含人员范围回显），底部「返回+保存」；已发布状态（未开始/进行中/已结束）不提供编辑入口</td></tr>
+        <tr><td>弹窗</td><td>查看详情</td><td>所有状态均显示「详情」按钮，打开只读表单页（全部字段禁用、不可编辑），底部仅显示「返回」</td></tr>
         <tr><td>选择器</td><td>试卷选择弹窗</td><td>已有组件，系统试卷单选</td></tr>
         <tr><td>选择器</td><td>人员选择弹窗</td><td>已有组件，按姓名/部门多选参与练习的人员或部门</td></tr>
       </table>
@@ -3429,10 +3565,10 @@
 |  │                │ │  ┌──────────┬──────────┬──────────┬──────┬──────┬──────┬──────┐ │
 |  │                │ │  │ 练习名称  │ 开始时间  │ 结束时间  │ 状态  │创建人│创建时间│ 操作  │ │
 |  │                │ │  ├──────────┼──────────┼──────────┼──────┼──────┼──────┼──────┤ │
-|  │                │ │  │ ...      │ ...      │ ...      │ 草稿  │ ...  │ ...  │发布/编辑/删除│
-|  │                │ │  │ ...      │ ...      │ ...      │未开始 │ ...  │ ...  │    -      │ │
-|  │                │ │  │ ...      │ ...      │ ...      │进行中 │ ...  │ ...  │    -      │ │
-|  │                │ │  │ ...      │ ...      │ ...      │已结束 │ ...  │ ...  │    -      │ │
+|  │                │ │  │ ...      │ ...      │ ...      │ 草稿  │ ...  │ ...  │详情/发布/编辑/删除│
+|  │                │ │  │ ...      │ ...      │ ...      │未开始 │ ...  │ ...  │   详情     │ │
+|  │                │ │  │ ...      │ ...      │ ...      │进行中 │ ...  │ ...  │   详情     │ │
+|  │                │ │  │ ...      │ ...      │ ...      │已结束 │ ...  │ ...  │   详情     │ │
 |  │                │ │  └──────────┴──────────┴──────────┴──────┴──────┴──────┴──────┘ │
 |  │                │ │                                                          │  |
 |  └────────────────┘ └──────────────────────────────────────────────────────────┘  |
@@ -3490,11 +3626,18 @@
       <p>根据练习状态，每行末尾显示不同操作按钮：</p>
       <table>
         <tr><th>状态</th><th>操作按钮</th><th>说明</th></tr>
-        <tr><td>草稿</td><td>发布 + 编辑 + 删除</td><td>可发布、编辑、删除</td></tr>
-        <tr><td>未开始</td><td>-</td><td>不可操作</td></tr>
-        <tr><td>进行中</td><td>-</td><td>不可操作</td></tr>
-        <tr><td>已结束</td><td>-</td><td>不可操作</td></tr>
+        <tr><td>草稿</td><td>详情 + 发布 + 编辑 + 删除</td><td>可查看详情、发布、编辑、删除</td></tr>
+        <tr><td>未开始</td><td>详情</td><td>可查看详情（只读）</td></tr>
+        <tr><td>进行中</td><td>详情</td><td>可查看详情（只读）</td></tr>
+        <tr><td>已结束</td><td>详情</td><td>可查看详情（只读）</td></tr>
       </table>
+
+      <h4>3.2.0 查看详情</h4>
+      <ul>
+        <li><strong>显示条件：</strong>全部状态均显示</li>
+        <li><strong>行为：</strong>右侧打开「查看模拟练习」只读表单页，回填全部已有数据，所有字段禁用不可编辑，试卷选择触发器隐藏</li>
+        <li><strong>底部按钮：</strong>仅显示「返回」</li>
+      </ul>
 
       <h4>3.2.1 发布</h4>
       <ul>
@@ -3513,9 +3656,10 @@
       <h4>3.2.2 编辑</h4>
       <ul>
         <li><strong>显示条件：</strong>仅草稿状态显示编辑；已发布状态（未开始/进行中/已结束）均不显示编辑</li>
-        <li><strong>行为：</strong>打开右侧表单页，回填全部已有数据
+        <li><strong>行为：</strong>打开右侧表单页，回填全部已有数据（包括练习名称、试卷、题目数量、练习开放时间、人员范围）
           <ul>
             <li><strong>草稿状态：</strong>全部字段可编辑，试卷可选，底部「返回+保存」</li>
+            <li><strong>人员范围回显：</strong>编辑草稿时，已选人员/部门以标签形式完整回显，按指定用户和部门范围分组展示，支持逐项移除和重新添加</li>
           </ul>
         </li>
       </ul>
@@ -3529,7 +3673,7 @@
         <li><strong>禁用情况：</strong>进行中状态下提示「进行中的练习不可删除」；已结束状态不显示删除入口</li>
       </ul>
 
-      <h3>3.3 新增/编辑弹窗</h3>
+      <h3>3.3 新增/编辑/查看弹窗</h3>
       <p>弹窗以右侧表单页形式展示（替代浮层弹窗），左侧列表隐藏，右侧显示完整表单页，左上角有返回箭头按钮。</p>
       <p><strong>表单分组（4 个分组，从上到下依次为）：</strong></p>
       <table>
@@ -3540,16 +3684,16 @@
         <tr><td>练习人员</td><td>人员选择器</td></tr>
       </table>
 
-      <p><strong>新增模式 vs 编辑模式：</strong></p>
+      <p><strong>新增模式 vs 编辑模式 vs 查看模式：</strong></p>
       <table>
-        <tr><th>对比项</th><th>新增模式</th><th>编辑模式</th></tr>
-        <tr><td>标题</td><td>「新增模拟练习」</td><td>「编辑模拟练习」</td></tr>
-        <tr><td>练习名称</td><td>可编辑</td><td>草稿可编辑</td></tr>
-        <tr><td>试卷选择</td><td>可点击打开选择器</td><td>草稿可编辑</td></tr>
-        <tr><td>题目数量</td><td>选试卷后可编辑</td><td>草稿可编辑</td></tr>
-        <tr><td>开始时间</td><td>可编辑</td><td>草稿可编辑</td></tr>
-        <tr><td>结束时间</td><td>可编辑</td><td>草稿可编辑</td></tr>
-        <tr><td>初始数据</td><td>全部默认值（空）</td><td>回填已有数据</td></tr>
+        <tr><th>对比项</th><th>新增模式</th><th>编辑模式</th><th>查看模式</th></tr>
+        <tr><td>标题</td><td>「新增模拟练习」</td><td>「编辑模拟练习」</td><td>「查看模拟练习」</td></tr>
+        <tr><td>练习名称</td><td>可编辑</td><td>草稿可编辑</td><td>只读（禁用）</td></tr>
+        <tr><td>试卷选择</td><td>可点击打开选择器</td><td>草稿可编辑</td><td>只读（触发器隐藏）</td></tr>
+        <tr><td>题目数量</td><td>选试卷后可编辑</td><td>草稿可编辑</td><td>只读（禁用）</td></tr>
+        <tr><td>开始时间</td><td>可编辑</td><td>草稿可编辑</td><td>只读（禁用）</td></tr>
+        <tr><td>结束时间</td><td>可编辑</td><td>草稿可编辑</td><td>只读（禁用）</td></tr>
+        <tr><td>初始数据</td><td>全部默认值（空）</td><td>回填已有数据</td><td>回填已有数据</td></tr>
       </table>
 
       <h4>3.3.1 表单字段</h4>
@@ -3569,6 +3713,12 @@
         <tr><th>按钮</th><th>行为</th></tr>
         <tr><td>返回</td><td>返回左侧列表，不保存任何修改</td></tr>
         <tr><td>保存</td><td>校验通过后保存，新增状态为未发布（草稿），编辑草稿保持草稿状态；提示「新增成功」/「修改成功」</td></tr>
+      </table>
+
+      <p><strong>查看模式：</strong></p>
+      <table>
+        <tr><th>按钮</th><th>行为</th></tr>
+        <tr><td>返回</td><td>返回左侧列表，不修改任何数据</td></tr>
       </table>
 
       <p><strong>编辑模式保存规则：</strong>「保存」保持原发布状态不变（草稿仍为草稿）。发布操作统一在列表行中点击「发布」完成。</p>
