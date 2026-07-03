@@ -3713,9 +3713,9 @@
       window.closeExamModal = function() {
         // 通知父窗口切换到练习列表页面
         if (window.parent !== window) {
-          window.parent.postMessage({ action: 'nav-to-page', file: '练习设置_20250616.html' }, '*');
+          window.parent.postMessage({ action: 'nav-to-page', file: '练习设置.html' }, '*');
         } else {
-          window.location.href = '练习设置_20250616.html';
+          window.location.href = '练习设置.html';
         }
       };
 
