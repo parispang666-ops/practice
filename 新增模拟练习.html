@@ -1438,6 +1438,16 @@
   .selected-list-pagination .jump-input { width: 48px; height: 28px; border: 1px solid #D9D9D9; border-radius: 4px; text-align: center; }
   .selected-list-back { text-align: center; padding: 24px 0 36px; }
   .selected-list-back .btn-back { height: 36px; padding: 0 26px; border: 1px solid #2F3640; border-radius: 4px; background: #fff; color: #2F3640; font-size: 14px; cursor: pointer; }
+
+  /* ==================== 离职标注 & 一键清理 ==================== */
+  .person-status-left { color: #F54A45; margin-left: 4px; }
+  .person-clean-btn { display: inline-flex; align-items: center; justify-content: center; height: 28px; padding: 0 12px; border: none; border-radius: 4px; background: #2F9BFF; color: #fff; font-size: 12px; cursor: pointer; white-space: nowrap; }
+  .person-clean-btn:hover { background: #1F86EB; }
+  .selected-list-toolbar .clean-departed-btn { display: inline-flex; align-items: center; justify-content: center; height: 28px; padding: 0 12px; border: none; border-radius: 4px; background: #2F9BFF; color: #fff; font-size: 12px; cursor: pointer; }
+  .selected-list-toolbar .clean-departed-btn:hover { background: #1F86EB; }
+  .selected-list-tip { display: none; align-items: center; gap: 8px; margin: 8px auto 0; padding: 6px 12px; border: 1px solid #FFD666; border-radius: 4px; background: #FFFBE6; color: #8C6B00; font-size: 13px; width: fit-content; }
+  .selected-list-tip.show { display: inline-flex; }
+  .selected-list-tip::before { content: '!'; display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border-radius: 50%; background: #FAAD14; color: #fff; font-size: 11px; line-height: 1; }
   .selected-list-back .btn-back:hover { border-color: #307FE2; color: #307FE2; }
 
     /* 人员选择器搜索 */
@@ -2032,6 +2042,7 @@
                               <div>
                                 <span class="person-group-title">人员</span>
                                 <span class="person-group-count" id="personGroupCount">（0个）</span>
+                                <button class="person-clean-btn" type="button" id="personCleanBtn" onclick="cleanDepartedPersons()" style="margin-left:12px;display:none;">一键清理离职人员</button>
                               </div>
                             </div>
                             <div class="person-group-body">
@@ -2223,10 +2234,13 @@
         </div>
       </div>
       <div class="selected-list-toolbar">
-        <button class="batch-delete" onclick="batchDeleteSelectedList()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-          批量删除
-        </button>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <button class="clean-departed-btn" id="selectedListCleanBtn" onclick="cleanDepartedPersonsFromDrawer()" style="display:none;">一键清理离职人员</button>
+          <button class="batch-delete" onclick="batchDeleteSelectedList()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            批量删除
+          </button>
+        </div>
         <span class="selected-info" id="selectedListInfo">已选 0 项</span>
       </div>
       <div class="selected-list-table-wrap">
@@ -2261,6 +2275,7 @@
         <div class="selected-list-empty" id="selectedListEmpty" style="display:none;">
           <div class="selected-list-empty-tip">请选择要批量操作的内容</div>
         </div>
+        <div class="selected-list-tip" id="selectedListCleanTip">已清理0位离职人员</div>
       </div>
       <div class="selected-list-back">
         <button class="btn-back" onclick="closeSelectedList()">返回选择</button>
@@ -2603,32 +2618,32 @@
 
       // 人员数据（unitType: 'own'=本单位 'sub'=下级单位）
       var personList = [
-        { id: 'p1', name: '庞刚', dept: '安全管理部', title: '安全总监', unitType: 'own' },
-        { id: 'p2', name: '李明明', dept: '生产运营部', title: '运营经理', unitType: 'own' },
-        { id: 'p3', name: '张伟', dept: '设备管理部', title: '设备工程师', unitType: 'own' },
-        { id: 'p4', name: '王芳', dept: '人力资源部', title: 'HR经理', unitType: 'own' },
-        { id: 'p5', name: '赵磊', dept: '质量管理部', title: '质量主管', unitType: 'sub' },
-        { id: 'p6', name: '陈静', dept: '安全管理部', title: '安全专员', unitType: 'own' },
-        { id: 'p7', name: '刘洋', dept: '生产运营部', title: '班组长', unitType: 'own' },
-        { id: 'p8', name: '孙丽', dept: '行政部', title: '行政主管', unitType: 'sub' },
-        { id: 'p9', name: '周杰', dept: '技术研发部', title: '高级工程师', unitType: 'sub' },
-        { id: 'p10', name: '吴敏', dept: '设备管理部', title: '维修主管', unitType: 'own' },
-        { id: 'p11', name: '郑凯', dept: '采购部', title: '采购经理', unitType: 'own' },
-        { id: 'p12', name: '高媛', dept: '采购部', title: '采购专员', unitType: 'own' },
-        { id: 'p13', name: '宋晨', dept: '财务部', title: '财务主管', unitType: 'own' },
-        { id: 'p14', name: '许诺', dept: '财务部', title: '会计', unitType: 'own' },
-        { id: 'p15', name: '韩雪', dept: '法务部', title: '法务专员', unitType: 'sub' },
-        { id: 'p16', name: '冯宇', dept: '信息管理部', title: '系统管理员', unitType: 'own' },
-        { id: 'p17', name: '蒋欣', dept: '信息管理部', title: '实施顾问', unitType: 'own' },
-        { id: 'p18', name: '鲁涛', dept: '市场部', title: '市场经理', unitType: 'sub' },
-        { id: 'p19', name: '沈悦', dept: '市场部', title: '招商主管', unitType: 'sub' },
-        { id: 'p20', name: '董力', dept: '物流部', title: '仓储主管', unitType: 'own' },
-        { id: 'p21', name: '何青', dept: '物流部', title: '配送专员', unitType: 'own' },
-        { id: 'p22', name: '白露', dept: '客服部', title: '客服主管', unitType: 'sub' },
-        { id: 'p23', name: '梁辰', dept: '客服部', title: '客服专员', unitType: 'sub' },
-        { id: 'p24', name: '马骁', dept: '工程管理部', title: '项目经理', unitType: 'own' },
-        { id: 'p25', name: '程菲', dept: '工程管理部', title: '安全主任', unitType: 'own' },
-        { id: 'p26', name: '严松', dept: '质量管理部', title: '质检工程师', unitType: 'sub' }
+        { id: 'p1', name: '庞刚', dept: '安全管理部', title: '安全总监', unitType: 'own', status: 'active' },
+        { id: 'p2', name: '李明明', dept: '生产运营部', title: '运营经理', unitType: 'own', status: 'left' },
+        { id: 'p3', name: '张伟', dept: '设备管理部', title: '设备工程师', unitType: 'own', status: 'active' },
+        { id: 'p4', name: '王芳', dept: '人力资源部', title: 'HR经理', unitType: 'own', status: 'active' },
+        { id: 'p5', name: '赵磊', dept: '质量管理部', title: '质量主管', unitType: 'sub', status: 'left' },
+        { id: 'p6', name: '陈静', dept: '安全管理部', title: '安全专员', unitType: 'own', status: 'active' },
+        { id: 'p7', name: '刘洋', dept: '生产运营部', title: '班组长', unitType: 'own', status: 'active' },
+        { id: 'p8', name: '孙丽', dept: '行政部', title: '行政主管', unitType: 'sub', status: 'left' },
+        { id: 'p9', name: '周杰', dept: '技术研发部', title: '高级工程师', unitType: 'sub', status: 'active' },
+        { id: 'p10', name: '吴敏', dept: '设备管理部', title: '维修主管', unitType: 'own', status: 'active' },
+        { id: 'p11', name: '郑凯', dept: '采购部', title: '采购经理', unitType: 'own', status: 'active' },
+        { id: 'p12', name: '高媛', dept: '采购部', title: '采购专员', unitType: 'own', status: 'active' },
+        { id: 'p13', name: '宋晨', dept: '财务部', title: '财务主管', unitType: 'own', status: 'active' },
+        { id: 'p14', name: '许诺', dept: '财务部', title: '会计', unitType: 'own', status: 'active' },
+        { id: 'p15', name: '韩雪', dept: '法务部', title: '法务专员', unitType: 'sub', status: 'active' },
+        { id: 'p16', name: '冯宇', dept: '信息管理部', title: '系统管理员', unitType: 'own', status: 'active' },
+        { id: 'p17', name: '蒋欣', dept: '信息管理部', title: '实施顾问', unitType: 'own', status: 'active' },
+        { id: 'p18', name: '鲁涛', dept: '市场部', title: '市场经理', unitType: 'sub', status: 'active' },
+        { id: 'p19', name: '沈悦', dept: '市场部', title: '招商主管', unitType: 'sub', status: 'active' },
+        { id: 'p20', name: '董力', dept: '物流部', title: '仓储主管', unitType: 'own', status: 'active' },
+        { id: 'p21', name: '何青', dept: '物流部', title: '配送专员', unitType: 'own', status: 'active' },
+        { id: 'p22', name: '白露', dept: '客服部', title: '客服主管', unitType: 'sub', status: 'active' },
+        { id: 'p23', name: '梁辰', dept: '客服部', title: '客服专员', unitType: 'sub', status: 'active' },
+        { id: 'p24', name: '马骁', dept: '工程管理部', title: '项目经理', unitType: 'own', status: 'active' },
+        { id: 'p25', name: '程菲', dept: '工程管理部', title: '安全主任', unitType: 'own', status: 'active' },
+        { id: 'p26', name: '严松', dept: '质量管理部', title: '质检工程师', unitType: 'sub', status: 'active' }
       ];
 
       // 部门范围数据（根据人员列表推导）
@@ -2693,8 +2708,9 @@
           var html = previewItems.map(function(item) {
             var key = type === 'person' ? item.id : item.name;
             var label = item.name;
+            var departedLabel = type === 'person' && isDepartedPerson(item.id) ? '<span class="person-status-left">(离职)</span>' : '';
             return '<span class="person-tag">' +
-              '<span class="tag-label" title="' + escapeHtml(label) + '">' + escapeHtml(label) + '</span>' +
+              '<span class="tag-label" title="' + escapeHtml(label) + '">' + escapeHtml(label) + departedLabel + '</span>' +
               '<span class="tag-close" onclick="removeItemByKey(\'' + type + '\',\'' + String(key).replace(/'/g, "\\'") + '\')">×</span>' +
               '</span>';
           }).join('');
@@ -2770,6 +2786,7 @@
           if (deptCard) deptCard.style.display = depts.length > 0 ? 'block' : 'none';
           if (positionCard) positionCard.style.display = positions.length > 0 ? 'block' : 'none';
         }
+        updatePersonCleanControls();
       };
 
       // 按类型+key删除单项
@@ -3157,6 +3174,75 @@
         if (e.target === this) closePersonPicker();
       });
 
+      // ==================== 离职人员辅助函数 ====================
+      function getPersonRecordById(id) {
+        return personList.find(function(p) { return p.id === id; }) || null;
+      }
+
+      function isDepartedPerson(id) {
+        var person = getPersonRecordById(id);
+        return !!(person && person.status === 'left');
+      }
+
+      function getDepartedSelectedPersons() {
+        return selectedItems.filter(function(item) {
+          return item.type === 'person' && isDepartedPerson(item.id);
+        });
+      }
+
+      function updatePersonCleanControls() {
+        var departedCount = getDepartedSelectedPersons().length;
+        var cleanBtn = $('#personCleanBtn');
+        var drawerCleanBtn = $('#selectedListCleanBtn');
+        if (cleanBtn) cleanBtn.style.display = departedCount > 0 ? 'inline-flex' : 'none';
+        if (drawerCleanBtn) drawerCleanBtn.style.display = selectedListType === 'person' && departedCount > 0 ? 'inline-flex' : 'none';
+      }
+
+      function showSelectedListCleanTip(count) {
+        var tip = $('#selectedListCleanTip');
+        if (!tip) return;
+        tip.textContent = '已清理' + count + '位离职人员';
+        tip.classList.add('show');
+        clearTimeout(tip._timer);
+        tip._timer = setTimeout(function() { tip.classList.remove('show'); }, 3000);
+      }
+
+      window.cleanDepartedPersons = function() {
+        var departedPersons = getDepartedSelectedPersons();
+        var count = departedPersons.length;
+        if (count === 0) {
+          showToast('当前没有离职人员可清理');
+          return;
+        }
+        selectedItems = selectedItems.filter(function(item) {
+          return !(item.type === 'person' && isDepartedPerson(item.id));
+        });
+        window.renderPersonList();
+        showToast('已清理' + count + '位离职人员', 'success');
+        if (selectedListType === 'person') {
+          window.renderSelectedList();
+          showSelectedListCleanTip(count);
+        }
+        updatePersonCleanControls();
+      };
+
+      window.cleanDepartedPersonsFromDrawer = function() {
+        var departedPersons = getDepartedSelectedPersons();
+        var count = departedPersons.length;
+        if (count === 0) {
+          showToast('当前没有离职人员可清理');
+          return;
+        }
+        selectedItems = selectedItems.filter(function(item) {
+          return !(item.type === 'person' && isDepartedPerson(item.id));
+        });
+        window.renderPersonList();
+        window.renderSelectedList();
+        showSelectedListCleanTip(count);
+        showToast('已清理' + count + '位离职人员', 'success');
+        updatePersonCleanControls();
+      };
+
       // ==================== 已选列表弹窗 ====================
       var selectedListType = 'person';   // 'person' | 'dept' | 'position'
       var selectedListSearchText = '';
@@ -3230,6 +3316,7 @@
 
         window.renderSelectedList();
         $('#selectedListOverlay').classList.add('is-open');
+        updatePersonCleanControls();
       };
 
       window.closeSelectedList = function() {
@@ -3246,7 +3333,7 @@
         if (selectedListType === 'person') {
           return selectedItems.filter(function(i) { return i.type === 'person'; }).map(function(p) {
             var pInfo = personList.find(function(pl) { return pl.id === p.id; }) || {};
-            return { key: p.id, name: p.name, extra1: p.dept || '-', extra2: pInfo.title || '-' };
+            return { key: p.id, name: p.name, extra1: p.dept || '-', extra2: pInfo.title || '-', isDeparted: isDepartedPerson(p.id) };
           });
         } else if (selectedListType === 'dept') {
           return selectedItems.filter(function(i) { return i.type === 'dept'; }).map(function(d) {
@@ -3305,13 +3392,16 @@
           var serial = selectedListType === 'person'
             ? ((selectedListPage - 1) * selectedListPageSize + index + 1)
             : (index + 1);
+          var nameText = selectedListType === 'person' && item.isDeparted
+            ? escapeHtml(item.name) + ' <span class="person-status-left">(离职)</span>'
+            : escapeHtml(item.name);
           var extra1Cell = selectedListType === 'person' ? '<td>' + escapeHtml(item.extra1) + '</td>' : '';
           var extra2Cell = '';
           var keyArg = selectedListType === 'person' ? item.key : item.key.replace(/'/g, "\\'");
           return '<tr>' +
             '<td><input type="checkbox" ' + (isChecked ? 'checked' : '') + ' onchange="toggleSelectedListRow(\'' + keyArg + '\', this.checked)"></td>' +
             '<td>' + serial + '</td>' +
-            '<td>' + escapeHtml(item.name) + '</td>' +
+            '<td>' + nameText + '</td>' +
             extra1Cell +
             extra2Cell +
             '<td><span class="link-action" onclick="removeSelectedListItem(\'' + keyArg + '\')">删除</span></td>' +

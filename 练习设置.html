@@ -456,6 +456,8 @@
     .form-panel.is-readonly .person-clean-btn { display: none !important; }
 
     .form-panel.is-readonly .readonly-icon { display: none; }
+    /* ==================== 离职标注 ==================== */
+    .person-status-left { color: #F54A45; margin-left: 4px; }
 
     /* ==================== 单选/多选 ==================== */
     .choice-group {
@@ -3241,7 +3243,7 @@
         if (selectedListType === 'person') {
           return selectedItems.filter(function(i) { return i.type === 'person'; }).map(function(p) {
             var pInfo = personList.find(function(pl) { return pl.id === p.id; }) || {};
-            return { key: p.id, name: p.name, extra1: p.dept || '-', extra2: pInfo.title || '-' };
+            return { key: p.id, name: p.name, extra1: p.dept || '-', extra2: pInfo.title || '-', isDeparted: isDepartedPerson(p.id) };
           });
         } else if (selectedListType === 'dept') {
           return selectedItems.filter(function(i) { return i.type === 'dept'; }).map(function(d) {
@@ -3290,13 +3292,16 @@
         var readonly = !!isExamReadonlyMode;
         tbody.innerHTML = items.map(function(item) {
           var isChecked = selectedListCheckedKeys.indexOf(item.key) !== -1;
+          var nameText = selectedListType === 'person' && item.isDeparted
+            ? escapeHtml(item.name) + ' <span class="person-status-left">(离职)</span>'
+            : escapeHtml(item.name);
           var extra1Cell = selectedListType === 'person' ? '<td>' + escapeHtml(item.extra1) + '</td>' : '<td>' + item.extra1 + '人</td>';
           var extra2Cell = selectedListType === 'person' ? '<td>' + escapeHtml(item.extra2) + '</td>' : '<td></td>';
           var keyArg = selectedListType === 'person' ? item.key : item.key.replace(/'/g, "\\'");
           var selectCell = readonly ? '' : '<td><input type="checkbox" ' + (isChecked ? 'checked' : '') + ' onchange="toggleSelectedListRow(\'' + keyArg + '\', this.checked)"></td>';
           return '<tr>' +
             selectCell +
-            '<td>' + escapeHtml(item.name) + '</td>' +
+            '<td>' + nameText + '</td>' +
             extra1Cell +
             extra2Cell +
             (readonly ? '' : '<td><span class="link-action" onclick="removeSelectedListItem(\'' + keyArg + '\')">移除</span></td>') +
@@ -3536,6 +3541,11 @@
 
       function getPersonById(id) {
         return personList.find(function(p) { return p.id === id; }) || null;
+      }
+
+      function isDepartedPerson(id) {
+        var person = getPersonById(id);
+        return !!(person && person.employmentStatus === 'left');
       }
 
       function resolveCurrentExamPersons(item) {
