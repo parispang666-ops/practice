@@ -1377,7 +1377,7 @@
     .btn-add-person:hover { background: #EBF3FD; }
 
     /* 人员选择顶部栏 */
-    .person-select-bar { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; flex-wrap: wrap; }
+    .person-select-bar { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
     .person-total-count { font-size: 14px; color: #307FE2; font-weight: 500; }
 
     .person-group-card { margin-top: 12px; background: transparent; border-radius: 6px; overflow: visible; }
@@ -1385,11 +1385,9 @@
     .person-group-header { display: flex; align-items: center; justify-content: space-between; padding: 2px 0 10px; background: transparent; border-bottom: none; }
     .person-group-title { font-size: 14px; font-weight: 500; color: #1F2329; }
     .person-group-count { font-size: 12px; color: #8F959E; margin-left: 6px; font-weight: 400; }
-    .person-group-actions { display: flex; gap: 12px; font-size: 12px; }
+    .person-group-actions { display: none; }
     .person-group-body { padding: 0; }
     .person-group-empty { text-align: left; padding: 2px 0 8px; color: #C9CDD4; font-size: 13px; }
-    .person-clean-btn { display: inline-flex; align-items: center; justify-content: center; height: 28px; padding: 0 12px; border: none; border-radius: 4px; background: #2F9BFF; color: #fff; font-size: 12px; cursor: pointer; white-space: nowrap; }
-    .person-clean-btn:hover { background: #1F86EB; }
 
     /* 人员/部门标签 */
     .person-tags { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -1397,7 +1395,6 @@
     .person-tag .tag-label { max-width: 96px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .person-tag .tag-close { display: flex; align-items: center; justify-content: center; width: 14px; height: 14px; color: #2F88F7; cursor: pointer; font-size: 14px; line-height: 1; transition: all 0.15s; }
     .person-tag .tag-close:hover { color: #175CD3; }
-    .person-status-left { color: #F54A45; margin-left: 4px; }
     .person-more-btn { display: inline-flex; align-items: center; justify-content: center; min-width: 138px; height: 30px; padding: 0 18px; background: linear-gradient(180deg, #3D9FF8 0%, #2F88F7 100%); border-radius: 4px; color: #fff; font-size: 13px; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 12px rgba(47, 136, 247, 0.16); }
     .person-more-btn:hover { filter: brightness(0.98); }
 
@@ -1410,35 +1407,35 @@
   .link-action.danger { color: #F54A45; }
   .link-action.danger:hover { color: #D93025; }
 
-  /* 已选列表抽屉 */
   .selected-list-overlay { background: rgba(16, 24, 40, 0.35); align-items: stretch; justify-content: flex-end; }
   .selected-list-overlay .modal { width: min(760px, calc(100vw - 160px)); max-height: 100vh; height: 100vh; border-radius: 0; box-shadow: -12px 0 36px rgba(15, 23, 42, 0.12); }
   .selected-list-overlay .modal-header { padding: 28px 32px 18px; border-bottom: 1px solid #EEF2F6; }
   .selected-list-overlay .modal-header h2 { font-size: 16px; font-weight: 600; color: #1F2329; }
-  .selected-list-search { display: flex; align-items: center; gap: 12px; padding: 16px 32px 0; border-bottom: none; flex-wrap: wrap; }
+  .selected-list-search { display: flex; align-items: flex-end; gap: 16px; padding: 16px 32px 0; border-bottom: none; flex-wrap: wrap; }
   .selected-list-filter { display: flex; align-items: center; gap: 10px; }
   .selected-list-filter .search-label { min-width: 56px; font-size: 14px; color: #1F2329; }
   .selected-list-filter .modal-input { width: 180px; height: 36px; }
   .selected-list-search-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
-  .selected-list-search .modal-input { width: 220px; height: 36px; }
-  .selected-list-search .search-label { font-size: 14px; color: #1F2329; }
-  .selected-list-search .btn-search { height: 36px; padding: 0 18px; border: 1px solid #2F88F7; border-radius: 4px; background: #2F88F7; color: #fff; font-size: 14px; cursor: pointer; }
+  .selected-list-search .btn-search { height: 36px; min-width: 72px; padding: 0 18px; border: 1px solid #2F88F7; border-radius: 4px; background: #2F88F7; color: #fff; font-size: 14px; cursor: pointer; }
   .selected-list-search .btn-search:hover { background: #1E78E8; border-color: #1E78E8; }
-  .selected-list-search .btn-reset { height: 36px; padding: 0 18px; border: 1px solid #2F3640; border-radius: 4px; background: #fff; color: #2F3640; font-size: 14px; cursor: pointer; }
+  .selected-list-search .btn-reset { height: 36px; min-width: 72px; padding: 0 18px; border: 1px solid #2F3640; border-radius: 4px; background: #fff; color: #2F3640; font-size: 14px; cursor: pointer; }
   .selected-list-search .btn-reset:hover { border-color: #2F88F7; color: #2F88F7; }
   .selected-list-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 32px 12px; border-bottom: none; }
   .selected-list-toolbar .batch-delete { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 12px; border: 1px solid #D9D9D9; border-radius: 4px; background: #fff; color: #646A73; font-size: 13px; cursor: pointer; }
   .selected-list-toolbar .batch-delete:hover { border-color: #2F88F7; color: #2F88F7; background: #F7FBFF; }
-  .selected-list-toolbar .clean-departed-btn { display: inline-flex; align-items: center; justify-content: center; height: 28px; padding: 0 12px; border: none; border-radius: 4px; background: #2F9BFF; color: #fff; font-size: 12px; cursor: pointer; }
-  .selected-list-toolbar .clean-departed-btn:hover { background: #1F86EB; }
   .selected-list-toolbar .selected-info { font-size: 13px; color: #646A73; }
   .selected-list-table-wrap { flex: 1; min-height: 0; padding: 0 32px; overflow: auto; }
   .selected-list-table-wrap .data-table th { background: #F5F6F8; font-weight: 500; }
   .selected-list-table-wrap .data-table td { padding: 10px 12px; font-size: 13px; }
   .selected-list-empty { text-align: center; padding: 40px 20px; color: #999; font-size: 14px; }
-  .selected-list-tip { display: none; align-items: center; gap: 8px; margin: 8px auto 0; padding: 6px 12px; border: 1px solid #FFD666; border-radius: 4px; background: #FFFBE6; color: #8C6B00; font-size: 13px; width: fit-content; }
-  .selected-list-tip.show { display: inline-flex; }
-  .selected-list-tip::before { content: '!'; display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border-radius: 50%; background: #FAAD14; color: #fff; font-size: 11px; line-height: 1; }
+  .selected-list-empty-tip { display: inline-flex; align-items: center; gap: 8px; margin-top: 220px; padding: 7px 14px; border: 1px solid #FFD666; border-radius: 4px; background: #FFFBE6; color: #8C6B00; font-size: 13px; }
+  .selected-list-empty-tip::before { content: '!'; display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border-radius: 50%; background: #FAAD14; color: #fff; font-size: 11px; line-height: 1; }
+  .selected-list-pagination { display: flex; align-items: center; gap: 10px; padding: 16px 0 8px; color: #646A73; font-size: 13px; }
+  .selected-list-pagination.hidden { display: none; }
+  .selected-list-pagination .page-size-select { height: 32px; min-width: 92px; }
+  .selected-list-pagination .page-btn { width: 28px; height: 28px; border: none; color: #646A73; }
+  .selected-list-pagination .page-btn.active { background: transparent; color: #2F88F7; }
+  .selected-list-pagination .jump-input { width: 48px; height: 28px; border: 1px solid #D9D9D9; border-radius: 4px; text-align: center; }
   .selected-list-back { text-align: center; padding: 24px 0 36px; }
   .selected-list-back .btn-back { height: 36px; padding: 0 26px; border: 1px solid #2F3640; border-radius: 4px; background: #fff; color: #2F3640; font-size: 14px; cursor: pointer; }
   .selected-list-back .btn-back:hover { border-color: #307FE2; color: #307FE2; }
@@ -1909,7 +1906,7 @@
                   </button>
                   <span class="exam-form-header-text" id="examModalTitle" style="margin:0;">新增模拟练习</span>
                   <span class="annotation-wrapper" style="position:absolute;top:8px;right:24px;">
-                    <span class="prd-annotation" id="examModalBadge" data-badge-id="6" data-title="[6] 新增/编辑页面 - 整体规则" data-content="<h3 style='margin:0 0 8px;font-size:13px;color:#FF8340;'>一、新增 vs 编辑</h3><table style='width:100%;font-size:11px;border-collapse:collapse;'><tr style='background:#f7f8fa;'><th style='padding:4px 8px;border:1px solid #e6e7eb;'>对比</th><th style='padding:4px 8px;border:1px solid #e6e7eb;'>新增</th><th style='padding:4px 8px;border:1px solid #e6e7eb;'>编辑（仅草稿）</th></tr><tr><td style='padding:4px 8px;border:1px solid #e6e7eb;'>标题</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>新增模拟练习</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>编辑模拟练习</td></tr><tr style='background:#f7f8fa;'><td style='padding:4px 8px;border:1px solid #e6e7eb;'>试卷选择</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>可点击</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>可编辑，可选可改</td></tr><tr><td style='padding:4px 8px;border:1px solid #e6e7eb;'>题目数量</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>选试卷后可编辑</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>可编辑</td></tr><tr style='background:#f7f8fa;'><td style='padding:4px 8px;border:1px solid #e6e7eb;'>时间</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>可编辑</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>草稿可编辑</td></tr><tr><td style='padding:4px 8px;border:1px solid #e6e7eb;'>底部按钮</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>返回+保存</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>返回+保存</td></tr><tr style='background:#f7f8fa;'><td style='padding:4px 8px;border:1px solid #e6e7eb;'>初始数据</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>默认值（空）</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>回填已有数据</td></tr></table><p style='margin:8px 0 0;font-size:11px;color:#F64C41;'><strong>已发布状态（未开始/进行中/已结束）不提供编辑入口。</strong></p><h3 style='margin:10px 0 6px;font-size:13px;color:#FF8340;'>二、底部按钮（新增 / 草稿编辑）</h3><table style='width:100%;font-size:11px;border-collapse:collapse;'><tr style='background:#f7f8fa;'><th style='padding:4px 8px;border:1px solid #e6e7eb;'>按钮</th><th style='padding:4px 8px;border:1px solid #e6e7eb;'>行为</th></tr><tr><td style='padding:4px 8px;border:1px solid #e6e7eb;'>返回</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>返回左侧列表，不保存任何修改</td></tr><tr style='background:#f7f8fa;'><td style='padding:4px 8px;border:1px solid #e6e7eb;'>保存</td><td style='padding:4px 8px;border:1px solid #e6e7eb;'>校验通过后保存，新增状态为草稿，编辑草稿保持草稿；提示「新增成功」/「修改成功」</td></tr></table><p style='margin:8px 0 0;font-size:11px;'>发布操作统一在列表行中点击「发布」完成。</p><h3 style='margin:10px 0 6px;font-size:13px;color:#FF8340;'>三、校验规则（依次执行，共11条）</h3><ol style='font-size:11px;'><li>练习名称必填 →「请输入练习名称」</li><li>试卷必选 →「请选择试卷」</li><li>练习开放时间必须完整填写 →「请填写完整的练习开放时间」</li><li>结束时间>开始时间 →「结束时间必须大于开始时间」</li><li>新增时开始时间>当前时间 →「开始时间必须大于当前时间」</li><li>题目总数>0 →「请输入有效的题目总数」</li><li>总数≤试卷总数 →「题目总数不能超过试卷题目总数（N道）」</li><li>至少选一种题型 →「请至少选择一种题目类型」</li><li>各题型之和=总数 →「各题型数量之和需等于题目总数」</li><li>各题型≤试卷上限 →「不能超过试卷对应类型数量（N道）」</li><li>练习人员必填 →「请至少添加一个人员或部门」</li></ol><p style='margin-top:8px;font-size:11px;'><strong>编辑模式保存规则：</strong>「保存」保持原发布状态不变（草稿仍为草稿）。</p>">6</span>
+                    <span class="prd-annotation" id="examModalBadge" data-badge-id="6" data-title="[6] 新增练习表单规则" data-content="">6</span>
                   </span>
                 </div>
                 <div class="exam-form-body">
@@ -2035,7 +2032,6 @@
                               <div>
                                 <span class="person-group-title">人员</span>
                                 <span class="person-group-count" id="personGroupCount">（0个）</span>
-                                <button class="person-clean-btn" type="button" id="personCleanBtn" onclick="cleanDepartedPersons()" style="margin-left:12px;">一键清理离职人员</button>
                               </div>
                             </div>
                             <div class="person-group-body">
@@ -2227,13 +2223,10 @@
         </div>
       </div>
       <div class="selected-list-toolbar">
-        <div style="display:flex;align-items:center;gap:8px;">
-          <button class="clean-departed-btn" id="selectedListCleanBtn" onclick="cleanDepartedPersonsFromDrawer()" style="display:none;">一键清理离职人员</button>
-          <button class="batch-delete" onclick="batchDeleteSelectedList()">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-            批量删除
-          </button>
-        </div>
+        <button class="batch-delete" onclick="batchDeleteSelectedList()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          批量删除
+        </button>
         <span class="selected-info" id="selectedListInfo">已选 0 项</span>
       </div>
       <div class="selected-list-table-wrap">
@@ -2250,10 +2243,24 @@
           </thead>
           <tbody id="selectedListBody"></tbody>
         </table>
+        <div class="selected-list-pagination hidden" id="selectedListPagination">
+          <span id="selectedListTotalText">共 0 条</span>
+          <select class="page-size-select" id="selectedListPageSize" onchange="changeSelectedListPageSize()">
+            <option value="10">10条/页</option>
+            <option value="20">20条/页</option>
+            <option value="50">50条/页</option>
+          </select>
+          <button class="page-btn" onclick="changeSelectedListPage(-1)">&lt;</button>
+          <div id="selectedListPageNumbers"></div>
+          <button class="page-btn" onclick="changeSelectedListPage(1)">&gt;</button>
+          <span>跳至</span>
+          <input type="number" min="1" class="jump-input" id="selectedListJumpInput">
+          <span>页</span>
+          <button class="btn-search" style="height:28px;min-width:auto;padding:0 10px;" onclick="jumpSelectedListPage()">确定</button>
+        </div>
         <div class="selected-list-empty" id="selectedListEmpty" style="display:none;">
           <div class="selected-list-empty-tip">请选择要批量操作的内容</div>
         </div>
-        <div class="selected-list-tip" id="selectedListCleanTip">已清理0位离职人员</div>
       </div>
       <div class="selected-list-back">
         <button class="btn-back" onclick="closeSelectedList()">返回选择</button>
@@ -2596,43 +2603,38 @@
 
       // 人员数据（unitType: 'own'=本单位 'sub'=下级单位）
       var personList = [
-        { id: 'p1', name: '庞刚', dept: '安全管理部', title: '安全总监', unitType: 'own', status: 'active' },
-        { id: 'p2', name: '李明明', dept: '生产运营部', title: '运营经理', unitType: 'own', status: 'left' },
-        { id: 'p3', name: '张伟', dept: '设备管理部', title: '设备工程师', unitType: 'own', status: 'active' },
-        { id: 'p4', name: '王芳', dept: '人力资源部', title: 'HR经理', unitType: 'own', status: 'left' },
-        { id: 'p5', name: '赵磊', dept: '质量管理部', title: '质量主管', unitType: 'sub', status: 'active' },
-        { id: 'p6', name: '陈静', dept: '安全管理部', title: '安全专员', unitType: 'own', status: 'active' },
-        { id: 'p7', name: '刘洋', dept: '生产运营部', title: '班组长', unitType: 'own', status: 'active' },
-        { id: 'p8', name: '孙丽', dept: '行政部', title: '行政主管', unitType: 'sub', status: 'left' },
-        { id: 'p9', name: '周杰', dept: '技术研发部', title: '高级工程师', unitType: 'sub', status: 'active' },
-        { id: 'p10', name: '吴敏', dept: '设备管理部', title: '维修主管', unitType: 'own', status: 'active' },
-        { id: 'p11', name: '郑凯', dept: '采购部', title: '采购经理', unitType: 'own', status: 'active' },
-        { id: 'p12', name: '高媛', dept: '采购部', title: '采购专员', unitType: 'own', status: 'active' },
-        { id: 'p13', name: '宋晨', dept: '财务部', title: '财务主管', unitType: 'own', status: 'active' },
-        { id: 'p14', name: '许诺', dept: '财务部', title: '会计', unitType: 'own', status: 'active' },
-        { id: 'p15', name: '韩雪', dept: '法务部', title: '法务专员', unitType: 'sub', status: 'active' },
-        { id: 'p16', name: '冯宇', dept: '信息管理部', title: '系统管理员', unitType: 'own', status: 'active' },
-        { id: 'p17', name: '蒋欣', dept: '信息管理部', title: '实施顾问', unitType: 'own', status: 'active' },
-        { id: 'p18', name: '鲁涛', dept: '市场部', title: '市场经理', unitType: 'sub', status: 'active' },
-        { id: 'p19', name: '沈悦', dept: '市场部', title: '招商主管', unitType: 'sub', status: 'active' },
-        { id: 'p20', name: '董力', dept: '物流部', title: '仓储主管', unitType: 'own', status: 'active' },
-        { id: 'p21', name: '何青', dept: '物流部', title: '配送专员', unitType: 'own', status: 'active' },
-        { id: 'p22', name: '白露', dept: '客服部', title: '客服主管', unitType: 'sub', status: 'active' },
-        { id: 'p23', name: '梁辰', dept: '客服部', title: '客服专员', unitType: 'sub', status: 'active' },
-        { id: 'p24', name: '马骁', dept: '工程管理部', title: '项目经理', unitType: 'own', status: 'active' },
-        { id: 'p25', name: '程菲', dept: '工程管理部', title: '安全主任', unitType: 'own', status: 'active' },
-        { id: 'p26', name: '严松', dept: '质量管理部', title: '质检工程师', unitType: 'sub', status: 'active' },
-        { id: 'p27', name: '朱琳', dept: '审计部', title: '审计经理', unitType: 'own', status: 'active' },
-        { id: 'p28', name: '罗成', dept: '审计部', title: '审计专员', unitType: 'own', status: 'active' },
-        { id: 'p29', name: '邵峰', dept: '品牌部', title: '品牌经理', unitType: 'sub', status: 'active' },
-        { id: 'p30', name: '唐宁', dept: '品牌部', title: '设计主管', unitType: 'sub', status: 'active' }
+        { id: 'p1', name: '庞刚', dept: '安全管理部', title: '安全总监', unitType: 'own' },
+        { id: 'p2', name: '李明明', dept: '生产运营部', title: '运营经理', unitType: 'own' },
+        { id: 'p3', name: '张伟', dept: '设备管理部', title: '设备工程师', unitType: 'own' },
+        { id: 'p4', name: '王芳', dept: '人力资源部', title: 'HR经理', unitType: 'own' },
+        { id: 'p5', name: '赵磊', dept: '质量管理部', title: '质量主管', unitType: 'sub' },
+        { id: 'p6', name: '陈静', dept: '安全管理部', title: '安全专员', unitType: 'own' },
+        { id: 'p7', name: '刘洋', dept: '生产运营部', title: '班组长', unitType: 'own' },
+        { id: 'p8', name: '孙丽', dept: '行政部', title: '行政主管', unitType: 'sub' },
+        { id: 'p9', name: '周杰', dept: '技术研发部', title: '高级工程师', unitType: 'sub' },
+        { id: 'p10', name: '吴敏', dept: '设备管理部', title: '维修主管', unitType: 'own' },
+        { id: 'p11', name: '郑凯', dept: '采购部', title: '采购经理', unitType: 'own' },
+        { id: 'p12', name: '高媛', dept: '采购部', title: '采购专员', unitType: 'own' },
+        { id: 'p13', name: '宋晨', dept: '财务部', title: '财务主管', unitType: 'own' },
+        { id: 'p14', name: '许诺', dept: '财务部', title: '会计', unitType: 'own' },
+        { id: 'p15', name: '韩雪', dept: '法务部', title: '法务专员', unitType: 'sub' },
+        { id: 'p16', name: '冯宇', dept: '信息管理部', title: '系统管理员', unitType: 'own' },
+        { id: 'p17', name: '蒋欣', dept: '信息管理部', title: '实施顾问', unitType: 'own' },
+        { id: 'p18', name: '鲁涛', dept: '市场部', title: '市场经理', unitType: 'sub' },
+        { id: 'p19', name: '沈悦', dept: '市场部', title: '招商主管', unitType: 'sub' },
+        { id: 'p20', name: '董力', dept: '物流部', title: '仓储主管', unitType: 'own' },
+        { id: 'p21', name: '何青', dept: '物流部', title: '配送专员', unitType: 'own' },
+        { id: 'p22', name: '白露', dept: '客服部', title: '客服主管', unitType: 'sub' },
+        { id: 'p23', name: '梁辰', dept: '客服部', title: '客服专员', unitType: 'sub' },
+        { id: 'p24', name: '马骁', dept: '工程管理部', title: '项目经理', unitType: 'own' },
+        { id: 'p25', name: '程菲', dept: '工程管理部', title: '安全主任', unitType: 'own' },
+        { id: 'p26', name: '严松', dept: '质量管理部', title: '质检工程师', unitType: 'sub' }
       ];
-      var activePersonList = personList.filter(function(p) { return p.status !== 'left'; });
 
       // 部门范围数据（根据人员列表推导）
       var deptMap = {};
       var deptList = [];
-      activePersonList.forEach(function(p) {
+      personList.forEach(function(p) {
         if (!deptMap[p.dept]) {
           deptMap[p.dept] = { name: p.dept, count: 0, personIds: [] };
           deptList.push(deptMap[p.dept]);
@@ -2644,7 +2646,7 @@
       // 岗位范围数据（根据人员列表中的 title 推导）
       var positionMap = {};
       var positionList = [];
-      activePersonList.forEach(function(p) {
+      personList.forEach(function(p) {
         if (!p.title) return;
         if (!positionMap[p.title]) {
           positionMap[p.title] = { name: p.title, count: 0, personIds: [] };
@@ -2663,40 +2665,6 @@
         dept: { page: 1, pageSize: 10 },
         position: { page: 1, pageSize: 10 }
       };
-
-      function getPersonRecordById(id) {
-        return personList.find(function(p) { return p.id === id; }) || null;
-      }
-
-      function isDepartedPerson(id) {
-        var person = getPersonRecordById(id);
-        return !!(person && person.status === 'left');
-      }
-
-      function getDepartedSelectedPersons() {
-        return selectedItems.filter(function(item) {
-          return item.type === 'person' && isDepartedPerson(item.id);
-        });
-      }
-
-      function updatePersonCleanControls() {
-        var departedCount = getDepartedSelectedPersons().length;
-        var cleanBtn = $('#personCleanBtn');
-        var drawerCleanBtn = $('#selectedListCleanBtn');
-        if (cleanBtn) cleanBtn.style.display = departedCount > 0 ? 'inline-flex' : 'none';
-        if (drawerCleanBtn) drawerCleanBtn.style.display = selectedListType === 'person' && departedCount > 0 ? 'inline-flex' : 'none';
-      }
-
-      function showSelectedListCleanTip(count) {
-        var tip = $('#selectedListCleanTip');
-        if (!tip) return;
-        tip.textContent = '已清理' + count + '位离职人员';
-        tip.classList.add('show');
-        clearTimeout(tip._timer);
-        tip._timer = setTimeout(function() {
-          tip.classList.remove('show');
-        }, 3000);
-      }
 
       // ==================== 主表单已选人员/范围卡片 ====================
 
@@ -2725,15 +2693,14 @@
           var html = previewItems.map(function(item) {
             var key = type === 'person' ? item.id : item.name;
             var label = item.name;
-            var departedLabel = type === 'person' && isDepartedPerson(item.id) ? '<span class="person-status-left">(离职)</span>' : '';
             return '<span class="person-tag">' +
-              '<span class="tag-label" title="' + escapeHtml(label) + '">' + escapeHtml(label) + departedLabel + '</span>' +
+              '<span class="tag-label" title="' + escapeHtml(label) + '">' + escapeHtml(label) + '</span>' +
               '<span class="tag-close" onclick="removeItemByKey(\'' + type + '\',\'' + String(key).replace(/'/g, "\\'") + '\')">×</span>' +
               '</span>';
           }).join('');
           var hiddenCount = list.length - previewItems.length;
           if (hiddenCount > 0) {
-            html += '<span class="person-more-btn" onclick="openSelectedList(\'' + type + '\')">查看更多' + hiddenCount + '项</span>';
+            html += '<span class="person-more-btn" onclick="openSelectedList(\'' + type + '\')">查看更多' + hiddenCount + (type === 'person' ? '项' : '项') + '</span>';
           }
           return html;
         }
@@ -2776,9 +2743,7 @@
 
         // 计算并展示去重后的总人数
         var totalSet = {};
-        persons.forEach(function(p) {
-          if (!isDepartedPerson(p.id)) totalSet[p.id] = true;
-        });
+        persons.forEach(function(p) { totalSet[p.id] = true; });
         depts.forEach(function(d) {
           var deptItem = deptMap[d.name];
           if (deptItem && deptItem.personIds) {
@@ -2805,7 +2770,6 @@
           if (deptCard) deptCard.style.display = depts.length > 0 ? 'block' : 'none';
           if (positionCard) positionCard.style.display = positions.length > 0 ? 'block' : 'none';
         }
-        updatePersonCleanControls();
       };
 
       // 按类型+key删除单项
@@ -2817,37 +2781,11 @@
           return true;
         });
         window.renderPersonList();
-        if (selectedListType === 'person') window.renderSelectedList();
-      };
-
-      // 查看所有指定用户
-      window.viewAllPersons = function() {
-        var persons = selectedItems.filter(function(i) { return i.type === 'person'; });
-        if (persons.length === 0) { alert('暂无指定用户'); return; }
-        var text = persons.map(function(p) { return p.name + (p.dept ? '（' + p.dept + '）' : ''); }).join('\n');
-        alert('指定用户（' + persons.length + '人）：\n' + text);
-      };
-
-      // 查看所有部门范围
-      window.viewAllDepts = function() {
-        var depts = selectedItems.filter(function(i) { return i.type === 'dept'; });
-        if (depts.length === 0) { alert('暂未选择部门范围'); return; }
-        var text = depts.map(function(d) {
-          var cnt = deptMap[d.name] ? deptMap[d.name].count : 0;
-          return d.name + '（' + cnt + '人）';
-        }).join('\n');
-        alert('部门范围（' + depts.length + '个部门）：\n' + text);
-      };
-
-      // 全部移除指定用户
-      window.removeAllPersons = function() {
-        selectedItems = selectedItems.filter(function(i) { return i.type !== 'person'; });
-        window.renderPersonList();
       };
 
       // 获取所有人员
       function getVisiblePersons() {
-        return activePersonList;
+        return personList;
       }
 
       // 获取所有部门
@@ -2955,18 +2893,6 @@
         if (!page) return;
         state.page = Math.min(totalPages, Math.max(1, page));
         window.setPickerPage(type, state.page);
-      };
-
-      // 全部移除部门范围
-      window.removeAllDepts = function() {
-        selectedItems = selectedItems.filter(function(i) { return i.type !== 'dept'; });
-        window.renderPersonList();
-      };
-
-      // 全部移除岗位范围
-      window.removeAllPositions = function() {
-        selectedItems = selectedItems.filter(function(i) { return i.type !== 'position'; });
-        window.renderPersonList();
       };
 
       // ==================== 人员选择弹窗 ====================
@@ -3236,6 +3162,8 @@
       var selectedListSearchText = '';
       var selectedListExtraSearchText = '';
       var selectedListCheckedKeys = [];  // 当前弹窗中勾选的key（人员为id，部门/岗位为name）
+      var selectedListPage = 1;
+      var selectedListPageSize = 10;
 
       window.openSelectedList = function(type) {
         selectedListType = type;
@@ -3288,16 +3216,20 @@
         if (colName) {
           colName.textContent = type === 'person' ? '姓名' : (type === 'dept' ? '部门名称' : '岗位名称');
         }
-        if (colCount) colCount.textContent = type === 'person' ? '部门' : '人数';
-        if (colExtra2) colExtra2.style.display = type === 'person' ? 'table-cell' : 'none';
+        if (colCount) {
+          colCount.textContent = '部门';
+          colCount.style.display = type === 'person' ? 'table-cell' : 'none';
+        }
+        if (colExtra2) colExtra2.style.display = 'none';
 
         var selectAll = $('#selectedListSelectAll');
         if (selectAll) selectAll.checked = false;
         selectedListExtraSearchText = '';
+        selectedListPage = 1;
+        selectedListPageSize = parseInt($('#selectedListPageSize').value, 10) || 10;
 
         window.renderSelectedList();
         $('#selectedListOverlay').classList.add('is-open');
-        updatePersonCleanControls();
       };
 
       window.closeSelectedList = function() {
@@ -3314,17 +3246,17 @@
         if (selectedListType === 'person') {
           return selectedItems.filter(function(i) { return i.type === 'person'; }).map(function(p) {
             var pInfo = personList.find(function(pl) { return pl.id === p.id; }) || {};
-            return { key: p.id, name: p.name, extra1: p.dept || '-', extra2: pInfo.title || '-', isDeparted: isDepartedPerson(p.id) };
+            return { key: p.id, name: p.name, extra1: p.dept || '-', extra2: pInfo.title || '-' };
           });
         } else if (selectedListType === 'dept') {
           return selectedItems.filter(function(i) { return i.type === 'dept'; }).map(function(d) {
             var cnt = deptMap[d.name] ? deptMap[d.name].count : 0;
-            return { key: d.name, name: d.name, extra1: cnt, extra2: '' };
+            return { key: d.name, name: d.name, extra1: d.name, extra2: '', count: cnt };
           });
         } else {
           return selectedItems.filter(function(i) { return i.type === 'position'; }).map(function(d) {
             var cnt = positionMap[d.name] ? positionMap[d.name].count : 0;
-            return { key: d.name, name: d.name, extra1: cnt, extra2: '' };
+            return { key: d.name, name: d.name, extra1: d.name, extra2: '', count: cnt };
           });
         }
       }
@@ -3332,14 +3264,15 @@
       window.renderSelectedList = function() {
         var tbody = $('#selectedListBody');
         var emptyEl = $('#selectedListEmpty');
+        var paginationEl = $('#selectedListPagination');
+        var totalTextEl = $('#selectedListTotalText');
         if (!tbody) return;
 
         var items = getSelectedListItems();
         if (selectedListSearchText) {
           var lower = selectedListSearchText.toLowerCase();
           items = items.filter(function(item) {
-            return item.name.toLowerCase().indexOf(lower) !== -1 ||
-              (item.extra1 && String(item.extra1).toLowerCase().indexOf(lower) !== -1);
+            return item.name.toLowerCase().indexOf(lower) !== -1;
           });
         }
         if (selectedListType === 'person' && selectedListExtraSearchText) {
@@ -3350,32 +3283,41 @@
         }
 
         window.updateSelectedListInfo(items.length);
+        if (totalTextEl) totalTextEl.textContent = '共 ' + items.length + ' 条';
 
         if (items.length === 0) {
           tbody.innerHTML = '';
           if (emptyEl) emptyEl.style.display = 'block';
+          if (paginationEl) paginationEl.classList.add('hidden');
           return;
         }
         if (emptyEl) emptyEl.style.display = 'none';
+        if (paginationEl) paginationEl.classList.toggle('hidden', selectedListType !== 'person');
 
-        tbody.innerHTML = items.map(function(item, index) {
+        var totalPages = Math.max(1, Math.ceil(items.length / selectedListPageSize));
+        if (selectedListPage > totalPages) selectedListPage = totalPages;
+        var pageItems = selectedListType === 'person'
+          ? items.slice((selectedListPage - 1) * selectedListPageSize, selectedListPage * selectedListPageSize)
+          : items;
+
+        tbody.innerHTML = pageItems.map(function(item, index) {
           var isChecked = selectedListCheckedKeys.indexOf(item.key) !== -1;
-          var nameText = selectedListType === 'person' && item.isDeparted
-            ? escapeHtml(item.name) + ' <span class="person-status-left">(离职)</span>'
-            : escapeHtml(item.name);
-          var extra1Cell = selectedListType === 'person' ? '<td>' + escapeHtml(item.extra1) + '</td>' : '<td>' + item.extra1 + '人</td>';
-          var extra2Cell = selectedListType === 'person' ? '<td>' + escapeHtml(item.extra2) + '</td>' : '<td></td>';
+          var serial = selectedListType === 'person'
+            ? ((selectedListPage - 1) * selectedListPageSize + index + 1)
+            : (index + 1);
+          var extra1Cell = selectedListType === 'person' ? '<td>' + escapeHtml(item.extra1) + '</td>' : '';
+          var extra2Cell = '';
           var keyArg = selectedListType === 'person' ? item.key : item.key.replace(/'/g, "\\'");
           return '<tr>' +
             '<td><input type="checkbox" ' + (isChecked ? 'checked' : '') + ' onchange="toggleSelectedListRow(\'' + keyArg + '\', this.checked)"></td>' +
-            '<td>' + (index + 1) + '</td>' +
-            '<td>' + nameText + '</td>' +
+            '<td>' + serial + '</td>' +
+            '<td>' + escapeHtml(item.name) + '</td>' +
             extra1Cell +
             extra2Cell +
-            '<td><span class="link-action" onclick="removeSelectedListItem(\'' + keyArg + '\')">移除</span></td>' +
+            '<td><span class="link-action" onclick="removeSelectedListItem(\'' + keyArg + '\')">删除</span></td>' +
             '</tr>';
         }).join('');
-        updatePersonCleanControls();
+        window.renderSelectedListPagination(items.length, totalPages);
       };
 
       function escapeHtml(text) {
@@ -3385,6 +3327,7 @@
       window.searchSelectedList = function() {
         selectedListSearchText = ($('#selectedListSearchInput').value || '').trim();
         selectedListExtraSearchText = ($('#selectedListExtraInput') ? $('#selectedListExtraInput').value : '').trim();
+        selectedListPage = 1;
         window.renderSelectedList();
       };
 
@@ -3393,6 +3336,7 @@
         if ($('#selectedListExtraInput')) $('#selectedListExtraInput').value = '';
         selectedListSearchText = '';
         selectedListExtraSearchText = '';
+        selectedListPage = 1;
         window.renderSelectedList();
       };
 
@@ -3413,8 +3357,7 @@
         if (selectedListSearchText) {
           var lower = selectedListSearchText.toLowerCase();
           items = items.filter(function(item) {
-            return item.name.toLowerCase().indexOf(lower) !== -1 ||
-              (item.extra1 && String(item.extra1).toLowerCase().indexOf(lower) !== -1);
+            return item.name.toLowerCase().indexOf(lower) !== -1;
           });
         }
         if (selectedListType === 'person' && selectedListExtraSearchText) {
@@ -3422,6 +3365,9 @@
           items = items.filter(function(item) {
             return String(item.extra1 || '').toLowerCase().indexOf(extraLower) !== -1;
           });
+        }
+        if (selectedListType === 'person') {
+          items = items.slice((selectedListPage - 1) * selectedListPageSize, selectedListPage * selectedListPageSize);
         }
         if (checked) {
           items.forEach(function(item) {
@@ -3443,8 +3389,7 @@
         if (selectedListSearchText) {
           var lower = selectedListSearchText.toLowerCase();
           items = items.filter(function(item) {
-            return item.name.toLowerCase().indexOf(lower) !== -1 ||
-              (item.extra1 && String(item.extra1).toLowerCase().indexOf(lower) !== -1);
+            return item.name.toLowerCase().indexOf(lower) !== -1;
           });
         }
         if (selectedListType === 'person' && selectedListExtraSearchText) {
@@ -3452,6 +3397,9 @@
           items = items.filter(function(item) {
             return String(item.extra1 || '').toLowerCase().indexOf(extraLower) !== -1;
           });
+        }
+        if (selectedListType === 'person') {
+          items = items.slice((selectedListPage - 1) * selectedListPageSize, selectedListPage * selectedListPageSize);
         }
         if (items.length === 0) {
           selectAll.checked = false;
@@ -3483,7 +3431,7 @@
 
       window.batchDeleteSelectedList = function() {
         if (selectedListCheckedKeys.length === 0) {
-          showToast('请至少选择一项');
+          showToast('请选择要批量操作的内容');
           return;
         }
         var keysToDelete = selectedListCheckedKeys.slice();
@@ -3499,38 +3447,47 @@
         window.updateSelectedListSelectAllState();
       };
 
-      window.cleanDepartedPersons = function() {
-        var departedPersons = getDepartedSelectedPersons();
-        var count = departedPersons.length;
-        if (count === 0) {
-          showToast('当前没有离职人员可清理');
-          return;
+      window.renderSelectedListPagination = function(totalCount, totalPages) {
+        var wrap = $('#selectedListPageNumbers');
+        if (!wrap || selectedListType !== 'person') return;
+        var pages = [];
+        for (var i = 1; i <= totalPages; i++) {
+          pages.push('<button class="page-btn' + (i === selectedListPage ? ' active' : '') + '" onclick="setSelectedListPage(' + i + ')">' + i + '</button>');
         }
-        selectedItems = selectedItems.filter(function(item) {
-          return !(item.type === 'person' && isDepartedPerson(item.id));
-        });
-        window.renderPersonList();
-        showToast('已清理' + count + '位离职人员', 'success');
-        if (selectedListType === 'person') {
-          window.renderSelectedList();
-          showSelectedListCleanTip(count);
-        }
+        wrap.innerHTML = pages.join('');
       };
 
-      window.cleanDepartedPersonsFromDrawer = function() {
-        var departedPersons = getDepartedSelectedPersons();
-        var count = departedPersons.length;
-        if (count === 0) {
-          showToast('当前没有离职人员可清理');
-          return;
-        }
-        selectedItems = selectedItems.filter(function(item) {
-          return !(item.type === 'person' && isDepartedPerson(item.id));
-        });
-        window.renderPersonList();
+      window.setSelectedListPage = function(page) {
+        selectedListPage = page;
         window.renderSelectedList();
-        showSelectedListCleanTip(count);
-        showToast('已清理' + count + '位离职人员', 'success');
+      };
+
+      window.changeSelectedListPage = function(delta) {
+        var items = getSelectedListItems();
+        if (selectedListSearchText) {
+          var lower = selectedListSearchText.toLowerCase();
+          items = items.filter(function(item) { return item.name.toLowerCase().indexOf(lower) !== -1; });
+        }
+        if (selectedListExtraSearchText) {
+          var extraLower = selectedListExtraSearchText.toLowerCase();
+          items = items.filter(function(item) { return String(item.extra1 || '').toLowerCase().indexOf(extraLower) !== -1; });
+        }
+        var totalPages = Math.max(1, Math.ceil(items.length / selectedListPageSize));
+        selectedListPage = Math.min(totalPages, Math.max(1, selectedListPage + delta));
+        window.renderSelectedList();
+      };
+
+      window.changeSelectedListPageSize = function() {
+        selectedListPageSize = parseInt($('#selectedListPageSize').value, 10) || 10;
+        selectedListPage = 1;
+        window.renderSelectedList();
+      };
+
+      window.jumpSelectedListPage = function() {
+        var val = parseInt($('#selectedListJumpInput').value, 10);
+        if (!val || val < 1) return;
+        selectedListPage = val;
+        window.renderSelectedList();
       };
 
       // 已选列表弹窗背景点击关闭
@@ -3543,7 +3500,7 @@
         { id: 1, name: '2026年安全知识练习', paper: '2026年安全知识试卷A', paperId: 'paper1', total: 300, types: { single: 100, multi: 100, judge: 100 }, creator: '庞刚', createTime: '2026-06-15 09:30:00', openTimeStart: '2026-06-10 08:00', openTimeEnd: '2026-07-10 20:00', persons: [], selectedRanges: [], isPublished: true },
         { id: 2, name: '2026年消防知识练习', paper: '2026年消防知识试卷', paperId: 'paper3', total: 200, types: { single: 80, multi: 60, judge: 60 }, creator: '李明明', createTime: '2026-06-18 14:22:00', openTimeStart: '2026-08-01 09:00', openTimeEnd: '2026-09-01 18:00', persons: [{ id: 'p1', name: '庞刚', dept: '安全管理部' }, { id: 'p3', name: '张伟', dept: '生产运营部' }], selectedRanges: [{ type: 'person', id: 'p1', name: '庞刚', dept: '安全管理部' }, { type: 'person', id: 'p3', name: '张伟', dept: '生产运营部' }], isPublished: true },
         { id: 3, name: '安全基础知识考核', paper: '2026年安全知识试卷B', paperId: 'paper2', total: 150, types: { single: 50, multi: 50, judge: 50 }, creator: '庞刚', createTime: '2026-05-20 10:15:00', openTimeStart: '2026-05-01 10:00', openTimeEnd: '2026-05-31 10:00', persons: [], selectedRanges: [{ type: 'dept', id: 'dept_安全管理部', name: '安全管理部' }, { type: 'position', id: 'position_安全总监', name: '安全总监' }], isPublished: true },
-        { id: 4, name: '2026年安全生产月练习', paper: '2026年安全知识试卷C', paperId: 'paper4', total: 200, types: { single: 80, multi: 60, judge: 60 }, creator: '张伟', createTime: '2026-06-25 16:00:00', openTimeStart: '2026-07-01 09:00', openTimeEnd: '2026-09-01 18:00', persons: [], selectedRanges: [{ type: 'dept', id: 'dept_生产运营部', name: '生产运营部' }, { type: 'dept', id: 'dept_安全管理部', name: '安全管理部' }, { type: 'dept', id: 'dept_设备管理部', name: '设备管理部' }, { type: 'dept', id: 'dept_人力资源部', name: '人力资源部' }, { type: 'dept', id: 'dept_质量管理部', name: '质量管理部' }, { type: 'dept', id: 'dept_行政部', name: '行政部' }, { type: 'dept', id: 'dept_技术研发部', name: '技术研发部' }, { type: 'dept', id: 'dept_采购部', name: '采购部' }, { type: 'dept', id: 'dept_财务部', name: '财务部' }, { type: 'dept', id: 'dept_法务部', name: '法务部' }, { type: 'dept', id: 'dept_信息管理部', name: '信息管理部' }, { type: 'position', id: 'position_安全总监', name: '安全总监' }, { type: 'position', id: 'position_运营经理', name: '运营经理' }, { type: 'position', id: 'position_设备工程师', name: '设备工程师' }, { type: 'position', id: 'position_HR经理', name: 'HR经理' }, { type: 'position', id: 'position_质量主管', name: '质量主管' }, { type: 'position', id: 'position_安全专员', name: '安全专员' }, { type: 'position', id: 'position_班组长', name: '班组长' }, { type: 'position', id: 'position_行政主管', name: '行政主管' }, { type: 'position', id: 'position_高级工程师', name: '高级工程师' }, { type: 'position', id: 'position_维修主管', name: '维修主管' }, { type: 'position', id: 'position_采购经理', name: '采购经理' }, { type: 'person', id: 'p2', name: '李明明', dept: '生产运营部' }, { type: 'person', id: 'p4', name: '王芳', dept: '人力资源部' }, { type: 'person', id: 'p6', name: '陈静', dept: '安全管理部' }, { type: 'person', id: 'p7', name: '刘洋', dept: '生产运营部' }, { type: 'person', id: 'p8', name: '孙丽', dept: '行政部' }, { type: 'person', id: 'p9', name: '周杰', dept: '技术研发部' }, { type: 'person', id: 'p10', name: '吴敏', dept: '设备管理部' }, { type: 'person', id: 'p11', name: '郑凯', dept: '采购部' }, { type: 'person', id: 'p12', name: '高媛', dept: '采购部' }, { type: 'person', id: 'p13', name: '宋晨', dept: '财务部' }, { type: 'person', id: 'p14', name: '许诺', dept: '财务部' }, { type: 'person', id: 'p15', name: '韩雪', dept: '法务部' }, { type: 'person', id: 'p16', name: '冯宇', dept: '信息管理部' }], isPublished: false }
+        { id: 4, name: '2026年安全生产月练习', paper: '2026年安全知识试卷C', paperId: 'paper4', total: 200, types: { single: 80, multi: 60, judge: 60 }, creator: '张伟', createTime: '2026-06-25 16:00:00', openTimeStart: '2026-07-01 09:00', openTimeEnd: '2026-09-01 18:00', persons: [], selectedRanges: [], isPublished: false }
       ];
       var examNextId = 5;
       var editingExamId = null;
@@ -3682,134 +3639,15 @@
       window.updateExamModalBadge = function(mode) {
         var badge = document.getElementById('examModalBadge');
         if (!badge) return;
-        if (mode === 'edit') {
-          badge.setAttribute('data-badge-id', '7');
-          badge.setAttribute('data-title', '[7] 编辑模拟练习弹窗');
-          badge.setAttribute('data-content',
-            '<h3 style="margin:0 0 8px;font-size:13px;color:#F54A45;">编辑模式 vs 新增模式差异</h3>' +
-            '<table style="width:100%;font-size:11px;border-collapse:collapse;margin-bottom:10px;">' +
-            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">对比项</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">编辑</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">新增</th></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">标题</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">编辑模拟练习</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">新增模拟练习</td></tr>' +
-            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">试卷选择</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">草稿可编辑（可选可改试卷）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">可点击打开试卷选择弹窗</td></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">初始数据</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填已有数据（全部字段）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">全部默认值（空/空人员）</td></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">底部按钮</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">返回+保存</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">返回+保存</td></tr>' +
-            '</table>' +
-            '<h3 style="margin:10px 0 6px;font-size:13px;color:#1890ff;">一、表单字段（共5个，全部必填✓）</h3>' +
-            '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
-            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">字段</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">控件类型</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">编辑模式行为</th></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">1. 练习名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">文本输入框（≤20字）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填原名称；实时显示字数计数0/20；草稿可编辑</td></tr>' +
-            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">2. 选择试卷</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">只读输入框+触发器▼</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填原试卷名称及试卷信息条；草稿可编辑，可选可改试卷</td></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">3. 练习开放时间</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">两个datetime-local输入框</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">草稿可编辑</td></tr>' +
-            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">4. 练习题目总数</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">数字输入框（带单位「道」）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填原题目总数；上限≤试卷题目总数；oninput实时更新题型汇总；草稿可编辑</td></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">5. 各题型数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">复选框+数字输入（单选/多选/判断 共3行）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填原各题型数量和勾选状态；勾选复选框激活对应输入；每行带提示文字；底部实时显示汇总(N/total)；草稿可编辑</td></tr>' +
-            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">6. 练习人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">添加人员按钮+已选标签回显</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填已选人员/部门标签；可修改；标签可逐个×移除；可编辑</td></tr>' +
-            '</table>' +
-            '<h3 style="margin:10px 0 6px;font-size:13px;color:#1890ff;">二、底部按钮</h3>' +
-            '<p style="font-size:11px;margin:0 0 6px;"><strong>草稿编辑：</strong></p>' +
-            '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
-            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">按钮</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">行为</th></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">返回</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">关闭弹窗，不保存任何修改</td></tr>' +
-            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">保存</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">校验通过后保存；保持草稿状态不变；更新数据→关闭弹窗→刷新列表→提示「修改成功」</td></tr>' +
-            '</table>' +
-            '<p style="font-size:11px;margin:8px 0 6px;color:#F54A45;"><strong>说明：</strong>已发布状态（未开始/进行中/已结束）不提供编辑入口，也不提供任何行操作。</p>' +
-            '<h3 style="margin:10px 0 6px;font-size:13px;color:#1890ff;">三、表单校验规则（依次执行，共10条）</h3>' +
-            '<ol style="font-size:11px;padding-left:18px;line-height:1.8;">' +
-            '<li>练习名称必填 → Toast「请输入练习名称」</li>' +
-            '<li>试卷必选 → Toast「请选择试卷」</li>' +
-            '<li>题目总数 > 0 → Toast「请输入有效的题目总数」</li>' +
-            '<li>总数 ≤ 试卷题目总数 → Toast「不能超过试卷题目总数（N道）」</li>' +
-            '<li>至少选一种题型 → Toast「请至少选择一种题目类型」</li>' +
-            '<li>各题型之和 = 总数 → Toast「各题型数量之和需等于题目总数」</li>' +
-            '<li>单选题数 ≤ 试卷单选上限 → Toast「单选题数量不能超过试卷单选数量（N道）」</li>' +
-            '<li>多选题数 ≤ 试卷多选上限 → Toast「多选题数量不能超过试卷多选数量（N道）」</li>' +
-            '<li>判断题数 ≤ 试卷判断上限 → Toast「判断题数量不能超过试卷判断数量（N道）」</li>' +
-            '<li>练习人员必填；须添加至少一人或一部门 → Toast「请至少添加一个人员或部门」</li>' +
-            '</ol>' +
-            '<p style="margin-top:6px;font-size:11px;"><strong>校验失败：</strong>Toast提示错误，保留弹窗和已填内容。<strong>校验通过：</strong>更新数据→关闭弹窗→刷新列表→Toast「修改成功」。</p>' +
-            '<h3 style="margin:10px 0 6px;font-size:13px;color:#1890ff;">四、弹窗交互规则</h3>' +
-            '<ul style="font-size:11px;line-height:1.6;">' +
-            '<li>弹窗以浮层形式展示，包含遮罩层</li>' +
-            '<li>点击遮罩层不关闭弹窗</li>' +
-            '<li>关闭方式：×按钮 / 返回按钮 / 保存成功后自动关闭</li>' +
-            '<li>编辑模式（仅草稿）：全部字段可编辑，试卷可选可改</li>' +
-            '<li>题型复选框勾选/取消勾选实时更新底部汇总</li>' +
-            '</ul>'
-          );
-          badge.textContent = '7';
-        } else if (mode === 'add') {
-          badge.setAttribute('data-badge-id', '6');
-          badge.setAttribute('data-title', '[6] 新增模拟练习弹窗');
-          badge.setAttribute('data-content',
-            '<h3 style="margin:0 0 8px;font-size:13px;color:#1890ff;">一、表单字段及默认值（共5个，全部必填✓）</h3>' +
-            '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
-            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">字段</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">控件类型</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">默认值</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">交互说明</th></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">1. 练习名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">文本输入框（≤20字）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">实时显示字数计数0/20；超过20字不再允许输入</td></tr>' +
-            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">2. 选择试卷</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">只读输入框+触发器▼</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空（placeholder：请选择试卷）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">点击打开系统试卷选择弹窗（单选）；选中后展示试卷结构信息条（题目总数/单选/多选/判断数量）；自动填充题目总数和各题型数量</td></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">3. 练习开放时间</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">两个datetime-local输入框</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">格式yyyy-MM-dd HH:mm；开始时间至结束时间；旁注「员工可以在练习开放时间内进行练习」</td></tr>' +
-            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">4. 练习题目总数</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">数字输入框（带单位「道」）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空（选择试卷后自动填充为试卷题目总数）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">用户可手动修改；上限≤试卷题目总数；oninput实时更新题型汇总</td></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">5. 各题型数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">复选框+数字输入（单选/多选/判断 共3行）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空（选择试卷后自动填充为试卷对应题型数量）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">勾选复选框激活对应输入；用户可手动修改；每行带提示「仅支持输入≤题目总数的数字」；各≤试卷对应类型上限；底部实时显示汇总(N/total)</td></tr>' +
-            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">6. 练习人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">添加人员按钮+已选标签回显</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">点击「添加人员」打开系统人员选择弹窗（多选，支持按姓名/部门搜索+按部门批量选择）；已选人员/部门以标签回显，可逐个×移除</td></tr>' +
-            '</table>' +
-            '<h3 style="margin:10px 0 6px;font-size:13px;color:#1890ff;">二、底部按钮</h3>' +
-            '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
-            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">按钮</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">行为</th></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">返回</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">关闭弹窗，不保存任何修改</td></tr>' +
-            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">保存</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">校验通过后保存；状态为未发布（草稿）；关闭弹窗→刷新列表→提示「新增成功」</td></tr>' +
-            '</table>' +
-            '<h3 style="margin:10px 0 6px;font-size:13px;color:#1890ff;">三、表单校验规则（依次执行，共10条）</h3>' +
-            '<ol style="font-size:11px;padding-left:18px;line-height:1.8;">' +
-            '<li>练习名称必填 → Toast「请输入练习名称」</li>' +
-            '<li>试卷必选 → Toast「请选择试卷」</li>' +
-            '<li>题目总数 > 0 → Toast「请输入有效的题目总数」</li>' +
-            '<li>总数 ≤ 试卷题目总数 → Toast「不能超过试卷题目总数（N道）」</li>' +
-            '<li>至少选一种题型 → Toast「请至少选择一种题目类型」</li>' +
-            '<li>各题型之和 = 总数 → Toast「各题型数量之和需等于题目总数」</li>' +
-            '<li>单选题数 ≤ 试卷单选上限 → Toast「单选题数量不能超过试卷单选数量（N道）」</li>' +
-            '<li>多选题数 ≤ 试卷多选上限 → Toast「多选题数量不能超过试卷多选数量（N道）」</li>' +
-            '<li>判断题数 ≤ 试卷判断上限 → Toast「判断题数量不能超过试卷判断数量（N道）」</li>' +
-            '<li>练习人员必填；须添加至少一人或一部门 → Toast「请至少添加一个人员或部门」</li>' +
-            '</ol>' +
-            '<p style="margin-top:6px;font-size:11px;"><strong>校验失败：</strong>Toast提示错误，保留弹窗和已填内容。<strong>校验通过：</strong>追加数据→关闭弹窗→刷新列表→Toast「新增成功」。</p>' +
-            '<h3 style="margin:10px 0 6px;font-size:13px;color:#1890ff;">四、弹窗交互规则</h3>' +
-            '<ul style="font-size:11px;line-height:1.6;">' +
-            '<li>弹窗以浮层形式展示，包含遮罩层</li>' +
-            '<li>点击遮罩层不关闭弹窗</li>' +
-            '<li>关闭方式：×按钮 / 返回按钮 / 保存成功后自动关闭</li>' +
-            '<li>题型复选框勾选/取消勾选实时更新底部汇总</li>' +
-            '</ul>'
-          );
-          badge.textContent = '6';
-        } else if (mode === 'view') {
-          badge.setAttribute('data-badge-id', '14');
-          badge.setAttribute('data-title', '[14] 查看模拟练习详情');
-          badge.setAttribute('data-content',
-            '<h3 style="margin:0 0 8px;font-size:13px;color:#307FE2;">一、查看详情模式</h3>' +
-            '<p style="font-size:11px;">所有状态的练习均提供「详情」按钮，点击后进入只读表单页。</p>' +
-            '<h3 style="margin:10px 0 6px;font-size:13px;color:#307FE2;">二、只读规则</h3>' +
-            '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
-            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">表单区域</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">只读行为</th></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">输入框禁用，展示已填名称</td></tr>' +
-            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习开放时间</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">日期时间输入框禁用，展示已设时间</td></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">选择试卷</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">触发器和箭头隐藏，显示试卷名称和信息条，不可点击</td></tr>' +
-            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习题目数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">总数和各题型数量禁用，勾选框不可操作</td></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">「添加人员」按钮隐藏，已选人员/部门回显为标签展示，不可移除</td></tr>' +
-            '</table>' +
-            '<h3 style="margin:10px 0 6px;font-size:13px;color:#307FE2;">三、底部按钮</h3>' +
-            '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
-            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">按钮</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">行为</th></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">返回</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">返回列表，不修改任何数据</td></tr>' +
-            '</table>' +
-            '<h3 style="margin:10px 0 6px;font-size:13px;color:#307FE2;">四、详情入口</h3>' +
-            '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
-            '<tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">练习状态</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">操作列显示</th></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">草稿</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">详情 + 发布 + 编辑 + 删除</td></tr>' +
-            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">未开始</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">详情</td></tr>' +
-            '<tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">进行中</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">详情</td></tr>' +
-            '<tr style="background:#f7f8fa;"><td style="padding:4px 8px;border:1px solid #e6e7eb;">已结束</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">详情</td></tr>' +
-            '</table>'
-          );
-          badge.textContent = '14';
-        }
+        var badgeMap = {
+          add: { id: '6', title: '[6] 新增练习表单规则' },
+          edit: { id: '7', title: '[7] 编辑练习表单规则' },
+          view: { id: '14', title: '[14] 查看详情规则' }
+        };
+        var current = badgeMap[mode] || badgeMap.add;
+        badge.setAttribute('data-badge-id', current.id);
+        badge.setAttribute('data-title', current.title);
+        badge.textContent = current.id;
       };
 
       // 打开新增弹窗
@@ -4241,7 +4079,7 @@
             createTime: nowStr,
             isPublished: (mode === 'publish')
           });
-          showToast('新增成功', 'success');
+          showToast('练习已保存成功，您可以通过点击「发布」按钮完成发布', 'success');
         }
         window.renderExamTable();
         closeExamModal();
@@ -4249,9 +4087,9 @@
 
 
 
-      // 独立页面初始化：默认进入编辑模拟练习
-      window.initStandaloneExamEditPage = function() {
-        document.title = '编辑模拟练习 - 环慧慧 EHS+';
+      // 独立页面初始化：默认进入新增模拟练习
+      window.initStandaloneExamAddPage = function() {
+        document.title = '新增模拟练习 - 环慧慧 EHS+';
         var examNav = document.querySelector('.settings-nav-item[data-view="exam"]');
         var profNav = document.querySelector('.settings-nav-item[data-view="prof"]');
         if (profNav) profNav.classList.remove('active');
@@ -4260,27 +4098,14 @@
         var examView = $('#examView');
         if (profView) profView.classList.remove('active');
         if (examView) examView.classList.add('active');
-
-        var editableItem = examPracticeData.find(function(item) {
-          return window.getExamStatus(item).status === 'draft';
-        });
-        if (!editableItem && examPracticeData.length > 0) {
-          examPracticeData[0].isPublished = false;
-          editableItem = examPracticeData[0];
-        }
-        if (editableItem) {
-          window.editExamPractice(editableItem.id);
-        } else {
-          window.openExamModal();
-          $('#examModalTitle').textContent = '编辑模拟练习';
-        }
+        window.openExamModal();
       };
 
       // 初始渲染表格
       window.renderExamTable();
-      window.initStandaloneExamEditPage();
+      window.initStandaloneExamAddPage();
 
-      console.log('编辑模拟练习页面已就绪');
+      console.log('新增模拟练习页面已就绪');
     })();
   </script>
 
@@ -4310,98 +4135,122 @@
       <div class="prd-drawer-tab is-active" data-tab="page" id="prdTabPage">页面PRD</div>
     </div>
         <div class="prd-drawer-content" id="prdDrawerContentPage" style="display:block;">
-<h1>编辑练习 PRD（产品需求文档）</h1>
+<h1>新增练习 PRD（产品需求文档）</h1>
 <h2>1. 引言</h2>
 <h3>1.1 背景</h3>
-<p>编辑练习页面用于管理员修改草稿状态的模拟练习配置。页面需要回填已有数据，并根据当前部门、岗位和人员状态重新计算应练人数，帮助管理员在发布前处理离职或组织变更人员。</p>
+<p>新增练习页面用于管理员创建一条模拟练习草稿。管理员选择试卷、配置题目数量、设置练习开放时间，并指定参与练习的部门、岗位或人员。保存后练习保持草稿状态，发布操作统一回到练习列表完成。</p>
 <h3>1.2 页面入口</h3>
 <table>
 <thead>
 <tr><th>来源</th><th>行为</th></tr>
 </thead>
 <tbody>
-<tr><td>练习列表草稿行点击「编辑」</td><td>跳转至 <code>练习设置_编辑模拟练习.html</code></td></tr>
-<tr><td>index 导航点击「编辑练习」</td><td>打开编辑练习页面</td></tr>
+<tr><td>练习列表点击「新增」</td><td>跳转至 <code>新增模拟练习.html</code></td></tr>
+<tr><td>index 导航点击「新增练习」</td><td>打开新增练习页面</td></tr>
 </tbody>
 </table>
 <h3>1.3 使用角色</h3>
 <ul>
-<li><strong>管理员</strong>：可编辑草稿练习。</li>
+<li><strong>管理员</strong>：可创建练习草稿。</li>
 </ul>
 <ul>
 <li><strong>平台员工</strong>：无此页面访问权限。</li>
 </ul>
 <h2>2. 页面布局</h2>
-<p>编辑练习为独立页面，包含 4 个表单分组。</p>
+<p>新增练习为独立页面，包含 4 个表单分组。</p>
 <pre><code>
 +-------------------------------------------------------+
-|  ← 编辑模拟练习                                       |
+|  ← 新增模拟练习                                       |
 +-------------------------------------------------------+
 |  基本信息                                             |
+|    练习名称、练习开放时间                              |
+|                                                       |
 |  选择试卷                                             |
+|    选择试卷、试卷结构信息                              |
+|                                                       |
 |  练习题目数量                                         |
+|    练习题目总数、单选/多选/判断数量                    |
+|                                                       |
 |  练习人员                                             |
-|    部门（X个） 标签... 查看更多                       |
-|    岗位（X个） 标签... 查看更多                       |
-|    人员（X个） [一键清理离职人员] 标签... 查看更多     |
+|    添加人员、部门/岗位/人员已选标签、查看更多抽屉       |
 +-------------------------------------------------------+
 |                 [返回] [保存]                         |
 +-------------------------------------------------------+
 </code></pre>
-<h2>3. 数据回填与人数计算</h2>
-<h3>3.1 数据回填</h3>
-<p>进入编辑页面后，回填以下数据：</p>
+<h2>3. 表单字段</h2>
 <table>
 <thead>
-<tr><th>数据</th><th>说明</th></tr>
+<tr><th>字段</th><th>控件类型</th><th>必填</th><th>默认值</th><th>校验规则</th><th>交互说明</th></tr>
 </thead>
 <tbody>
-<tr><td>基本信息</td><td>练习名称、练习开放时间</td></tr>
-<tr><td>试卷信息</td><td>已选择试卷及试卷结构</td></tr>
-<tr><td>题目数量</td><td>题目总数、单选/多选/判断数量</td></tr>
-<tr><td>练习对象</td><td>已选部门、岗位、人员</td></tr>
-<tr><td>人员快照</td><td>创建练习时计算出的人员列表</td></tr>
+<tr><td>练习名称</td><td>文本输入框</td><td>是</td><td>空</td><td>≤20 字</td><td>实时显示字数计数</td></tr>
+<tr><td>练习开放时间</td><td>日期时间范围</td><td>是</td><td>空</td><td>结束时间 > 开始时间；开始时间 > 当前时间</td><td>员工可在开放时间内练习</td></tr>
+<tr><td>选择试卷</td><td>只读输入框 + 试卷选择弹窗</td><td>是</td><td>空</td><td>必选</td><td>单选试卷，选择后展示试卷结构</td></tr>
+<tr><td>练习题目总数</td><td>数字输入框</td><td>是</td><td>空</td><td>>0 且 ≤ 试卷题目总数</td><td>未选择试卷前禁用</td></tr>
+<tr><td>各题型数量</td><td>复选框 + 数字输入</td><td>是</td><td>空</td><td>至少选择一种题型；题型合计 = 总数；各题型不超过试卷上限</td><td>选择试卷后启用</td></tr>
+<tr><td>练习人员</td><td>人员选择器</td><td>是</td><td>空</td><td>至少选择一个部门、岗位或人员</td><td>支持部门、岗位、人员多选</td></tr>
 </tbody>
 </table>
-<h3>3.2 人数重新计算</h3>
-<p>如果练习对象中包含部门或岗位，进入编辑页时需要根据当前组织和人员状态重新计算人数。</p>
+<h2>4. 选择试卷</h2>
+<h3>4.1 打开方式</h3>
+<ul>
+<li>点击「选择试卷」输入框或选择按钮打开试卷选择弹窗。</li>
+</ul>
+<ul>
+<li>试卷为单选。</li>
+</ul>
+<h3>4.2 选择后展示</h3>
+<p>选择试卷后，在表单中展示试卷结构信息：</p>
 <table>
 <thead>
-<tr><th>对象类型</th><th>计算规则</th></tr>
+<tr><th>信息</th><th>说明</th></tr>
 </thead>
 <tbody>
-<tr><td>部门</td><td>根据当前部门下在职人员重新计算</td></tr>
-<tr><td>岗位</td><td>根据当前岗位下在职人员重新计算</td></tr>
-<tr><td>人员</td><td>直接回填已选人员，并标注已离职人员</td></tr>
+<tr><td>试卷名称</td><td>当前选择的试卷名称</td></tr>
+<tr><td>题目总数</td><td>试卷内题目总量</td></tr>
+<tr><td>单选题数量</td><td>试卷内单选题数量</td></tr>
+<tr><td>多选题数量</td><td>试卷内多选题数量</td></tr>
+<tr><td>判断题数量</td><td>试卷内判断题数量</td></tr>
 </tbody>
 </table>
-<p>统计人数时：</p>
+<h3>4.3 题目数量联动</h3>
 <ul>
-<li>已离职人员仍可在已选人员中展示，但需标注「（离职）」。</li>
+<li>未选择试卷前，题目数量相关控件禁用。</li>
 </ul>
 <ul>
-<li>部门、岗位范围内的当前在职人员用于计算应练人数。</li>
+<li>选择试卷后，题目数量控件启用。</li>
 </ul>
 <ul>
-<li>同一人员同时命中部门、岗位或人员时，需要按人员 ID 去重。</li>
+<li>各题型数量不能超过试卷对应题型数量。</li>
 </ul>
-<h2>4. 表单字段</h2>
-<table>
-<thead>
-<tr><th>字段</th><th>控件类型</th><th>必填</th><th>校验规则</th><th>交互说明</th></tr>
-</thead>
-<tbody>
-<tr><td>练习名称</td><td>文本输入框</td><td>是</td><td>≤20 字</td><td>回填已有名称，可修改</td></tr>
-<tr><td>练习开放时间</td><td>日期时间范围</td><td>是</td><td>结束时间 > 开始时间；开始时间 > 当前时间</td><td>回填已有时间，可修改</td></tr>
-<tr><td>选择试卷</td><td>试卷选择弹窗</td><td>是</td><td>必选</td><td>回填已有试卷，可重新选择</td></tr>
-<tr><td>练习题目总数</td><td>数字输入框</td><td>是</td><td>>0 且 ≤ 试卷题目总数</td><td>回填已有数量</td></tr>
-<tr><td>各题型数量</td><td>复选框 + 数字输入</td><td>是</td><td>至少选择一种题型；题型合计 = 总数；各题型不超过试卷上限</td><td>回填已有题型数量</td></tr>
-<tr><td>练习人员</td><td>人员选择器</td><td>是</td><td>至少选择一个部门、岗位或人员</td><td>回填已有对象，支持继续添加或移除</td></tr>
-</tbody>
-</table>
 <h2>5. 练习人员</h2>
-<h3>5.1 已选内容展示</h3>
-<p>编辑页与新增页保持一致，按类型分组展示：</p>
+<h3>5.1 人员选择器</h3>
+<p>点击「添加人员」打开人员选择弹窗。</p>
+<table>
+<thead>
+<tr><th>页签</th><th>支持能力</th></tr>
+</thead>
+<tbody>
+<tr><td>部门</td><td>支持按部门名称查询、勾选多个部门</td></tr>
+<tr><td>岗位</td><td>支持按岗位名称查询、勾选多个岗位</td></tr>
+<tr><td>人员</td><td>支持按姓名、部门查询，勾选多个人员</td></tr>
+</tbody>
+</table>
+<h3>5.2 人员选择器分页</h3>
+<ul>
+<li>部门、岗位、人员列表均支持分页。</li>
+</ul>
+<ul>
+<li>当列表数据超过 10 条时展示分页。</li>
+</ul>
+<ul>
+<li>默认每页 10 条。</li>
+</ul>
+<ul>
+<li>翻页不清空已选数据。</li>
+</ul>
+<h3>5.3 已选内容展示</h3>
+<p>选择完成后，在表单中按类型分组展示：</p>
 <table>
 <thead>
 <tr><th>类型</th><th>展示标题</th><th>展示规则</th></tr>
@@ -4409,78 +4258,23 @@
 <tbody>
 <tr><td>部门</td><td>部门（X个）</td><td>最多直接展示 10 项</td></tr>
 <tr><td>岗位</td><td>岗位（X个）</td><td>最多直接展示 10 项</td></tr>
-<tr><td>人员</td><td>人员（X个）</td><td>最多直接展示 10 项，离职人员标注「（离职）」</td></tr>
+<tr><td>人员</td><td>人员（X个）</td><td>最多直接展示 10 项</td></tr>
 </tbody>
 </table>
 <ul>
 <li>每个标签右侧展示删除图标，支持逐项移除。</li>
 </ul>
 <ul>
-<li>去掉「查看已选」按钮。</li>
-</ul>
-<ul>
-<li>去掉「全部移除」按钮。</li>
+<li>已选内容在表单内直接分组展示，超过直接展示上限时通过「查看更多X项」进入抽屉查看完整列表。</li>
 </ul>
 <ul>
 <li>当某类型已选数量超过 10 项时，在第 10 项后展示「查看更多X项」按钮。</li>
 </ul>
 <ul>
-<li>点击「查看更多X项」打开对应类型的已选列表抽屉。</li>
+<li>X 为剩余未直接展示的数量。</li>
 </ul>
-<h3>5.2 一键清理离职人员</h3>
-<p>「一键清理离职人员」按钮放在「人员（X个）」统计文字后面。</p>
-<table>
-<thead>
-<tr><th>规则</th><th>说明</th></tr>
-</thead>
-<tbody>
-<tr><td>显示条件</td><td>已选人员中存在离职人员时展示</td></tr>
-<tr><td>点击行为</td><td>移除已选人员中的离职人员</td></tr>
-<tr><td>提示</td><td>「已清理X位离职人员」</td></tr>
-<tr><td>提示位置</td><td>仅保留顶部 tip 提示</td></tr>
-<tr><td>提示时长</td><td>自动消失，不持续展示</td></tr>
-</tbody>
-</table>
-<p>清理后：</p>
-<ul>
-<li>人员标签中的离职人员被移除。</li>
-</ul>
-<ul>
-<li>已选人员抽屉中的离职人员同步被移除。</li>
-</ul>
-<ul>
-<li>人员统计数量更新。</li>
-</ul>
-<ul>
-<li>页面只展示一个清理成功提示。</li>
-</ul>
-<h3>5.3 人员选择器</h3>
-<p>点击「添加人员」打开人员选择弹窗。</p>
-<table>
-<thead>
-<tr><th>页签</th><th>查询条件</th><th>支持能力</th></tr>
-</thead>
-<tbody>
-<tr><td>部门</td><td>部门名称</td><td>支持分页、勾选多个部门</td></tr>
-<tr><td>岗位</td><td>岗位名称</td><td>支持分页、勾选多个岗位</td></tr>
-<tr><td>人员</td><td>姓名、部门名称</td><td>支持分页、勾选多个人员</td></tr>
-</tbody>
-</table>
-<p>分页规则：</p>
-<ul>
-<li>部门、岗位、人员 mock 数据均支持超过 10 条。</li>
-</ul>
-<ul>
-<li>默认每页 10 条。</li>
-</ul>
-<ul>
-<li>切换分页不清空已选内容。</li>
-</ul>
-<ul>
-<li>已选项在分页切换后仍保持勾选状态。</li>
-</ul>
-<h2>6. 查看更多抽屉</h2>
-<p>编辑页的查看更多与新增页完全统一，均为右侧抽屉展示。</p>
+<h3>5.4 查看更多抽屉</h3>
+<p>点击「查看更多X项」后打开对应类型的已选列表抽屉。</p>
 <table>
 <thead>
 <tr><th>抽屉</th><th>标题</th><th>查询条件</th><th>表格字段</th><th>操作</th></tr>
@@ -4488,32 +4282,12 @@
 <tbody>
 <tr><td>已选部门列表</td><td>已选部门列表</td><td>部门名称</td><td>序号、部门名称、操作</td><td>删除、批量删除</td></tr>
 <tr><td>已选岗位列表</td><td>已选岗位列表</td><td>岗位名称</td><td>序号、岗位名称、操作</td><td>删除、批量删除</td></tr>
-<tr><td>已选人员列表</td><td>已选人员列表</td><td>姓名、部门名称</td><td>序号、姓名、部门、操作</td><td>删除、批量删除、一键清理离职人员</td></tr>
+<tr><td>已选人员列表</td><td>已选人员列表</td><td>姓名、部门名称</td><td>序号、姓名、部门、操作</td><td>删除、批量删除</td></tr>
 </tbody>
 </table>
-<h3>6.1 已选人员抽屉</h3>
-<p>已选人员抽屉需要额外支持：</p>
+<p>抽屉规则：</p>
 <ul>
-<li>按姓名查询。</li>
-</ul>
-<ul>
-<li>按部门名称查询。</li>
-</ul>
-<ul>
-<li>已离职人员姓名后标注「（离职）」。</li>
-</ul>
-<ul>
-<li>顶部展示「一键清理离职人员」按钮。</li>
-</ul>
-<ul>
-<li>点击一键清理后提示「已清理X位离职人员」，提示自动消失。</li>
-</ul>
-<ul>
-<li>清理后刷新抽屉列表和主表单人员标签。</li>
-</ul>
-<h3>6.2 抽屉通用规则</h3>
-<ul>
-<li>抽屉从右侧打开，宽度与新增页保持一致。</li>
+<li>抽屉从右侧打开，宽度与编辑页面保持一致。</li>
 </ul>
 <ul>
 <li>支持查询、重置。</li>
@@ -4525,21 +4299,21 @@
 <li>未勾选时点击批量删除，提示「请选择要批量操作的内容」。</li>
 </ul>
 <ul>
-<li>点击「返回」关闭抽屉并回到编辑表单。</li>
+<li>点击「返回」关闭抽屉并回到新增表单。</li>
 </ul>
-<h2>7. 底部按钮</h2>
+<h2>6. 底部按钮</h2>
 <table>
 <thead>
 <tr><th>按钮</th><th>行为</th></tr>
 </thead>
 <tbody>
-<tr><td>返回</td><td>返回练习列表，不保存当前修改</td></tr>
-<tr><td>保存</td><td>执行表单校验，校验通过后保存草稿</td></tr>
+<tr><td>返回</td><td>返回练习列表，不保存当前填写内容</td></tr>
+<tr><td>保存</td><td>执行表单校验，校验通过后保存为草稿</td></tr>
 </tbody>
 </table>
 <p>保存成功后提示：</p>
 <p>练习已保存成功，您可以通过点击「发布」按钮完成发布</p>
-<h2>8. 表单校验</h2>
+<h2>7. 表单校验</h2>
 <p>校验不通过时展示提示，不离开页面。</p>
 <ol>
 <li>练习名称必填。提示：「请输入练习名称」。</li>
@@ -4574,27 +4348,27 @@
 <ol>
 <li>至少选择一个部门、岗位或人员。提示：「请至少添加一个人员或部门」。</li>
 </ol>
-<h2>9. 保存数据</h2>
+<h2>8. 保存数据</h2>
 <table>
 <thead>
 <tr><th>字段</th><th>说明</th></tr>
 </thead>
 <tbody>
-<tr><td>练习名称</td><td>修改后的练习名称</td></tr>
-<tr><td>试卷信息</td><td>当前选中的试卷 ID、名称、题目结构</td></tr>
-<tr><td>题目数量</td><td>当前题目总数及各题型数量</td></tr>
-<tr><td>开放时间</td><td>当前开始时间、结束时间</td></tr>
-<tr><td>练习对象</td><td>当前已选部门、岗位、人员</td></tr>
-<tr><td>人员快照</td><td>根据当前练习对象重新计算后的人员列表</td></tr>
-<tr><td>发布状态</td><td>保存后仍保持草稿</td></tr>
+<tr><td>练习名称</td><td>管理员输入的练习名称</td></tr>
+<tr><td>试卷信息</td><td>选中的试卷 ID、名称、题目结构</td></tr>
+<tr><td>题目数量</td><td>题目总数及各题型数量</td></tr>
+<tr><td>开放时间</td><td>开始时间、结束时间</td></tr>
+<tr><td>练习对象</td><td>已选部门、岗位、人员</td></tr>
+<tr><td>人员快照</td><td>根据练习对象计算出的当前应练人员</td></tr>
+<tr><td>发布状态</td><td>保存后默认为草稿</td></tr>
 </tbody>
 </table>
-<h2>10. 关联文档</h2>
+<h2>9. 关联文档</h2>
 <ul>
 <li><a href="./练习列表_PRD.md">练习列表 PRD</a></li>
 </ul>
 <ul>
-<li><a href="./新增练习_PRD.md">新增练习 PRD</a></li>
+<li><a href="./编辑练习_PRD.md">编辑练习 PRD</a></li>
 </ul>
     </div>
   </div>
@@ -4755,75 +4529,70 @@
       }
 
       // 页面加载完成后初始化
-      function refreshEditPracticePrd() {
+      function refreshAddPracticePrd() {
         var drawerTitle = $('#prdDrawer .prd-drawer-title');
-        if (drawerTitle) drawerTitle.textContent = '编辑练习 - PRD 说明';
+        if (drawerTitle) drawerTitle.textContent = '新增练习 - PRD 说明';
         var panel = $('#prdDrawerContentPage');
         if (panel) {
           // PRD 内容已在页面 HTML 中渲染，无需从文件加载
         }
-        var addContent = '<p>新增练习为独立页面，用于创建模拟练习草稿。表单包含基本信息、试卷、题目数量和练习人员；保存后提示「练习已保存成功，您可以通过点击「发布」按钮完成发布」。</p><p>发布仍在练习列表完成。</p>';
-        var editContent = '<p><strong>页面用途：</strong>编辑练习页面用于管理员修改草稿状态的模拟练习配置。</p><p><strong>数据回填：</strong>进入编辑页面后回填基本信息、试卷信息、题目数量、练习对象和创建练习时计算出的人员快照。</p><p><strong>人数重新计算：</strong>如果练习对象中包含部门或岗位，进入编辑页时需要根据当前组织和人员状态重新计算人数。部门按当前部门下在职人员计算；岗位按当前岗位下在职人员计算；人员直接回填已选人员，并标注已离职人员。</p><p><strong>统计口径：</strong>已离职人员仍可在已选人员中展示，但需标注「（离职）」；部门、岗位范围内的当前在职人员用于计算应练人数；同一人员同时命中部门、岗位或人员时，需要按人员 ID 去重。</p><p><strong>保存状态：</strong>保存后仍保持草稿。</p>';
-        var fieldContent = '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">字段</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">规则</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">必填，≤20 字，回填已有名称，可修改。</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习开放时间</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">必填，结束时间大于开始时间，开始时间大于当前时间，回填已有时间。</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">选择试卷</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">必选，回填已有试卷，可重新选择。</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习题目总数</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">必填，大于 0 且不超过试卷题目总数，回填已有数量。</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">各题型数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">至少选择一种题型；题型合计等于总数；各题型不超过试卷上限。</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">至少选择一个部门、岗位或人员，回填已有对象，支持继续添加或移除。</td></tr></table>';
-        var personnelContent = '<p><strong>已选展示：</strong>部门、岗位、人员按类型分组展示，每组最多直接展示 10 项；人员分组中的离职人员标注「（离职）」。每个标签右侧展示删除图标，支持逐项移除。</p><p><strong>按钮规则：</strong>去掉「查看已选」按钮，去掉「全部移除」按钮；超过 10 项时在第 10 项后展示「查看更多X项」，X 为剩余未直接展示数量，点击打开对应类型的右侧已选列表抽屉。</p><p><strong>一键清理离职人员：</strong>按钮放在「人员（X个）」统计文字后面。已选人员中存在离职人员时展示，点击后移除已选人员中的离职人员，提示「已清理X位离职人员」；提示仅保留顶部 tip，自动消失。清理后人员标签、已选人员抽屉和人员统计数量同步刷新。</p><p><strong>人员选择器分页：</strong>部门、岗位、人员 mock 数据均支持超过 10 条，默认每页 10 条，切换分页不清空已选内容，已选项在分页切换后仍保持勾选状态。</p><p><strong>查看更多抽屉：</strong>编辑页的查看更多与新增页完全统一，均为右侧抽屉展示。部门抽屉按部门名称查询；岗位抽屉按岗位名称查询；人员抽屉按姓名和部门名称查询。抽屉支持查询、重置、勾选后批量删除；未勾选批量删除时提示「请选择要批量操作的内容」。已选人员抽屉顶部展示「一键清理离职人员」，已离职人员姓名后标注「（离职）」。</p>';
-        var deptDrawerContent = '<p><strong>打开方式：</strong>在编辑表单的部门分组中，当已选部门超过 10 项时点击「查看更多X项」打开「已选部门列表」抽屉。</p><p><strong>查询条件：</strong>部门名称。</p><p><strong>表格字段：</strong>序号、部门名称、操作。</p><p><strong>操作规则：</strong>支持单条删除；支持勾选后批量删除；未勾选时点击批量删除，提示「请选择要批量操作的内容」；点击「返回」关闭抽屉并回到编辑表单。</p><p><strong>同步规则：</strong>删除部门后，主表单部门标签和根据部门/岗位重新计算的应练人数同步刷新。</p>';
-        var positionDrawerContent = '<p><strong>打开方式：</strong>在编辑表单的岗位分组中，当已选岗位超过 10 项时点击「查看更多X项」打开「已选岗位列表」抽屉。</p><p><strong>查询条件：</strong>岗位名称。</p><p><strong>表格字段：</strong>序号、岗位名称、操作。</p><p><strong>操作规则：</strong>支持单条删除；支持勾选后批量删除；未勾选时点击批量删除，提示「请选择要批量操作的内容」；点击「返回」关闭抽屉并回到编辑表单。</p><p><strong>同步规则：</strong>删除岗位后，主表单岗位标签和根据部门/岗位重新计算的应练人数同步刷新。</p>';
-        var personDrawerContent = '<p><strong>打开方式：</strong>在编辑表单的人员分组中，当已选人员超过 10 项时点击「查看更多X项」打开「已选人员列表」抽屉。</p><p><strong>查询条件：</strong>姓名、部门名称。</p><p><strong>表格字段：</strong>序号、姓名、部门、操作。</p><p><strong>操作规则：</strong>支持单条删除；支持勾选后批量删除；支持一键清理离职人员；未勾选时点击批量删除，提示「请选择要批量操作的内容」；点击「返回」关闭抽屉并回到编辑表单。</p><p><strong>同步规则：</strong>抽屉中的离职人员与主表单保持一致，清理后同步刷新。</p>';
-        var validationContent = '<p><strong>返回：</strong>返回练习列表，不保存当前修改。</p><p><strong>保存：</strong>执行表单校验，校验通过后保存草稿。</p><p><strong>成功提示：</strong>练习已保存成功，您可以通过点击「发布」按钮完成发布。</p><ol><li>练习名称必填 →「请输入练习名称」。</li><li>请选择试卷 →「请选择试卷」。</li><li>练习开放时间完整填写 →「请填写完整的练习开放时间」。</li><li>结束时间必须大于开始时间 →「结束时间必须大于开始时间」。</li><li>开始时间必须大于当前时间 →「开始时间必须大于当前时间」。</li><li>题目总数必须大于 0 →「请输入有效的题目总数」。</li><li>题目总数不能超过试卷题目总数 →「题目总数不能超过试卷题目总数（N 道）」。</li><li>至少选择一种题目类型 →「请至少选择一种题目类型」。</li><li>各题型数量之和等于题目总数 →「各题型数量之和需等于题目总数」。</li><li>各题型数量不能超过试卷对应题型数量 →「不能超过试卷单选/多选/判断题数量（N 道）」。</li><li>至少选择一个部门、岗位或人员 →「请至少添加一个人员或部门」。</li></ol>';
-        var editFormRuleContent = ''
+        var fieldContent = '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">字段</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">规则</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">文本输入框，必填，≤20 字，实时显示字数计数。</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习开放时间</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">日期时间范围，必填，结束时间大于开始时间，开始时间大于当前时间。</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">选择试卷</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">只读输入框 + 试卷选择弹窗，必选，单选试卷。</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习题目总数</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">数字输入，必填，大于 0 且不超过试卷题目总数，未选择试卷前禁用。</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">各题型数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">至少选择一种题型；题型合计等于总数；各题型不超过试卷上限。</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">至少选择一个部门、岗位或人员。</td></tr></table>';
+        var validationContent = '<p><strong>保存：</strong>执行表单校验，校验通过后保存为草稿。</p><p><strong>成功提示：</strong>练习已保存成功，您可以通过点击「发布」按钮完成发布。</p><ol><li>练习名称必填 →「请输入练习名称」。</li><li>请选择试卷 →「请选择试卷」。</li><li>练习开放时间完整填写 →「请填写完整的练习开放时间」。</li><li>结束时间必须大于开始时间 →「结束时间必须大于开始时间」。</li><li>开始时间必须大于当前时间 →「开始时间必须大于当前时间」。</li><li>题目总数必须大于 0 →「请输入有效的题目总数」。</li><li>题目总数不能超过试卷题目总数 →「题目总数不能超过试卷题目总数（N 道）」。</li><li>至少选择一种题目类型 →「请至少选择一种题目类型」。</li><li>各题型数量之和等于题目总数 →「各题型数量之和需等于题目总数」。</li><li>各题型数量不能超过试卷对应题型数量 →「不能超过试卷单选/多选/判断题数量（N 道）」。</li><li>至少选择一个部门、岗位或人员 →「请至少添加一个人员或部门」。</li></ol>';
+        var personnelContent = '<p><strong>人员选择器：</strong>点击「添加人员」打开人员选择弹窗。部门支持按部门名称查询并勾选多个部门；岗位支持按岗位名称查询并勾选多个岗位；人员支持按姓名、部门查询并勾选多个人员。</p><p><strong>人员选择器分页：</strong>部门、岗位、人员列表均支持分页；当列表数据超过 10 条时展示分页；默认每页 10 条；翻页不清空已选数据，已选项在分页切换后仍保持勾选状态。</p><p><strong>已选内容展示：</strong>选择完成后，在表单中按部门、岗位、人员分组展示。每组最多直接展示 10 项，每个标签右侧展示删除图标，支持逐项移除。</p><p><strong>查看更多入口：</strong>当某类型已选数量超过 10 项时，在第 10 项后展示「查看更多X项」按钮，X 为剩余未直接展示数量；点击后打开对应类型的右侧已选列表抽屉。</p>';
+        var selectedDrawerContent = '<p><strong>查看更多抽屉：</strong>已选部门列表按部门名称查询；已选岗位列表按岗位名称查询；已选人员列表按姓名、部门名称查询。</p><table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">抽屉</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">表格字段</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">操作</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选部门列表</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">序号、部门名称、操作</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">删除、批量删除</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选岗位列表</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">序号、岗位名称、操作</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">删除、批量删除</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选人员列表</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">序号、姓名、部门、操作</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">删除、批量删除</td></tr></table><p><strong>通用规则：</strong>抽屉从右侧打开，宽度与编辑页面保持一致；支持查询、重置；支持勾选后批量删除；未勾选时点击批量删除，提示「请选择要批量操作的内容」；点击「返回」关闭抽屉并回到新增表单。</p>';
+        var deptDrawerContent = '<p><strong>打开方式：</strong>在新增表单的部门分组中，当已选部门超过 10 项时点击「查看更多X项」打开「已选部门列表」抽屉。</p><p><strong>查询条件：</strong>部门名称。</p><p><strong>表格字段：</strong>序号、部门名称、操作。</p><p><strong>操作规则：</strong>支持单条删除；支持勾选后批量删除；未勾选时点击批量删除，提示「请选择要批量操作的内容」；点击「返回」关闭抽屉并回到新增表单。</p>';
+        var positionDrawerContent = '<p><strong>打开方式：</strong>在新增表单的岗位分组中，当已选岗位超过 10 项时点击「查看更多X项」打开「已选岗位列表」抽屉。</p><p><strong>查询条件：</strong>岗位名称。</p><p><strong>表格字段：</strong>序号、岗位名称、操作。</p><p><strong>操作规则：</strong>支持单条删除；支持勾选后批量删除；未勾选时点击批量删除，提示「请选择要批量操作的内容」；点击「返回」关闭抽屉并回到新增表单。</p>';
+        var personDrawerContent = '<p><strong>打开方式：</strong>在新增表单的人员分组中，当已选人员超过 10 项时点击「查看更多X项」打开「已选人员列表」抽屉。</p><p><strong>查询条件：</strong>姓名、部门名称。</p><p><strong>表格字段：</strong>序号、姓名、部门、操作。</p><p><strong>操作规则：</strong>支持单条删除；支持勾选后批量删除；未勾选时点击批量删除，提示「请选择要批量操作的内容」；点击「返回」关闭抽屉并回到新增表单。</p>';
+        var addContent = '<p><strong>页面用途：</strong>新增练习页面用于管理员创建一条模拟练习草稿。管理员选择试卷、配置题目数量、设置练习开放时间，并指定参与练习的部门、岗位或人员。</p><p><strong>保存状态：</strong>保存后练习保持草稿状态，发布操作统一回到练习列表完成。</p>' + fieldContent;
+        var addFormRuleContent = ''
           + '<h3 style="margin:0 0 8px;font-size:13px;color:#FF8340;">1. 引言</h3>'
-          + '<p><strong>背景：</strong>编辑练习页面用于管理员修改草稿状态的模拟练习配置。页面需要回填已有数据，并根据当前部门、岗位和人员状态重新计算应练人数，帮助管理员在发布前处理离职或组织变更人员。</p>'
-          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">来源</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">行为</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习列表草稿行点击「编辑」</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">跳转至 `练习设置_编辑模拟练习.html`</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">index 导航点击「编辑练习」</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">打开编辑练习页面</td></tr></table>'
-          + '<p><strong>使用角色：</strong>管理员可编辑草稿练习；平台员工无此页面访问权限。</p>'
+          + '<p><strong>背景：</strong>新增练习页面用于管理员创建一条模拟练习草稿。管理员选择试卷、配置题目数量、设置练习开放时间，并指定参与练习的部门、岗位或人员。保存后练习保持草稿状态，发布操作统一回到练习列表完成。</p>'
+          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">来源</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">行为</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习列表点击「新增」</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">跳转至 `新增模拟练习.html`</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">index 导航点击「新增练习」</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">打开新增练习页面</td></tr></table>'
+          + '<p><strong>使用角色：</strong>管理员可创建练习草稿；平台员工无此页面访问权限。</p>'
           + '<h3 style="margin:10px 0 8px;font-size:13px;color:#FF8340;">2. 页面布局</h3>'
-          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">分组</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">包含内容</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">基本信息</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习名称、练习开放时间</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">选择试卷</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">选择试卷、试卷结构信息</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习题目数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习题目总数、单选/多选/判断数量</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">部门（X个）、岗位（X个）、人员（X个）分组标签、一键清理离职人员、查看更多抽屉</td></tr></table>'
-          + '<h3 style="margin:10px 0 8px;font-size:13px;color:#FF8340;">3. 数据回填与人数计算</h3>'
-          + '<p><strong>3.1 数据回填：</strong>进入编辑页面后，回填基本信息、试卷信息、题目数量、练习对象和创建练习时计算出的人员快照。</p>'
-          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">数据</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">说明</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">基本信息</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习名称、练习开放时间</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">试卷信息</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选择试卷及试卷结构</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">题目数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">题目总数、单选/多选/判断数量</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习对象</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选部门、岗位、人员</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">人员快照</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">创建练习时计算出的人员列表</td></tr></table>'
-          + '<p><strong>3.2 人数重新计算：</strong>如果练习对象中包含部门或岗位，进入编辑页时需要根据当前组织和人员状态重新计算人数。</p>'
-          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">对象类型</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">计算规则</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">部门</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">根据当前部门下在职人员重新计算</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">岗位</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">根据当前岗位下在职人员重新计算</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">直接回填已选人员，并标注已离职人员</td></tr></table>'
-          + '<p><strong>统计口径：</strong>已离职人员仍可在已选人员中展示，但需标注「（离职）」；部门、岗位范围内的当前在职人员用于计算应练人数；同一人员同时命中部门、岗位或人员时，需要按人员 ID 去重。</p>'
-          + '<h3 style="margin:10px 0 8px;font-size:13px;color:#FF8340;">4. 表单字段</h3>'
-          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">字段</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">控件类型</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">必填</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">校验规则</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">交互说明</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">文本输入框</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">是</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">≤20 字</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填已有名称，可修改</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习开放时间</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">日期时间范围</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">是</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">结束时间 &gt; 开始时间；开始时间 &gt; 当前时间</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填已有时间，可修改</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">选择试卷</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">试卷选择弹窗</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">是</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">必选</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填已有试卷，可重新选择</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习题目总数</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">数字输入框</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">是</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">&gt;0 且 ≤ 试卷题目总数</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填已有数量</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">各题型数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">复选框 + 数字输入</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">是</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">至少选择一种题型；题型合计 = 总数；各题型不超过试卷上限</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填已有题型数量</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">人员选择器</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">是</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">至少选择一个部门、岗位或人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">回填已有对象，支持继续添加或移除</td></tr></table>'
+          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">分组</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">包含内容</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">基本信息</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习名称、练习开放时间</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">选择试卷</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">选择试卷、试卷结构信息</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习题目数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习题目总数、单选/多选/判断数量</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">添加人员、部门/岗位/人员已选标签、查看更多抽屉</td></tr></table>'
+          + '<h3 style="margin:10px 0 8px;font-size:13px;color:#FF8340;">3. 表单字段</h3>'
+          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">字段</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">控件类型</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">必填</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">默认值</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">校验规则</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">交互说明</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">文本输入框</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">是</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">≤20 字</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">实时显示字数计数</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习开放时间</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">日期时间范围</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">是</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">结束时间 &gt; 开始时间；开始时间 &gt; 当前时间</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">员工可在开放时间内练习</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">选择试卷</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">只读输入框 + 试卷选择弹窗</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">是</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">必选</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">单选试卷，选择后展示试卷结构</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习题目总数</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">数字输入框</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">是</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">&gt;0 且 ≤ 试卷题目总数</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">未选择试卷前禁用</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">各题型数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">复选框 + 数字输入</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">是</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">至少选择一种题型；题型合计 = 总数；各题型不超过试卷上限</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">选择试卷后启用</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">人员选择器</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">是</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">空</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">至少选择一个部门、岗位或人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">支持部门、岗位、人员多选</td></tr></table>'
+          + '<h3 style="margin:10px 0 8px;font-size:13px;color:#FF8340;">4. 选择试卷</h3>'
+          + '<p><strong>4.1 打开方式：</strong>点击「选择试卷」输入框或选择按钮打开试卷选择弹窗；试卷为单选。</p>'
+          + '<p><strong>4.2 选择后展示：</strong></p>'
+          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">信息</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">说明</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">试卷名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">当前选择的试卷名称</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">题目总数</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">试卷内题目总量</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">单选题数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">试卷内单选题数量</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">多选题数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">试卷内多选题数量</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">判断题数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">试卷内判断题数量</td></tr></table>'
+          + '<p><strong>4.3 题目数量联动：</strong>未选择试卷前，题目数量相关控件禁用；选择试卷后，题目数量控件启用；各题型数量不能超过试卷对应题型数量。</p>'
           + '<h3 style="margin:10px 0 8px;font-size:13px;color:#FF8340;">5. 练习人员</h3>'
-          + '<p><strong>5.1 已选内容展示：</strong>编辑页与新增页保持一致，按类型分组展示。</p>'
-          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">类型</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">展示标题</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">展示规则</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">部门</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">部门（X个）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">最多直接展示 10 项</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">岗位</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">岗位（X个）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">最多直接展示 10 项</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">人员（X个）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">最多直接展示 10 项，离职人员标注「（离职）」</td></tr></table>'
-          + '<p>每个标签右侧展示删除图标，支持逐项移除；去掉「查看已选」按钮；去掉「全部移除」按钮；当某类型已选数量超过 10 项时，在第 10 项后展示「查看更多X项」按钮；点击「查看更多X项」打开对应类型的已选列表抽屉。</p>'
-          + '<p><strong>5.2 一键清理离职人员：</strong>按钮放在「人员（X个）」统计文字后面。</p>'
-          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">规则</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">说明</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">显示条件</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选人员中存在离职人员时展示</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">点击行为</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">移除已选人员中的离职人员</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">提示</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">「已清理X位离职人员」</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">提示位置</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">仅保留顶部 tip 提示</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">提示时长</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">自动消失，不持续展示</td></tr></table>'
-          + '<p>清理后：人员标签中的离职人员被移除；已选人员抽屉中的离职人员同步被移除；人员统计数量更新；页面只展示一个清理成功提示。</p>'
-          + '<p><strong>5.3 人员选择器：</strong>点击「添加人员」打开人员选择弹窗。</p>'
-          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">页签</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">查询条件</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">支持能力</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">部门</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">部门名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">支持分页、勾选多个部门</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">岗位</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">岗位名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">支持分页、勾选多个岗位</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">姓名、部门名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">支持分页、勾选多个人员</td></tr></table>'
-          + '<p><strong>分页规则：</strong>部门、岗位、人员 mock 数据均支持超过 10 条；默认每页 10 条；切换分页不清空已选内容；已选项在分页切换后仍保持勾选状态。</p>'
-          + '<h3 style="margin:10px 0 8px;font-size:13px;color:#FF8340;">6. 查看更多抽屉</h3>'
-          + '<p><strong>编辑页的查看更多：</strong>与新增页完全统一，均为右侧抽屉展示。</p>'
-          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">抽屉</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">标题</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">查询条件</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">表格字段</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">操作</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选部门列表</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选部门列表</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">部门名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">序号、部门名称、操作</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">删除、批量删除</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选岗位列表</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选岗位列表</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">岗位名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">序号、岗位名称、操作</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">删除、批量删除</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选人员列表</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选人员列表</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">姓名、部门名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">序号、姓名、部门、操作</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">删除、批量删除、一键清理离职人员</td></tr></table>'
-          + '<p><strong>6.1 已选人员抽屉：</strong>按姓名查询；按部门名称查询；已离职人员姓名后标注「（离职）」；顶部展示「一键清理离职人员」按钮；点击一键清理后提示「已清理X位离职人员」，提示自动消失；清理后刷新抽屉列表和主表单人员标签。</p>'
-          + '<p><strong>6.2 抽屉通用规则：</strong>抽屉从右侧打开，宽度与新增页保持一致；支持查询、重置；支持勾选后批量删除；未勾选时点击批量删除，提示「请选择要批量操作的内容」；点击「返回」关闭抽屉并回到编辑表单。</p>'
-          + '<h3 style="margin:10px 0 8px;font-size:13px;color:#FF8340;">7. 底部按钮</h3>'
-          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">按钮</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">行为</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">返回</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">返回练习列表，不保存当前修改</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">保存</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">执行表单校验，校验通过后保存草稿</td></tr></table>'
+          + '<p><strong>5.1 人员选择器：</strong>点击「添加人员」打开人员选择弹窗。</p>'
+          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">页签</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">支持能力</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">部门</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">支持按部门名称查询、勾选多个部门</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">岗位</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">支持按岗位名称查询、勾选多个岗位</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">支持按姓名、部门查询，勾选多个人员</td></tr></table>'
+          + '<p><strong>5.2 人员选择器分页：</strong>部门、岗位、人员列表均支持分页；当列表数据超过 10 条时展示分页；默认每页 10 条；翻页不清空已选数据。</p>'
+          + '<p><strong>5.3 已选内容展示：</strong></p>'
+          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">类型</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">展示标题</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">展示规则</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">部门</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">部门（X个）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">最多直接展示 10 项</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">岗位</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">岗位（X个）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">最多直接展示 10 项</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">人员</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">人员（X个）</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">最多直接展示 10 项</td></tr></table>'
+          + '<p>每个标签右侧展示删除图标，支持逐项移除；已选内容在表单内直接分组展示，超过直接展示上限时通过「查看更多X项」进入抽屉查看完整列表；当某类型已选数量超过 10 项时，在第 10 项后展示「查看更多X项」按钮；X 为剩余未直接展示的数量。</p>'
+          + '<p><strong>5.4 查看更多抽屉：</strong>点击「查看更多X项」后打开对应类型的已选列表抽屉。</p>'
+          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">抽屉</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">标题</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">查询条件</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">表格字段</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">操作</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选部门列表</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选部门列表</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">部门名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">序号、部门名称、操作</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">删除、批量删除</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选岗位列表</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选岗位列表</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">岗位名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">序号、岗位名称、操作</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">删除、批量删除</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选人员列表</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选人员列表</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">姓名、部门名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">序号、姓名、部门、操作</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">删除、批量删除</td></tr></table>'
+          + '<p>抽屉从右侧打开，宽度与编辑页面保持一致；支持查询、重置；支持勾选后批量删除；未勾选时点击批量删除，提示「请选择要批量操作的内容」；点击「返回」关闭抽屉并回到新增表单。</p>'
+          + '<h3 style="margin:10px 0 8px;font-size:13px;color:#FF8340;">6. 底部按钮</h3>'
+          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">按钮</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">行为</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">返回</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">返回练习列表，不保存当前填写内容</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">保存</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">执行表单校验，校验通过后保存为草稿</td></tr></table>'
           + '<p><strong>保存成功后提示：</strong>练习已保存成功，您可以通过点击「发布」按钮完成发布</p>'
-          + '<h3 style="margin:10px 0 8px;font-size:13px;color:#FF8340;">8. 表单校验</h3>'
+          + '<h3 style="margin:10px 0 8px;font-size:13px;color:#FF8340;">7. 表单校验</h3>'
           + '<ol><li>练习名称必填。提示：「请输入练习名称」。</li><li>请选择试卷。提示：「请选择试卷」。</li><li>练习开放时间必须完整填写。提示：「请填写完整的练习开放时间」。</li><li>结束时间必须大于开始时间。提示：「结束时间必须大于开始时间」。</li><li>开始时间必须大于当前时间。提示：「开始时间必须大于当前时间」。</li><li>题目总数必须大于 0。提示：「请输入有效的题目总数」。</li><li>题目总数不能超过试卷题目总数。提示：「题目总数不能超过试卷题目总数（N 道）」。</li><li>至少选择一种题目类型。提示：「请至少选择一种题目类型」。</li><li>各题型数量之和必须等于题目总数。提示：「各题型数量之和需等于题目总数」。</li><li>各题型数量不能超过试卷对应题型数量。提示：「不能超过试卷单选/多选/判断题数量（N 道）」。</li><li>至少选择一个部门、岗位或人员。提示：「请至少添加一个人员或部门」。</li></ol>'
-          + '<h3 style="margin:10px 0 8px;font-size:13px;color:#FF8340;">9. 保存数据</h3>'
-          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">字段</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">说明</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">修改后的练习名称</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">试卷信息</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">当前选中的试卷 ID、名称、题目结构</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">题目数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">当前题目总数及各题型数量</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">开放时间</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">当前开始时间、结束时间</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习对象</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">当前已选部门、岗位、人员</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">人员快照</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">根据当前练习对象重新计算后的人员列表</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">发布状态</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">保存后仍保持草稿</td></tr></table>'
-          + '<h3 style="margin:10px 0 8px;font-size:13px;color:#FF8340;">10. 关联文档</h3>'
-          + '<p>练习列表 PRD、新增练习 PRD。</p>';
-        var publishContent = '<p>编辑页保存后仍需回到练习列表发布。发布前检测人员变更。</p><p><strong>移除：</strong>人员列表中离职/停用；部门或岗位范围中离职、停用、转出部门、转出岗位。</p><p><strong>新增：</strong>部门或岗位范围中转入部门、转入岗位、由停用变为启用人员。</p><p>无变更直接提示「发布成功」；有变更展示发布弹窗。离职和停用均标注「（离职）」。</p><p>发布提示语为「练习发布后，新入职的人员不自动纳入练习中。」</p>';
-        var detailContent = '<p>查看详情为只读页面，样式与新增练习一致，不支持编辑。</p><p>人员和人数以发布时快照为准；发布后离职、停用、转部门、转岗位或新人员进入范围，均不再修改详情人数。</p><p>超过 10 项展示「查看更多X项」打开只读抽屉，抽屉不展示移除按钮。</p>';
+          + '<h3 style="margin:10px 0 8px;font-size:13px;color:#FF8340;">8. 保存数据</h3>'
+          + '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">字段</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">说明</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">管理员输入的练习名称</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">试卷信息</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">选中的试卷 ID、名称、题目结构</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">题目数量</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">题目总数及各题型数量</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">开放时间</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">开始时间、结束时间</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习对象</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">已选部门、岗位、人员</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">人员快照</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">根据练习对象计算出的当前应练人员</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">发布状态</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">保存后默认为草稿</td></tr></table>'
+          + '<h3 style="margin:10px 0 8px;font-size:13px;color:#FF8340;">9. 关联文档</h3>'
+          + '<p>练习列表 PRD、编辑练习 PRD。</p>';
+        var listContent = '<p>练习列表负责发布、编辑、详情和删除。新增练习保存后回到列表，以草稿状态展示。</p><p><strong>草稿操作顺序：</strong>发布、编辑、详情、删除。</p>';
+        var editContent = '<p>编辑练习仅草稿可进入，页面回填已有配置，保存后仍保持草稿。部门/岗位范围会按当前组织关系重新计算人员数量。</p><p>离职和停用人员均标注「（离职）」，可一键清理离职人员。</p>';
+        var detailContent = '<p>详情页只读，样式与新增练习保持一致。练习人员和人数以发布时快照为准，发布后人员状态或组织变化不再影响详情。</p><p>超过 10 项展示「查看更多X项」打开只读抽屉，抽屉不展示移除按钮。</p>';
         var annotations = {
-          '1': ['[1] 编辑练习页面定位', editContent],
-          '2': ['[2] 练习列表规则', '<p>练习列表展示练习名称、开放时间、状态、创建人、创建时间和操作。草稿操作顺序为：发布、编辑、详情、删除。</p><p>编辑页保存后返回列表仍为草稿。</p>'],
-          '3': ['[3] 新增入口规则', addContent],
-          '4': ['[4] 编辑入口规则', '<p>仅草稿状态展示「编辑」，点击进入当前独立编辑页面；已发布状态不展示编辑入口。</p>' + editContent],
-          '6': ['[6] 新增练习规则', addContent],
-          '7': ['[7] 编辑练习表单规则', editFormRuleContent],
-          '8': ['[8] 发布与人员变更规则', publishContent],
+          '1': ['[1] 新增练习页面定位', addContent],
+          '2': ['[2] 练习列表规则', listContent],
+          '3': ['[3] 新增入口规则', '<p>从练习列表点击「新增」进入当前独立新增页面；进入时表单为空，按默认草稿创建流程填写。</p>'],
+          '4': ['[4] 编辑入口规则', editContent],
+          '6': ['[6] 新增练习表单规则', addFormRuleContent],
+          '7': ['[7] 编辑练习规则', editContent],
+          '8': ['[8] 发布规则', '<p>发布只在练习列表的草稿行操作中完成。发布前校验开放时间，并检测人员变更。</p><p><strong>移除：</strong>人员列表中离职/停用；部门或岗位范围中离职、停用、转出部门、转出岗位。</p><p><strong>新增：</strong>部门或岗位范围中转入部门、转入岗位、由停用变启用人员。</p><p>无变更提示「发布成功」；有变更展示发布弹窗。离职和停用均标注「（离职）」。</p>'],
           '9': ['[9] 详情规则', detailContent],
-          '10': ['[10] 删除规则', '<p>仅草稿状态展示删除。确认后删除草稿并提示「删除成功」。</p>'],
-          '12': ['[12] 选择试卷规则', '<p>复用系统试卷选择器。草稿编辑时可重新选择试卷；确认后回填试卷信息，并更新题目总数和各题型上限校验。</p><p>若更换试卷导致原题型数量超出上限，需要重新调整后才能保存。</p>'],
-          '13': ['[13] 练习人员与抽屉规则', personnelContent],
-          '14': ['[14] 详情与快照规则', detailContent],
+          '10': ['[10] 删除规则', '<p>仅草稿状态可删除；确认后移除草稿并提示「删除成功」。</p>'],
+          '12': ['[12] 选择试卷与题目数量', '<p><strong>打开方式：</strong>点击「选择试卷」输入框或选择按钮打开试卷选择弹窗。试卷为单选。</p><p><strong>选择后展示：</strong>试卷名称、题目总数、单选题数量、多选题数量、判断题数量。</p><p><strong>题目数量联动：</strong>未选择试卷前，题目数量相关控件禁用；选择试卷后启用。各题型数量不能超过试卷对应题型数量。</p>'],
+          '13': ['[13] 练习人员与查看更多抽屉', personnelContent + selectedDrawerContent],
+          '14': ['[14] 查看详情规则', detailContent],
           '15': ['[15] 已选部门列表抽屉', deptDrawerContent],
           '16': ['[16] 已选岗位列表抽屉', positionDrawerContent],
           '17': ['[17] 已选人员列表抽屉', personDrawerContent]
@@ -4843,12 +4612,13 @@
           badge.setAttribute('data-content', annotations[id][1]);
           badge.textContent = id;
         };
+        window.updateExamModalBadge('add');
       }
 
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() { refreshEditPracticePrd(); initAnnotations(); });
+        document.addEventListener('DOMContentLoaded', function() { refreshAddPracticePrd(); initAnnotations(); });
       } else {
-        refreshEditPracticePrd();
+        refreshAddPracticePrd();
         initAnnotations();
       }
     })();

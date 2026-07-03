@@ -1881,7 +1881,7 @@
                 </div>
                 <div class="toolbar" style="position:relative;">
                   <span class="annotation-wrapper" style="position:relative;display:inline-block;">
-                    <button class="btn-primary" onclick="window.location.href='练习设置_新增模拟练习.html'">新增</button>
+                    <button class="btn-primary" onclick="window.location.href='新增模拟练习.html'">新增</button>
                     <span class="prd-annotation" data-badge-id="3" data-title="[3] 新增按钮" data-content="<p><strong>点击行为：</strong>右侧打开「新增模拟练习」表单页，表单重置为默认值。</p><p><strong>底部按钮：</strong>返回（灰色描边）| 保存（蓝色描边），保存后状态为「草稿」</p><p><em>表单字段详见弹窗角标 [6]</em></p>">3</span>
                   </span>
                 </div>
@@ -1903,7 +1903,7 @@
                           </span>
                           <span class="annotation-wrapper" style="position:relative;display:inline-block;margin-left:4px;">
                             <span style="display:inline-block;font-size:11px;color:#1890ff;position:relative;margin-right:4px;">编辑</span>
-                            <span class="prd-annotation" data-badge-id="5" data-title="[5] 编辑操作" data-content="<p><strong>显示条件：</strong>仅草稿状态展示「编辑」入口。</p><p><strong>点击行为：</strong>跳转至 <strong>练习设置_编辑模拟练习.html</strong>，编辑页面回填草稿数据，并处理人员变更和清理离职人员逻辑。</p>">5</span>
+                            <span class="prd-annotation" data-badge-id="5" data-title="[5] 编辑操作" data-content="<p><strong>显示条件：</strong>仅草稿状态展示「编辑」入口。</p><p><strong>点击行为：</strong>跳转至 <strong>编辑模拟练习.html</strong>，编辑页面回填草稿数据，并处理人员变更和清理离职人员逻辑。</p>">5</span>
                           </span>
                           <span class="annotation-wrapper" style="position:relative;display:inline-block;margin-left:4px;">
                             <span style="display:inline-block;font-size:11px;color:#307FE2;position:relative;margin-right:4px;">详情</span>
@@ -4493,8 +4493,8 @@
 </thead>
 <tbody>
 <tr><td>练习列表</td><td><code>练习设置.html</code></td><td>PC 后台练习配置列表页</td></tr>
-<tr><td>新增练习</td><td><code>练习设置_新增模拟练习.html</code></td><td>从列表页点击「新增」进入</td></tr>
-<tr><td>编辑练习</td><td><code>练习设置_编辑模拟练习.html</code></td><td>从草稿行点击「编辑」进入</td></tr>
+<tr><td>新增练习</td><td><code>新增模拟练习.html</code></td><td>从列表页点击「新增」进入</td></tr>
+<tr><td>编辑练习</td><td><code>编辑模拟练习.html</code></td><td>从草稿行点击「编辑」进入</td></tr>
 </tbody>
 </table>
 <h3>2.2 功能清单</h3>
@@ -4563,7 +4563,7 @@
 </table>
 <h3>4.3 新增</h3>
 <ul>
-<li>点击「新增」后跳转至 <code>练习设置_新增模拟练习.html</code>。</li>
+<li>点击「新增」后跳转至 <code>新增模拟练习.html</code>。</li>
 </ul>
 <ul>
 <li>新增页面的字段、校验和保存逻辑见 <a href="./新增练习_PRD.md">新增练习 PRD</a>。</li>
@@ -4586,7 +4586,7 @@
 <li>仅草稿状态展示「编辑」入口。</li>
 </ul>
 <ul>
-<li>点击后跳转至 <code>练习设置_编辑模拟练习.html</code>。</li>
+<li>点击后跳转至 <code>编辑模拟练习.html</code>。</li>
 </ul>
 <ul>
 <li>编辑页面的字段、校验、人员变更和清理离职人员逻辑见 <a href="./编辑练习_PRD.md">编辑练习 PRD</a>。</li>
@@ -4861,8 +4861,8 @@
         }
         var listContent = '<p><strong>字段：</strong>练习名称、开始时间、结束时间、状态、创建人、创建时间、操作。</p><table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">字段</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">说明</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习名称</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">管理员自定义名称，≤20 字，单行展示。</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">开始/结束时间</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">练习开放时间，格式为年-月-日 时:分。</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">状态</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">草稿、未开始、进行中、已结束。</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">创建人/创建时间</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">展示创建管理员和创建时间，创建时间倒序。</td></tr></table><p><strong>空状态：</strong>无数据时显示「暂无数据」。</p>';
         var operationContent = '<table style="width:100%;font-size:12px;border-collapse:collapse;"><tr style="background:#f7f8fa;"><th style="padding:4px 8px;border:1px solid #e6e7eb;">状态</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">操作按钮</th><th style="padding:4px 8px;border:1px solid #e6e7eb;">说明</th></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">草稿</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">发布、编辑、详情、删除</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">可发布、编辑、查看详情、删除。</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">未开始</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">详情</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">可查看只读详情。</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">进行中</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">详情</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">可查看只读详情。</td></tr><tr><td style="padding:4px 8px;border:1px solid #e6e7eb;">已结束</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">详情</td><td style="padding:4px 8px;border:1px solid #e6e7eb;">可查看只读详情。</td></tr></table>';
-        var addContent = '<p>点击「新增」后跳转至 <strong>练习设置_新增模拟练习.html</strong>。新增页面用于创建练习草稿，字段、校验和保存逻辑见新增练习 PRD。</p>';
-        var editContent = '<p><strong>显示条件：</strong>仅草稿状态展示「编辑」入口。</p><p><strong>点击行为：</strong>跳转至 <strong>练习设置_编辑模拟练习.html</strong>，编辑页面回填草稿数据，并处理人员变更和清理离职人员逻辑。</p>';
+        var addContent = '<p>点击「新增」后跳转至 <strong>新增模拟练习.html</strong>。新增页面用于创建练习草稿，字段、校验和保存逻辑见新增练习 PRD。</p>';
+        var editContent = '<p><strong>显示条件：</strong>仅草稿状态展示「编辑」入口。</p><p><strong>点击行为：</strong>跳转至 <strong>编辑模拟练习.html</strong>，编辑页面回填草稿数据，并处理人员变更和清理离职人员逻辑。</p>';
         var detailContent = '<p><strong>显示条件：</strong>全部状态均展示「详情」入口。</p><p><strong>详情内容：</strong>回填练习名称、试卷、题目数量、开放时间、练习人员等配置。</p><p><strong>人员快照：</strong>详情页展示的练习人员和共计人数以发布时人员快照为准；发布后发生离职、停用、转部门、转岗位，或有人员新进入部门/岗位范围，均不修改详情页人数。</p><p><strong>只读规则：</strong>全部字段禁用，仅提供「返回」。</p>';
         var deleteContent = '<p><strong>显示条件：</strong>仅草稿状态显示。</p><p><strong>点击行为：</strong>弹出确认弹窗，文案为「确定要删除该练习吗？此操作不可恢复。」</p><p><strong>确认后：</strong>从列表中移除该练习并刷新列表。</p><p><strong>反馈：</strong>提示「删除成功」，3 秒后自动消失。</p>';
         var publishContent = '<p><strong>显示条件：</strong>仅草稿状态展示「发布」。</p><p><strong>发布前基础校验：</strong></p><ol><li>练习开放时间必须完整填写。失败提示：「请先编辑练习，填写完整的练习开放时间后再发布」。</li><li>结束时间必须大于开始时间。失败提示：「结束时间必须大于开始时间，请先修改后再发布」。</li><li>开始时间必须大于当前时间。失败提示：「开始时间必须大于当前时间，请先修改后再发布」。</li></ol><p><strong>人员变更检测：</strong>基础校验通过后，判断当前练习对象与创建练习时的人员快照是否存在变更。</p><p><strong>无变更：</strong>不展示发布弹窗，直接完成发布并提示「发布成功」。</p><p><strong>有变更：</strong>展示发布弹窗，确认后完成发布。</p>';
